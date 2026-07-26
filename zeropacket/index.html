@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZeroPacket — Unified Network & CUCM Suite v4.0</title>
+  <title>ZeroPacket — Network & CUCM Suite v1.0</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
     html, body { height: 100vh; width: 100vw; overflow: hidden; background-color: #040711; color: #cbd5e1; }
@@ -75,8 +75,8 @@
 
     .form-group { margin-bottom: 12px; }
     label { display: block; font-size: 10px; font-family: monospace; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase; }
-    input, select { width: 100%; background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; padding: 8px 12px; color: #fff; font-size: 12px; font-family: monospace; outline: none; transition: all 0.2s; }
-    input:focus, select:focus { border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+    input, select, textarea { width: 100%; background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; padding: 8px 12px; color: #fff; font-size: 12px; font-family: monospace; outline: none; transition: all 0.2s; }
+    input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
     
     .btn { background: #00f0ff; color: #060913; font-weight: 700; border: none; padding: 8px 14px; border-radius: 6px; font-size: 11px; font-family: monospace; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
     .btn:hover { background: #38edf8; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
@@ -121,7 +121,57 @@
     .canvas-node .node-del { color: #f43f5e; cursor: pointer; font-weight: bold; margin-left: 6px; }
     .canvas-node .node-del:hover { color: #ff0000; }
 
-    /* FOOTER OPTIMIZATION - BOŞLUKLARI SIFIRLAYAN YAPI */
+    /* WEBRTC SOFTPHONE STYLES */
+    .softphone-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+    .phone-device { width: 300px; background: #080d1a; border: 2px solid rgba(0, 240, 255, 0.3); border-radius: 16px; padding: 16px; box-shadow: 0 0 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; gap: 12px; }
+    .phone-screen { background: #03050c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px; text-align: center; }
+    .phone-status { font-size: 10px; font-family: monospace; color: #10b981; margin-bottom: 4px; text-transform: uppercase; }
+    .phone-display-num { font-size: 20px; font-family: monospace; font-weight: bold; color: #fff; height: 28px; overflow: hidden; letter-spacing: 2px; }
+    .phone-timer { font-size: 11px; font-family: monospace; color: #64748b; margin-top: 4px; }
+    .phone-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .key-btn { background: #0d1527; border: 1px solid rgba(255,255,255,0.08); color: #fff; font-size: 16px; font-family: monospace; font-weight: bold; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+    .key-btn:hover { background: rgba(0,240,255,0.2); border-color: #00f0ff; }
+    .key-btn:active { transform: scale(0.95); }
+    .key-sub { font-size: 8px; color: #64748b; display: block; margin-top: -2px; }
+    .phone-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .btn-call { background: #10b981; color: #000; font-weight: bold; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-family: monospace; font-size: 12px; }
+    .btn-call:hover { background: #34d399; box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+    .btn-hangup { background: #f43f5e; color: #fff; font-weight: bold; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-family: monospace; font-size: 12px; }
+    .btn-hangup:hover { background: #fb7185; box-shadow: 0 0 10px rgba(244,63,94,0.5); }
+    .phone-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .btn-feat { background: #0d1527; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 10px; padding: 6px; border-radius: 6px; cursor: pointer; font-family: monospace; text-align: center; }
+    .btn-feat.active { background: rgba(0,240,255,0.2); color: #00f0ff; border-color: #00f0ff; }
+    .sip-console { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 10px; }
+    .sip-log-box { flex: 1; height: 260px; background: #03050c; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px; font-family: monospace; font-size: 10px; overflow-y: auto; color: #94a3b8; }
+    .sip-msg-tx { color: #00f0ff; }
+    .sip-msg-rx { color: #10b981; }
+    .sip-msg-info { color: #f59e0b; }
+    .audio-vis { width: 100%; height: 50px; background: #03050c; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; }
+
+    /* NAT & PAT STYLES */
+    .nat-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; font-family: monospace; }
+    .nat-table th, .nat-table td { border: 1px solid rgba(255, 255, 255, 0.08); padding: 6px 8px; text-align: left; }
+    .nat-table th { background: #080d1a; color: #00f0ff; }
+    .nat-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+
+    /* SIP PARSER & CALL FLOW VISUALIZER STYLES */
+    .seq-diagram-box { display: flex; flex-direction: column; gap: 12px; background: #03050c; border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 8px; padding: 16px; min-height: 280px; overflow-x: auto; }
+    .seq-hosts { display: flex; justify-content: space-around; border-bottom: 2px solid rgba(0, 240, 255, 0.4); padding-bottom: 8px; margin-bottom: 12px; }
+    .seq-host-tag { background: #0d1527; border: 1px solid #00f0ff; color: #00f0ff; font-weight: bold; font-size: 11px; padding: 4px 12px; border-radius: 12px; }
+    .seq-step { display: flex; align-items: center; justify-content: space-between; position: relative; margin: 8px 0; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; }
+    .seq-step:hover { background: rgba(0, 240, 255, 0.1); }
+    .seq-arrow-line { position: absolute; left: 15%; right: 15%; height: 2px; background: #38edf8; top: 50%; z-index: 1; }
+    .seq-arrow-line::after { content: ''; position: absolute; right: 0; top: -4px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid #38edf8; }
+    .seq-arrow-line.reverse::after { right: auto; left: 0; border-left: none; border-right: 8px solid #10b981; }
+    .seq-arrow-line.reverse { background: #10b981; }
+    .seq-label { z-index: 2; background: #080d1a; border: 1px solid rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #fff; margin: 0 auto; }
+
+    /* CDR DASHBOARD STYLES */
+    .cdr-kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .cdr-kpi-card { background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px; border-radius: 8px; text-align: center; }
+    .cdr-kpi-val { font-size: 18px; font-weight: bold; color: #00f0ff; margin-top: 4px; }
+
+    /* FOOTER OPTIMIZATION */
     footer { height: auto; min-height: 44px; background: #040711; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 4px 16px; flex-shrink: 0; font-family: monospace; font-size: 11px; display: flex; flex-direction: column; justify-content: flex-end; }
     #cli-logs { max-height: 50px; overflow-y: auto; color: #64748b; line-height: 1.3; font-size: 10px; margin-bottom: 2px; display: none; }
     #cli-logs:not(:empty) { display: block; }
@@ -157,11 +207,11 @@
     <div class="brand">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       <span>ZERO<span style="color:#00f0ff;">PACKET</span></span>
-      <span class="brand-badge">v4.0 ENGINE</span>
+      <span class="brand-badge">v1.0 ENGINE</span>
     </div>
     <div class="top-stats">
-      <div class="stat-badge"><span class="dot-active"></span> CUCM Cluster: <b style="color:#fff; margin-left:4px;">Pub + 2 Sub</b></div>
-      <div class="stat-badge"><span style="color:#00f0ff">SIP Trunk:</span> ACTIVE</div>
+      <div class="stat-badge"><span class="dot-active"></span> Server: <b style="color:#fff; margin-left:4px;">ONLINE</b></div>
+      <div class="stat-badge"><span style="color:#00f0ff">System Arc.:</span> H.Malatya</div>
     </div>
   </header>
 
@@ -178,10 +228,11 @@
         <!-- CUCM & VOIP SUITE -->
         <div class="nav-group">
           <div class="nav-title cucm-header">☎️ CUCM & VOIP SUITE</div>
+          <button onclick="showPanel('softphone')" id="btn-softphone" class="nav-btn cucm-btn">WebRTC / SIP Softphone Sim</button>
+          <button onclick="showPanel('sip-parser')" id="btn-sip-parser" class="nav-btn cucm-btn">SIP Log Parser & Call Flow</button>
+          <button onclick="showPanel('cdr-analytics')" id="btn-cdr-analytics" class="nav-btn cucm-btn">CDR Analytics & Billing</button>
           <button onclick="showPanel('cucm-deepdive')" id="btn-cucm-deepdive" class="nav-btn cucm-btn">CUCM Deep Dive & Architecture</button>
           <button onclick="showPanel('cucm-ports')" id="btn-cucm-ports" class="nav-btn cucm-btn">CUCM Port Matrix</button>
-          <button onclick="showPanel('cucm-codec')" id="btn-cucm-codec" class="nav-btn cucm-btn">VoIP Codec Bandwidth Calc</button>
-          <button onclick="showPanel('cucm-dial')" id="btn-cucm-dial" class="nav-btn cucm-btn">Dial Plan Manipulator</button>
           <button onclick="showPanel('cucm-cli')" id="btn-cucm-cli" class="nav-btn cucm-btn">CUCM CLI Command Ref</button>
           <button onclick="showPanel('qos')" id="btn-qos" class="nav-btn cucm-btn">VoIP QoS / DSCP Converter</button>
         </div>
@@ -189,6 +240,7 @@
         <!-- NETWORK INFRASTRUCTURE SUITE -->
         <div class="nav-group">
           <div class="nav-title network-header">🌐 NETWORK SUITE</div>
+          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn">Dynamic NAT & PAT Sim</button>
           <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn">Topology Canvas (Advanced)</button>
           <button onclick="showPanel('multivendor')" id="btn-multivendor" class="nav-btn net-btn">Multi-Vendor Config Generator</button>
           <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn">Subnet Calculator</button>
@@ -232,6 +284,18 @@
           <!-- CUCM SECTION -->
           <div class="dash-section-title" style="color:#38edf8;">☎️ CUCM & VoIP Araçları</div>
           <div class="dash-grid">
+            <div class="dash-card" onclick="showPanel('softphone')">
+              <div class="dash-card-title">WebRTC / SIP Softphone <span>➔</span></div>
+              <div class="dash-card-desc">Gerçek zamanlı DTMF, SIP sinyalleşme protokolü, Web Audio dalga boyu osiloskobu ve interaktif arama simülatörü.</div>
+            </div>
+            <div class="dash-card" onclick="showPanel('sip-parser')">
+              <div class="dash-card-title">SIP Log Parser & Flow Visualizer <span>➔</span></div>
+              <div class="dash-card-desc">Ham SIP loglarını ayrıştırır ve interaktif sıralı sinyalleşme diyagramı (Call Flow Sequence Diagram) çıkarır.</div>
+            </div>
+            <div class="dash-card" onclick="showPanel('cdr-analytics')">
+              <div class="dash-card-title">CDR Analytics & Billing Dashboard <span>➔</span></div>
+              <div class="dash-card-desc">Call Detail Record verilerini analiz eder; ASR, ACD, çağrı durumları ve maliyet metriklerini raporlar.</div>
+            </div>
             <div class="dash-card" onclick="showPanel('cucm-deepdive')">
               <div class="dash-card-title">CUCM Deep Dive & Arch <span>➔</span></div>
               <div class="dash-card-desc">Cluster veritabanı replikasyonu, Call Routing, CUBE SIP Trunking ve kayıt süreçleri rehberi.</div>
@@ -239,14 +303,6 @@
             <div class="dash-card" onclick="showPanel('cucm-ports')">
               <div class="dash-card-title">CUCM Port Matrix <span>➔</span></div>
               <div class="dash-card-desc">SIP, SCCP, TFTP, CTI, AXL ve RTP ses iletimi için gerekli güvenlik duvarı port listesi.</div>
-            </div>
-            <div class="dash-card" onclick="showPanel('cucm-codec')">
-              <div class="dash-card-title">Codec Bandwidth Calc <span>➔</span></div>
-              <div class="dash-card-desc">G.711, G.729 ve G.722 ses kodlayıcılarına göre bant genişliği gereksinimini hesaplar.</div>
-            </div>
-            <div class="dash-card" onclick="showPanel('cucm-dial')">
-              <div class="dash-card-title">Dial Plan Manipulator <span>➔</span></div>
-              <div class="dash-card-desc">Cisco CUCM numaralandırma planlarındaki Digit Discard ve Prefix kurallarını simüle eder.</div>
             </div>
             <div class="dash-card" onclick="showPanel('qos')">
               <div class="dash-card-title">QoS / DSCP Converter <span>➔</span></div>
@@ -257,6 +313,10 @@
           <!-- NETWORK SECTION -->
           <div class="dash-section-title" style="color:#10b981;">🌐 Genel Ağ (Network) Araçları</div>
           <div class="dash-grid">
+            <div class="dash-card" onclick="showPanel('nat')">
+              <div class="dash-card-title">Dynamic NAT & PAT Sim <span>➔</span></div>
+              <div class="dash-card-desc">Dinamik NAT ve PAT (Overload) çevrimlerini simüle eder, dönüştürme tablosunu canlı yönetir.</div>
+            </div>
             <div class="dash-card" onclick="showPanel('canvas')">
               <div class="dash-card-title">Topology Canvas (Advanced) <span>➔</span></div>
               <div class="dash-card-desc">Özel konfigürasyonlar, dinamik bağlantı modları ve PNG/JSON çıktı alma destekli çizim alanı.</div>
@@ -276,6 +336,240 @@
             <div class="dash-card" onclick="showPanel('ipsec')">
               <div class="dash-card-title">IPSec MSS Calc <span>➔</span></div>
               <div class="dash-card-desc">GRE ve IPSec tünelleme protokollerinde paketin parçalanmaması için ideal TCP MSS değerini bulur.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. SIP LOG PARSER & CALL FLOW VISUALIZER PANEL -->
+        <div id="panel-sip-parser" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🔍 SIP Log Parser & Call Flow Visualizer</div>
+              <div class="panel-desc">Ham SIP loglarınızı yapıştırın veya örnek log yükleyerek interaktif sinyalleşme şemasını (Sequence Diagram) çıkarın.</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button onclick="loadSampleSipLog()" class="btn btn-secondary">Örnek Log Yükle</button>
+              <button onclick="parseSipLogs()" class="btn">🚀 Ayrıştır ve Şema Çıkar</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="form-group">
+                <label>Ham SIP Trace / Trace Log Metni</label>
+                <textarea id="sip-raw-input" rows="18" placeholder="SIP paket metinlerini buraya yapıştırın..."></textarea>
+              </div>
+            </div>
+
+            <div>
+              <label>Arayan & Aranan Sinyalleşme Şeması (Call Flow Sequence)</label>
+              <div class="seq-diagram-box" id="seq-diagram-container">
+                <div style="text-align:center; color:#64748b; margin-auto:0;">Log ayrıştırması bekleniyor...</div>
+              </div>
+
+              <div class="result-box" id="seq-details-box" style="margin-top:10px; min-height:80px;">
+                <div style="color:#64748b;">Şemadaki bir mesajın detaylarını görmek için üzerine tıklayın.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. CDR ANALYTICS & BILLING DASHBOARD PANEL -->
+        <div id="panel-cdr-analytics" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">📊 CDR (Call Detail Record) Analytics & Billing Dashboard</div>
+              <div class="panel-desc">Çağrı detay kayıtlarını analiz edin, ASR/ACD metriklerini ve maliyet raporlarını görüntüleyin.</div>
+            </div>
+            <button onclick="loadSampleCDR()" class="btn btn-secondary">Örnek CDR Verisi Yükle</button>
+          </div>
+
+          <!-- KPI METRICS -->
+          <div class="cdr-kpi-grid">
+            <div class="cdr-kpi-card">
+              <label>Toplam Çağrı</label>
+              <div class="cdr-kpi-val" id="cdr-total-calls">0</div>
+            </div>
+            <div class="cdr-kpi-card">
+              <label>Başarılı (Answered)</label>
+              <div class="cdr-kpi-val green" id="cdr-answered-calls">0</div>
+            </div>
+            <div class="cdr-kpi-card">
+              <label>ASR (%)</label>
+              <div class="cdr-kpi-val" style="color:#f59e0b;" id="cdr-asr-val">0%</div>
+            </div>
+            <div class="cdr-kpi-card">
+              <label>Ort. Süre (ACD)</label>
+              <div class="cdr-kpi-val" id="cdr-acd-val">0s</div>
+            </div>
+            <div class="cdr-kpi-card">
+              <label>Toplam Maliyet</label>
+              <div class="cdr-kpi-val green" id="cdr-cost-val">$0.00</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 2fr 1fr; gap:16px;">
+            <div>
+              <label>Çağrı Kayıt Tablosu (CDR Table)</label>
+              <div style="max-height: 280px; overflow-y: auto; background: #03050c; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;">
+                <table class="nat-table">
+                  <thead>
+                    <tr>
+                      <th>Arayan (From)</th>
+                      <th>Aranan (To)</th>
+                      <th>Süre (sn)</th>
+                      <th>Durum</th>
+                      <th>Maliyet ($)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cdr-table-body">
+                    <tr><td colspan="5" style="text-align:center; color:#64748b;">Henüz CDR verisi işlenmedi.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <label>Çağrı Sonlanma Durum Dağılımı</label>
+              <div class="result-box" id="cdr-status-summary" style="height:280px; display:flex; flex-direction:column; justify-content:center; gap:8px;">
+                <div style="color:#64748b; text-align:center;">CDR analizi bekleniyor...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DYNAMIC NAT & PAT SIMULATOR PANEL -->
+        <div id="panel-nat" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🔀 Dynamic NAT & PAT (Port Address Translation) Simulator</div>
+              <div class="panel-desc">Yerel ağdan gelen paketlerin Dış/Kamusal IP ve Port adreslerine çevrimini canlı simüle edin.</div>
+            </div>
+            <div>
+              <button onclick="clearNatTable()" class="btn btn-danger">Tabloyu Sıfırla</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="form-group">
+                <label>NAT Modu</label>
+                <select id="nat-mode">
+                  <option value="pat">PAT (Port Address Translation / Overload)</option>
+                  <option value="dynamic">Dynamic NAT (Pool Adres Tüketimi)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>İç Yerel IP (Inside Local IP)</label>
+                <input type="text" id="nat-inside-ip" value="192.168.1.50">
+              </div>
+              <div class="form-group">
+                <label>İç Yerel Port (Inside Local Port)</label>
+                <input type="number" id="nat-inside-port" value="49152">
+              </div>
+              <div class="form-group">
+                <label>Dış Hedef IP (Outside Global IP)</label>
+                <input type="text" id="nat-outside-ip" value="8.8.8.8">
+              </div>
+              <div class="form-group">
+                <label>Dış Hedef Port (Outside Global Port)</label>
+                <input type="number" id="nat-outside-port" value="80">
+              </div>
+              <div class="form-group">
+                <label>NAT IP Havuzu (Dynamic NAT için Public Pool)</label>
+                <input type="text" id="nat-pool" value="203.0.113.10-203.0.113.12">
+              </div>
+              <button onclick="sendNatPacket()" class="btn" style="width:100%; margin-top:8px;">🚀 Paket Gönder (Translate)</button>
+            </div>
+
+            <div>
+              <label>NAT Dönüştürme Tablosu (Translation Table)</label>
+              <div style="max-height: 320px; overflow-y: auto; background: #03050c; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;">
+                <table class="nat-table">
+                  <thead>
+                    <tr>
+                      <th>Proto</th>
+                      <th>Inside Local</th>
+                      <th>Inside Global</th>
+                      <th>Outside Global</th>
+                    </tr>
+                  </thead>
+                  <tbody id="nat-table-body">
+                    <tr><td colspan="4" style="text-align:center; color:#64748b;">Henüz bir NAT çevrimi gerçekleşmedi.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="result-box" id="nat-log-out" style="margin-top:10px; min-height:80px;">
+                <div style="color:#64748b;">Simülasyon günlüğü burada gösterilecektir.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WEBRTC / SIP SOFTPHONE PANEL -->
+        <div id="panel-softphone" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">📱 Interactive WebRTC / SIP Softphone Simulator</div>
+              <div class="panel-desc">Gerçek zamanlı DTMF ses tonları, canlı SIP sinyalleşme logları ve Web Audio osiloskopu.</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button onclick="toggleSipRegister()" id="btn-sip-reg" class="btn" style="background:#10b981; color:#000;">REGISTER (REGISTERED)</button>
+            </div>
+          </div>
+
+          <div class="softphone-layout">
+            <!-- SOFTPHONE DEVICE -->
+            <div class="phone-device">
+              <div class="phone-screen">
+                <div class="phone-status" id="sp-status-text">REGISTERED — EXT 1001</div>
+                <div class="phone-display-num" id="sp-display"></div>
+                <div class="phone-timer" id="sp-timer">00:00</div>
+              </div>
+
+              <!-- KEYPAD -->
+              <div class="phone-keypad">
+                <button class="key-btn" onclick="pressKey('1')">1<span class="key-sub">. / @</span></button>
+                <button class="key-btn" onclick="pressKey('2')">2<span class="key-sub">ABC</span></button>
+                <button class="key-btn" onclick="pressKey('3')">3<span class="key-sub">DEF</span></button>
+                <button class="key-btn" onclick="pressKey('4')">4<span class="key-sub">GHI</span></button>
+                <button class="key-btn" onclick="pressKey('5')">5<span class="key-sub">JKL</span></button>
+                <button class="key-btn" onclick="pressKey('6')">6<span class="key-sub">MNO</span></button>
+                <button class="key-btn" onclick="pressKey('7')">7<span class="key-sub">PQRS</span></button>
+                <button class="key-btn" onclick="pressKey('8')">8<span class="key-sub">TUV</span></button>
+                <button class="key-btn" onclick="pressKey('9')">9<span class="key-sub">WXYZ</span></button>
+                <button class="key-btn" onclick="pressKey('*')">*<span class="key-sub">⚙️</span></button>
+                <button class="key-btn" onclick="pressKey('0')">0<span class="key-sub">+</span></button>
+                <button class="key-btn" onclick="pressKey('#')">#<span class="key-sub">⌗</span></button>
+              </div>
+
+              <!-- CONTROLS -->
+              <div class="phone-controls">
+                <button class="btn-call" onclick="startCall()">📞 ARAMA (CALL)</button>
+                <button class="btn-hangup" onclick="endCall()">🔴 KAPAT (HANGUP)</button>
+              </div>
+
+              <!-- FEATURES -->
+              <div class="phone-features">
+                <button class="btn-feat" id="btn-sp-mute" onclick="toggleMute()">MUTE</button>
+                <button class="btn-feat" id="btn-sp-hold" onclick="toggleHold()">HOLD</button>
+                <button class="btn-feat" onclick="backspaceKey()">⌫ DEL</button>
+              </div>
+            </div>
+
+            <!-- SIP LOGS & AUDIO VISUALIZER -->
+            <div class="sip-console">
+              <div>
+                <label>RTP Live Audio Stream Waveform (Web Audio Oscilloscope)</label>
+                <canvas id="sp-audio-canvas" class="audio-vis"></canvas>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label style="margin:0;">Real-Time SIP Signaling Trace (UDP/5060)</label>
+                  <button class="btn btn-secondary" onclick="clearSipLogs()" style="padding:2px 6px; font-size:9px;">Temizle</button>
+                </div>
+                <div class="sip-log-box" id="sip-log-container"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -481,41 +775,6 @@ dial-peer voice 200 voip
           </div>
         </div>
 
-        <!-- CODEC CALCULATOR -->
-        <div id="panel-cucm-codec" class="panel">
-          <div class="panel-header"><div class="panel-title">VoIP Bandwidth & Codec Calculator</div></div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-            <div class="form-group">
-              <label>Codec Seçin</label>
-              <select id="codec-type" onchange="calcCodec()">
-                <option value="g711">G.711 (64 Kbps Uncompressed)</option>
-                <option value="g729">G.729 (8 Kbps Compressed)</option>
-                <option value="g722">G.722 (64 Kbps HD Voice)</option>
-              </select>
-            </div>
-            <div class="form-group"><label>Eşzamanlı Çağrı Sayısı</label><input type="number" id="codec-calls" value="10" oninput="calcCodec()"></div>
-          </div>
-          <div class="result-box" id="codec-out"></div>
-        </div>
-
-        <!-- DIAL PLAN ENGINE -->
-        <div id="panel-cucm-dial" class="panel">
-          <div class="panel-header"><div class="panel-title">Cisco Dial Plan & Digit Manipulator</div></div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-            <div class="form-group"><label>Aranan Numara (Called Number)</label><input type="text" id="dial-num" value="902125551234"></div>
-            <div class="form-group">
-              <label>Discard Digits</label>
-              <select id="dial-discard">
-                <option value="pre">PreDot (9. Atılır)</option>
-                <option value="none">Yok (Tüm Numarayı Gönder)</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group"><label>Prefix Digits Outbound</label><input type="text" id="dial-prefix" value="+90"></div>
-          <button onclick="calcDial()" class="btn">Simüle Et</button>
-          <div class="result-box" id="dial-out"></div>
-        </div>
-
         <!-- CUCM CLI REFERENCE -->
         <div id="panel-cucm-cli" class="panel">
           <div class="panel-header"><div class="panel-title">CUCM OS CLI Quick Reference Guide</div></div>
@@ -651,7 +910,7 @@ dial-peer voice 200 voip
     <div id="cli-logs"></div>
     <div class="cli-input-wrapper">
       <span class="cli-prompt">admin@zeropacket:~#</span>
-      <input type="text" id="cli-in" onkeydown="runCLI(event)" placeholder="komut girin (örn: show status, show ip route, ping 10.0.0.1, help)">
+      <input type="text" id="cli-in" onkeydown="runCLI(event)" placeholder="komut girin (örn: show status, show ip nat translations, show ip route, ping 10.0.0.1, help)">
     </div>
   </footer>
 
@@ -670,7 +929,7 @@ dial-peer voice 200 voip
       const steps = [
         { p: 25, m: "Initializing ZeroPacket Kernel..." },
         { p: 55, m: "Loading CUCM Telephony & Route Engines..." },
-        { p: 85, m: "Building Interactive Topologies..." },
+        { p: 85, m: "Building Interactive Topologies & NAT Engine..." },
         { p: 100, m: "System Ready!" }
       ];
 
@@ -711,6 +970,550 @@ dial-peer voice 200 voip
       document.getElementById('cucm-sec-pipeline').style.display = tabName === 'pipeline' ? 'block' : 'none';
       document.getElementById('cucm-sec-siptrunk').style.display = tabName === 'siptrunk' ? 'block' : 'none';
       document.getElementById('cucm-sec-reg').style.display = tabName === 'reg' ? 'block' : 'none';
+    }
+
+    // 1. SIP LOG PARSER ENGINE
+    let parsedSipMessages = [];
+
+    function loadSampleSipLog() {
+      const sample = 
+`INVITE sip:2002@10.10.10.12 SIP/2.0
+Via: SIP/2.0/UDP 10.10.20.101:5060;branch=z9hG4bK776asdhds
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>
+Call-ID: c303912a@10.10.20.101
+CSeq: 101 INVITE
+Content-Type: application/sdp
+
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP 10.10.20.101:5060;branch=z9hG4bK776asdhds
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>
+Call-ID: c303912a@10.10.20.101
+CSeq: 101 INVITE
+
+SIP/2.0 180 Ringing
+Via: SIP/2.0/UDP 10.10.20.101:5060;branch=z9hG4bK776asdhds
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>;tag=98765
+Call-ID: c303912a@10.10.20.101
+CSeq: 101 INVITE
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 10.10.20.101:5060;branch=z9hG4bK776asdhds
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>;tag=98765
+Call-ID: c303912a@10.10.20.101
+CSeq: 101 INVITE
+Content-Type: application/sdp
+
+ACK sip:2002@10.10.10.12 SIP/2.0
+Via: SIP/2.0/UDP 10.10.20.101:5060;branch=z9hG4bK776asdhds2
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>;tag=98765
+Call-ID: c303912a@10.10.20.101
+CSeq: 102 ACK
+
+BYE sip:2002@10.10.10.12 SIP/2.0
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>;tag=98765
+Call-ID: c303912a@10.10.20.101
+CSeq: 103 BYE
+
+SIP/2.0 200 OK
+From: <sip:1001@10.10.20.101>;tag=12345
+To: <sip:2002@10.10.10.12>;tag=98765
+Call-ID: c303912a@10.10.20.101
+CSeq: 103 BYE`;
+
+      document.getElementById('sip-raw-input').value = sample;
+      parseSipLogs();
+    }
+
+    function parseSipLogs() {
+      const rawText = document.getElementById('sip-raw-input').value.trim();
+      if (!rawText) {
+        alert('Lütfen ayrıştırılacak ham SIP log verisi girin.');
+        return;
+      }
+
+      const blocks = rawText.split(/\n\s*\n/);
+      parsedSipMessages = [];
+      const hostsSet = new Set(['10.10.20.101', '10.10.10.12']);
+
+      blocks.forEach((blk, idx) => {
+        const lines = blk.split('\n');
+        const firstLine = lines[0] ? lines[0].trim() : '';
+        if (!firstLine) return;
+
+        let methodOrCode = firstLine;
+        let isReverse = firstLine.startsWith('SIP/2.0');
+        
+        parsedSipMessages.push({
+          id: idx,
+          firstLine: firstLine,
+          fullText: blk,
+          isReverse: isReverse,
+          fromHost: isReverse ? '10.10.10.12' : '10.10.20.101',
+          toHost: isReverse ? '10.10.20.101' : '10.10.10.12'
+        });
+      });
+
+      renderSequenceDiagram(Array.from(hostsSet));
+    }
+
+    function renderSequenceDiagram(hosts) {
+      const container = document.getElementById('seq-diagram-container');
+      if (parsedSipMessages.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:#64748b;">Ayrıştırılabilir SIP mesajı bulunamadı.</div>`;
+        return;
+      }
+
+      let html = `<div class="seq-hosts">`;
+      hosts.forEach(h => {
+        html += `<div class="seq-host-tag">${h}</div>`;
+      });
+      html += `</div>`;
+
+      parsedSipMessages.forEach((msg, idx) => {
+        const arrowClass = msg.isReverse ? 'seq-arrow-line reverse' : 'seq-arrow-line';
+        html += `
+          <div class="seq-step" onclick="showSipDetails(${idx})">
+            <div class="${arrowClass}"></div>
+            <div class="seq-label">${msg.firstLine}</div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      showSipDetails(0);
+    }
+
+    function showSipDetails(idx) {
+      const msg = parsedSipMessages[idx];
+      if (!msg) return;
+
+      document.getElementById('seq-details-box').innerHTML = `
+        <div style="color:#00f0ff; font-weight:bold; margin-bottom:6px;">Sinyalleşme İnceleyici — [Adım #${idx + 1}]</div>
+        <div class="res-row"><span class="res-label">Gönderen (From):</span><span class="res-val amber">${msg.fromHost}</span></div>
+        <div class="res-row"><span class="res-label">Alıcı (To):</span><span class="res-val green">${msg.toHost}</span></div>
+        <div style="margin-top:8px;">
+          <label>Ham SIP Header:</label>
+          <pre style="background:#03050c; border:1px solid rgba(255,255,255,0.08); padding:8px; border-radius:6px; color:#cbd5e1; max-height:120px; overflow-y:auto; margin-top:4px;">${msg.fullText}</pre>
+        </div>
+      `;
+    }
+
+    // 3. CDR ANALYTICS ENGINE
+    function loadSampleCDR() {
+      const sampleCDRData = [
+        { from: '1001', to: '2002', duration: 145, status: 'ANSWERED', cost: 0.29 },
+        { from: '1001', to: '2005', duration: 0, status: 'BUSY', cost: 0.00 },
+        { from: '1003', to: '902125551234', duration: 320, status: 'ANSWERED', cost: 0.96 },
+        { from: '1002', to: '2002', duration: 0, status: 'NO ANSWER', cost: 0.00 },
+        { from: '1004', to: '905321234567', duration: 45, status: 'ANSWERED', cost: 0.45 },
+        { from: '1001', to: '2003', duration: 0, status: 'FAILED', cost: 0.00 },
+        { from: '1005', to: '1001', duration: 210, status: 'ANSWERED', cost: 0.42 }
+      ];
+
+      renderCDRAnalytics(sampleCDRData);
+    }
+
+    function renderCDRAnalytics(data) {
+      const totalCalls = data.length;
+      const answeredCalls = data.filter(d => d.status === 'ANSWERED').length;
+      const asr = totalCalls > 0 ? ((answeredCalls / totalCalls) * 100).toFixed(1) : 0;
+      
+      const totalSecs = data.reduce((acc, curr) => acc + curr.duration, 0);
+      const acd = answeredCalls > 0 ? Math.round(totalSecs / answeredCalls) : 0;
+      
+      const totalCost = data.reduce((acc, curr) => acc + curr.cost, 0).toFixed(2);
+
+      // KPI Set
+      document.getElementById('cdr-total-calls').innerText = totalCalls;
+      document.getElementById('cdr-answered-calls').innerText = answeredCalls;
+      document.getElementById('cdr-asr-val').innerText = `${asr}%`;
+      document.getElementById('cdr-acd-val').innerText = `${acd}s`;
+      document.getElementById('cdr-cost-val').innerText = `$${totalCost}`;
+
+      // Table Render
+      const tbody = document.getElementById('cdr-table-body');
+      let html = '';
+      data.forEach(r => {
+        let statusColor = r.status === 'ANSWERED' ? '#10b981' : '#f43f5e';
+        if (r.status === 'BUSY') statusColor = '#f59e0b';
+
+        html += `
+          <tr>
+            <td>${r.from}</td>
+            <td>${r.to}</td>
+            <td>${r.duration}s</td>
+            <td style="color:${statusColor}; font-weight:bold;">${r.status}</td>
+            <td style="color:#00f0ff;">$${r.cost.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+
+      // Status Summary
+      const counts = {};
+      data.forEach(r => { counts[r.status] = (counts[r.status] || 0) + 1; });
+
+      let sumHtml = '<div style="color:#00f0ff; font-weight:bold; margin-bottom:8px;">Durum Kodu Özeti:</div>';
+      for (const [st, cnt] of Object.entries(counts)) {
+        const pct = ((cnt / totalCalls) * 100).toFixed(1);
+        sumHtml += `
+          <div class="res-row">
+            <span class="res-label">${st}:</span>
+            <span class="res-val">${cnt} (${pct}%)</span>
+          </div>
+        `;
+      }
+      document.getElementById('cdr-status-summary').innerHTML = sumHtml;
+    }
+
+    // DYNAMIC NAT & PAT SIMULATOR ENGINE
+    let natTable = [];
+    let patPortCounter = 10000;
+    let poolIndex = 0;
+
+    function sendNatPacket() {
+      const mode = document.getElementById('nat-mode').value;
+      const inIp = document.getElementById('nat-inside-ip').value.trim();
+      const inPort = document.getElementById('nat-inside-port').value.trim();
+      const outIp = document.getElementById('nat-outside-ip').value.trim();
+      const outPort = document.getElementById('nat-outside-port').value.trim();
+      const poolStr = document.getElementById('nat-pool').value.trim();
+
+      const insideLocal = `${inIp}:${inPort}`;
+      const outsideGlobal = `${outIp}:${outPort}`;
+      let insideGlobal = "";
+      let logMsg = "";
+
+      if (mode === 'pat') {
+        const existing = natTable.find(t => t.insideLocal === insideLocal && t.outsideGlobal === outsideGlobal);
+        if (existing) {
+          insideGlobal = existing.insideGlobal;
+          logMsg = `[PAT REUSE] Var olan PAT eşleşmesi kullanıldı: ${insideLocal} -> ${insideGlobal}`;
+        } else {
+          const publicIp = poolStr.split('-')[0] || "203.0.113.1";
+          const assignedPort = patPortCounter++;
+          insideGlobal = `${publicIp}:${assignedPort}`;
+          natTable.push({ proto: "tcp", insideLocal, insideGlobal, outsideGlobal });
+          logMsg = `[PAT SUCCESS] Yeni Port Çevrimi: ${insideLocal} -> ${insideGlobal} (Destination: ${outsideGlobal})`;
+        }
+      } else { // Dynamic NAT
+        const existing = natTable.find(t => t.insideLocal === insideLocal);
+        if (existing) {
+          insideGlobal = existing.insideGlobal;
+          logMsg = `[DYNAMIC NAT REUSE] Cihazın aktif 1:1 NAT IP kiralama durumu mevcut: ${insideLocal} -> ${insideGlobal}`;
+        } else {
+          let poolIps = [];
+          if (poolStr.includes('-')) {
+            const [startIp, endIp] = poolStr.split('-');
+            const startOcts = startIp.split('.');
+            const startNum = parseInt(startOcts[3]);
+            const endNum = parseInt(endIp.split('.')[3]);
+            const prefix = startOcts.slice(0, 3).join('.');
+            for (let i = startNum; i <= endNum; i++) poolIps.push(`${prefix}.${i}`);
+          } else {
+            poolIps = [poolStr];
+          }
+
+          if (poolIndex < poolIps.length) {
+            const assignedIp = poolIps[poolIndex++];
+            insideGlobal = `${assignedIp}:${inPort}`;
+            natTable.push({ proto: "ip", insideLocal, insideGlobal, outsideGlobal });
+            logMsg = `[DYNAMIC NAT SUCCESS] IP Havuzundan IP Tahsis Edildi: ${insideLocal} -> ${insideGlobal}`;
+          } else {
+            logMsg = `<span style="color:#ef4444;">[NAT DROP] HATA: Dynamic NAT havuzundaki tüm IP adresleri tükendi! Paket düşürüldü.</span>`;
+            document.getElementById('nat-log-out').innerHTML = logMsg;
+            return;
+          }
+        }
+      }
+
+      renderNatTable();
+      document.getElementById('nat-log-out').innerHTML = `<div style="color:#10b981;">${logMsg}</div>`;
+    }
+
+    function renderNatTable() {
+      const tbody = document.getElementById('nat-table-body');
+      if (natTable.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b;">Henüz bir NAT çevrimi gerçekleşmedi.</td></tr>`;
+        return;
+      }
+
+      let html = "";
+      natTable.forEach(row => {
+        html += `
+          <tr>
+            <td style="color:#f59e0b;">${row.proto.toUpperCase()}</td>
+            <td style="color:#94a3b8;">${row.insideLocal}</td>
+            <td style="color:#00f0ff; font-weight:bold;">${row.insideGlobal}</td>
+            <td style="color:#10b981;">${row.outsideGlobal}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function clearNatTable() {
+      natTable = [];
+      patPortCounter = 10000;
+      poolIndex = 0;
+      renderNatTable();
+      document.getElementById('nat-log-out').innerHTML = `<div style="color:#64748b;">NAT ve PAT dönüştürme tablosu temizlendi.</div>`;
+    }
+
+    // WEBRTC & SIP SOFTPHONE ENGINE
+    let isRegistered = true;
+    let callState = 'IDLE'; // IDLE, DIALING, RINGING, CONNECTED, HELD
+    let callTimerInterval = null;
+    let callSeconds = 0;
+    let isMuted = false;
+    let audioCtx = null;
+
+    const dtmfFrequencies = {
+      '1': [697, 1209], '2': [697, 1336], '3': [697, 1477],
+      '4': [770, 1209], '5': [770, 1336], '6': [770, 1477],
+      '7': [852, 1209], '8': [852, 1336], '9': [852, 1477],
+      '*': [941, 1209], '0': [941, 1336], '#': [941, 1477]
+    };
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        initAudioVisualizer();
+      }
+    }
+
+    function playDtmfTone(key) {
+      initAudioContext();
+      if (!dtmfFrequencies[key]) return;
+
+      const freqs = dtmfFrequencies[key];
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc1.frequency.value = freqs[0];
+      osc2.frequency.value = freqs[1];
+
+      gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc1.start();
+      osc2.start();
+      osc1.stop(audioCtx.currentTime + 0.15);
+      osc2.stop(audioCtx.currentTime + 0.15);
+    }
+
+    function pressKey(key) {
+      playDtmfTone(key);
+      const disp = document.getElementById('sp-display');
+      if (callState === 'IDLE' || callState === 'DIALING') {
+        disp.innerText += key;
+      } else if (callState === 'CONNECTED') {
+        logSipMessage(`INFO sip:1001@cucm-pub.local SIP/2.0\r\nSignal=${key}\r\nDuration=160`, 'tx');
+      }
+    }
+
+    function backspaceKey() {
+      const disp = document.getElementById('sp-display');
+      disp.innerText = disp.innerText.slice(0, -1);
+    }
+
+    function toggleSipRegister() {
+      const btn = document.getElementById('btn-sip-reg');
+      const statusText = document.getElementById('sp-status-text');
+      if (isRegistered) {
+        isRegistered = false;
+        btn.style.background = '#f43f5e';
+        btn.style.color = '#fff';
+        btn.innerText = 'UNREGISTERED';
+        statusText.innerText = 'OFFLINE — NO SERVICE';
+        statusText.style.color = '#f43f5e';
+        logSipMessage('REGISTER sip:cucm-pub.local SIP/2.0\r\nExpires: 0', 'tx');
+        logSipMessage('SIP/2.0 200 OK (Unregistered)', 'rx');
+        if (callState !== 'IDLE') endCall();
+      } else {
+        isRegistered = true;
+        btn.style.background = '#10b981';
+        btn.style.color = '#000';
+        btn.innerText = 'REGISTER (REGISTERED)';
+        statusText.innerText = 'REGISTERED — EXT 1001';
+        statusText.style.color = '#10b981';
+        logSipMessage('REGISTER sip:cucm-pub.local SIP/2.0\r\nContact: <sip:1001@10.10.20.101:5060>', 'tx');
+        logSipMessage('SIP/2.0 200 OK\r\nRegistered Extensions: 1001', 'rx');
+      }
+    }
+
+    function startCall() {
+      if (!isRegistered) {
+        alert('Telefon CUCM sunucusuna kayıtlı değil!');
+        return;
+      }
+      const target = document.getElementById('sp-display').innerText.trim();
+      if (!target) {
+        alert('Lütfen aranacak numarayı girin.');
+        return;
+      }
+
+      callState = 'DIALING';
+      document.getElementById('sp-status-text').innerText = 'CALLING ' + target + '...';
+      document.getElementById('sp-status-text').style.color = '#f59e0b';
+
+      logSipMessage(`INVITE sip:${target}@10.10.10.12 SIP/2.0\r\nFrom: <sip:1001@cucm>\r\nTo: <sip:${target}>\r\nContent-Type: application/sdp\r\n\r\nv=0\r\no=ZeroPacket 1234 5678 IN IP4 10.10.20.101\r\nm=audio 16400 RTP/AVP 0 101`, 'tx');
+
+      setTimeout(() => {
+        if (callState !== 'DIALING') return;
+        logSipMessage('SIP/2.0 100 Trying', 'rx');
+      }, 300);
+
+      setTimeout(() => {
+        if (callState !== 'DIALING') return;
+        logSipMessage('SIP/2.0 180 Ringing', 'rx');
+        document.getElementById('sp-status-text').innerText = 'RINGING...';
+      }, 800);
+
+      setTimeout(() => {
+        if (callState !== 'DIALING') return;
+        logSipMessage('SIP/2.0 200 OK (SDP Answer: G.711u / RTP active)', 'rx');
+        logSipMessage(`ACK sip:${target}@10.10.10.12 SIP/2.0`, 'tx');
+        
+        callState = 'CONNECTED';
+        document.getElementById('sp-status-text').innerText = 'CONNECTED — ' + target;
+        document.getElementById('sp-status-text').style.color = '#10b981';
+        
+        callSeconds = 0;
+        clearInterval(callTimerInterval);
+        callTimerInterval = setInterval(() => {
+          callSeconds++;
+          const m = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+          const s = String(callSeconds % 60).padStart(2, '0');
+          document.getElementById('sp-timer').innerText = `${m}:${s}`;
+        }, 1000);
+      }, 2000);
+    }
+
+    function endCall() {
+      if (callState === 'IDLE') return;
+      
+      const target = document.getElementById('sp-display').innerText.trim();
+      if (callState === 'CONNECTED' || callState === 'HELD') {
+        logSipMessage(`BYE sip:${target}@10.10.10.12 SIP/2.0`, 'tx');
+        logSipMessage('SIP/2.0 200 OK', 'rx');
+      } else {
+        logSipMessage(`CANCEL sip:${target}@10.10.10.12 SIP/2.0`, 'tx');
+        logSipMessage('SIP/2.0 200 OK', 'rx');
+      }
+
+      callState = 'IDLE';
+      clearInterval(callTimerInterval);
+      document.getElementById('sp-timer').innerText = '00:00';
+      document.getElementById('sp-status-text').innerText = isRegistered ? 'REGISTERED — EXT 1001' : 'OFFLINE';
+      document.getElementById('sp-status-text').style.color = isRegistered ? '#10b981' : '#f43f5e';
+      
+      isMuted = false;
+      document.getElementById('btn-sp-mute').classList.remove('active');
+      document.getElementById('btn-sp-hold').classList.remove('active');
+    }
+
+    function toggleMute() {
+      if (callState !== 'CONNECTED') return;
+      isMuted = !isMuted;
+      const btn = document.getElementById('btn-sp-mute');
+      btn.classList.toggle('active', isMuted);
+      logSipMessage(isMuted ? 'INFO (Audio Stream Muted / Local Mic Off)' : 'INFO (Audio Stream Unmuted)', 'info');
+    }
+
+    function toggleHold() {
+      if (callState !== 'CONNECTED' && callState !== 'HELD') return;
+      const btn = document.getElementById('btn-sp-hold');
+      const target = document.getElementById('sp-display').innerText.trim();
+      
+      if (callState === 'CONNECTED') {
+        callState = 'HELD';
+        btn.classList.add('active');
+        document.getElementById('sp-status-text').innerText = 'ON HOLD — ' + target;
+        document.getElementById('sp-status-text').style.color = '#f59e0b';
+        logSipMessage(`INVITE sip:${target}@10.10.10.12 SIP/2.0\r\na=sendonly (Call Hold)`, 'tx');
+        logSipMessage('SIP/2.0 200 OK (Held)', 'rx');
+      } else {
+        callState = 'CONNECTED';
+        btn.classList.remove('active');
+        document.getElementById('sp-status-text').innerText = 'CONNECTED — ' + target;
+        document.getElementById('sp-status-text').style.color = '#10b981';
+        logSipMessage(`INVITE sip:${target}@10.10.10.12 SIP/2.0\r\na=sendrecv (Call Resume)`, 'tx');
+        logSipMessage('SIP/2.0 200 OK (Resumed)', 'rx');
+      }
+    }
+
+    function logSipMessage(msg, type = 'tx') {
+      const box = document.getElementById('sip-log-container');
+      const time = new Date().toLocaleTimeString();
+      let colorClass = 'sip-msg-tx';
+      let prefix = '▲ [TX] ';
+      
+      if (type === 'rx') { colorClass = 'sip-msg-rx'; prefix = '▼ [RX] '; }
+      if (type === 'info') { colorClass = 'sip-msg-info'; prefix = 'ℹ [SYS] '; }
+
+      const div = document.createElement('div');
+      div.className = colorClass;
+      div.style.marginBottom = '6px';
+      div.style.borderBottom = '1px dashed rgba(255,255,255,0.05)';
+      div.style.paddingBottom = '4px';
+      div.innerText = `[${time}] ${prefix}\n${msg}`;
+
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function clearSipLogs() {
+      document.getElementById('sip-log-container').innerHTML = '';
+    }
+
+    function initAudioVisualizer() {
+      const canvas = document.getElementById('sp-audio-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      let step = 0;
+      function drawWave() {
+        requestAnimationFrame(drawWave);
+        ctx.fillStyle = '#03050c';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.beginPath();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = (callState === 'CONNECTED' && !isMuted) ? '#00f0ff' : '#1e293b';
+
+        const sliceWidth = canvas.width / 100;
+        let x = 0;
+
+        for (let i = 0; i < 100; i++) {
+          let y = canvas.height / 2;
+          if (callState === 'CONNECTED' && !isMuted) {
+            y += Math.sin(i * 0.2 + step) * (Math.random() * 8 + 4);
+          } else if (callState === 'DIALING' || callState === 'HELD') {
+            y += Math.sin(i * 0.1 + step) * 2;
+          }
+
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+          x += sliceWidth;
+        }
+
+        ctx.stroke();
+        step += 0.15;
+      }
+      drawWave();
     }
 
     // ADVANCED TOPOLOGY ENGINE
@@ -939,33 +1742,6 @@ dial-peer voice 200 voip
       reader.readAsText(file);
     }
 
-    // VOIP & CUCM FUNCTIONS
-    function calcCodec() {
-      const type = document.getElementById('codec-type').value;
-      const calls = parseInt(document.getElementById('codec-calls').value) || 1;
-      let singleBw = type === 'g729' ? 31.2 : 87.2;
-      const totalBw = (singleBw * calls).toFixed(1);
-      
-      document.getElementById('codec-out').innerHTML = `
-        <div class="res-row"><span class="res-label">Codec Tipi:</span><span class="res-val">${type.toUpperCase()}</span></div>
-        <div class="res-row"><span class="res-label">Tek Çağrı Yükü (L2-L4 Dahil):</span><span class="res-val amber">~${singleBw} Kbps</span></div>
-        <div class="res-row"><span class="res-label">Toplam Hat Hızı Gereksinimi:</span><span class="res-val green">${totalBw} Kbps (${(totalBw/1000).toFixed(2)} Mbps)</span></div>
-      `;
-    }
-
-    function calcDial() {
-      const num = document.getElementById('dial-num').value;
-      const discard = document.getElementById('dial-discard').value;
-      const prefix = document.getElementById('dial-prefix').value;
-      let processed = (discard === 'pre' && num.length > 1) ? num.substring(1) : num;
-
-      document.getElementById('dial-out').innerHTML = `
-        <div class="res-row"><span class="res-label">Gelen Numara:</span><span class="res-val">${num}</span></div>
-        <div class="res-row"><span class="res-label">Discard Sonrası:</span><span class="res-val amber">${processed}</span></div>
-        <div class="res-row"><span class="res-label">Outbound Sent Digits:</span><span class="res-val green">${prefix + processed}</span></div>
-      `;
-    }
-
     function calcQoS() {
       const v = document.getElementById('qos-val').value;
       let dscp = 46, cos = 5, desc = "Voice RTP Payload";
@@ -1136,18 +1912,20 @@ dial-peer voice 200 voip
       else if(oui.startsWith("000B82")) vendor = "Grandstream Networks";
 
       document.getElementById('mac-out').innerHTML = `
-        <div class="res-row"><span class="res-label">OUI Bloğu:</span><span class="res-val">${oui ? oui.match(/.{1,2}/g).join(':') : 'GEÇERSİZ'}</span></div>
-        <div class="res-row"><span class="res-label">Tespit Edilen Üretici:</span><span class="res-val green">${vendor}</span></div>
+        <div class="res-row"><span class="res-label">OUI Bloğu:</span><span class="res-val">${oui}</span></div>
+        <div class="res-row"><span class="res-label">Üretici / Vendor:</span><span class="res-val green">${vendor}</span></div>
       `;
     }
 
     function calcRTT() {
       const dist = parseFloat(document.getElementById('rtt-dist').value) || 0;
-      const oneWay = (dist / 200000) * 1000; 
+      const speedInFiber = 200000; // km/s
+      const oneWay = (dist / speedInFiber) * 1000; // ms
       const rtt = (oneWay * 2).toFixed(2);
 
       document.getElementById('rtt-out').innerHTML = `
-        <div class="res-row"><span class="res-label">Fiber Mesafesi:</span><span class="res-val">${dist} km</span></div>
+        <div class="res-row"><span class="res-label">Mesafe:</span><span class="res-val">${dist} km</span></div>
+        <div class="res-row"><span class="res-label">Tek Yön Gecikme:</span><span class="res-val amber">~${oneWay.toFixed(2)} ms</span></div>
         <div class="res-row"><span class="res-label">Tahmini RTT Latency:</span><span class="res-val green">~${rtt} ms</span></div>
       `;
     }
@@ -1155,192 +1933,52 @@ dial-peer voice 200 voip
     function calcWild() {
       const mask = document.getElementById('wild-val').value.trim();
       const octs = mask.split('.');
-      if(octs.length !== 4) { alert('Geçerli subnet mask girin'); return; }
+      if(octs.length !== 4) { alert('Geçersiz Maske!'); return; }
       const wild = octs.map(o => 255 - parseInt(o)).join('.');
 
       document.getElementById('wild-out').innerHTML = `
         <div class="res-row"><span class="res-label">Subnet Mask:</span><span class="res-val">${mask}</span></div>
-        <div class="res-row"><span class="res-label">Wildcard (Inverse) Mask:</span><span class="res-val green">${wild}</span></div>
+        <div class="res-row"><span class="res-label">Wildcard Mask:</span><span class="res-val green">${wild}</span></div>
       `;
     }
 
-    // ADVANCED CLI ENGINE WITH EXTENDED COMMANDS & DYNAMIC PARSER
-    const cliDatabase = {
-      // CUCM / CISCO VOS COMMANDS
-      "show status": `<span style="color:#94a3b8;">[CUCM Pub] Hostname: cucm-pub-01 | CPU: 14% | RAM: 4.8/16 GB | Disk /active: 42%</span>`,
-      "utils service list": `<span style="color:#94a3b8;">
-Cisco CallManager [STARTED]
-Cisco CTI Manager [STARTED]
-Cisco TFTP [STARTED]
-Cisco AXL Web Service [STARTED]
-Cisco Database Layer Monitor [STARTED]
-</span>`,
-      "show dbreplication runstatus": `<span style="color:#10b981;">
---------------------------------------------------------------------------------
-Cluster Replication State: 2 (GOOD - Out of Sync Check Completed)
-Pub (10.10.10.11): Active | Sub1 (10.10.10.12): Connected | Sub2 (10.10.10.13): Connected
-</span>`,
-      "show perfquery class \"cisco phones\"": `<span style="color:#00f0ff;">
-Number of Registered Phones: 1248
-Number of Unregistered Phones: 12
-Number of Rejected Phones: 0
-</span>`,
-      "utils ntp status": `<span style="color:#f59e0b;">
-ntpd status: synchronized to NTP Server (10.10.0.1), stratum 2
-time correct to within 12 ms, polling interval is 64 s
-</span>`,
-      "show network cluster": `<span style="color:#94a3b8;">
-10.10.10.11 cucm-pub.local Publisher authenticated
-10.10.10.12 cucm-sub1.local Subscriber authenticated using DB 10.10.10.11
-</span>`,
-      "utils core active list": `<span style="color:#10b981;">No core dump files found on active partition.</span>`,
-      "utils diagnose test": `<span style="color:#94a3b8;">
-[PASS] test_tomcat
-[PASS] test_ntp
-[PASS] test_disk_space
-[PASS] test_database_connectivity
-Diagnostics Complete: ALL TESTS PASSED.
-</span>`,
-
-      // NETWORK / CISCO IOS-XE COMMANDS
-      "show ip interface brief": `<span style="color:#cbd5e1;">
-Interface              IP-Address      OK? Method Status                Protocol
-GigabitEthernet0/0/0   10.0.0.1        YES NVRAM  up                    up      
-GigabitEthernet0/0/1   192.168.10.1    YES NVRAM  up                    up      
-GigabitEthernet0/0/2   unassigned      YES NVRAM  administratively down down    
-Vlan10                 10.10.10.254    YES NVRAM  up                    up      
-</span>`,
-      "show ip route": `<span style="color:#94a3b8;">
-Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP, D - EIGRP, O - OSPF
-Gateway of last resort is 10.0.0.254 to network 0.0.0.0
-
-S*    0.0.0.0/0 [1/0] via 10.0.0.254
-C     10.0.0.0/24 is directly connected, GigabitEthernet0/0/0
-O     172.16.0.0/16 [110/20] via 192.168.10.2, 01:42:12, GigabitEthernet0/0/1
-C     10.10.10.0/24 is directly connected, Vlan10
-</span>`,
-      "show cdp neighbors": `<span style="color:#cbd5e1;">
-Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
-Sw-Core-01       Gig 0/0/1         168        R S I       C9300-48P Gig 1/0/24
-CUBE-GW-01       Gig 0/0/0         145        R M         ISR4331   Gig 0/0/0
-SEP001122334455  Gig 0/0/3         120        H P         IP 8845   Port 1
-</span>`,
-      "show running-config": `<span style="color:#64748b;">! Running configuration truncated for brevity...
-hostname ZeroPacket-Core-RTR
-!
-voice service voip
- allow-connections sip to sip
- sip
-!
-interface GigabitEthernet0/0/0
- ip address 10.0.0.1 255.255.255.0
- negotiation auto
-!
-end</span>`,
-      "show version": `<span style="color:#00f0ff;">
-Cisco IOS XE Software, Version 17.09.04
-System image file is "bootflash:c1100-universalk9.17.09.04.SPA.bin"
-Uptime is 42 weeks, 3 days, 14 hours, 22 minutes
-</span>`,
-      "show bgp summary": `<span style="color:#94a3b8;">
-BGP router identifier 10.0.0.1, local AS number 64512
-BGP table version is 142, main routing table version 142
-
-Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
-192.168.10.2    4 64513   42103   42100      142    0    0 12w4d    24
-</span>`,
-      "show mac address-table": `<span style="color:#cbd5e1;">
-Mac Address Table
--------------------------------------------
-Vlan    Mac Address       Type        Ports
-----    -----------       --------    -----
-  10    0007.0e11.2233    DYNAMIC     Gi0/0/1
-  10    0011.2233.4455    DYNAMIC     Gi0/0/3
- 100    a44c.1122.3344    DYNAMIC     Gi0/0/2
-</span>`,
-      "show vlan brief": `<span style="color:#94a3b8;">
-VLAN Name                             Status    Ports
----- -------------------------------- --------- -------------------------------
-1    default                          active    Gi0/0/2
-10   VOIP_DATA                        active    Gi0/0/3, Gi0/0/4
-100  MANAGEMENT                       active    Gi0/0/1
-</span>`
-    };
-
+    // CLI TERMINAL ENGINE
     function runCLI(e) {
       if (e.key === 'Enter') {
-        const inp = document.getElementById('cli-in');
+        const input = document.getElementById('cli-in');
+        const cmd = input.value.trim().toLowerCase();
         const logs = document.getElementById('cli-logs');
-        const inputCmd = inp.value.trim();
-        
-        if (!inputCmd) return;
-        
-        if (inputCmd.toLowerCase() === 'clear') { 
-          logs.innerHTML = ''; 
-          inp.value = ''; 
-          return; 
-        }
-        
-        logs.innerHTML += `<div><span style="color:#00f0ff;">admin@zeropacket:~#</span> ${inputCmd}</div>`;
-        const cleanCmd = inputCmd.toLowerCase();
 
-        if (cleanCmd.startsWith("ping ")) {
-          const target = inputCmd.split(" ")[1] || "127.0.0.1";
-          logs.innerHTML += `<div style="color:#10b981;">
-Type escape sequence to abort.
-Sending 5, 100-byte ICMP Echos to ${target}, timeout is 2 seconds:
-!!!!!
-Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms
-</div>`;
-        } 
-        else if (cleanCmd.startsWith("traceroute ") || cleanCmd.startsWith("tracert ")) {
-          const target = inputCmd.split(" ")[1] || "8.8.8.8";
-          logs.innerHTML += `<div style="color:#f59e0b;">
-Tracing the route to ${target}
-  1  10.0.0.254 (10.0.0.254) 1.21 ms
-  2  192.168.10.1 (192.168.10.1) 4.15 ms
-  3  ${target} 12.44 ms
-Trace complete.
-</div>`;
-        }
-        else if (cleanCmd === 'help') {
-          logs.innerHTML += `<div style="color:#10b981; font-weight:bold; margin-top:4px;">[ AVAILABLE SYSTEM COMMANDS ]</div>
-<div style="color:#38edf8;">☎️ CUCM / Cisco VOS:</div>
-<div style="color:#cbd5e1; padding-left:10px;">
-show status, utils service list, show dbreplication runstatus,<br>
-show perfquery class "cisco phones", utils ntp status, show network cluster,<br>
-utils core active list, utils diagnose test
-</div>
-<div style="color:#10b981; margin-top:4px;">🌐 Network / IOS-XE:</div>
-<div style="color:#cbd5e1; padding-left:10px;">
-show ip interface brief, show ip route, show cdp neighbors,<br>
-show running-config, show version, show bgp summary,<br>
-show mac address-table, show vlan brief, ping &lt;ip&gt;, traceroute &lt;ip&gt;
-</div>
-<div style="color:#64748b; margin-top:4px;">Diğer: 'clear' (ekranı temizler)</div>`;
-        } 
-        else if (cliDatabase[cleanCmd]) {
-          logs.innerHTML += `<div>${cliDatabase[cleanCmd]}</div>`;
-        } 
-        else {
-          logs.innerHTML += `<div style="color:#f43f5e;">% Command not recognized or syntax error. Type '<span style="color:#00f0ff;">help</span>' for available commands.</div>`;
+        if (!cmd) return;
+
+        let res = "";
+        if (cmd === 'help') {
+          res = "Desteklenen komutlar: show status, show ip nat translations, show ip route, ping [ip], clear";
+        } else if (cmd === 'show status') {
+          res = "CUCM Cluster: OK | Publisher: 10.10.10.11 | Active Sub: 10.10.10.12 | CPU: 12% | RAM: 42%";
+        } else if (cmd === 'show ip nat translations') {
+          res = natTable.length > 0 ? JSON.stringify(natTable, null, 2) : "NAT tablosu boş.";
+        } else if (cmd === 'clear') {
+          logs.innerHTML = "";
+          input.value = "";
+          return;
+        } else {
+          res = `Komut anlaşılamadı: '${cmd}'. Yardım için 'help' yazın.`;
         }
 
+        const entry = document.createElement('div');
+        entry.innerHTML = `<span style="color:#00f0ff;">admin@zeropacket:~# ${cmd}</span><br><span style="color:#cbd5e1;">${res}</span>`;
+        logs.appendChild(entry);
         logs.scrollTop = logs.scrollHeight;
-        inp.value = '';
+        input.value = "";
       }
     }
 
-    // INIT ON LOAD
-    window.onload = () => {
+    // INIT
+    window.onload = function() {
       triggerIntro();
-      switchTopologyMode('cucm');
-      calcCodec();
-      calcDial();
       calcQoS();
-      calcSTP();
-      calcIPSec();
-      calcRTT();
+      switchTopologyMode('cucm');
     };
   </script>
 </body>
