@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARGUS_NET // REAL-TIME OSINT CENTER</title>
+
+<!-- Leaflet Harita Ana Kütüphanesi -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- FontAwesome - Simgeler İçin -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<!-- Satellite.js - Yörünge ve Anlık Konum Motoru -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.0.0/satellite.min.js"></script>
+
+<!-- 3D Globe (CesiumJS) Kütüphaneleri -->
+<script>window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/';</script>
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Cesium.js"></script>
+<link href="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+<!-- Modern Yazı Tipleri -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-main: #06080b;
+  --bg-panel: #0d1117;
+  --bg-card: #161b22;
+  --bg-card-hover: #1c2128;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(88, 166, 255, 0.4);
+
+  /* Minimal Taktik Renk Paleti */
+  --accent-blue: #58a6ff;
+  --accent-cyan: #39c5cf;
+  --tactical-red: #f85149;
+  --tactical-amber: #d29922;
+  --tactical-green: #3fb950;
+  
+  --text-main: #e6edf3;
+  --text-muted: #8b949e;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  margin: 0; padding: 0;
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* =========================================================
+   YENİ PROFESYONEL TAKTİKSEL INTRO / BOOT STİLLERİ
+   ========================================================= */
+#argus-boot-screen {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: #03060a; z-index: 9999;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  font-family: var(--font-mono); overflow: hidden;
+  user-select: none;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+}
+
+/* Taktiksel Izgara ve Scanline Efekti */
+#argus-boot-screen::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background-image: 
+    linear-gradient(rgba(57, 197, 207, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 197, 207, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px; z-index: 1; pointer-events: none;
+}
+
+#argus-boot-screen::after {
+  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(2, 4, 8, 0.85) 90%);
+  z-index: 2; pointer-events: none;
+}
+
+/* HUD Köşe Çerçeveleri */
+.hud-corner {
+  position: absolute; width: 24px; height: 24px;
+  border: 2px solid rgba(57, 197, 207, 0.4); z-index: 5; pointer-events: none;
+}
+.hud-corner.top-left { top: 25px; left: 25px; border-right: none; border-bottom: none; }
+.hud-corner.top-right { top: 25px; right: 25px; border-left: none; border-bottom: none; }
+.hud-corner.bottom-left { bottom: 25px; left: 25px; border-right: none; border-top: none; }
+.hud-corner.bottom-right { bottom: 25px; right: 25px; border-left: none; border-top: none; }
+
+.boot-container {
+  z-index: 10; width: 780px; max-width: 92%;
+  background: rgba(10, 14, 22, 0.75);
+  border: 1px solid rgba(57, 197, 207, 0.25);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(57, 197, 207, 0.05);
+  border-radius: 6px; padding: 25px 30px; box-sizing: border-box;
+  backdrop-filter: blur(8px); position: relative;
+}
+
+.boot-top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px; margin-bottom: 20px;
+  font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px;
+}
+.boot-top-badge {
+  background: rgba(57, 197, 207, 0.12); color: var(--accent-cyan);
+  border: 1px solid rgba(57, 197, 207, 0.3); padding: 3px 8px; border-radius: 3px; font-weight: 700;
+}
+
+.boot-main-content {
+  display: grid; grid-template-columns: 140px 1fr; gap: 25px; align-items: center; margin-bottom: 20px;
+}
+
+/* Radar Çekirdeği */
+.radar-core-wrap {
+  width: 130px; height: 130px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.radar-circle {
+  position: absolute; width: 100%; height: 100%;
+  border: 1px dashed rgba(57, 197, 207, 0.3); border-radius: 50%;
+  animation: rotateRadar 12s linear infinite;
+}
+.radar-circle-inner {
+  position: absolute; width: 70%; height: 70%;
+  border: 1px solid rgba(88, 166, 255, 0.4); border-radius: 50%;
+  border-top-color: transparent; border-bottom-color: transparent;
+  animation: rotateRadarReverse 6s linear infinite;
+}
+.radar-sweep {
+  position: absolute; width: 100%; height: 100%; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(57, 197, 207, 0.25) 0deg, transparent 60deg, transparent 360deg);
+  animation: rotateRadar 2.5s linear infinite;
+}
+.radar-center-dot {
+  width: 8px; height: 8px; background: var(--tactical-red); border-radius: 50%;
+  box-shadow: 0 0 10px var(--tactical-red); z-index: 2;
+}
+
+@keyframes rotateRadar { 100% { transform: rotate(360deg); } }
+@keyframes rotateRadarReverse { 100% { transform: rotate(-360deg); } }
+
+.boot-header-text { display: flex; flex-direction: column; justify-content: center; }
+.boot-brand-title {
+  font-size: 32px; font-weight: 800; color: #fff; letter-spacing: 4px;
+  margin: 0 0 4px 0; text-transform: uppercase; line-height: 1;
+}
+.boot-brand-title span { color: var(--accent-cyan); text-shadow: 0 0 12px rgba(57, 197, 207, 0.6); }
+.boot-sub-title {
+  font-size: 10px; color: var(--text-muted); letter-spacing: 2px;
+  text-transform: uppercase; font-weight: 600; margin-bottom: 12px;
+}
+
+.boot-telemetry-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  background: rgba(0, 0, 0, 0.3); padding: 8px 10px; border-radius: 4px; border: 1px solid var(--border-color);
+}
+.t-box { display: flex; flex-direction: column; }
+.t-lbl { font-size: 8px; color: var(--text-muted); text-transform: uppercase; }
+.t-val { font-size: 10px; color: var(--accent-blue); font-weight: 700; }
+
+.boot-progress-section { margin-bottom: 15px; }
+.boot-progress-header {
+  display: flex; justify-content: space-between; font-size: 10px;
+  color: var(--text-main); margin-bottom: 6px; font-weight: 600;
+}
+.boot-progress-bar-container {
+  width: 100%; height: 4px; background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px; overflow: hidden; position: relative;
+}
+.boot-progress-bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+  box-shadow: 0 0 10px var(--accent-cyan);
+  transition: width 0.12s ease-out;
+}
+
+.boot-terminal-box {
+  width: 100%; height: 140px; background: rgba(3, 6, 10, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px;
+  padding: 10px 12px; box-sizing: border-box; overflow: hidden; position: relative;
+}
+#boot-terminal-log {
+  height: 100%; display: flex; flex-direction: column; justify-content: flex-end;
+}
+
+.b-line {
+  font-size: 10.5px; line-height: 1.55; opacity: 0; transform: translateX(-6px);
+  animation: lineFadeIn 0.12s forwards ease-out; display: flex; gap: 8px; align-items: center;
+}
+.b-time { color: var(--text-muted); font-size: 9.5px; opacity: 0.7; }
+.b-tag { font-weight: 700; padding: 0 4px; border-radius: 2px; font-size: 8.5px; }
+.b-tag.sys { background: rgba(88, 166, 255, 0.15); color: var(--accent-blue); }
+.b-tag.ok { background: rgba(63, 185, 80, 0.15); color: var(--tactical-green); }
+.b-tag.warn { background: rgba(210, 153, 34, 0.15); color: var(--tactical-amber); }
+.b-txt { color: var(--text-main); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@keyframes lineFadeIn { to { opacity: 1; transform: translateX(0); } }
+
+.boot-footer-actions {
+  display: flex; justify-content: space-between; align-items: center; margin-top: 15px;
+  padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 9.5px; color: var(--text-muted);
+}
+.boot-skip-btn {
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color);
+  color: var(--text-main); font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+  padding: 4px 10px; border-radius: 3px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.boot-skip-btn:hover { background: rgba(57, 197, 207, 0.15); border-color: var(--accent-cyan); color: #fff; }
+
+/* ALT KAYAN YAZI STİLLERİ */
+#ticker-bar {
+  position: fixed; bottom: 0; left: 0; width: 100vw; height: 30px;
+  background: #090c10; border-top: 1px solid var(--border-color); z-index: 3000;
+  display: flex; align-items: center; font-family: var(--font-mono); font-size: 11px;
+  overflow: hidden;
+}
+
+.ticker-badge {
+  background: rgba(248, 81, 73, 0.15); color: var(--tactical-red); border-right: 1px solid var(--border-color);
+  font-weight: 700; padding: 0 14px; height: 100%; display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  z-index: 3002; letter-spacing: 1px; font-size: 10px;
+}
+
+.ticker-wrapper { flex: 1; overflow: hidden; position: relative; height: 100%; display: flex; align-items: center; }
+.ticker-content { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker-anim 45s linear infinite; color: var(--text-main); }
+.ticker-content:hover { animation-play-state: paused; cursor: pointer; }
+.ticker-item { display: inline-block; margin-right: 45px; color: var(--text-main); }
+.ticker-item span { color: var(--accent-blue); font-weight: bold; margin-right: 6px; }
+
+@keyframes ticker-anim {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* SOL KONTROL MERKEZİ */
+#control-center {
+  width: 380px;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  display: flex; flex-direction: column; z-index: 1000;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.panel-header {
+  padding: 14px;
+  background: #090c10;
+  border-bottom: 1px solid var(--border-color);
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.brand-container { display: flex; justify-content: space-between; align-items: center; }
+.brand-title-wrap { display: flex; align-items: center; gap: 10px; }
+.sys-status-led {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--tactical-green);
+  box-shadow: 0 0 8px var(--tactical-green);
+}
+
+.brand-title {
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+  color: var(--text-main); letter-spacing: 1.5px; text-transform: uppercase;
+}
+.brand-title span { color: var(--accent-blue); }
+
+.map-mode-toggle {
+  background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color);
+  color: var(--text-muted); font-family: var(--font-mono); font-size: 9px;
+  font-weight: 600; padding: 4px 8px; border-radius: 4px; cursor: pointer;
+  transition: all 0.2s ease; display: flex; align-items: center; gap: 6px;
+}
+.map-mode-toggle:hover {
+  background: rgba(255, 255, 255, 0.08); color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-box-container { position: relative; width: 100%; }
+.search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-size: 11px; pointer-events: none; transition: color 0.2s;
+}
+.search-input {
+  width: 100%; background: #161b22; border: 1px solid var(--border-color);
+  border-radius: 5px; padding: 6px 10px 6px 30px; color: #fff;
+  font-family: var(--font-mono); font-size: 10px; box-sizing: border-box;
+  outline: none; transition: all 0.2s ease;
+}
+.search-input:focus {
+  border-color: var(--accent-blue);
+  background: #1c2128;
+}
+.search-input:focus + .search-icon { color: var(--accent-blue); }
+
+.filter-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+#f-all { grid-column: span 2; }
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color);
+  color: var(--text-muted); font-family: var(--font-mono); font-size: 8.5px;
+  font-weight: 500; padding: 5px 8px; cursor: pointer; text-align: left;
+  border-radius: 4px; transition: all 0.2s ease;
+  display: flex; align-items: center; gap: 6px; letter-spacing: 0.2px;
+}
+.filter-btn i { font-size: 9px; opacity: 0.7; width: 10px; text-align: center; }
+.filter-btn:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-main); }
+
+.filter-btn.active {
+  background: rgba(88, 166, 255, 0.08) !important;
+  border-color: var(--border-active) !important;
+  color: var(--accent-blue) !important;
+  font-weight: 600;
+}
+.filter-btn.active i { opacity: 1; color: var(--accent-blue); }
+
+.terminal-status {
+  border: 1px solid var(--border-color); border-radius: 5px;
+  padding: 6px 8px; font-family: var(--font-mono); font-size: 9.5px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.terminal-status-title {
+  font-family: var(--font-mono); font-size: 8.5px; color: var(--text-muted);
+  margin-bottom: 5px; text-transform: uppercase; font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between; letter-spacing: 0.5px;
+}
+
+.portal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.portal-btn {
+  background: #161b22; border: 1px solid var(--border-color);
+  color: var(--text-muted); font-family: var(--font-mono); font-size: 8px;
+  font-weight: 600; padding: 5px 3px; cursor: pointer; text-align: center;
+  border-radius: 4px; transition: all 0.2s ease; display: flex; align-items: center;
+  justify-content: center; gap: 4px;
+}
+.portal-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; background: #1c2128; }
+
+.summary-single-line {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color);
+  border-radius: 5px; padding: 5px 8px; font-family: var(--font-mono); font-size: 9px;
+}
+.summary-info { display: flex; align-items: center; gap: 6px; }
+.summary-single-line span { color: var(--text-muted); }
+.summary-single-line strong { color: var(--text-main); font-weight: 600; }
+
+.report-gen-btn {
+  background: rgba(248, 81, 73, 0.1); border: 1px solid rgba(248, 81, 73, 0.3);
+  color: var(--tactical-red); font-family: var(--font-mono); font-size: 8px;
+  font-weight: 600; padding: 3px 6px; border-radius: 3px; cursor: pointer;
+  transition: all 0.2s ease; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;
+}
+.report-gen-btn:hover {
+  background: var(--tactical-red); color: #000;
+}
+
+.threat-filter-container {
+  padding: 6px 10px; background: #090c10;
+  border-bottom: 1px solid var(--border-color);
+}
+.threat-filter-row { display: flex; gap: 3px; background: #161b22; padding: 2px; border-radius: 4px; border: 1px solid var(--border-color); }
+.threat-f-btn {
+  flex: 1; background: transparent; border: none;
+  color: var(--text-muted); font-family: var(--font-mono); font-size: 8px;
+  font-weight: 600; padding: 4px 2px; border-radius: 3px; cursor: pointer;
+  text-align: center; transition: all 0.2s ease;
+}
+.threat-f-btn:hover { color: #fff; }
+.threat-f-btn.active { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.threat-f-btn.tf-kritik.active { color: var(--tactical-red); background: rgba(248,81,73,0.15); }
+.threat-f-btn.tf-yuksek.active { color: var(--tactical-amber); background: rgba(210,153,34,0.15); }
+
+/* KOMPAKT AKIŞ KARTLARI */
+#feed-container {
+  flex: 1; overflow-y: auto; padding: 6px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+#feed-container::-webkit-scrollbar { width: 3px; }
+#feed-container::-webkit-scrollbar-track { background: transparent; }
+#feed-container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
+#feed-container::-webkit-scrollbar-thumb:hover { background: var(--border-active); }
+
+.tactic-card {
+  background: var(--bg-card);
+  padding: 5px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px; cursor: pointer; display: flex;
+  align-items: center; justify-content: space-between; gap: 6px;
+  transition: all 0.15s ease; position: relative;
+}
+.tactic-card:hover {
+  border-color: rgba(255, 255, 255, 0.25); background: var(--bg-card-hover);
+}
+
+.tactic-card h4 {
+  margin: 0; font-size: 10px; color: var(--text-main); font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2;
+}
+
+.card-main-info { display: flex; align-items: center; gap: 6px; overflow: hidden; flex: 1; }
+
+.badge-threat {
+  font-family: var(--font-mono); font-size: 7px; font-weight: 700;
+  padding: 1px 4px; border-radius: 3px; text-transform: uppercase; white-space: nowrap;
+}
+.th-kritik { background: rgba(248, 81, 73, 0.15); color: var(--tactical-red); border: 1px solid rgba(248, 81, 73, 0.3); }
+.th-yüksek { background: rgba(210, 153, 34, 0.15); color: var(--tactical-amber); border: 1px solid rgba(210, 153, 34, 0.3); }
+.th-orta, .th-düşük { background: rgba(139, 148, 158, 0.15); color: var(--text-muted); border: 1px solid rgba(139, 148, 158, 0.3); }
+
+/* STRATEJİK DENİZ YOLLARI ÖZEL İKON STİLLERİ */
+.maritime-strait-icon {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-cyan); font-size: 14px;
+  filter: drop-shadow(0 0 6px rgba(0, 230, 230, 0.6));
+  transition: transform 0.2s; cursor: pointer;
+}
+.maritime-strait-icon:hover { transform: scale(1.3); }
+
+.maritime-danger-icon {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tactical-red); font-size: 15px;
+  transition: transform 0.2s; cursor: pointer;
+}
+.maritime-danger-icon:hover { transform: scale(1.3); }
+
+.piracy-marker-icon {
+  display: flex; align-items: center; justify-content: center; color: var(--tactical-red); font-size: 16px;
+  transition: transform 0.2s; cursor: pointer;
+}
+.piracy-marker-icon:hover { transform: scale(1.3); }
+
+/* HARİTA & MODAL STİLLERİ */
+#log-feed {
+  position: absolute; bottom: 42px; right: 15px; width: 300px;
+  background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 12px;
+  font-family: var(--font-mono); font-size: 9px; color: var(--text-main); z-index: 2000;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5); opacity: 0; transform: translateY(15px);
+  pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#log-feed.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.log-line span { color: var(--accent-blue); font-weight: bold; }
+
+#map-container { flex: 1; height: 100vh; position: relative; background: #07090e; }
+#map { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 10; }
+#cesiumContainer { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 5; display: none; }
+.cesium-viewer-bottom { display: none !important; }
+
+.leaflet-bottom { bottom: 35px !important; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: var(--bg-panel) !important; color: var(--text-main) !important;
+  border: 1px solid var(--border-color) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.6) !important;
+  font-family: var(--font-mono) !important; font-size: 10.5px !important;
+}
+.leaflet-popup-close-button { color: var(--text-muted) !important; }
+
+.radar-marker { display: flex; align-items: center; justify-content: center; }
+.radar-dot { width: 8px; height: 8px; border-radius: 50%; position: absolute; z-index: 5; }
+.radar-wave { width: 22px; height: 22px; border-radius: 50%; position: absolute; animation: pulse-wave 2s infinite ease-out; opacity: 0; }
+
+@keyframes pulse-wave {
+  0% { transform: scale(0.3); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.bg-askeri { background-color: var(--tactical-red); }
+.bg-istihbarat { background-color: var(--accent-blue); }
+.bg-siber { background-color: #a371f7; }
+.bg-afet { background-color: var(--accent-cyan); }
+.bg-yangin { background-color: #f0883e; }
+
+.wave-askeri { background: rgba(248, 81, 73, 0.3); border: 1px solid var(--tactical-red); }
+.wave-istihbarat { background: rgba(88, 166, 255, 0.3); border: 1px solid var(--accent-blue); }
+.wave-siber { background: rgba(163, 113, 247, 0.3); border: 1px solid #a371f7; }
+.wave-afet { background: rgba(57, 197, 207, 0.3); border: 1px solid var(--accent-cyan); }
+.wave-yangin { background: rgba(240, 136, 62, 0.3); border: 1px solid #f0883e; }
+
+.sat-marker-icon {
+  display: flex; align-items: center; justify-content: center; color: #a371f7; font-size: 15px;
+  transition: transform 0.2s; cursor: pointer;
+}
+.sat-marker-icon:hover { transform: scale(1.3); }
+
+.fire-marker-icon {
+  display: flex; align-items: center; justify-content: center; color: #f0883e; font-size: 15px;
+  transition: transform 0.2s; cursor: pointer;
+}
+.fire-marker-icon:hover { transform: scale(1.3); }
+
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(4, 6, 9, 0.8); backdrop-filter: blur(4px);
+  z-index: 2000; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.modal-content {
+  background: var(--bg-panel); border: 1px solid var(--border-color);
+  width: 650px; max-width: 90%; max-height: 85vh; border-radius: 8px;
+  display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+.modal-header { padding: 14px 18px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.modal-header h3 { margin: 0; font-family: var(--font-mono); color: #fff; font-size: 13px; letter-spacing: 0.5px; }
+.close-modal-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; }
+.close-modal-btn:hover { color: var(--tactical-red); }
+
+.modal-body { flex: 1; padding: 18px; overflow-y: auto; }
+.report-textarea {
+  width: 100%; height: 330px; background: #06080b; border: 1px solid var(--border-color); border-radius: 6px;
+  color: var(--accent-blue); font-family: var(--font-mono); font-size: 11px; padding: 12px; box-sizing: border-box; resize: none; line-height: 1.6;
+}
+
+.modal-footer { padding: 12px 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
+.modal-action-btn {
+  background: #161b22; border: 1px solid var(--border-color); color: #fff; font-family: var(--font-mono); font-size: 10px;
+  padding: 7px 14px; border-radius: 5px; cursor: pointer; transition: all 0.2s;
+}
+.modal-action-btn:hover { border-color: rgba(255,255,255,0.3); background: #1c2128; }
+.modal-action-btn.primary { background: var(--accent-blue); color: #000; border: none; font-weight: 600; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.detail-box { background: #06080b; border: 1px solid var(--border-color); border-radius: 5px; padding: 8px 10px; font-family: var(--font-mono); }
+.detail-box label { font-size: 8px; color: var(--text-muted); display: block; margin-bottom: 2px; text-transform: uppercase; }
+.detail-box val { font-size: 10.5px; color: #fff; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ARGUS_NET // YENİ PROFESYONEL TAKTİK INTRO -->
+<div id="argus-boot-screen">
+  <div class="hud-corner top-left"></div>
+  <div class="hud-corner top-right"></div>
+  <div class="hud-corner bottom-left"></div>
+  <div class="hud-corner bottom-right"></div>
+
+  <div class="boot-container">
+    <div class="boot-top-bar">
+      <div class="boot-top-badge"><i class="fa-solid fa-shield-halved"></i> UNCLASSIFIED // OSINT PROTOCOL</div>
+      <div>SYS_HASH: <span id="boot-hex-code" style="color:var(--accent-cyan); font-weight:bold;">0x00000000</span></div>
+      <div>CORE_VERSION: <span style="color:#fff;">v2.4.0</span></div>
+    </div>
+
+    <div class="boot-main-content">
+      <div class="radar-core-wrap">
+        <div class="radar-circle"></div>
+        <div class="radar-circle-inner"></div>
+        <div class="radar-sweep"></div>
+        <div class="radar-center-dot"></div>
+      </div>
+
+      <div class="boot-header-text">
+        <h1 class="boot-brand-title">ARGUS<span>_NET</span></h1>
+        <div class="boot-sub-title">Multi-Domain Tactical Intelligence & Reconnaissance System</div>
+
+        <div class="boot-telemetry-grid">
+          <div class="t-box">
+            <span class="t-lbl">ŞİFRELEME</span>
+            <span class="t-val">AES-256-GCM</span>
+          </div>
+          <div class="t-box">
+            <span class="t-lbl">YÖRÜNGE MODU</span>
+            <span class="t-val">TLE REALTIME</span>
+          </div>
+          <div class="t-box">
+            <span class="t-lbl">BAĞLANTI LATENCY</span>
+            <span class="t-val" id="boot-ping">12 ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="boot-progress-section">
+      <div class="boot-progress-header">
+        <span id="boot-status-text"><i class="fa-solid fa-spinner fa-spin"></i> ÇEKİRDEK MODÜLLER YÜKLENİYOR...</span>
+        <span id="boot-pct-val" style="color:var(--accent-cyan);">0%</span>
+      </div>
+      <div class="boot-progress-bar-container">
+        <div class="boot-progress-bar-fill" id="boot-progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="boot-terminal-box">
+      <div id="boot-terminal-log"></div>
+    </div>
+
+    <div class="boot-footer-actions">
+      <div><i class="fa-solid fa-lock" style="color:var(--tactical-green);"></i> GÜVENLİ İLETİŞİM PROTOKOLÜ AKTİF</div>
+      <button class="boot-skip-btn" onclick="introAtla()">
+        <span>[ ATL / SKIP ]</span> <i class="fa-solid fa-forward-step"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let bootFinished = false;
+
+  function introAtla() {
+    if (bootFinished) return;
+    bootFinished = true;
+    const bootScreen = document.getElementById('argus-boot-screen');
+    bootScreen.style.transform = 'scale(1.08)';
+    bootScreen.style.filter = 'blur(6px)';
+    bootScreen.style.opacity = '0';
+    setTimeout(() => { bootScreen.style.display = 'none'; }, 700);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const term = document.getElementById('boot-terminal-log');
+    const progFill = document.getElementById('boot-progress-fill');
+    const pctVal = document.getElementById('boot-pct-val');
+    const hexVal = document.getElementById('boot-hex-code');
+    const pingVal = document.getElementById('boot-ping');
+    const statusText = document.getElementById('boot-status-text');
+
+    const bootSteps = [
+      { tag: "SYS", tagCls: "sys", msg: "Çekirdek bellek ve bellek bütünlüğü doğrulandı.", pct: 15, delay: 200 },
+      { tag: "OK", tagCls: "ok", msg: "Kuantum dirençli el sıkışma protokolü tamamlandı.", pct: 30, delay: 550 },
+      { tag: "SYS", tagCls: "sys", msg: "Türksat & Starlink TLE uydu verileri yörünge motoruna bağlandı.", pct: 50, delay: 900 },
+      { tag: "OK", tagCls: "ok", msg: "USGS sismik sensör hattı ve AFAD nodları bağlandı.", pct: 68, delay: 1300 },
+      { tag: "WARN", tagCls: "warn", msg: "CISA & DarkWeb Ransomware CTI istihbarat filtreleri aktif.", pct: 85, delay: 1700 },
+      { tag: "OK", tagCls: "ok", msg: "Görsel Taktik Harita Arayüzü hazır. Sistem çevrimiçi.", pct: 100, delay: 2100 }
+    ];
+
+    const hexInterval = setInterval(() => {
+      if (!bootFinished) {
+        hexVal.innerText = '0x' + Math.floor(Math.random()*4294967295).toString(16).toUpperCase().padStart(8, '0');
+        pingVal.innerText = (Math.floor(Math.random() * 8) + 10) + ' ms';
+      }
+    }, 60);
+
+    bootSteps.forEach((step) => {
+      setTimeout(() => {
+        if (bootFinished) return;
+        
+        progFill.style.width = step.pct + '%';
+        pctVal.innerText = step.pct + '%';
+        
+        if(step.pct < 100) {
+          statusText.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${step.msg}`;
+        } else {
+          statusText.innerHTML = `<i class="fa-solid fa-check" style="color:var(--tactical-green);"></i> SİSTEM HAZIR. BAĞLANTI SAĞLANDI.`;
+        }
+
+        const line = document.createElement('div');
+        line.className = 'b-line';
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}.${String(now.getMilliseconds()).padStart(3,'0')}`;
+        
+        line.innerHTML = `
+          <span class="b-time">[${timeStr}]</span>
+          <span class="b-tag ${step.tagCls}">${step.tag}</span>
+          <span class="b-txt">${step.msg}</span>
+        `;
+        term.appendChild(line);
+      }, step.delay);
+    });
+
+    // Otomatik Kapanış
+    setTimeout(() => {
+      clearInterval(hexInterval);
+      if (!bootFinished) introAtla();
+    }, 6000);
+
+    // Klavye ESC tuşu ile atlama
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') introAtla();
+    });
+  });
+</script>
+
+<!-- SOL KONTROL MERKEZİ -->
+<div id="control-center">
+  <div class="panel-header">
+    <div class="brand-container">
+      <div class="brand-title-wrap">
+        <div class="sys-status-led"></div>
+        <div class="brand-title">ARGUS_NET // <span>OSINT</span></div>
+      </div>
+      <button class="map-mode-toggle" onclick="haritaModunuDegistir()">
+        <i class="fa-solid fa-cube"></i> <span>[ 3D ]</span>
+      </button>
+    </div>
+
+    <div class="search-box-container">
+      <input type="text" id="search-input" class="search-input" placeholder="// HEDEF VEYA DETAY ARA..." oninput="aramaGuncelle()">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="filter-grid">
+      <button class="filter-btn active" id="f-all" onclick="filtrele('all', event)">
+        <i class="fa-solid fa-layer-group"></i> TÜM AKIŞLAR
+      </button>
+      <button class="filter-btn active" id="f-askeri" onclick="filtrele('Askeri', event)">
+        <i class="fa-solid fa-shield-halved"></i> ASKERİ / DENİZ
+      </button>
+      <button class="filter-btn active" id="f-siber" onclick="filtrele('Siber', event)">
+        <i class="fa-solid fa-bug"></i> SİBER TEHDİTLER
+      </button>
+      <button class="filter-btn active" id="f-afet" onclick="filtrele('Afet', event)">
+        <i class="fa-solid fa-triangle-exclamation"></i> DOĞAL AFET / KRİZ
+      </button>
+      <button class="filter-btn active" id="f-yangin" onclick="filtrele('Yangın', event)">
+        <i class="fa-solid fa-fire"></i> YANGIN / TERMAL
+      </button>
+      <button class="filter-btn active" id="f-maritime" onclick="toggleStratejikDenizYollari()">
+        <i class="fa-solid fa-anchor"></i> STRATEJİK DENİZ
+      </button>
+      <button class="filter-btn active" id="f-uydu" onclick="toggleUydular()">
+        <i class="fa-solid fa-satellite"></i> CANLI UYDU
+      </button>
+      <button class="filter-btn active" id="f-rainviewer" onclick="toggleRainViewerRadar()">
+        <i class="fa-solid fa-cloud-showers-heavy"></i> YAĞIŞ RADARI
+      </button>
+      <button class="filter-btn active" id="f-piracy" onclick="filtrele('Piracy', event)">
+        <i class="fa-solid fa-skull"></i> KORSAN & SALDIRI
+      </button>
+    </div>
+
+    <div class="terminal-status">
+      <div class="terminal-status-title">
+        <span>// CANLI TAKİP PORTALLARI</span>
+        <i class="fa-solid fa-radar" style="font-size: 8.5px;"></i>
+      </div>
+      <div class="portal-grid">
+        <button class="portal-btn" onclick="toggleLiveAdsbMap()">
+          <i class="fa-solid fa-plane"></i> UÇUŞ
+        </button>
+        <button class="portal-btn" onclick="toggleLiveAisMap()">
+          <i class="fa-solid fa-ship"></i> GEMİ
+        </button>
+        <button class="portal-btn" onclick="toggleLiveWeatherMap()">
+          <i class="fa-solid fa-wind"></i> HAVA
+        </button>
+      </div>
+    </div>
+
+    <div class="summary-single-line">
+      <div class="summary-info">
+        <span>DURUM:</span> <strong id="sync-status" style="color:var(--tactical-amber);">ARANIYOR...</strong> 
+        <span style="opacity: 0.3;">|</span> 
+        <span>HEDEF:</span> <strong id="counter">00</strong>
+      </div>
+      <button class="report-gen-btn" onclick="durumRaporuUret()">
+        <i class="fa-solid fa-file-lines"></i> [ RAPOR ]
+      </button>
+    </div>
+  </div>
+
+  <div class="threat-filter-container">
+    <div class="threat-filter-row">
+      <button class="threat-f-btn active" id="tf-all" onclick="tehditFiltrele('all')">TÜMÜ</button>
+      <button class="threat-f-btn tf-kritik" id="tf-kritik" onclick="tehditFiltrele('Kritik')">KRİTİK</button>
+      <button class="threat-f-btn tf-yuksek" id="tf-yuksek" onclick="tehditFiltrele('Yüksek')">YÜKSEK</button>
+      <button class="threat-f-btn" id="tf-diger" onclick="tehditFiltrele('Düşük')">ORTA/DÜŞÜK</button>
+    </div>
+  </div>
+
+  <div id="feed-container"></div>
+</div>
+
+<div id="map-container">
+  <div id="map"></div>
+  <div id="cesiumContainer"></div>
+  <div id="log-feed">
+    <div class="log-line"><span>[SİSTEM]</span> Güvenli Taktik OSINT Merkezine hoş geldiniz.</div>
+  </div>
+</div>
+
+<!-- TÜRKİYE SON DAKİKA KAYAN YAZI BANT -->
+<div id="ticker-bar">
+  <div class="ticker-badge"><i class="fa-solid fa-bolt"></i> CANLI // TR</div>
+  <div class="ticker-wrapper">
+    <div class="ticker-content" id="ticker-text">
+      <div class="ticker-item"><span>[CANLI TR]</span> Türkiye son dakika haber akışı senkronize ediliyor...</div>
+    </div>
+  </div>
+</div>
+
+<!-- CANLI PORTAL CONTAINER -->
+<div id="live-portal-container" style="display: none; position: absolute; top: 0; left: 380px; width: calc(100vw - 380px); height: calc(100vh - 30px); z-index: 1999; background: #000;">
+  <button onclick="closeLivePortal()" style="position: absolute; top: 15px; right: 15px; z-index: 10000; background: var(--tactical-red); color: white; border: none; font-family: var(--font-mono); font-size: 11px; font-weight: bold; padding: 8px 14px; border-radius: 5px; cursor: pointer;">[ PORTALI KAPAT ]</button>
+  <iframe id="live-portal-iframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+</div>
+
+<!-- RAPOR MODALI -->
+<div class="modal-overlay" id="report-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>ARGUS_NET // HYBRID SITUATION REPORT (SITREP)</h3>
+      <button class="close-modal-btn" onclick="modalKapat()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <textarea class="report-textarea" id="report-text" readonly></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-action-btn" onclick="raporKopyala()">METNİ KOPYALA</button>
+      <button class="modal-action-btn primary" onclick="raporIndir()">DOKÜMANI İNDİR (.TXT)</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAY MODALI -->
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal-content" style="width: 700px;">
+    <div class="modal-header">
+      <h3 id="detay-baslik-ust">// İSTİHBARAT HEDEF ANALİZİ (DETAYLI SITREP)</h3>
+      <button class="close-modal-btn" onclick="detayModalKapat()">&times;</button>
+    </div>
+    <div class="modal-body" style="font-family: var(--font-mono);">
+      <div style="font-size: 13px; color: #fff; font-weight: 600; margin-bottom: 12px; line-height: 1.4;" id="detay-ana-baslik"></div>
+
+      <div class="detail-grid">
+        <div class="detail-box">
+          <label>SEKTÖR / OPERASYON KATEGORİSİ</label>
+          <val id="detay-kategori" style="color: var(--accent-blue);">-</val>
+        </div>
+        <div class="detail-box">
+          <label>TEHDİT SEVİYESİ / RİSK</label>
+          <val id="detay-tehdit">-</val>
+        </div>
+        <div class="detail-box">
+          <label>COĞRAFİ HEDEF KOORDİNATI</label>
+          <val id="detay-koordinat">-</val>
+        </div>
+        <div class="detail-box">
+          <label>KAYNAK GÜVENİLİRLİK SKORU</label>
+          <val id="detay-guvenilirlik">A1 (OSINT DOĞRULANMIŞ)</val>
+        </div>
+        <div class="detail-box">
+          <label>ETKİ ALANI / STRATEJİK ÖNEM</label>
+          <val id="detay-etki-alani" style="color: var(--tactical-amber);">-</val>
+        </div>
+        <div class="detail-box">
+          <label>MUHTEMEL TEHDİT AKTÖRÜ / UNSUR</label>
+          <val id="detay-aktor" style="color: #a371f7;">-</val>
+        </div>
+      </div>
+
+      <div class="detail-box" style="margin-bottom: 8px;">
+        <label>TAKTİK ÖZET & RİSK KORELASYONU</label>
+        <div id="detay-ai-ozet" style="font-size: 10px; color: var(--text-main); line-height: 1.4; margin-top: 3px; white-space: pre-line;">-</div>
+      </div>
+
+      <div class="detail-box" style="margin-bottom: 8px; border-color: rgba(63,185,80,0.3);">
+        <label style="color: var(--tactical-green);">TAVSİYE EDİLEN AKSİYON PLANI</label>
+        <div id="detay-tavsiye" style="font-size: 10px; color: #c9d1d9; line-height: 1.4; margin-top: 3px; white-space: pre-line;">-</div>
+      </div>
+
+      <div class="detail-box">
+        <label>HAM RAPOR İÇERİĞİ & RESMİ KAYNAK DETAYLARI</label>
+        <div id="detay-tam-metin" style="font-size: 10px; color: #e6edf3; line-height: 1.5; margin-top: 4px; max-height: 130px; overflow-y: auto; white-space: pre-line;">-</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a id="detay-kaynak-link" href="#" target="_blank" class="modal-action-btn primary" style="text-decoration: none; text-align: center; display: inline-block;">RESMİ KAYNAĞA GİT (.TR / GLOBAL)</a>
+      <button class="modal-action-btn" onclick="detayModalKapat()">KAPAT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Güvenli İstek Atıcı
+async function safeFetch(url, options = {}, timeoutMs = 5000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (e) {
+    clearTimeout(timeoutId);
+    return null;
+  }
+}
+
+// Yardımcı Metin Temizleyici
+function htmlTemizle(htmlMetin) {
+  if (!htmlMetin) return "";
+  const temp = document.createElement("div");
+  temp.innerHTML = htmlMetin;
+  return (temp.textContent || temp.innerText || "").trim();
+}
+
+// TÜRKİYE CANLI AKIŞ MOTORU
+async function turkiyeHaberleriCek() {
+  const tickerText = document.getElementById('ticker-text');
+  try {
+    const res = await safeFetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.trthaber.com/sondakika_articles.rss');
+    if (res && res.ok) {
+      const data = await res.json();
+      if (data && data.status === 'ok' && data.items && data.items.length > 0) {
+        let html = '';
+        data.items.forEach(item => {
+          let zaman = "ANLIK";
+          if (item.pubDate) {
+            const d = new Date(item.pubDate);
+            zaman = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          }
+          html += `<div class="ticker-item"><span>[${zaman}]</span> ${item.title}</div>`;
+        });
+        tickerText.innerHTML = html;
+        logEkle("[HABER BANTI] TRT Haber canlı Türkiye akışı güncellendi.");
+        return;
+      }
+    }
+  } catch (e) {}
+
+  tickerText.innerHTML = `
+    <div class="ticker-item"><span>[CANLI TR]</span> TÜRKSAT 4A / 5A / 5B UYDU YÖRÜNGE VERİLERİ ANLIK İZLENİYOR</div>
+    <div class="ticker-item"><span>[AFAD / USGS]</span> SİSMİK İSTASYONLAR CANLI DİNLENİYOR</div>
+    <div class="ticker-item"><span>[EONET / TERMAL]</span> ORMAN YANGINLARI VE ISISAL ODAKLAR UYDU AĞIYLA İZLENİYOR</div>
+  `;
+}
+
+// Harita Kurulumu
+const map = L.map('map', {
+    zoomControl: false,
+    attributionControl: false,
+    minZoom: 3,
+    maxZoom: 18,
+    maxBounds: [[-85, -180], [85, 180]],
+    maxBoundsViscosity: 1.0
+}).setView([39.0, 35.0], 6);
+
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    noWrap: true,
+    bounds: [[-85.0511, -180], [85.0511, 180]],
+    minZoom: 3,
+    maxZoom: 19
+}).addTo(map);
+
+function setDynamicMinZoom() {
+    const width = window.innerWidth;
+    let dynamicMin = width < 768 ? 2 : 3;
+    map.setMinZoom(dynamicMin);
+}
+window.addEventListener('resize', setDynamicMinZoom);
+setDynamicMinZoom();
+
+Cesium.Ion.defaultAccessToken = '';
+let cesiumViewer = null;
+let is3DMode = false;
+let rainViewerLayer = null;
+let rainViewerAktif = false;
+
+// STRATEJİK DENİZ YOLLARI
+const stratejikDenizYollari = [
+  { ad: "İstanbul Boğazı", tip: "Boğaz", kat: "strait", lat: 41.1172, lng: 29.0681, detay: "Karadeniz-Akdeniz bağlantısı. Montrö Rejimi kapsamında stratejik jeopolitik geçit." },
+  { ad: "Çanakkale Boğazı", tip: "Boğaz", kat: "strait", lat: 40.2000, lng: 26.4000, detay: "Ege - Marmara ana transit deniz koridoru." },
+  { ad: "Hürmüz Boğazı", tip: "Boğaz", kat: "strait", lat: 26.5667, lng: 56.2500, detay: "Dünya petrol sevkiyatının %20'sinin geçtiği yüksek askeri riskli boğaz." },
+  { ad: "Babülmendep Boğazı", tip: "Boğaz", kat: "strait", lat: 12.5833, lng: 43.3333, detay: "Kızıldeniz - Hint Okyanusu geçidi. Asimetrik füze/İHA ve korsanlık tehdit bölgesi." },
+  { ad: "Cebelitarık Boğazı", tip: "Boğaz", kat: "strait", lat: 35.9800, lng: -5.6000, detay: "Akdeniz - Atlas Okyanusu ana stratejik çıkış noktası." },
+  { ad: "Malaka Boğazı", tip: "Boğaz", kat: "strait", lat: 2.5000, lng: 101.5000, detay: "Asya ikmal rotalarının kalbi. Deniz haydutluğu ve darboğaz riski." },
+  { ad: "Kerç Boğazı", tip: "Boğaz", kat: "strait", lat: 45.2500, lng: 36.5500, detay: "Azak Denizi - Karadeniz geçişi. Aktif askeri çatışma sahası." },
+  { ad: "Tayvan Boğazı", tip: "Boğaz", kat: "strait", lat: 24.0000, lng: 119.5000, detay: "Küresel çip/ticaret koridoru. Yüksek donanma ve askeri gerilim bölgesi." },
+  { ad: "Süveyş Kanalı", tip: "Kanal", kat: "canal", lat: 30.7050, lng: 32.3442, detay: "Asya-Avrupa en kısa deniz yolu. Tıkanma ve bölgesel kriz hassasiyeti." },
+  { ad: "Panama Kanalı", tip: "Kanal", kat: "canal", lat: 9.0800, lng: -79.6800, detay: "Pasifik-Atlas geçidi. Küresel lojistik ve su seviyesi kısıtlama alanı." },
+  { ad: "Gine Körfezi (Korsanlık Sahası)", tip: "Tehlikeli Deniz", kat: "danger", lat: 2.0000, lng: 6.0000, detay: "Yüksek korsanlık, gemi ele geçirme ve deniz haydutluğu riski." },
+  { ad: "Aden Körfezi & Kızıldeniz Koridoru", tip: "Tehlikeli Deniz", kat: "danger", lat: 12.0000, lng: 48.0000, detay: "Füze/İHA saldırıları ve ticari seyrüsefer tehdit sahası." }
+];
+
+let stratejikDenizMarkers = {};
+let denizYollariAktif = false;
+
+function toggleStratejikDenizYollari() {
+  const btn = document.getElementById('f-maritime');
+  if (!denizYollariAktif) {
+    denizYollariAktif = true;
+    if (btn) btn.classList.add('active');
+
+    stratejikDenizYollari.forEach(nokta => {
+      let iconHtml = '<i class="fa-solid fa-anchor"></i>';
+      let iconClass = 'maritime-strait-icon';
+
+      if (nokta.kat === 'danger') {
+        iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+        iconClass = 'maritime-danger-icon';
+      }
+
+      const customIcon = L.divIcon({
+        className: iconClass,
+        html: iconHtml,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+
+      const m = L.marker([nokta.lat, nokta.lng], { icon: customIcon }).addTo(map);
+      let renkKod = nokta.kat === 'danger' ? 'var(--tactical-red)' : 'var(--accent-cyan)';
+      
+      m.bindPopup(`
+        <div style="font-family: var(--font-mono); padding: 2px;">
+          <strong style="color: ${renkKod}; font-size: 11px;">[${nokta.tip.toUpperCase()}] ${nokta.ad}</strong><br>
+          <span style="font-size: 9.5px; color: #a0a0a0; display:block; margin-top:4px;">${nokta.detay}</span>
+        </div>
+      `);
+
+      stratejikDenizMarkers[nokta.ad] = m;
+    });
+
+    logEkle("[DENİZ GÜVENLİĞİ] Stratejik deniz yolları haritaya eklendi.");
+  } else {
+    denizYollariAktif = false;
+    if (btn) btn.classList.remove('active');
+
+    Object.keys(stratejikDenizMarkers).forEach(k => { map.removeLayer(stratejikDenizMarkers[k]); });
+    stratejikDenizMarkers = {};
+    logEkle("[DENİZ GÜVENLİĞİ] Stratejik deniz yolları katmanı gizlendi.");
+  }
+}
+
+async function toggleRainViewerRadar() {
+  const btn = document.getElementById('f-rainviewer');
+  if (!rainViewerAktif) {
+    try {
+      logEkle("[HAVA] RainViewer canlı radar verisi sorgulanıyor...");
+      const response = await safeFetch("https://api.rainviewer.com/public/weather-maps.json");
+      if (response && response.ok) {
+        const data = await response.json();
+        if (data && data.radar && data.radar.past && data.radar.past.length > 0) {
+          const lastFrame = data.radar.past[data.radar.past.length - 1];
+          const host = data.host || "https://tilecache.rainviewer.com";
+          const tileUrl = `${host}${lastFrame.path}/256/{z}/{x}/{y}/2/1_1.png`;
+          if (rainViewerLayer) map.removeLayer(rainViewerLayer);
+          rainViewerLayer = L.tileLayer(tileUrl, { opacity: 0.65, zIndex: 100, tileSize: 256, noWrap: true });
+          rainViewerLayer.addTo(map);
+          rainViewerAktif = true;
+          if (btn) btn.classList.add('active');
+          logEkle("[HAVA] Canlı 2D yağış/fırtına radarı haritaya yüklendi.");
+        }
+      }
+    } catch (err) { logEkle("[HAVA UYARI] Radar verisine erişilemedi."); }
+  } else {
+    if (rainViewerLayer) { map.removeLayer(rainViewerLayer); rainViewerLayer = null; }
+    rainViewerAktif = false;
+    if (btn) btn.classList.remove('active');
+    logEkle("[HAVA] Canlı yağış radarı kapatıldı.");
+  }
+}
+
+function haritaModunuDegistir() {
+  const btn = document.querySelector('.map-mode-toggle');
+  const leafletDiv = document.getElementById('map');
+  const cesiumDiv = document.getElementById('cesiumContainer');
+
+  if (!is3DMode) {
+    leafletDiv.style.display = 'none';
+    cesiumDiv.style.display = 'block';
+    btn.innerHTML = '<i class="fa-solid fa-map"></i> <span>[ 2D ]</span>';
+    btn.style.borderColor = "var(--tactical-red)";
+    btn.style.color = "var(--tactical-red)";
+    is3DMode = true;
+
+    if (!cesiumViewer) {
+      cesiumViewer = new Cesium.Viewer('cesiumContainer', {
+        animation: false, baseLayerPicker: false, fullscreenButton: false, vrButton: false,
+        geocoder: false, homeButton: false, infoBox: false, sceneModePicker: false,
+        selectionIndicator: false, timeline: false, navigationHelpButton: false, baseLayer: false
+      });
+      const darkMatterProvider = new Cesium.UrlTemplateImageryProvider({
+        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+      });
+      cesiumViewer.imageryLayers.add(new Cesium.ImageryLayer(darkMatterProvider));
+      cesiumViewer.scene.globe.enableLighting = true;
+    }
+    logEkle("[SİSTEM] 3D Dünya Küresi Modu aktifleşti.");
+  } else {
+    cesiumDiv.style.display = 'none';
+    leafletDiv.style.display = 'block';
+    btn.innerHTML = '<i class="fa-solid fa-cube"></i> <span>[ 3D ]</span>';
+    btn.style.borderColor = "var(--border-color)";
+    btn.style.color = "var(--text-muted)";
+    is3DMode = false;
+    setTimeout(() => { map.invalidateSize(); }, 200);
+    logEkle("[SİSTEM] 2D Standart Taktik Harita Moduna dönüldü.");
+  }
+}
+
+const uydular = [
+  { name: "TÜRKSAT 4A", tle1: "1 39522U 14007A 26100.50000000  .00000100  00000-0  00000-0 0  9991", tle2: "2 39522   0.0500  42.0000 0001000   0.0000   0.0000  1.00270000100016", color: "#a371f7" },
+  { name: "TÜRKSAT 5A", tle1: "1 47306U 21001A 26100.50000000  .00000100  00000-0  00000-0 0  9992", tle2: "2 47306   0.0300  31.0000 0001000   0.0000   0.0000  1.00270000100024", color: "#a371f7" },
+  { name: "TÜRKSAT 5B", tle1: "1 50166U 21126A 26100.50000000  .00000100  00000-0  00000-0 0  9993", tle2: "2 50166   0.0400  42.0000 0001000   0.0000   0.0000  1.00270000100031", color: "#a371f7" },
+  { name: "ISS (UZAY İSTASYONU)", tle1: "1 25544U 98067A 26100.50000000  .00016717  00000-0  10270-3 0  9994", tle2: "2 25544  51.6400 208.0000 0004000 120.0000 240.0000 15.49000000100045", color: "#39c5cf" }
+];
+
+let uyduMarkers = {};
+let uyduTakipInterval = null;
+let uydularAktif = false;
+
+function updateSatellitePositions() {
+  const now = new Date();
+  uydular.forEach(sat => {
+    try {
+      const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
+      const positionAndVelocity = satellite.propagate(satrec, now);
+      const positionEci = positionAndVelocity.position;
+      if (positionEci) {
+        const gmst = satellite.gstime(now);
+        const positionGd = satellite.eciToGeodetic(positionEci, gmst);
+        const latitude = satellite.degreesLat(positionGd.latitude);
+        const longitude = satellite.degreesLong(positionGd.longitude);
+        const altitude = Math.round(positionGd.height);
+
+        if (uyduMarkers[sat.name]) {
+          uyduMarkers[sat.name].setLatLng([latitude, longitude]);
+        } else {
+          const satIcon = L.divIcon({
+            className: 'sat-marker-icon',
+            html: `<i class="fa-solid fa-satellite" style="color:${sat.color};"></i>`,
+            iconSize: [26, 26], iconAnchor: [13, 13]
+          });
+          const marker = L.marker([latitude, longitude], { icon: satIcon }).addTo(map);
+          marker.bindPopup(`<b>🛰️ Uydu Sinyali</b><br>${sat.name}<br>İrtifa: ${altitude} km`);
+          uyduMarkers[sat.name] = marker;
+        }
+      }
+    } catch(err) {}
+  });
+}
+
+function toggleUydular() {
+  const btn = document.getElementById('f-uydu');
+  if (!uydularAktif) {
+    uydularAktif = true;
+    if (btn) btn.classList.add('active');
+    updateSatellitePositions();
+    uyduTakipInterval = setInterval(updateSatellitePositions, 2000);
+    logEkle("[UYDU TAKİP] Türksat ve ISS canlı izleniyor.");
+  } else {
+    uydularAktif = false;
+    if (btn) btn.classList.remove('active');
+    clearInterval(uyduTakipInterval);
+    Object.keys(uyduMarkers).forEach(key => { map.removeLayer(uyduMarkers[key]); });
+    uyduMarkers = {};
+    logEkle("[UYDU TAKİP] Canlı uydu takibi kapatıldı.");
+  }
+}
+
+let tumHaberler = [];
+let markerGrup = L.layerGroup().addTo(map);
+
+let aktifKategori = 'all';
+let aktifTehdit = 'all';
+let aramaMetni = '';
+
+const feedContainer = document.getElementById('feed-container');
+const logFeed = document.getElementById('log-feed');
+const counterEl = document.getElementById('counter');
+let logTimeout = null;
+
+function logEkle(mesaj) {
+  const zaman = new Date().toLocaleTimeString();
+  logFeed.innerHTML = `<div class="log-line"><span>[${zaman}]</span> ${mesaj}</div>`;
+  logFeed.classList.add('show');
+  if (logTimeout) clearTimeout(logTimeout);
+  logTimeout = setTimeout(() => { logFeed.classList.remove('show'); }, 4000);
+}
+
+function filtrele(tip, evt) {
+  aktifKategori = tip;
+  if (tip === 'all') {
+    document.querySelectorAll('.filter-grid .filter-btn').forEach(b => b.classList.add('active'));
+    aktifTehdit = 'all';
+    document.querySelectorAll('.threat-f-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tf-all')?.classList.add('active');
+    document.getElementById('search-input').value = '';
+    aramaMetni = '';
+    if (!uydularAktif) toggleUydular();
+    if (!rainViewerAktif) toggleRainViewerRadar();
+    if (!denizYollariAktif) toggleStratejikDenizYollari();
+    logEkle("TÜM AKIŞLAR AKTİFLEŞTİRİLDİ.");
+  } else {
+    document.querySelectorAll('.filter-grid .filter-btn').forEach(b => b.classList.remove('active'));
+    if (uydularAktif) document.getElementById('f-uydu')?.classList.add('active');
+    if (rainViewerAktif) document.getElementById('f-rainviewer')?.classList.add('active');
+    if (denizYollariAktif) document.getElementById('f-maritime')?.classList.add('active');
+
+    const btnIdMap = { 'Askeri': 'f-askeri', 'Siber': 'f-siber', 'Afet': 'f-afet', 'Yangın': 'f-yangin', 'Piracy': 'f-piracy' };
+    if (btnIdMap[tip]) document.getElementById(btnIdMap[tip])?.classList.add('active');
+    else if (evt && (evt.currentTarget || evt.target)) (evt.currentTarget || evt.target).classList.add('active');
+    logEkle(`KATEGORİ SÜZGECİ: ${tip.toUpperCase()}`);
+  }
+  arayuzuYenile();
+}
+
+function tehditFiltrele(seviye) {
+  aktifTehdit = seviye;
+  document.querySelectorAll('.threat-f-btn').forEach(b => b.classList.remove('active'));
+  if(seviye === 'all') document.getElementById('tf-all')?.classList.add('active');
+  else if(seviye === 'Kritik') document.getElementById('tf-kritik')?.classList.add('active');
+  else if(seviye === 'Yüksek') document.getElementById('tf-yuksek')?.classList.add('active');
+  else document.getElementById('tf-diger')?.classList.add('active');
+
+  logEkle(`TEHDİT SEVİYESİ SÜZGECİ: ${seviye.toUpperCase()}`);
+  arayuzuYenile();
+}
+
+function aramaGuncelle() {
+  aramaMetni = document.getElementById('search-input').value.toLowerCase().trim();
+  arayuzuYenile();
+}
+
+function toggleLiveAdsbMap() {
+  document.getElementById('live-portal-iframe').src = "https://globe.adsb.lol/?bounds=35.0,25.0,42.0,45.0";
+  document.getElementById('live-portal-container').style.display = 'block';
+  logEkle("[PORTAL] ADSB Uçuş Takip Portalı açıldı.");
+}
+
+function toggleLiveAisMap() {
+  document.getElementById('live-portal-iframe').src = "https://www.marinetraffic.com/en/ais/embed/zoom:6/centery:38.5/centerx:30.0/maptype:4/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:false/remember:false";
+  document.getElementById('live-portal-container').style.display = 'block';
+  logEkle("[PORTAL] MarineTraffic Deniz Takip Portalı açıldı.");
+}
+
+function toggleLiveWeatherMap() {
+  document.getElementById('live-portal-iframe').src = "https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=%C2%B0C&metricWind=km/h&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=39.0&lon=35.0";
+  document.getElementById('live-portal-container').style.display = 'block';
+  logEkle("[PORTAL] Windy Hava Radarı açıldı.");
+}
+
+function closeLivePortal() {
+  document.getElementById('live-portal-container').style.display = 'none';
+  document.getElementById('live-portal-iframe').src = "";
+  logEkle("[SİSTEM] Portal kapatıldı.");
+}
+
+function formatTarihSaat(tarihDegeri) {
+  try {
+    const d = tarihDegeri ? new Date(tarihDegeri) : new Date();
+    if (isNaN(d.getTime())) return "ANLIK";
+    
+    const bugun = new Date();
+    const isToday = d.getDate() === bugun.getDate() && 
+                    d.getMonth() === bugun.getMonth() && 
+                    d.getFullYear() === bugun.getFullYear();
+
+    const saat = String(d.getHours()).padStart(2, '0');
+    const dakika = String(d.getMinutes()).padStart(2, '0');
+
+    if (isToday) {
+      return `BUGÜN ${saat}:${dakika}`;
+    } else {
+      const gun = String(d.getDate()).padStart(2, '0');
+      const ay = String(d.getMonth() + 1).padStart(2, '0');
+      return `${gun}.${ay} ${saat}:${dakika}`;
+    }
+  } catch (e) {
+    return "ANLIK";
+  }
+}
+
+// CANLI VERİ MOTORU
+async function canliVerileriCek() {
+  logEkle("[SİSTEM] Çoklu Domain Canlı İstihbarat Kaynakları Sorgulanıyor...");
+  document.getElementById("sync-status").innerText = "SORGULANIYOR...";
+  document.getElementById("sync-status").style.color = "var(--tactical-amber)";
+
+  let yeniHaberler = [];
+  const suAn = new Date();
+
+  // 1. KÜRESEL ASKERİ ÇATIŞMALAR & GERİLİM AKIŞI
+  try {
+    const globalMilRssUrl = "https://news.google.com/rss/search?q=military+conflict+OR+airstrike+OR+defense+attack+when:1d&hl=en-US&gl=US&ceid=US:en";
+    const globalMilRes = await safeFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(globalMilRssUrl)}`);
+    if (globalMilRes && globalMilRes.ok) {
+      const globalMilData = await globalMilRes.json();
+      if (globalMilData && globalMilData.items) {
+        const catSahaNoktalari = [
+          { lat: 33.3152, lng: 44.3661, ad: "Irak / Bölgesel Güvenlik Hattı" },
+          { lat: 33.5138, lng: 36.2765, ad: "Suriye / Operasyon Bölgesi" },
+          { lat: 48.3794, lng: 31.1656, ad: "Doğu Avrupa / Ukrayna Çatışma Sahası" },
+          { lat: 31.5000, lng: 34.4667, ad: "Doğu Akdeniz / Orta Doğu Temas Hattı" }
+        ];
+
+        globalMilData.items.slice(0, 8).forEach((art, idx) => {
+          const nokta = catSahaNoktalari[idx % catSahaNoktalari.length];
+          const milZamani = art.pubDate ? new Date(art.pubDate) : suAn;
+          const haberMetni = htmlTemizle(art.content || art.description || art.title);
+
+          yeniHaberler.push({
+            baslik: `⚔️ Askeri Çatışma / Operasyon: ${art.title ? art.title.substring(0, 80) : 'Sınır Ötesi Askeri Hareketlilik'}`,
+            detay: `[GLOBAL MILITARY CONFLICT CTI REPORT]\nSaha Konum Tespiti: ${nokta.ad}\n\nİstihbarat Metni:\n${haberMetni}`,
+            enlem: nokta.lat + (Math.random() * 0.8 - 0.4),
+            boylam: nokta.lng + (Math.random() * 0.8 - 0.4),
+            kategori: "Askeri",
+            tehdit_seviyesi: "Kritik",
+            kaynak_guvenilirlik: "A1 (Global Defense OSINT)",
+            kaynak: art.link || "#",
+            tarihSaat: milZamani
+          });
+        });
+        logEkle("[ASKERİ] Canlı küresel askeri çatışma verileri senkronize edildi.");
+      }
+    }
+  } catch (e) {}
+
+  // 2. TÜRKÇE GÜNCEL ASKERİ HABERLER
+  try {
+    const milRssUrl = "https://news.google.com/rss/search?q=savunma+sanayii+OR+TSK+OR+harekat+OR+donanma+when:2d&hl=tr&gl=TR&ceid=TR:tr";
+    const milRes = await safeFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(milRssUrl)}`);
+    if (milRes && milRes.ok) {
+      const milData = await milRes.json();
+      if (milData && milData.items) {
+        const askeriNoktalar = [
+          { lat: 39.9334, lng: 32.8597, ad: "Ankara / MSB & SSB" },
+          { lat: 37.0662, lng: 37.3833, ad: "Gaziantep / Sınır Hattı" },
+          { lat: 36.8841, lng: 30.7056, ad: "Akdeniz / Donanma Seyir Alanı" },
+          { lat: 41.0082, lng: 28.9784, ad: "Marmara / Deniz Komutanlığı" },
+          { lat: 38.4192, lng: 27.1287, ad: "Ege / Hava Komutanlığı" }
+        ];
+        milData.items.slice(0, 10).forEach((art, idx) => {
+          const nokta = askeriNoktalar[idx % askeriNoktalar.length];
+          const milZamani = art.pubDate ? new Date(art.pubDate) : suAn;
+          const haberMetni = htmlTemizle(art.content || art.description || art.title);
+          yeniHaberler.push({
+            baslik: art.title ? art.title.substring(0, 85) : "Savunma ve Operasyonel Gelişme",
+            detay: `${haberMetni}\n\n[Bölge Notu]: ${nokta.ad} çevresinde takip edilmektedir.`,
+            enlem: nokta.lat + (Math.random() * 0.6 - 0.3),
+            boylam: nokta.lng + (Math.random() * 0.6 - 0.3),
+            kategori: "Askeri",
+            tehdit_seviyesi: "Yüksek",
+            kaynak_guvenilirlik: "A1 (TR Savunma OSINT)",
+            kaynak: art.link || "#",
+            tarihSaat: milZamani
+          });
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 3. DENİZ KORSANLIĞI & GEMİ SALDIRILARI
+  try {
+    const piracyQueries = [
+      "https://news.google.com/rss/search?q=piracy+ship+attack+OR+tanker+hijacked+OR+gulf+of+aden+pirates&hl=en-US&gl=US&ceid=US:en",
+      "https://news.google.com/rss/search?q=korsan+gemi+saldiri+OR+deniz+haydutlugu+OR+gemi+korsanlar&hl=tr&gl=TR&ceid=TR:tr"
+    ];
+
+    const konumSozlugu = [
+      { anahtar: "yemen", lat: 12.7855, lng: 45.0187, ad: "Yemen / Aden Körfezi Koridoru" },
+      { anahtar: "somali", lat: 2.0469, lng: 45.3182, ad: "Somali / Hint Okyanusu Kıyı Şeridi" },
+      { anahtar: "red sea", lat: 19.5, lng: 38.5, ad: "Kızıldeniz Ticaret Hattı" },
+      { anahtar: "kızıldeniz", lat: 19.5, lng: 38.5, ad: "Kızıldeniz Ticaret Hattı" },
+      { anahtar: "guinea", lat: 2.5, lng: 6.5, ad: "Gine Körfezi (Batı Afrika)" },
+      { anahtar: "malacca", lat: 2.5, lng: 101.5, ad: "Malaka Boğazı (Güneydoğu Asya)" },
+      { anahtar: "black sea", lat: 43.5, lng: 34.0, ad: "Karadeniz Seyir Sahası" },
+      { anahtar: "karadeniz", lat: 43.5, lng: 34.0, ad: "Karadeniz Seyir Sahası" },
+      { anahtar: "hormuz", lat: 26.56, lng: 56.25, ad: "Hürmüz Boğazı Girişi" },
+      { anahtar: "istanbul", lat: 41.0082, lng: 28.9784, ad: "İstanbul Boğazı Yaklaşması" },
+      { anahtar: "singapore", lat: 1.29027, lng: 103.85195, ad: "Singapur Boğazı" },
+      { anahtar: "bab el-mandeb", lat: 12.5833, lng: 43.3333, ad: "Babülmendep Boğazı" }
+    ];
+
+    for (let rssUrl of piracyQueries) {
+      try {
+        const piracyRes = await safeFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+        if (piracyRes && piracyRes.ok) {
+          const piracyData = await piracyRes.json();
+          if (piracyData && piracyData.items) {
+            piracyData.items.slice(0, 6).forEach((art, idx) => {
+              let metin = (art.title + " " + (art.content || art.description || "")).toLowerCase();
+              let secilenKoord = { lat: 11.5 + (idx * 1.5), lng: 43.5 + (idx * 1.5), ad: "Uluslararası Ticari Deniz Suları" };
+
+              for (let k of konumSozlugu) {
+                if (metin.includes(k.anahtar)) {
+                  secilenKoord = { lat: k.lat, lng: k.lng, ad: k.ad };
+                  break;
+                }
+              }
+
+              const piracyZamani = art.pubDate ? new Date(art.pubDate) : suAn;
+              const haberIcerik = htmlTemizle(art.content || art.description || art.title);
+
+              yeniHaberler.push({
+                baslik: `🏴‍☠️ KORSAN / GEMİ SALDIRISI: ${art.title ? art.title.substring(0, 80) : "Deniz Güvenlik İhlali"}`,
+                detay: `[UKMTO & MARITIME PIRACY CTI REPORT]\nSaha / Konum Tespiti: ${secilenKoord.ad}\n\nOlay Detayı:\n${haberIcerik}`,
+                enlem: secilenKoord.lat + (Math.random() * 0.3 - 0.15),
+                boylam: secilenKoord.lng + (Math.random() * 0.3 - 0.15),
+                kategori: "Askeri",
+                isPiracy: true,
+                tehdit_seviyesi: "Kritik",
+                kaynak_guvenilirlik: "A1 (Maritime Piracy OSINT)",
+                kaynak: art.link || "#",
+                tarihSaat: piracyZamani
+              });
+            });
+          }
+        }
+      } catch (e) {}
+    }
+    logEkle("[DENİZ GÜVENLİĞİ] Korsanlık ve gemi saldırı ihbarları haritalandı.");
+  } catch (e) {}
+
+  // 4. SİBER CTI
+  try {
+    const cyberCtiRssUrl = "https://news.google.com/rss/search?q=botnet+malware+cyber+attack+IOC+when:2d&hl=en-US&gl=US&ceid=US:en";
+    const cyberCtiRes = await safeFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(cyberCtiRssUrl)}`);
+    if (cyberCtiRes && cyberCtiRes.ok) {
+      const cyberCtiData = await cyberCtiRes.json();
+      if (cyberCtiData && cyberCtiData.items) {
+        const siberMerkezler = [
+          { lat: 39.9334, lng: 32.8597, ad: "TR-CERT / Ankara" },
+          { lat: 52.3676, lng: 4.9041, ad: "AB Siber Güvenlik / Amsterdam" },
+          { lat: 38.8951, lng: -77.0364, ad: "US-CISA / Washington" },
+          { lat: 35.6762, lng: 139.6503, ad: "Asya C2 / Tokyo" },
+          { lat: 51.5074, lng: -0.1278, ad: "NCSC / Londra" }
+        ];
+
+        cyberCtiData.items.slice(0, 8).forEach((art, idx) => {
+          const lokasyon = siberMerkezler[idx % siberMerkezler.length];
+          const iocZaman = art.pubDate ? new Date(art.pubDate) : suAn;
+          const ctiIcerik = htmlTemizle(art.content || art.description || art.title);
+
+          yeniHaberler.push({
+            baslik: `☣️ Siber Tehdit & Zararlı: ${art.title ? art.title.substring(0, 75) : 'Kritik Zararlı İhbarı'}`,
+            detay: `[GLOBAL CTI THREAT FEED]\nSorumlu Merkez: ${lokasyon.ad}\n\nTeknik İhbar / Detay:\n${ctiIcerik}\n\nÖneri: Ağ güvenlik duvarı kurallarınızı güncelleyiniz.`,
+            enlem: lokasyon.lat + (Math.random() * 0.8 - 0.4),
+            boylam: lokasyon.lng + (Math.random() * 0.8 - 0.4),
+            kategori: "Siber",
+            tehdit_seviyesi: "Kritik",
+            kaynak_guvenilirlik: "A1 (Global CTI Threat Feed)",
+            kaynak: art.link || "#",
+            tarihSaat: iocZaman
+          });
+        });
+        logEkle("[SİBER] Canlı CTI zararlı yazılım verileri yüklendi.");
+      }
+    }
+  } catch (e) {}
+
+  // 5. RANSOMWARE.LIVE DARKWEB İHBARLARI
+  try {
+    const rwRssUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://www.ransomware.live/rss.xml";
+    const rwRes = await safeFetch(rwRssUrl);
+    if (rwRes && rwRes.ok) {
+      const rwData = await rwRes.json();
+      if (rwData && rwData.items && rwData.items.length > 0) {
+        rwData.items.slice(0, 6).forEach((item) => {
+          const rwZamani = item.pubDate ? new Date(item.pubDate) : suAn;
+          const haberMetni = htmlTemizle(item.content || item.description || item.title);
+
+          yeniHaberler.push({
+            baslik: `🏴‍☠️ Ransomware Sızıntısı: ${item.title ? item.title.substring(0, 75) : 'Kritik Şirket Verisi Sızdırıldı'}`,
+            detay: `[RANSOMWARE.LIVE DARKWEB CTI REPORT]\nSızdırılan Kurban: ${item.title}\nSaptama Tarihi: ${item.pubDate || 'Güncel'}\n\nOlay Detayı:\n${haberMetni}`,
+            enlem: 38.5 + (Math.random() * 6 - 3),
+            boylam: 33.0 + (Math.random() * 8 - 4),
+            kategori: "Siber",
+            tehdit_seviyesi: "Kritik",
+            kaynak_guvenilirlik: "A1 (Ransomware.live Darkweb CTI)",
+            kaynak: item.link || "https://www.ransomware.live",
+            tarihSaat: rwZamani
+          });
+        });
+        logEkle("[SİBER CTI] Ransomware.live sızıntı ihbarları yüklendi.");
+      }
+    }
+  } catch (e) {}
+
+  // 6. TÜRKÇE SİBER HABERLER
+  try {
+    const cyberRssUrl = "https://news.google.com/rss/search?q=siber+saldiri+OR+hacker+OR+ransomware+OR+veri+sizintisi+when:2d&hl=tr&gl=TR&ceid=TR:tr";
+    const cyberRes = await safeFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(cyberRssUrl)}`);
+    if (cyberRes && cyberRes.ok) {
+      const cyberData = await cyberRes.json();
+      if (cyberData && cyberData.items) {
+        cyberData.items.slice(0, 6).forEach((art) => {
+          const cyberZamani = art.pubDate ? new Date(art.pubDate) : suAn;
+          const siberHaberMetni = htmlTemizle(art.content || art.description || art.title);
+          yeniHaberler.push({
+            baslik: `🔓 Siber Olay / Sızıntı: ${art.title ? art.title.substring(0, 75) : "Siber Güvenlik İhlali"}`,
+            detay: `[Siber İhbar Detayı]\n${siberHaberMetni}`,
+            enlem: 39.0 + (Math.random() * 3 - 1.5),
+            boylam: 35.0 + (Math.random() * 5 - 2.5),
+            kategori: "Siber",
+            tehdit_seviyesi: "Yüksek",
+            kaynak_guvenilirlik: "A1 (TR Siber Analiz)",
+            kaynak: art.link || "#",
+            tarihSaat: cyberZamani
+          });
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 7. CISA KRİTİK ZAFİYETLER
+  try {
+    const cisaRes = await safeFetch("https://raw.githubusercontent.com/cisagov/kev-data/main/known_exploited_vulnerabilities.json");
+    if (cisaRes && cisaRes.ok) {
+      const cisaData = await cisaRes.json();
+      if (cisaData && cisaData.vulnerabilities) {
+        const enSonZafiyetler = cisaData.vulnerabilities.slice(-8).reverse();
+        enSonZafiyetler.forEach((item) => {
+          const cisaZamani = item.dateAdded ? new Date(item.dateAdded) : suAn;
+          yeniHaberler.push({
+            baslik: `🚨 Yeni İstismar Zafiyeti: [${item.cveID}] ${item.vendorProject} - ${item.product}`,
+            detay: `Zafiyet Kimliği: ${item.cveID}\nYazılım Üreticisi / Ürün: ${item.vendorProject} / ${item.product}\nZafiyet Açıklaması: ${item.vulnerabilityName}\n\nGerekli Aksiyon: ${item.requiredAction || 'Sistem üreticisi tarafından yayımlanan güvenlik yamasını uygulayınız.'}`,
+            enlem: 38.5 + (Math.random() * 2 - 1),
+            boylam: 33.0 + (Math.random() * 4 - 2),
+            kategori: "Siber",
+            tehdit_seviyesi: "Kritik",
+            kaynak_guvenilirlik: "A1 (US CISA KEV)",
+            kaynak: `https://nvd.nist.gov/vuln/detail/${item.cveID}`,
+            tarihSaat: cisaZamani
+          });
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 8. SİSMİK DEPREM (USGS)
+  try {
+    const usgsRes = await safeFetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson");
+    if (usgsRes && usgsRes.ok) {
+      const usgsData = await usgsRes.json();
+      if (usgsData && usgsData.features) {
+        usgsData.features.slice(0, 8).forEach(f => {
+          const mag = f.properties.mag;
+          const yer = f.properties.place;
+          const url = f.properties.url;
+          const lng = f.geometry.coordinates[0];
+          const lat = f.geometry.coordinates[1];
+          const derinlik = f.geometry.coordinates[2];
+          const depremZamani = f.properties.time ? new Date(f.properties.time) : suAn;
+          let tehdit = mag >= 6.0 ? "Kritik" : (mag >= 4.5 ? "Yüksek" : "Düşük");
+          if (!isNaN(lat) && !isNaN(lng)) {
+            yeniHaberler.push({
+              baslik: `Sismik Sinyal: M ${mag.toFixed(1)} - ${yer}`,
+              detay: `USGS Sismik İstasyon Raporu:\nDeprem Büyüklüğü: M ${mag.toFixed(1)}\nOdak Derinliği: ${derinlik.toFixed(1)} km\nKonum / Merkez Üssü: ${yer}\nSismik Kod: ${f.id}`,
+              enlem: lat, boylam: lng, kategori: "Afet",
+              tehdit_seviyesi: tehdit, kaynak_guvenilirlik: "A1 (USGS Official)", kaynak: url,
+              tarihSaat: depremZamani
+            });
+          }
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 9. TERMAL UYDU YANGIN (NASA EONET)
+  try {
+    const eonetRes = await safeFetch("https://eonet.gsfc.nasa.gov/api/v3/events?status=open&limit=20");
+    if (eonetRes && eonetRes.ok) {
+      const eonetData = await eonetRes.json();
+      if (eonetData && eonetData.events) {
+        eonetData.events.forEach(ev => {
+          if (ev.geometry && ev.geometry.length > 0) {
+            const geom = ev.geometry[ev.geometry.length - 1];
+            const lng = geom.coordinates[0];
+            const lat = geom.coordinates[1];
+            const baslik = ev.title || "Küresel Orman Yangını";
+            const yanginZamani = geom.date ? new Date(geom.date) : suAn;
+            if (!isNaN(lat) && !isNaN(lng)) {
+              yeniHaberler.push({
+                baslik: `🔥 Termal Uydu Tespiti: ${baslik}`,
+                detay: `NASA EONET Uydu Sensör Verisi:\nOlay Başlığı: ${ev.title}\nKategori: ${ev.categories && ev.categories[0] ? ev.categories[0].title : 'Orman Yangını / Isı Anomalisi'}\nSaptama Zamanı: ${geom.date || 'Güncel'}`,
+                enlem: lat, boylam: lng, kategori: "Yangın", isYangin: true,
+                tehdit_seviyesi: "Kritik", kaynak_guvenilirlik: "A1 (NASA EONET Uyduları)",
+                kaynak: ev.sources && ev.sources[0] ? ev.sources[0].url : "https://eonet.gsfc.nasa.gov/",
+                tarihSaat: yanginZamani
+              });
+            }
+          }
+        });
+      }
+    }
+  } catch (e) {}
+
+  // BİRLEŞTİR VE YENİLE
+  if (yeniHaberler.length > 0) {
+    tumHaberler = yeniHaberler;
+    document.getElementById("sync-status").innerText = "ONLINE";
+    document.getElementById("sync-status").style.color = "var(--tactical-green)";
+    logEkle(`[SENKRONİZE] Toplam ${yeniHaberler.length} adet canlı haber ve korsanlık ihbarı yüklendi.`);
+  } else {
+    document.getElementById("sync-status").innerText = "OFFLINE";
+    document.getElementById("sync-status").style.color = "var(--tactical-red)";
+  }
+
+  arayuzuYenile();
+}
+
+function arayuzuYenile() {
+  markerGrup.clearLayers();
+  feedContainer.innerHTML = '';
+  if (cesiumViewer) { cesiumViewer.entities.removeAll(); }
+
+  const birlesikHaberler = [...tumHaberler];
+
+  let gosterilecekler = birlesikHaberler.filter(haber => {
+    let katUyum = false;
+    if (aktifKategori === 'all') {
+      katUyum = true;
+    } else if (aktifKategori === 'Piracy') {
+      katUyum = (haber.isPiracy === true);
+    } else {
+      katUyum = (haber.kategori === aktifKategori);
+    }
+
+    let tehditUyum = true;
+    if (aktifTehdit !== 'all') {
+      if (aktifTehdit === 'Düşük') tehditUyum = (haber.tehdit_seviyesi === 'Düşük' || haber.tehdit_seviyesi === 'Orta');
+      else tehditUyum = (haber.tehdit_seviyesi === aktifTehdit);
+    }
+    let aramaUyum = true;
+    if (aramaMetni !== '') aramaUyum = (haber.baslik + " " + haber.detay).toLowerCase().includes(aramaMetni);
+    return katUyum && tehditUyum && aramaUyum;
+  });
+
+  gosterilecekler.sort((a, b) => {
+    const timeA = a.tarihSaat ? new Date(a.tarihSaat).getTime() : 0;
+    const timeB = b.tarihSaat ? new Date(b.tarihSaat).getTime() : 0;
+    return timeB - timeA;
+  });
+
+  let gosterilenSayi = 0;
+
+  gosterilecekler.forEach(haber => {
+    if (haber.enlem === undefined || haber.boylam === undefined) return;
+    gosterilenSayi++;
+
+    let tSeviye = (haber.tehdit_seviyesi || "Düşük").toLowerCase();
+    let sektorSınıf = "istihbarat";
+    if(haber.kategori === "Askeri") sektorSınıf = "askeri";
+    if(haber.kategori === "Siber") sektorSınıf = "siber";
+    if(haber.kategori === "Afet") sektorSınıf = "afet";
+    if(haber.kategori === "Yangın") sektorSınıf = "yangin";
+
+    let markerIcon;
+    if (haber.isPiracy) {
+      markerIcon = L.divIcon({ className: 'piracy-marker-icon', html: `<i class="fa-solid fa-skull"></i>`, iconSize: [26, 26], iconAnchor: [13, 13] });
+    } else if (haber.isYangin) {
+      markerIcon = L.divIcon({ className: 'fire-marker-icon', html: `<i class="fa-solid fa-fire"></i>`, iconSize: [22, 22], iconAnchor: [11, 11] });
+    } else {
+      markerIcon = L.divIcon({ className: 'radar-marker', html: `<div class="radar-dot bg-${sektorSınıf}"></div><div class="radar-wave wave-${sektorSınıf}"></div>`, iconSize: [22, 22], iconAnchor: [11, 11] });
+    }
+
+    const marker = L.marker([haber.enlem, haber.boylam], { icon: markerIcon });
+    marker.bindPopup(`
+      <div style="font-family: var(--font-mono); padding: 2px;">
+        <strong style="color: var(--accent-blue); font-size: 10.5px;">${haber.baslik}</strong><br>
+        <span style="font-size: 9.5px; color: #a0a0a0;"><b>Kat:</b> ${haber.isPiracy ? 'Korsanlık' : haber.kategori} | <b>Tehdit:</b> ${haber.tehdit_seviyesi}</span>
+      </div>
+    `);
+
+    marker.on('click', () => { detayAnalizAc(haber); });
+    haber.leafletMarker = marker;
+    markerGrup.addLayer(marker);
+
+    if (cesiumViewer) {
+      cesiumViewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(haber.boylam, haber.enlem),
+        point: { pixelSize: 10, color: haber.isPiracy ? Cesium.Color.RED : Cesium.Color.ORANGERED, outlineColor: Cesium.Color.WHITE, outlineWidth: 2 },
+        description: haber.detay,
+        properties: { haberVerisi: haber }
+      });
+    }
+
+    const kart = document.createElement('div');
+    const tarihStr = formatTarihSaat(haber.tarihSaat);
+
+    kart.className = `tactic-card`;
+    kart.innerHTML = `
+      <div class="card-main-info">
+        <span class="badge-threat th-${tSeviye}">${tSeviye}</span>
+        <h4>${haber.baslik}</h4>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px; white-space: nowrap;">
+        <div style="font-size: 7.5px; font-family: var(--font-mono); color: var(--text-muted);"><i class="fa-regular fa-clock" style="font-size: 6.5px;"></i> ${tarihStr}</div>
+      </div>
+    `;
+
+    kart.addEventListener('click', () => {
+      if (!is3DMode) map.setView([haber.enlem, haber.boylam], 6, { animate: true });
+      else if (cesiumViewer) cesiumViewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(haber.boylam, haber.enlem, 1000000) });
+      detayAnalizAc(haber);
+    });
+
+    feedContainer.appendChild(kart);
+  });
+
+  counterEl.innerText = gosterilenSayi < 10 ? "0" + gosterilenSayi : gosterilenSayi;
+}
+
+// DETAYLI SITREP MODALI
+function detayAnalizAc(haber) {
+  document.getElementById('detay-ana-baslik').innerText = haber.baslik;
+  document.getElementById('detay-kategori').innerText = haber.isPiracy ? "DENİZ KORSANLIĞI / İHLAL" : haber.kategori.toUpperCase();
+  document.getElementById('detay-tehdit').innerText = haber.tehdit_seviyesi.toUpperCase();
+  document.getElementById('detay-tehdit').style.color = haber.tehdit_seviyesi === 'Kritik' ? 'var(--tactical-red)' : 'var(--tactical-amber)';
+  document.getElementById('detay-koordinat').innerText = `${Number(haber.enlem).toFixed(4)}° N, ${Number(haber.boylam).toFixed(4)}° E`;
+  document.getElementById('detay-guvenilirlik').innerText = haber.kaynak_guvenilirlik || "A1 (OSINT Doğrulanmış)";
+
+  let etkiAlani = "Bölgesel Sivil ve Kritik Altyapı";
+  let aktor = "Bağımsız / Teyit Edilmemiş Unsurlar";
+  let aiOzet = "";
+  let tavsiye = "";
+
+  if (haber.isPiracy) {
+    etkiAlani = "Ticari Deniz Taşıma Koridoru & Seyir Güvenliği";
+    aktor = "Asimetrik Korsan Grupları / Deniz Haydutları";
+    aiOzet = `[DENİZ GÜVENLİK TEHDİDİ]\nHedef bölgede ticaret gemilerine yönelik asimetrik korsanlık veya taciz olayı rapor edilmiştir.\n\nOlay Tespiti:\n"${haber.baslik}"`;
+    tavsiye = "Bölgedeki askeri devriye gemileri ve UKMTO/IMB merkezleriyle anlık irtibat kurulmalı, korumalı seyrüsefer hattı kullanılmalıdır.";
+  } else if (haber.kategori === 'Askeri') {
+    etkiAlani = "Milli Savunma, Donanma ve Sınır Güvenliği Çevresi";
+    aktor = "Asimetrik / Düzenli Askeri Unsurlar";
+    aiOzet = `[ASKERİ OPERASYONEL RİSK]\nBölgedeki sinyaller operasyonel stratejik hat hareketliliğiyle örtüşmektedir.\n\nİstihbarat Özeti:\n${haber.detay.substring(0, 200)}...`;
+    tavsiye = "Hava ve deniz koridorlarında teyakkuz seviyesi artırılmalı, keşif-gözetleme vasıtaları aktif tutulmalıdır.";
+  } else if (haber.kategori === 'Siber') {
+    etkiAlani = "Kurumsal Ağlar, Bulut ve Kritik BT Altyapısı";
+    aktor = "Siber Tehdit Grupları / APT / Ransomware Aktörleri";
+    aiOzet = `[SİBER TEHDİT İSTİHBARATI]\nTespit edilen zararlı yazılım veya sızıntı ihbarı aktif olarak risk taşımaktadır.\n\nTeknik Detay:\n${haber.detay.substring(0, 250)}`;
+    tavsiye = "Ağ güvenlik duvarında ilgili IOC bloklamaları yapılmalı, veri sızıntı kontrolleri acilen uygulanmalıdır.";
+  } else if (haber.kategori === 'Afet') {
+    etkiAlani = "Sismik Riskli Yerleşim Alanları ve Fay Hatları";
+    aktor = "Doğal Sismik / Tektonik Enerji Boşalımı";
+    aiOzet = `[SİSMİK DEPREM İHBARI]\nUSGS sensörlerinden alınan canlı veriler doğrultusunda tektonik hareketlilik kaydedildi.\n\nSismik Özet:\n${haber.detay}`;
+    tavsiye = "Sismik artçı dalga riski takip edilmeli, bölgesel afet arama-kurtarma birimleri bilgilendirilmelidir.";
+  } else if (haber.kategori === 'Yangın') {
+    etkiAlani = "Ormanlık Alanlar, Flora ve Ekolojik Denge";
+    aktor = "Termal / İklimsel / Beşeri Kaynaklı Odaklar";
+    aiOzet = `[NASA TERMAL UYDU TESPİTİ]\nNASA EONET uydularından alınan anlık verilere göre kızılötesi ısı anomalisi tespit edildi.\n\nUydu Detayı:\n${haber.detay}`;
+    tavsiye = "Yangın söndürme hava araçları ve kara müdahale ekipleri ilgili koordinata sevk edilmelidir.";
+  }
+
+  document.getElementById('detay-etki-alani').innerText = etkiAlani;
+  document.getElementById('detay-aktor').innerText = aktor;
+  document.getElementById('detay-ai-ozet').innerText = aiOzet;
+  document.getElementById('detay-tavsiye').innerText = tavsiye;
+  document.getElementById('detay-tam-metin').innerText = haber.detay;
+  document.getElementById('detay-kaynak-link').href = haber.kaynak || "#";
+  
+  document.getElementById('detail-modal').classList.add('active');
+}
+
+function detayModalKapat() { document.getElementById('detail-modal').classList.remove('active'); }
+
+function durumRaporuUret() {
+  if (tumHaberler.length === 0) return;
+  let rapor = `==================================================\n ARGUS_NET // HYBRID SITUATION REPORT (SITREP)\n==================================================\n\n`;
+  tumHaberler.forEach((h, idx) => {
+    rapor += `[${idx + 1}] Kategori: ${h.isPiracy ? 'KORSANLIK' : h.kategori} | Tehdit: ${h.tehdit_seviyesi}\nBaşlık: ${h.baslik}\nKoordinat: ${h.enlem.toFixed(2)}, ${h.boylam.toFixed(2)}\n--------------------------------------------------\n`;
+  });
+  document.getElementById('report-text').value = rapor;
+  document.getElementById('report-modal').classList.add('active');
+}
+
+function modalKapat() { document.getElementById('report-modal').classList.remove('active'); }
+
+async function raporKopyala() {
+  await navigator.clipboard.writeText(document.getElementById('report-text').value);
+  logEkle("[SİSTEM] Rapor panoya kopyalandı.");
+}
+
+function raporIndir() {
+  const blob = new Blob([document.getElementById('report-text').value], { type: 'text/plain;charset=utf-8' });
+  const link = document.createElement('a'); link.href = URL.ObjectURL(blob); link.download = 'ARGUS_SITREP.txt'; link.click();
+}
+
+filtrele('all');
+canliVerileriCek();
+turkiyeHaberleriCek();
+
+setInterval(canliVerileriCek, 60000);
+setInterval(turkiyeHaberleriCek, 120000);
+</script>
+</body>
+</html>
