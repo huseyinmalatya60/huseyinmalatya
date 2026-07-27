@@ -93,13 +93,21 @@
     .res-val.green { color: #10b981; }
     .res-val.amber { color: #f59e0b; }
 
-    /* DASHBOARD GRID */
-    .dash-section-title { font-size: 12px; font-family: monospace; text-transform: uppercase; font-weight: bold; margin: 12px 0 8px 0; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
-    .dash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-    .dash-card { background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px; transition: all 0.2s ease; cursor: pointer; }
-    .dash-card:hover { border-color: #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); transform: translateY(-2px); }
-    .dash-card-title { font-size: 12px; font-weight: bold; color: #00f0ff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
-    .dash-card-desc { font-size: 10px; color: #94a3b8; line-height: 1.3; }
+    /* UNIFIED TECHNICAL DIRECTORY DESIGN */
+    .dir-search-wrapper { display: flex; align-items: center; background: #080d1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; margin-bottom: 20px; padding: 6px 12px; }
+    .dir-search-wrapper input { border: none; background: transparent; color: #fff; font-size: 11px; height: 32px; padding: 0 8px; }
+    .dir-search-wrapper input:focus { box-shadow: none; }
+    
+    .directory-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+    .dir-category { background: rgba(8, 13, 26, 0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .dir-category-title { font-size: 11px; font-weight: bold; font-family: monospace; padding-bottom: 6px; border-bottom: 1px dashed rgba(255,255,255,0.1); margin-bottom: 4px; }
+    
+    .dir-item { background: rgba(4, 7, 17, 0.4); border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding: 10px 12px; cursor: pointer; transition: all 0.2s; }
+    .dir-item:hover { border-color: #00f0ff; background: rgba(0, 240, 255, 0.03); transform: translateX(3px); }
+    .dir-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .dir-item-title { font-size: 11px; font-weight: bold; color: #fff; font-family: monospace; }
+    .dir-item-tag { font-size: 8px; font-family: monospace; color: #00f0ff; background: rgba(0, 240, 255, 0.1); padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(0,240,255,0.15); }
+    .dir-item-desc { font-size: 10px; color: #94a3b8; line-height: 1.4; }
 
     /* ADVANCED CANVAS STYLE */
     .topology-tabs { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; }
@@ -171,6 +179,17 @@
     .cdr-kpi-card { background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px; border-radius: 8px; text-align: center; }
     .cdr-kpi-val { font-size: 18px; font-weight: bold; color: #00f0ff; margin-top: 4px; }
 
+    /* WIFI ANALYZER STYLES */
+    .wifi-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; background: #080d1a; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); }
+    .wifi-tool-btn { background: #0d1527; border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; padding: 6px 12px; border-radius: 6px; font-family: monospace; font-size: 11px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .wifi-tool-btn:hover { background: rgba(0,240,255,0.1); border-color: #00f0ff; color: #fff; }
+    .wifi-tool-btn.active { background: rgba(0, 240, 255, 0.2); border-color: #00f0ff; color: #00f0ff; font-weight: bold; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+    .wifi-canvas-box { position: relative; width: 100%; height: 420px; background: #03050c; border: 1px solid rgba(0,240,255,0.2); border-radius: 8px; overflow: hidden; cursor: crosshair; }
+    #wifi-canvas { width: 100%; height: 100%; display: block; }
+    .wifi-legend { display: flex; gap: 12px; font-size: 10px; font-family: monospace; margin-top: 8px; justify-content: center; background: #080d1a; padding: 6px; border-radius: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 4px; }
+    .legend-color { width: 12px; height: 12px; border-radius: 2px; }
+
     /* FOOTER OPTIMIZATION */
     footer { height: auto; min-height: 44px; background: #040711; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 4px 16px; flex-shrink: 0; font-family: monospace; font-size: 11px; display: flex; flex-direction: column; justify-content: flex-end; }
     #cli-logs { max-height: 50px; overflow-y: auto; color: #64748b; line-height: 1.3; font-size: 10px; margin-bottom: 2px; display: none; }
@@ -237,9 +256,19 @@
           <button onclick="showPanel('qos')" id="btn-qos" class="nav-btn cucm-btn">VoIP QoS / DSCP Converter</button>
         </div>
 
+        <!-- CISCO SPECIAL SUITE -->
+        <div class="nav-group">
+          <div class="nav-title" style="color: #f59e0b; border-bottom: 1px dashed rgba(245, 158, 11, 0.3); padding-bottom: 4px;">🦎 CISCO SUITE</div>
+          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco IOS Config Boilerplates</button>
+          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco ACL Generator</button>
+          <button onclick="showPanel('cisco-trouble')" id="btn-cisco-trouble" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco IP Phone Troubleshooter</button>
+          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco Password Tool (Type 7)</button>
+        </div>
+
         <!-- NETWORK INFRASTRUCTURE SUITE -->
         <div class="nav-group">
           <div class="nav-title network-header">🌐 NETWORK SUITE</div>
+          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"> Wi-Fi Signal & Wall Attenuation</button>
           <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn">Dynamic NAT & PAT Sim</button>
           <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn">Topology Canvas (Advanced)</button>
           <button onclick="showPanel('multivendor')" id="btn-multivendor" class="nav-btn net-btn">Multi-Vendor Config Generator</button>
@@ -276,66 +305,477 @@
         <div id="panel-dashboard" class="panel active">
           <div class="panel-header">
             <div>
-              <div class="panel-title">ZeroPacket Toolset Overview</div>
-              <div class="panel-desc">CUCM Ses ve Ağ (Network) araçlarının ayrılmış katalog özeti.</div>
+              <div class="panel-title">System Directory & Technical Quick-Reference Hub</div>
+              <div class="panel-desc">Ağ ve CUCM ses altyapı araçlarının görev tanımlarını listeleyen hızlı başvuru dizini.</div>
             </div>
           </div>
 
-          <!-- CUCM SECTION -->
-          <div class="dash-section-title" style="color:#38edf8;">☎️ CUCM & VoIP Araçları</div>
-          <div class="dash-grid">
-            <div class="dash-card" onclick="showPanel('softphone')">
-              <div class="dash-card-title">WebRTC / SIP Softphone <span>➔</span></div>
-              <div class="dash-card-desc">Gerçek zamanlı DTMF, SIP sinyalleşme protokolü, Web Audio dalga boyu osiloskobu ve interaktif arama simülatörü.</div>
+          <!-- DYNAMIC FILTER/SEARCH BAR -->
+          <div class="dir-search-wrapper">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" style="margin-right: 8px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="dash-search" oninput="filterDashboardTools()" style="width: 100%;" placeholder="Aradığınız aracı veya protokolü filtreleyin (örn: SIP, OSPF, Wi-Fi, IP, DHCP)...">
+          </div>
+
+          <!-- UNIFIED DIRECTORY GRID -->
+          <div class="directory-grid">
+            
+            <!-- CATEGORY 1: CUCM & VOIP SUITE -->
+            <div class="dir-category">
+              <div class="dir-category-title" style="color: #38edf8;">☎️ CUCM & VOIP SUITE DIRECTORY</div>
+              
+              <div class="dir-item" onclick="showPanel('softphone')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">WebRTC / SIP Softphone Sim</span>
+                  <span class="dir-item-tag">Simülatör</span>
+                </div>
+                <div class="dir-item-desc">Tarayıcı tabanlı telefon arayüzü ile DTMF tonları üretir ve SIP REGISTER/INVITE mesaj trafiklerini canlı olarak analiz etmenizi sağlar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('sip-parser')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">SIP Log Parser & Call Flow</span>
+                  <span class="dir-item-tag">Ayrıştırıcı</span>
+                </div>
+                <div class="dir-item-desc">Karışık ham SIP log metinlerini işleyerek, arama adımlarını ve SDP protokol parametrelerini sıralı bir sinyalleşme diyagramına dönüştürür.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cdr-analytics')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">CDR Analytics & Billing</span>
+                  <span class="dir-item-tag">Metrik</span>
+                </div>
+                <div class="dir-item-desc">Arama Detay Kayıtlarını (CDR) tarayarak ACD (Ortalama Çağrı Süresi), ASR (Çağrı Başarı Oranı) ve çağrı sonlanma maliyetlerini hesaplar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cucm-deepdive')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">CUCM Deep Dive & Arch</span>
+                  <span class="dir-item-tag">Kılavuz</span>
+                </div>
+                <div class="dir-item-desc">Cluster veritabanı replikasyonu, CSS/Partition hiyerarşisi, CUBE SIP Trunk mimarisi ve telefonların TFTP/Option 150 kayıt adımlarını açıklar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cucm-ports')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">CUCM Port Matrix</span>
+                  <span class="dir-item-tag">Güvenlik Duvarı</span>
+                </div>
+                <div class="dir-item-desc">Cisco ses ağlarında gerekli olan ana bağlantı portlarının (SIP/5060, SCCP/2000, TFTP/69, RTP/16384-32766, CTI/2748) hızlı başvuru listesidir.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cucm-cli')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">CUCM CLI Command Ref</span>
+                  <span class="dir-item-tag">CLI</span>
+                </div>
+                <div class="dir-item-desc">CUCM Linux tabanlı ana işletim sisteminde sunucu durumu, replikasyon takibi ve servis kontrolleri için kullanılan komutların kılavuzudur.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('qos')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">VoIP QoS / DSCP Converter</span>
+                  <span class="dir-item-tag">QoS</span>
+                </div>
+                <div class="dir-item-desc">RTP ses verisi (EF/46) ve SIP sinyalleşme trafiği (CS3/24) DSCP değerlerini Katman-2 CoS öncelik seviyesi karşılıklarına çevirir.</div>
+              </div>
+
             </div>
-            <div class="dash-card" onclick="showPanel('sip-parser')">
-              <div class="dash-card-title">SIP Log Parser & Flow Visualizer <span>➔</span></div>
-              <div class="dash-card-desc">Ham SIP loglarını ayrıştırır ve interaktif sıralı sinyalleşme diyagramı (Call Flow Sequence Diagram) çıkarır.</div>
+
+            <!-- CATEGORY 2: CISCO SUITE -->
+            <div class="dir-category">
+              <div class="dir-category-title" style="color: #f59e0b;">🦎 CISCO ADVANCED SUITE DIRECTORY</div>
+
+              <div class="dir-item" onclick="showPanel('cisco-templates')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Cisco IOS Config Boilerplates</span>
+                  <span class="dir-item-tag">CLI</span>
+                </div>
+                <div class="dir-item-desc">OSPF, EIGRP, eBGP, HSRP yedekliliği ve IP SLA statik yönlendirme takibi için router/switch cihazlarında kullanıma uygun hazır CLI kod blokları üretir.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cisco-acl')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Cisco ACL Generator</span>
+                  <span class="dir-item-tag">Güvenlik</span>
+                </div>
+                <div class="dir-item-desc">Standart (1-99) ve Extended (100-199) erişim kontrol listelerini, girilen subnet mask değerlerini otomatik wildcard maskelerine çevirerek hatasız yazar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cisco-trouble')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Cisco IP Phone Troubleshooter</span>
+                  <span class="dir-item-tag">Hata Analizi</span>
+                </div>
+                <div class="dir-item-desc">IP telefonlarda sıkça karşılaşılan ITL sertifika uyuşmazlığı, Preserving Connection ve TFTP zaman aşımları gibi ekran hatalarını çözmek için rehberlik sunar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('cisco-crypt')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Cisco Password Tool (Type 7)</span>
+                  <span class="dir-item-tag">Kriptoloji</span>
+                </div>
+                <div class="dir-item-desc">Cisco IOS yedek dosyalarındaki zayıf XOR tabanlı Type 7 şifreleri tarayıcı üzerinde saniyeler içinde çözer veya test amaçlı yeni hash kodları üretir.</div>
+              </div>
+
             </div>
-            <div class="dash-card" onclick="showPanel('cdr-analytics')">
-              <div class="dash-card-title">CDR Analytics & Billing Dashboard <span>➔</span></div>
-              <div class="dash-card-desc">Call Detail Record verilerini analiz eder; ASR, ACD, çağrı durumları ve maliyet metriklerini raporlar.</div>
+
+            <!-- CATEGORY 3: NETWORK SUITE -->
+            <div class="dir-category">
+              <div class="dir-category-title" style="color: #10b981;">🌐 NETWORK INFRASTRUCTURE DIRECTORY</div>
+
+              <div class="dir-item" onclick="showPanel('wifi-analyzer')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Wi-Fi Signal & Wall Attenuation</span>
+                  <span class="dir-item-tag">RF / Kablosuz</span>
+                </div>
+                <div class="dir-item-desc">Beton, tuğla, cam ve alçıpan duvar engellerinin 2.4/5.0 GHz frekanslarında yarattığı sinyal sönümleme etkisini ve serbest uzay kayıplarını (FSPL) canlı simüle eder.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('nat')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Dynamic NAT & PAT Sim</span>
+                  <span class="dir-item-tag">NAT</span>
+                </div>
+                <div class="dir-item-desc">Inside Local IP'lerin Outside Global IP ve Port adreslerine (PAT/Overload) olan dinamik dönüşüm süreçlerini ve NAT tablosunu canlı simüle eder.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('canvas')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Topology Canvas (Advanced)</span>
+                  <span class="dir-item-tag">Tasarım</span>
+                </div>
+                <div class="dir-item-desc">Sürükle-bırak destekli ağ topolojisi çizim alanı. Düğümler arası kablolama, IP/VLAN yapılandırması, JSON olarak projeyi kaydetme ve PNG görsel alma desteklenir.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('multivendor')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Multi-Vendor Config Generator</span>
+                  <span class="dir-item-tag">CLI</span>
+                </div>
+                <div class="dir-item-desc">Cisco IOS-XE, Juniper JunOS ve MikroTik RouterOS arayüz IP tanımlama ve durum değiştirme temel komut dizinlerini üretir.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('subnet')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Subnet Calculator</span>
+                  <span class="dir-item-tag">IP Hesaplama</span>
+                </div>
+                <div class="dir-item-desc">Girilen CIDR adres formatına göre ağ adresi, yayın adresi (broadcast), alt ağ maskesi, host aralığı ve toplam kullanılabilir ana bilgisayar sayısını çıkartır.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('vlsm')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">VLSM Subnet Splitter</span>
+                  <span class="dir-item-tag">IP Hesaplama</span>
+                </div>
+                <div class="dir-item-desc">Büyük IP bloklarını belirtilen sayıda alt ağ (subnet) taleplerine göre eşit bölümlere ayırarak verimli IP dağıtımı sağlar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('ipclass')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">IP Class Analyzer</span>
+                  <span class="dir-item-tag">IP Hesaplama</span>
+                </div>
+                <div class="dir-item-desc">İlgili IP adresinin hangi sınıfta (A-E) olduğunu ve RFC 1918 özel (private), genel (public) ya da CGNAT (RFC 6598) kapsamında olup olmadığını analiz eder.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('ipv6')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">IPv6 Expander</span>
+                  <span class="dir-item-tag">IPv6</span>
+                </div>
+                <div class="dir-item-desc">Çift iki nokta (::) ile sıkıştırılmış IPv6 adres yapılarını sıfırları doldurarak 8 oktetlik tam açık (expanded) biçimine genişletir.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('stp')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">STP Cost Calculator</span>
+                  <span class="dir-item-tag">Spanning Tree</span>
+                </div>
+                <div class="dir-item-desc">IEEE 802.1D (klasik) ve IEEE 802.1w (RSTP/Modern) standartlarına göre switch port hızlarının STP maliyet değerlerini gösterir.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('ipsec')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">IPSec MSS Calc</span>
+                  <span class="dir-item-tag">Tünel</span>
+                </div>
+                <div class="dir-item-desc">Fiziksel arayüz MTU limitinden tünel başlık ek yüklerini (GRE/IPSec overhead) düşerek en verimli TCP MSS boyutunu hesaplar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('bgpasn')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">BGP ASN Lookup</span>
+                  <span class="dir-item-tag">BGP</span>
+                </div>
+                <div class="dir-item-desc">BGP Otonom Sistem Numarasının (ASN) internet üzerinde yönlendirilebilir genel mi yoksa şirket içi özel mi (Private/RFC 6996) olduğunu tespit eder.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('mac')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">MAC OUI Lookup</span>
+                  <span class="dir-item-tag">Katman-2</span>
+                </div>
+                <div class="dir-item-desc">Fiziksel donanım (MAC) adreslerinin ilk 3 baytlık OUI üretici koduna göre cihazın markasını (Cisco, Yealink, Polycom, Grandstream) sorgular.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('rtt')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">RTT Latency Estimator</span>
+                  <span class="dir-item-tag">Fiziksel Limit</span>
+                </div>
+                <div class="dir-item-desc">Kilometrik fiber kablo mesafesine göre ışık hızının cam elyaf içindeki yayılımını baz alarak tahmini tek yön ve RTT (gidiş-dönüş) gecikmesini hesaplar.</div>
+              </div>
+
+              <div class="dir-item" onclick="showPanel('wildcard')">
+                <div class="dir-item-header">
+                  <span class="dir-item-title">Wildcard Mask Calc</span>
+                  <span class="dir-item-tag">Maske</span>
+                </div>
+                <div class="dir-item-desc">Alt ağ maskelerini (subnet mask) doğrudan Cisco ACL ve yönlendirme protokollerinde kullanılan wildcard maskesi karşılığına çevirir.</div>
+              </div>
+
             </div>
-            <div class="dash-card" onclick="showPanel('cucm-deepdive')">
-              <div class="dash-card-title">CUCM Deep Dive & Arch <span>➔</span></div>
-              <div class="dash-card-desc">Cluster veritabanı replikasyonu, Call Routing, CUBE SIP Trunking ve kayıt süreçleri rehberi.</div>
+
+          </div>
+        </div>
+
+        <!-- CISCO IOS CONFIG BOILERPLATES PANEL -->
+        <div id="panel-cisco-templates" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🦎 Cisco IOS/IOS-XE Config Boilerplate Generator</div>
+              <div class="panel-desc">Ağ protokolleri için standart Cisco standartlarında hazır şablon konfigürasyonları dinamik olarak üretin.</div>
             </div>
-            <div class="dash-card" onclick="showPanel('cucm-ports')">
-              <div class="dash-card-title">CUCM Port Matrix <span>➔</span></div>
-              <div class="dash-card-desc">SIP, SCCP, TFTP, CTI, AXL ve RTP ses iletimi için gerekli güvenlik duvarı port listesi.</div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="form-group">
+                <label>Protokol / Teknoloji</label>
+                <select id="cisco-tmpl-proto" onchange="toggleCiscoTmplFields()">
+                  <option value="ospf">OSPFv2 Routing</option>
+                  <option value="eigrp">EIGRP Routing</option>
+                  <option value="bgp">eBGP (External BGP)</option>
+                  <option value="hsrp">HSRP (Redundancy)</option>
+                  <option value="ipsla">IP SLA (Static Route Tracking)</option>
+                </select>
+              </div>
+              <div id="field-cisco-as" class="form-group">
+                <label>Process ID / AS Number</label>
+                <input type="number" id="cisco-tmpl-as" value="100">
+              </div>
+              <div class="form-group">
+                <label>Arayüz / Interface</label>
+                <input type="text" id="cisco-tmpl-iface" value="GigabitEthernet0/0">
+              </div>
+              <div class="form-group">
+                <label>IP Adresi / Subnet</label>
+                <input type="text" id="cisco-tmpl-ip" value="192.168.1.1/24">
+              </div>
+              <div id="field-cisco-extra" class="form-group">
+                <label>Karşı Taraf IP (BGP Neighbor / IP SLA Target)</label>
+                <input type="text" id="cisco-tmpl-extra" value="10.10.10.2">
+              </div>
+              <button onclick="generateCiscoConfig()" class="btn" style="width:100%;">🚀 Konfigürasyon Üret</button>
             </div>
-            <div class="dash-card" onclick="showPanel('qos')">
-              <div class="dash-card-title">QoS / DSCP Converter <span>➔</span></div>
-              <div class="dash-card-desc">EF, CS3, AF41 gibi DSCP değerlerinin L2 CoS karşılıklarını ve kullanım alanlarını gösterir.</div>
+            <div>
+              <label>Üretilen Cisco CLI Çıktısı</label>
+              <pre id="cisco-tmpl-output" style="background:#03050c; border:1px solid rgba(255,255,255,0.08); padding:12px; border-radius:8px; color:#00f0ff; height:320px; overflow-y:auto; font-family:monospace; font-size:11px; white-space:pre-wrap;">Konfigürasyon üretilmesi bekleniyor...</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- CISCO ACL GENERATOR PANEL -->
+        <div id="panel-cisco-acl" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🛡️ Cisco Access Control List (ACL) Generator</div>
+              <div class="panel-desc">Girdiğiniz parametrelere göre Wildcard maskelerini hesaplayarak Cisco standartlarında ACL kuralları oluşturur.</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="form-group">
+                <label>ACL Tipi</label>
+                <select id="acl-type" onchange="toggleAclFields()">
+                  <option value="standard">Standard (1-99 / IP-Based)</option>
+                  <option value="extended">Extended (100-199 / Protocol-Based)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>ACL Numarası veya Adı</label>
+                <input type="text" id="acl-num" value="101">
+              </div>
+              <div class="form-group">
+                <label>Eylem (Action)</label>
+                <select id="acl-action">
+                  <option value="permit">Permit (İzin Ver)</option>
+                  <option value="deny">Deny (Engelle)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Kaynak IP ve Alt Ağ Maskesi (Örn: 192.168.1.0/24 veya 192.168.1.0 255.255.255.0)</label>
+                <input type="text" id="acl-src" value="192.168.1.0/24">
+              </div>
+              <div id="acl-ext-fields">
+                <div class="form-group">
+                  <label>Protokol</label>
+                  <select id="acl-proto">
+                    <option value="ip">IP (Tüm Trafik)</option>
+                    <option value="tcp">TCP</option>
+                    <option value="udp">UDP</option>
+                    <option value="icmp">ICMP</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Hedef IP ve Alt Ağ Maskesi (Örn: 10.0.0.0/24 veya host 10.0.0.5)</label>
+                  <input type="text" id="acl-dst" value="10.0.0.0/24">
+                </div>
+                <div class="form-group">
+                  <label>Hedef Port (Opsiyonel)</label>
+                  <select id="acl-port">
+                    <option value="any">Tüm Portlar</option>
+                    <option value="eq 80">HTTP (Port 80)</option>
+                    <option value="eq 443">HTTPS (Port 443)</option>
+                    <option value="eq 22">SSH (Port 22)</option>
+                    <option value="eq 23">Telnet (Port 23)</option>
+                  </select>
+                </div>
+              </div>
+              <button onclick="generateCiscoAcl()" class="btn" style="width:100%;">🚀 ACL Kuralı Oluştur</button>
+            </div>
+            <div>
+              <label>Üretilen ACL CLI Konfigürasyonu</label>
+              <pre id="acl-output" style="background:#03050c; border:1px solid rgba(255,255,255,0.08); padding:12px; border-radius:8px; color:#10b981; height:320px; overflow-y:auto; font-family:monospace; font-size:11px; white-space:pre-wrap;">ACL kuralı oluşturulması bekleniyor...</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- CISCO IP PHONE TROUBLESHOOTER PANEL -->
+        <div id="panel-cisco-trouble" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">☎️ Cisco IP Phone Screen Troubleshooter</div>
+              <div class="panel-desc">IP telefon ekranlarında karşılaşılan hata kodlarını, sebeplerini ve ağ mühendisi gözünden çözüm yöntemlerini arayın.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Ekrandaki Hata / Durum Mesajı</label>
+            <select id="cisco-phone-error" onchange="troubleshootPhoneError()">
+              <option value="">-- Bir Hata Seçin --</option>
+              <option value="itl_error">Checking Trust List / Trust List Error / ITL-CTL Error</option>
+              <option value="preserving">Preserving Connection</option>
+              <option value="tftp_timeout">TFTP Timeout / File Not Found</option>
+              <option value="reg_rejected">Registration Rejected</option>
+              <option value="no_beacon">No Beacon / No Hub / Ethernet Disconnected</option>
+              <option value="temp_fail">Temp Fail / High Traffic</option>
+            </select>
+          </div>
+          <div id="phone-trouble-result" class="result-box" style="min-height: 200px; padding: 20px;">
+            <div style="color:#64748b; text-align:center; padding-top:40px;">Hata analizi için yukarıdan bir durum mesajı seçin.</div>
+          </div>
+        </div>
+
+        <!-- CISCO PASSWORD CIPHER TOOL (TYPE 7) -->
+        <div id="panel-cisco-crypt" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🔑 Cisco Type 7 Password Encryptor / Decryptor</div>
+              <div class="panel-desc">Cisco cihaz konfigürasyonlarında ("service password-encryption") yer alan zayıf Type 7 şifreleri anında çözün veya güvenlik testi amaçlı üretin.</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="form-group">
+                <label>İşlem Türü</label>
+                <select id="crypt-mode" onchange="toggleCryptPlaceholder()">
+                  <option value="decrypt">Deşifre Et (Decrypt - Type 7 to Text)</option>
+                  <option value="encrypt">Şifrele (Encrypt - Text to Type 7)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label id="crypt-input-label">Type 7 Şifre Metni (Örn: 070C281F190C)</label>
+                <input type="text" id="crypt-input" value="070C281F190C">
+              </div>
+              <button onclick="processCiscoCrypt()" class="btn" style="width:100%;">Çevir (Process)</button>
+            </div>
+            <div>
+              <label>İşlem Sonucu</label>
+              <div class="result-box" style="height:150px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div id="crypt-output" style="font-size:18px; font-weight:bold; color:#00f0ff; font-family:monospace;">-</div>
+                <div id="crypt-output-desc" style="font-size:10px; color:#64748b; margin-top:8px;">Sonuç burada belirecektir.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW: WIFI SIGNAL & WALL ATTENUATION ANALYZER PANEL -->
+        <div id="panel-wifi-analyzer" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">📶 Wi-Fi Signal & Obstacle Attenuation Simulator</div>
+              <div class="panel-desc">Duvarlar, pencereler ve kapıların Wi-Fi sinyaline (dBm) olan sönümleme etkisini canlı olarak simüle edin.</div>
+            </div>
+            <button onclick="clearWifiCanvas()" class="btn btn-danger">Çizimi Sıfırla</button>
+          </div>
+
+          <!-- TOP SETTINGS TOOLBAR -->
+          <div class="wifi-tools">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="margin:0; white-space:nowrap;">Frekans:</label>
+              <select id="wifi-freq" onchange="drawWifiHeatmap()" style="width:100px; padding:4px;">
+                <option value="2400">2.4 GHz</option>
+                <option value="5000" selected>5.0 GHz</option>
+              </select>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="margin:0; white-space:nowrap;">Yayın Gücü:</label>
+              <select id="wifi-txpower" onchange="drawWifiHeatmap()" style="width:110px; padding:4px;">
+                <option value="15">15 dBm (Düşük)</option>
+                <option value="20" selected>20 dBm (Standart)</option>
+                <option value="25">25 dBm (Yüksek)</option>
+              </select>
             </div>
           </div>
 
-          <!-- NETWORK SECTION -->
-          <div class="dash-section-title" style="color:#10b981;">🌐 Genel Ağ (Network) Araçları</div>
-          <div class="dash-grid">
-            <div class="dash-card" onclick="showPanel('nat')">
-              <div class="dash-card-title">Dynamic NAT & PAT Sim <span>➔</span></div>
-              <div class="dash-card-desc">Dinamik NAT ve PAT (Overload) çevrimlerini simüle eder, dönüştürme tablosunu canlı yönetir.</div>
+          <!-- VISIBLE OBSTACLE & DEVICE PALETTE -->
+          <div style="margin-bottom:10px;">
+            <label style="margin-bottom:6px; color:#00f0ff;">🛠️ Eklenecek Malzeme / Cihaz Seçin:</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="wifi-tool-btn active" onclick="setWifiTool('ap', this)">📡 Access Point (AP)</button>
+              <button class="wifi-tool-btn" onclick="setWifiTool('rx', this)">📱 İstemci (Ölçüm)</button>
+              <button class="wifi-tool-btn" onclick="setWifiTool('stone', this)" style="border-left:3px solid #a855f7;">🪨 Taş / Beton (-15 dB)</button>
+              <button class="wifi-tool-btn" onclick="setWifiTool('brick', this)" style="border-left:3px solid #ef4444;">🧱 Tuğla Duvar (-7 dB)</button>
+              <button class="wifi-tool-btn" onclick="setWifiTool('window', this)" style="border-left:3px solid #38edf8;">🪟 Cam / Pencere (-3 dB)</button>
+              <button class="wifi-tool-btn" onclick="setWifiTool('drywall', this)" style="border-left:3px solid #f59e0b;">🚪 Alçıpan / Ahşap (-4 dB)</button>
+              <button class="wifi-tool-btn" onclick="setWifiTool('metal', this)" style="border-left:3px solid #94a3b8;">🛡️ Metal Kapı (-22 dB)</button>
             </div>
-            <div class="dash-card" onclick="showPanel('canvas')">
-              <div class="dash-card-title">Topology Canvas (Advanced) <span>➔</span></div>
-              <div class="dash-card-desc">Özel konfigürasyonlar, dinamik bağlantı modları ve PNG/JSON çıktı alma destekli çizim alanı.</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 3fr 1fr; gap:16px;">
+            <div>
+              <div class="wifi-canvas-box">
+                <canvas id="wifi-canvas" width="700" height="420"></canvas>
+              </div>
+              <div class="wifi-legend">
+                <div class="legend-item"><div class="legend-color" style="background:#10b981;"></div> > -50 dBm (Mükemmel)</div>
+                <div class="legend-item"><div class="legend-color" style="background:#00f0ff;"></div> -50 ~ -65 dBm (İyi)</div>
+                <div class="legend-item"><div class="legend-color" style="background:#f59e0b;"></div> -65 ~ -75 dBm (Orta)</div>
+                <div class="legend-item"><div class="legend-color" style="background:#f97316;"></div> -75 ~ -85 dBm (Zayıf)</div>
+                <div class="legend-item"><div class="legend-color" style="background:#f43f5e;"></div> < -85 dBm (Kopma)</div>
+              </div>
             </div>
-            <div class="dash-card" onclick="showPanel('multivendor')">
-              <div class="dash-card-title">Multi-Vendor Config <span>➔</span></div>
-              <div class="dash-card-desc">Cisco IOS-XE, Juniper JunOS ve MikroTik cihazları için temel arayüz yapılandırmaları üretir.</div>
-            </div>
-            <div class="dash-card" onclick="showPanel('subnet')">
-              <div class="dash-card-title">Subnet Calculator <span>➔</span></div>
-              <div class="dash-card-desc">CIDR bloklarına göre Network, Broadcast, kullanılabilir IP aralıkları ve host sayılarını çıkarır.</div>
-            </div>
-            <div class="dash-card" onclick="showPanel('vlsm')">
-              <div class="dash-card-title">VLSM Splitter <span>➔</span></div>
-              <div class="dash-card-desc">Ana IP bloklarını belirtilen sayıda eşit ve efektif alt ağlara (subnet) böler.</div>
-            </div>
-            <div class="dash-card" onclick="showPanel('ipsec')">
-              <div class="dash-card-title">IPSec MSS Calc <span>➔</span></div>
-              <div class="dash-card-desc">GRE ve IPSec tünelleme protokollerinde paketin parçalanmaması için ideal TCP MSS değerini bulur.</div>
+
+            <div>
+              <label>Sinyal Metrik İnceleyici</label>
+              <div class="result-box" id="wifi-metrics-box" style="margin-top:0; min-height:200px;">
+                <div style="color:#64748b;">Ağ ölçümleri için tuval üzerinde gezinin veya istemci yerleştirin.</div>
+              </div>
+
+              <div class="result-box" style="margin-top:10px; font-size:10px; color:#cbd5e1;">
+                <div style="color:#00f0ff; font-weight:bold; margin-bottom:4px;">FSPL & Attenuation Bilgisi</div>
+                Serbest uzay sinyal kaybı (FSPL) mesafenin karesi ve frekans ile orantılıdır. Duvar engelleri toplam dBm değerinden düşülerek hesaplanır.
+              </div>
             </div>
           </div>
         </div>
@@ -844,7 +1284,7 @@ dial-peer voice 200 voip
             <label>Port Hızı</label>
             <select id="stp-speed" onchange="calcSTP()">
               <option value="10M">10 Mbps (Ethernet)</option>
-              <option value="100M">100 Mbps (FastEthernet)</option>
+              <option value="100M">100 Mbps (Fast延hernet)</option>
               <option value="1G" selected>1 Gbps (GigabitEthernet)</option>
               <option value="10G">10 Gbps (TenGigabit)</option>
               <option value="40G">40 Gbps</option>
@@ -929,7 +1369,7 @@ dial-peer voice 200 voip
       const steps = [
         { p: 25, m: "Initializing ZeroPacket Kernel..." },
         { p: 55, m: "Loading CUCM Telephony & Route Engines..." },
-        { p: 85, m: "Building Interactive Topologies & NAT Engine..." },
+        { p: 85, m: "Building Interactive Topologies & Wi-Fi Attenuation Engine..." },
         { p: 100, m: "System Ready!" }
       ];
 
@@ -957,6 +1397,10 @@ dial-peer voice 200 voip
 
       if(targetPanel) targetPanel.classList.add('active');
       if(targetBtn) targetBtn.classList.add('active');
+
+      if (id === 'wifi-analyzer') {
+        setTimeout(initWifiCanvas, 100);
+      }
     }
 
     // CUCM SUB TAB SWITCH
@@ -970,6 +1414,249 @@ dial-peer voice 200 voip
       document.getElementById('cucm-sec-pipeline').style.display = tabName === 'pipeline' ? 'block' : 'none';
       document.getElementById('cucm-sec-siptrunk').style.display = tabName === 'siptrunk' ? 'block' : 'none';
       document.getElementById('cucm-sec-reg').style.display = tabName === 'reg' ? 'block' : 'none';
+    }
+
+    // DYNAMIC FILTER FOR DIRECTORY
+    function filterDashboardTools() {
+      const query = document.getElementById('dash-search').value.toLowerCase().trim();
+      const items = document.querySelectorAll('.dir-item');
+      
+      items.forEach(item => {
+        const title = item.querySelector('.dir-item-title').innerText.toLowerCase();
+        const desc = item.querySelector('.dir-item-desc').innerText.toLowerCase();
+        
+        if (title.includes(query) || desc.includes(query)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // ==========================================
+    // WIFI SIGNAL & WALL ATTENUATION SIMULATOR ENGINE
+    // ==========================================
+    let wifiAP = { x: 150, y: 210 };
+    let wifiRx = { x: 500, y: 210 };
+    let wifiWalls = [
+      { x1: 300, y1: 50, x2: 300, y2: 370, type: 'stone', loss: 15, color: '#a855f7', name: 'Beton/Taş Duvar' },
+      { x1: 450, y1: 100, x2: 450, y2: 320, type: 'brick', loss: 7, color: '#ef4444', name: 'Tuğla Duvar' }
+    ];
+    let activeWifiTool = 'ap'; 
+    let isDrawingWall = false;
+    let currentWallStart = null;
+
+    function setWifiTool(tool, btnElement) {
+      activeWifiTool = tool;
+      document.querySelectorAll('.wifi-tool-btn').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+    }
+
+    function initWifiCanvas() {
+      const canvas = document.getElementById('wifi-canvas');
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      canvas.onmousedown = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        if (activeWifiTool === 'ap') {
+          wifiAP = { x, y };
+          drawWifiHeatmap();
+        } else if (activeWifiTool === 'rx') {
+          wifiRx = { x, y };
+          drawWifiHeatmap();
+        } else {
+          isDrawingWall = true;
+          currentWallStart = { x, y };
+        }
+      };
+
+      canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        if (isDrawingWall) {
+          drawWifiHeatmap();
+          const ctx = canvas.getContext('2d');
+          ctx.beginPath();
+          ctx.moveTo(currentWallStart.x, currentWallStart.y);
+          ctx.lineTo(x, y);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 4;
+          ctx.setLineDash([5, 5]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        } else {
+          updateWifiMetrics(x, y);
+        }
+      };
+
+      canvas.onmouseup = (e) => {
+        if (isDrawingWall) {
+          const rect = canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const wallConfigs = {
+            'stone': { loss: 15, color: '#a855f7', name: 'Beton/Taş Duvar' },
+            'brick': { loss: 7, color: '#ef4444', name: 'Tuğla Duvar' },
+            'window': { loss: 3, color: '#38edf8', name: 'Pencere/Cam' },
+            'drywall': { loss: 4, color: '#f59e0b', name: 'Alçıpan/Ahşap' },
+            'metal': { loss: 22, color: '#94a3b8', name: 'Metal Kapı/Zırh' }
+          };
+
+          if (Math.hypot(x - currentWallStart.x, y - currentWallStart.y) > 10) {
+            wifiWalls.push({
+              x1: currentWallStart.x,
+              y1: currentWallStart.y,
+              x2: x,
+              y2: y,
+              type: activeWifiTool,
+              ...wallConfigs[activeWifiTool]
+            });
+          }
+          isDrawingWall = false;
+          drawWifiHeatmap();
+        }
+      };
+
+      drawWifiHeatmap();
+    }
+
+    function checkIntersection(x1, y1, x2, y2, x3, y3, x4, y4) {
+      const denom = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+      if (denom === 0) return false;
+      const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denom;
+      const ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denom;
+      return (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1);
+    }
+
+    function calculateRssi(targetX, targetY) {
+      const freq = parseFloat(document.getElementById('wifi-freq').value);
+      const txPower = parseFloat(document.getElementById('wifi-txpower').value);
+      const distPx = Math.hypot(targetX - wifiAP.x, targetY - wifiAP.y);
+      const distM = Math.max(0.5, distPx / 20);
+      const fspl = 20 * Math.log10(distM) + 20 * Math.log10(freq) - 27.55;
+
+      let totalWallLoss = 0;
+      let intersectedWalls = [];
+
+      wifiWalls.forEach(w => {
+        if (checkIntersection(wifiAP.x, wifiAP.y, targetX, targetY, w.x1, w.y1, w.x2, w.y2)) {
+          totalWallLoss += w.loss;
+          intersectedWalls.push(w.name);
+        }
+      });
+
+      const rssi = txPower - fspl - totalWallLoss;
+      return { rssi: Math.round(rssi), distM: distM.toFixed(1), fspl: Math.round(fspl), wallLoss: totalWallLoss, intersectedWalls };
+    }
+
+    function drawWifiHeatmap() {
+      const canvas = document.getElementById('wifi-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+
+      ctx.fillStyle = '#03050c';
+      ctx.fillRect(0, 0, width, height);
+
+      const gridSize = 15;
+      for (let x = 0; x < width; x += gridSize) {
+        for (let y = 0; y < height; y += gridSize) {
+          const res = calculateRssi(x + gridSize / 2, y + gridSize / 2);
+          const rssi = res.rssi;
+
+          let color = 'rgba(244, 63, 94, 0.15)'; 
+          if (rssi > -50) color = 'rgba(16, 185, 129, 0.35)'; 
+          else if (rssi > -65) color = 'rgba(0, 240, 255, 0.3)'; 
+          else if (rssi > -75) color = 'rgba(245, 158, 11, 0.25)'; 
+          else if (rssi > -85) color = 'rgba(249, 115, 22, 0.2)'; 
+
+          ctx.fillStyle = color;
+          ctx.fillRect(x, y, gridSize, gridSize);
+        }
+      }
+
+      wifiWalls.forEach(w => {
+        ctx.beginPath();
+        ctx.moveTo(w.x1, w.y1);
+        ctx.lineTo(w.x2, w.y2);
+        ctx.strokeStyle = w.color;
+        ctx.lineWidth = 6;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '9px monospace';
+        ctx.fillText(`-${w.loss}dB`, (w.x1 + w.x2) / 2 + 5, (w.y1 + w.y2) / 2 - 5);
+      });
+
+      ctx.beginPath();
+      ctx.moveTo(wifiAP.x, wifiAP.y);
+      ctx.lineTo(wifiRx.x, wifiRx.y);
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.arc(wifiAP.x, wifiAP.y, 12, 0, Math.PI * 2);
+      ctx.fillStyle = '#00f0ff';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#000';
+      ctx.font = 'bold 9px monospace';
+      ctx.fillText('AP', wifiAP.x - 6, wifiAP.y + 3);
+
+      ctx.beginPath();
+      ctx.arc(wifiRx.x, wifiRx.y, 10, 0, Math.PI * 2);
+      ctx.fillStyle = '#10b981';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#000';
+      ctx.font = 'bold 8px monospace';
+      ctx.fillText('RX', wifiRx.x - 5, wifiRx.y + 3);
+
+      updateWifiMetrics(wifiRx.x, wifiRx.y);
+    }
+
+    function updateWifiMetrics(x, y) {
+      const res = calculateRssi(x, y);
+      const metricsBox = document.getElementById('wifi-metrics-box');
+
+      let statusStr = "Mükemmel";
+      let statusColor = "#10b981";
+      if (res.rssi <= -50 && res.rssi > -65) { statusStr = "İyi / Kararlı"; statusColor = "#00f0ff"; }
+      else if (res.rssi <= -65 && res.rssi > -75) { statusStr = "Orta (Ses/Video Kopabilir)"; statusColor = "#f59e0b"; }
+      else if (res.rssi <= -75 && res.rssi > -85) { statusStr = "Zayıf (Yüksek Paket Kaybı)"; statusColor = "#f97316"; }
+      else if (res.rssi <= -85) { statusStr = "Kritik / Sinyal Yok"; statusColor = "#f43f5e"; }
+
+      const wallsStr = res.intersectedWalls.length > 0 ? res.intersectedWalls.join(', ') : 'Engel Yok (Açık Alan)';
+
+      metricsBox.innerHTML = `
+        <div style="color:#00f0ff; font-weight:bold; margin-bottom:8px;">Canlı Sinyal Ölçüm Sonucu</div>
+        <div class="res-row"><span class="res-label">Sinyal Gücü (RSSI):</span><span class="res-val" style="color:${statusColor}; font-size:14px;">${res.rssi} dBm</span></div>
+        <div class="res-row"><span class="res-label">Bağlantı Kalitesi:</span><span class="res-val" style="color:${statusColor}">${statusStr}</span></div>
+        <div class="res-row"><span class="res-label">Mesafe:</span><span class="res-val">${res.distM} Metre</span></div>
+        <div class="res-row"><span class="res-label">Mesafe Kaybı (FSPL):</span><span class="res-val amber">-${res.fspl} dB</span></div>
+        <div class="res-row"><span class="res-label">Duvar Kaybı (Wall Att.):</span><span class="res-val amber">-${res.wallLoss} dB</span></div>
+        <div style="margin-top:8px; font-size:10px;">
+          <span style="color:#64748b;">Araya Giren Engeller:</span>
+          <div style="color:#cbd5e1; font-weight:bold; margin-top:2px;">${wallsStr}</div>
+        </div>
+      `;
     }
 
     // 1. SIP LOG PARSER ENGINE
@@ -1046,7 +1733,6 @@ CSeq: 103 BYE`;
         const firstLine = lines[0] ? lines[0].trim() : '';
         if (!firstLine) return;
 
-        let methodOrCode = firstLine;
         let isReverse = firstLine.startsWith('SIP/2.0');
         
         parsedSipMessages.push({
@@ -1123,20 +1809,16 @@ CSeq: 103 BYE`;
       const totalCalls = data.length;
       const answeredCalls = data.filter(d => d.status === 'ANSWERED').length;
       const asr = totalCalls > 0 ? ((answeredCalls / totalCalls) * 100).toFixed(1) : 0;
-      
       const totalSecs = data.reduce((acc, curr) => acc + curr.duration, 0);
       const acd = answeredCalls > 0 ? Math.round(totalSecs / answeredCalls) : 0;
-      
       const totalCost = data.reduce((acc, curr) => acc + curr.cost, 0).toFixed(2);
 
-      // KPI Set
       document.getElementById('cdr-total-calls').innerText = totalCalls;
       document.getElementById('cdr-answered-calls').innerText = answeredCalls;
       document.getElementById('cdr-asr-val').innerText = `${asr}%`;
       document.getElementById('cdr-acd-val').innerText = `${acd}s`;
       document.getElementById('cdr-cost-val').innerText = `$${totalCost}`;
 
-      // Table Render
       const tbody = document.getElementById('cdr-table-body');
       let html = '';
       data.forEach(r => {
@@ -1155,7 +1837,6 @@ CSeq: 103 BYE`;
       });
       tbody.innerHTML = html;
 
-      // Status Summary
       const counts = {};
       data.forEach(r => { counts[r.status] = (counts[r.status] || 0) + 1; });
 
@@ -1202,7 +1883,7 @@ CSeq: 103 BYE`;
           natTable.push({ proto: "tcp", insideLocal, insideGlobal, outsideGlobal });
           logMsg = `[PAT SUCCESS] Yeni Port Çevrimi: ${insideLocal} -> ${insideGlobal} (Destination: ${outsideGlobal})`;
         }
-      } else { // Dynamic NAT
+      } else { 
         const existing = natTable.find(t => t.insideLocal === insideLocal);
         if (existing) {
           insideGlobal = existing.insideGlobal;
@@ -1268,7 +1949,7 @@ CSeq: 103 BYE`;
 
     // WEBRTC & SIP SOFTPHONE ENGINE
     let isRegistered = true;
-    let callState = 'IDLE'; // IDLE, DIALING, RINGING, CONNECTED, HELD
+    let callState = 'IDLE'; 
     let callTimerInterval = null;
     let callSeconds = 0;
     let isMuted = false;
@@ -1799,6 +2480,311 @@ CSeq: 103 BYE`;
       `;
     }
 
+    // CISCO SPECIAL SUITE LOGIC
+    function toggleCiscoTmplFields() {
+      const proto = document.getElementById('cisco-tmpl-proto').value;
+      const asField = document.getElementById('field-cisco-as');
+      const extraField = document.getElementById('field-cisco-extra');
+
+      if (proto === 'hsrp') {
+        asField.style.display = 'block';
+        document.querySelector('#field-cisco-as label').innerText = 'HSRP Group Number';
+        extraField.style.display = 'block';
+        document.querySelector('#field-cisco-extra label').innerText = 'Virtual HSRP IP';
+      } else if (proto === 'ipsla') {
+        asField.style.display = 'block';
+        document.querySelector('#field-cisco-as label').innerText = 'IP SLA ID';
+        extraField.style.display = 'block';
+        document.querySelector('#field-cisco-extra label').innerText = 'Target IP to Ping';
+      } else if (proto === 'bgp') {
+        asField.style.display = 'block';
+        document.querySelector('#field-cisco-as label').innerText = 'Local AS Number';
+        extraField.style.display = 'block';
+        document.querySelector('#field-cisco-extra label').innerText = 'Neighbor IP & AS (örn: 10.10.10.2 remote-as 200)';
+      } else if (proto === 'ospf' || proto === 'eigrp') {
+        asField.style.display = 'block';
+        document.querySelector('#field-cisco-as label').innerText = proto === 'ospf' ? 'OSPF Process ID' : 'EIGRP AS Number';
+        extraField.style.display = 'none';
+      }
+    }
+
+    function generateCiscoConfig() {
+      const proto = document.getElementById('cisco-tmpl-proto').value;
+      const asNum = document.getElementById('cisco-tmpl-as').value;
+      const iface = document.getElementById('cisco-tmpl-iface').value;
+      const ipSub = document.getElementById('cisco-tmpl-ip').value;
+      const extra = document.getElementById('cisco-tmpl-extra').value;
+
+      let ip = ipSub;
+      let mask = "255.255.255.0";
+      if (ipSub.includes('/')) {
+        const parts = ipSub.split('/');
+        ip = parts[0];
+        const cidr = parseInt(parts[1]);
+        const maskInt = (0xFFFFFFFF << (32 - cidr)) >>> 0;
+        mask = [(maskInt >>> 24) & 255, (maskInt >>> 16) & 255, (maskInt >>> 8) & 255, maskInt & 255].join('.');
+      }
+
+      const octs = mask.split('.');
+      const wildcard = octs.map(o => 255 - parseInt(o)).join('.');
+      const netBase = ip.split('.').slice(0, 3).join('.') + '.0';
+
+      let out = `! Produced by ZeroPacket Engine\n`;
+      out += `interface ${iface}\n ip address ${ip} ${mask}\n no shutdown\n!\n`;
+
+      if (proto === 'ospf') {
+        out += `router ospf ${asNum}\n router-id ${ip}\n network ${netBase} ${wildcard} area 0\n`;
+      } else if (proto === 'eigrp') {
+        out += `router eigrp ${asNum}\n network ${netBase} ${wildcard}\n no auto-summary\n`;
+      } else if (proto === 'bgp') {
+        const remoteParts = extra.split(' ');
+        const nIP = remoteParts[0] || "10.10.10.2";
+        const rAS = remoteParts[2] || "200";
+        out += `router bgp ${asNum}\n neighbor ${nIP} remote-as ${rAS}\n neighbor ${nIP} update-source ${iface}\n network ${netBase} mask ${mask}\n`;
+      } else if (proto === 'hsrp') {
+        out += `interface ${iface}\n standby ${asNum} ip ${extra}\n standby ${asNum} priority 105\n standby ${asNum} preempt\n`;
+      } else if (proto === 'ipsla') {
+        out += `ip sla ${asNum}\n icmp-echo ${extra} source-interface ${iface}\n frequency 5\nexit\nip sla schedule ${asNum} life forever start-time now\n!\ntrack ${asNum} ip sla ${asNum} reachability\n!\nip route 0.0.0.0 0.0.0.0 ${extra} track ${asNum}\n`;
+      }
+
+      document.getElementById('cisco-tmpl-output').innerText = out;
+    }
+
+    function toggleAclFields() {
+      const type = document.getElementById('acl-type').value;
+      const extFields = document.getElementById('acl-ext-fields');
+      const numInput = document.getElementById('acl-num');
+
+      if (type === 'standard') {
+        extFields.style.display = 'none';
+        numInput.value = '10';
+      } else {
+        extFields.style.display = 'block';
+        numInput.value = '101';
+      }
+    }
+
+    function parseToWildcardString(ipInput) {
+      const trimmed = ipInput.trim();
+      if (trimmed.startsWith('host ') || trimmed === 'any') {
+        return trimmed;
+      }
+      
+      let ip = trimmed;
+      let cidr = 32;
+
+      if (trimmed.includes('/')) {
+        const parts = trimmed.split('/');
+        ip = parts[0];
+        cidr = parseInt(parts[1]);
+      } else if (trimmed.split(' ').length === 2) {
+        const parts = trimmed.split(' ');
+        ip = parts[0];
+        const mOcts = parts[1].split('.');
+        const wild = mOcts.map(o => 255 - parseInt(o)).join('.');
+        return `${ip} ${wild}`;
+      }
+
+      const maskInt = (0xFFFFFFFF << (32 - cidr)) >>> 0;
+      const wildOcts = [
+        (~maskInt >>> 24) & 255,
+        (~maskInt >>> 16) & 255,
+        (~maskInt >>> 8) & 255,
+        ~maskInt & 255
+      ];
+      
+      if (cidr === 32) return `host ${ip}`;
+      return `${ip} ${wildOcts.join('.')}`;
+    }
+
+    function generateCiscoAcl() {
+      const type = document.getElementById('acl-type').value;
+      const num = document.getElementById('acl-num').value.trim();
+      const action = document.getElementById('acl-action').value;
+      const srcRaw = document.getElementById('acl-src').value;
+
+      const srcParsed = parseToWildcardString(srcRaw);
+      let out = "";
+
+      if (type === 'standard') {
+        out = `access-list ${num} ${action} ${srcParsed}`;
+      } else {
+        const proto = document.getElementById('acl-proto').value;
+        const dstRaw = document.getElementById('acl-dst').value;
+        const port = document.getElementById('acl-port').value;
+        
+        const dstParsed = parseToWildcardString(dstRaw);
+        const portStr = port === 'any' ? '' : ` ${port}`;
+        
+        out = `access-list ${num} ${action} ${proto} ${srcParsed} ${dstParsed}${portStr}`;
+      }
+
+      document.getElementById('acl-output').innerText = `! Apply this command in Global Configuration Mode:\n${out}\n\n! Apply to interface example:\ninterface GigabitEthernet0/0\n ip access-group ${num} in`;
+    }
+
+    function troubleshootPhoneError() {
+      const err = document.getElementById('cisco-phone-error').value;
+      const result = document.getElementById('phone-trouble-result');
+
+      const db = {
+        'itl_error': {
+          title: "Checking Trust List / Trust List Error",
+          cause: "IP Telefonun dahili flash belleğinde saklanan ITL/CTL (Identity/Certificate Trust List) imza dosyası ile CUCM sunucusunun yeni imzaladığı güvenlik sertifikaları uyuşmuyor. Genelde CUCM geçişlerinde, IP değişikliklerinde veya sertifika yenilemelerinde gerçekleşir.",
+          steps: [
+            "Telefonun fiziksel tuş takımından Settings -> Security Configuration -> Trust List -> ITL File bölümüne gidin.",
+            "Güvenlik kilidini açmak için ****#** tuşlayın (bazı modellerde 'Keypad Unlock' seçeneği).",
+            "Sırasıyla 'More' -> 'Clear' / 'Delete' seçerek eski sertifikayı temizleyin.",
+            "Telefon otomatik olarak yeniden başlayacak ve TFTP'den yeni ITL dosyasını başarıyla indirecektir."
+          ]
+        },
+        'preserving': {
+          title: "Preserving Connection",
+          cause: "Telefon, kayıtlı olduğu CUCM Subscriber sunucusuyla olan TCP bağlantısını (SIP Keep-Alive / SCCP StationKeepAlive) kaybetti ancak aktif ses görüşmesini (RTP) kesmedi. Ağda oluşan paket kayıpları veya bir switch portunun çökmesi durumunda görünür.",
+          steps: [
+            "Ağ geçidi router üzerindeki SRST (Survivable Remote Site Telephony) servislerini kontrol edin.",
+            "Telefonun CUCM sunucularına ping atıp atamadığını (Option 150/TFTP yönünü) doğrulayın.",
+            "Switch portlarında 'Keepalive' paketlerini bloke eden bir ACL veya QoS sınırlaması olup olmadığını kontrol edin."
+          ]
+        },
+        'tftp_timeout': {
+          title: "TFTP Timeout / File Not Found",
+          cause: "Telefon, DHCP Option 150 üzerinden aldığı TFTP IP adresinden yapılandırma (.cnf.xml) veya firmware (.bin/.loads) dosyalarını çekemedi.",
+          steps: [
+            "DHCP Sunucusunda Option 150 değerinin tam olarak CUCM Publisher veya Subscriber IP adresi olduğunu teyit edin.",
+            "CUCM Servis Yönetiminden (Cisco Unified Serviceability) 'Cisco Tftp' servisinin çalışıp çalışmadığını (Active durumunu) kontrol edin.",
+            "Araya giren güvenlik duvarlarında (Firewall) UDP Port 69 (TFTP) ve TCP Port 6970 (HTTP TFTP) protokollerinin açık olduğunu doğrulayın."
+          ]
+        },
+        'reg_rejected': {
+          title: "Registration Rejected",
+          cause: "Telefon, CUCM sunucusuna ulaşıyor ancak sunucu bu telefonun kaydolmasına izin vermiyor.",
+          steps: [
+            "Telefonun MAC adresinin CUCM 'Device -> Phone' tablosuna doğru eklendiğinden emin olun (en sık yapılan hata harf/rakam karışıklığıdır).",
+            "CUCM üzerinde Auto-Registration özelliğinin açık olup olmadığını kontrol edin. Eğer kapalıysa manuel kayıt şarttır.",
+            "Telefona tanımlanan 'Phone Security Profile' parametrelerinin uyuştuğunu (Secure vs Non-Secure port) teyit edin."
+          ]
+        },
+        'no_beacon': {
+          title: "No Beacon / No Hub / Ethernet Disconnected",
+          cause: "IP Telefon fiziksel olarak Ethernet hattından link alamıyor (Katman 1 hatası).",
+          steps: [
+            "Ağ kablosunu (RJ45) ve switch portunu fiziksel olarak kontrol edin.",
+            "Switch tarafında portun shutdown edilip edilmediğini veya ses/data vlanlarının düzgün eşleşip eşleşmediğini kontrol edin.",
+            "Telefonun PoE switch'ten veya bir power injector'den yeterli güç (Class 2/3 Watt) çekip çekmediğini doğrulayın."
+          ]
+        },
+        'temp_fail': {
+          title: "Temp Fail / High Traffic",
+          cause: "Genellikle CUCM sunucusu üzerinde aşırı yüklenme olduğunda veya telefonun kayıt istekleri sunucunun kuyruk limitini aştığında geçici olarak görünür.",
+          steps: [
+            "CUCM CLI terminaline bağlanarak 'show perfquery class \"Cisco Phones\"' komutuyla kayıtlı telefon durumunu inceleyin.",
+            "Ağ üzerindeki multicast fırtınalarını (broadcast storms) ve SIP register flood girişimlerini analiz edin.",
+            "Gerekirse ilgili Subscriber düğümündeki Cisco CallManager servisini restart edin."
+          ]
+        }
+      };
+
+      if (!err || !db[err]) {
+        result.innerHTML = `<div style="color:#64748b; text-align:center; padding-top:40px;">Hata analizi için yukarıdan bir durum mesajı seçin.</div>`;
+        return;
+      }
+
+      const item = db[err];
+      let stepsHtml = "";
+      item.steps.forEach((st, idx) => {
+        stepsHtml += `<li style="margin-bottom:6px; line-height:1.4;">${st}</li>`;
+      });
+
+      result.innerHTML = `
+        <div style="color:#00f0ff; font-weight:bold; font-size:13px; margin-bottom:8px;">Durum: ${item.title}</div>
+        <p style="font-size:11px; color:#cbd5e1; line-height:1.5; margin-bottom:12px;"><b style="color:#f59e0b;">Olası Sebep:</b> ${item.cause}</p>
+        <div style="border-top:1px dashed rgba(255,255,255,0.08); padding-top:10px;">
+          <b style="color:#10b981; font-size:11px; display:block; margin-bottom:6px;">🛠️ Mühendislik Çözüm Adımları:</b>
+          <ol style="font-size:11px; color:#cbd5e1; padding-left:16px;">
+            ${stepsHtml}
+          </ol>
+        </div>
+      `;
+    }
+
+    function toggleCryptPlaceholder() {
+      const mode = document.getElementById('crypt-mode').value;
+      const label = document.getElementById('crypt-input-label');
+      const input = document.getElementById('crypt-input');
+
+      if (mode === 'decrypt') {
+        label.innerText = 'Type 7 Şifre Metni (Örn: 070C281F190C)';
+        input.value = '070C281F190C';
+      } else {
+        label.innerText = 'Şifrelenecek Düz Metin (Örn: cisco123)';
+        input.value = 'cisco123';
+      }
+    }
+
+    function decryptType7(encrypted) {
+      const key = [
+        0x64, 0x73, 0x66, 0x64, 0x3b, 0x6b, 0x66, 0x6f, 0x41, 0x69, 0x73, 0x6b,
+        0x66, 0x61, 0x33, 0x73, 0x41, 0x64, 0x66, 0x73, 0x73
+      ];
+      encrypted = encrypted.trim();
+      if (encrypted.length < 4) return "Hata: Çok kısa hash";
+      
+      let seed = parseInt(encrypted.substring(0, 2), 10);
+      if (isNaN(seed) || seed < 0 || seed > 15) return "Hata: Geçersiz seed";
+      
+      let decrypted = "";
+      for (let i = 2; i < encrypted.length; i += 2) {
+        let hexPair = encrypted.substring(i, i + 2);
+        let val = parseInt(hexPair, 16);
+        if (isNaN(val)) return "Hata: Geçersiz hex";
+        let keyByte = key[seed % key.length];
+        decrypted += String.fromCharCode(val ^ keyByte);
+        seed++;
+      }
+      return decrypted;
+    }
+
+    function encryptType7(plaintext) {
+      const key = [
+        0x64, 0x73, 0x66, 0x64, 0x3b, 0x6b, 0x66, 0x6f, 0x41, 0x69, 0x73, 0x6b,
+        0x66, 0x61, 0x33, 0x73, 0x41, 0x64, 0x66, 0x73, 0x73
+      ];
+      let seed = Math.floor(Math.random() * 16);
+      let seedStr = String(seed).padStart(2, '0');
+      let encrypted = seedStr;
+      
+      for (let i = 0; i < plaintext.length; i++) {
+        let charCode = plaintext.charCodeAt(i);
+        let keyByte = key[seed % key.length];
+        let encByte = charCode ^ keyByte;
+        encrypted += encByte.toString(16).toUpperCase().padStart(2, '0');
+        seed++;
+      }
+      return encrypted;
+    }
+
+    function processCiscoCrypt() {
+      const mode = document.getElementById('crypt-mode').value;
+      const input = document.getElementById('crypt-input').value.trim();
+      const outputDiv = document.getElementById('crypt-output');
+      const descDiv = document.getElementById('crypt-output-desc');
+
+      if (!input) {
+        alert("Lütfen bir girdi değeri girin.");
+        return;
+      }
+
+      if (mode === 'decrypt') {
+        const decrypted = decryptType7(input);
+        outputDiv.innerText = decrypted;
+        descDiv.innerText = "Type 7 Şifresi Çözüldü (Düz Metin)";
+      } else {
+        const encrypted = encryptType7(input);
+        outputDiv.innerText = encrypted;
+        descDiv.innerText = `Cisco formatında Type 7 hash üretildi (enable password 7 ${encrypted})`;
+      }
+    }
+
     function calcClass() {
       const ip = document.getElementById('ipclass-val').value.trim();
       const oct1 = parseInt(ip.split('.')[0]);
@@ -1919,8 +2905,8 @@ CSeq: 103 BYE`;
 
     function calcRTT() {
       const dist = parseFloat(document.getElementById('rtt-dist').value) || 0;
-      const speedInFiber = 200000; // km/s
-      const oneWay = (dist / speedInFiber) * 1000; // ms
+      const speedInFiber = 200000; 
+      const oneWay = (dist / speedInFiber) * 1000; 
       const rtt = (oneWay * 2).toFixed(2);
 
       document.getElementById('rtt-out').innerHTML = `
@@ -1979,6 +2965,9 @@ CSeq: 103 BYE`;
       triggerIntro();
       calcQoS();
       switchTopologyMode('cucm');
+      toggleCiscoTmplFields();
+      toggleAclFields();
+      toggleCryptPlaceholder();
     };
   </script>
 </body>
