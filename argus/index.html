@@ -2111,35 +2111,45 @@ try {
   console.error("USGS Veri Çekme Hatası:", e);
 }
 
-  // 6. TERMAL UYDU YANGIN (NASA EONET)
-  try {
-    const eonetRes = await safeFetch("https://eonet.gsfc.nasa.gov/api/v3/events?status=open&limit=20");
-    if (eonetRes && eonetRes.ok) {
-      const eonetData = await eonetRes.json();
-      if (eonetData && eonetData.events) {
-        eonetData.events.forEach(ev => {
-          if (ev.geometry && ev.geometry.length > 0) {
-            const geom = ev.geometry[ev.geometry.length - 1];
-            const lng = geom.coordinates[0];
-            const lat = geom.coordinates[1];
-            const baslik = ev.title || "Küresel Orman Yangını";
-            const yanginZamani = geom.date ? new Date(geom.date) : suAn;
-            if (!isNaN(lat) && !isNaN(lng)) {
-              yeniHaberler.push({
-                baslik: `🔥 Termal Uydu Tespiti: ${baslik}`,
-                detay: `NASA EONET Uydu Sensör Verisi:\nOlay Başlığı: ${ev.title}\nKategori: ${ev.categories && ev.categories[0] ? ev.categories[0].title : 'Orman Yangını / Isı Anomalisi'}\nSaptama Zamanı: ${geom.date || 'Güncel'}`,
-                enlem: lat, boylam: lng, kategori: "Yangın", isYangin: true,
-                tehdit_seviyesi: "Kritik", kaynak_guvenilirlik: "A1 (NASA EONET Uyduları)",
-                kaynak: ev.sources && ev.sources[0] ? ev.sources[0].url : "https://eonet.gsfc.nasa.gov/",
-                tarihSaat: yanginZamani
-              });
-            }
+  // 6. TERMAL UYDU YANGIN (NASA EONET - Düzeltilmiş)
+try {
+  // Doğrudan 'wildfires' kategorisi sorgulanıyor
+  const eonetRes = await safeFetch("https://eonet.gsfc.nasa.gov/api/v3/categories/wildfires?status=open&limit=50");
+  
+  if (eonetRes && eonetRes.ok) {
+    const eonetData = await eonetRes.json();
+    if (eonetData && eonetData.events) {
+      eonetData.events.forEach(ev => {
+        if (ev.geometry && ev.geometry.length > 0) {
+          // En son güncellenen koordinatı al
+          const geom = ev.geometry[ev.geometry.length - 1];
+          const lng = geom.coordinates[0];
+          const lat = geom.coordinates[1];
+          const baslik = ev.title || "Küresel Orman Yangını";
+          const yanginZamani = geom.date ? new Date(geom.date) : suAn;
+          
+          if (!isNaN(lat) && !isNaN(lng)) {
+            yeniHaberler.push({
+              baslik: `🔥 Termal Uydu Tespiti: ${baslik}`,
+              detay: `NASA EONET Olay Raporu:\nOlay: ${ev.title}\nSaptama Zamanı: ${geom.date || 'Güncel'}`,
+              enlem: lat, 
+              boylam: lng, 
+              kategori: "Yangın", 
+              isYangin: true,
+              tehdit_seviyesi: "Kritik", 
+              kaynak_guvenilirlik: "A1 (NASA EONET)",
+              kaynak: ev.sources && ev.sources[0] ? ev.sources[0].url : "https://eonet.gsfc.nasa.gov/",
+              tarihSaat: yanginZamani
+            });
           }
-        });
-      }
+        }
+      });
     }
-  } catch (e) {}
-
+  }
+} catch (e) {
+  console.error("EONET Yangın Hatası:", e);
+}
+  
   if (yeniHaberler.length > 0) {
     tumHaberler = yeniHaberler;
     document.getElementById("sync-status").innerText = "ONLINE";
