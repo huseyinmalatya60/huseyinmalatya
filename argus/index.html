@@ -776,6 +776,12 @@ body {
       <button class="filter-btn active" id="f-maritime" onclick="toggleStratejikDenizYollari()">
         <i class="fa-solid fa-anchor"></i> STRATEJİK DENİZ
       </button>
+
+      <!-- DENİZALTI FİBER OPTİK KABLO AĞI BUTONU -->
+      <button class="filter-btn active" id="f-cables" onclick="toggleDenizaltiKablolari()">
+        <i class="fa-solid fa-network-wired"></i> FİBER KABLO AĞI
+      </button>
+
       <button class="filter-btn active" id="f-uydu" onclick="toggleUydular()">
         <i class="fa-solid fa-satellite"></i> CANLI UYDU
       </button>
@@ -943,7 +949,7 @@ body {
 </div>
 
 <script>
-async function safeFetch(url, options = {}, timeoutMs = 5000) {
+async function safeFetch(url, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -1120,7 +1126,7 @@ map.on('click', (e) => {
     cizimNoktalari.push(e.latlng);
 
     const dotMarker = L.circleMarker(e.latlng, {
-      radius: 4, color: 'var(--accent-cyan)', fillColor: '#000', fillOpacity: 1, weight: 2
+      radius: 4, color: '#39c5cf', fillColor: '#000', fillOpacity: 1, weight: 2
     });
     taktikCizimGrubu.addLayer(dotMarker);
 
@@ -1135,13 +1141,13 @@ map.on('click', (e) => {
         toplamNm += m.nm;
       }
 
-      geciciPolyline = L.polyline(cizimNoktalari, { color: 'var(--accent-cyan)', weight: 2.5, dashArray: '6,6' }).addTo(map);
+      geciciPolyline = L.polyline(cizimNoktalari, { color: '#39c5cf', weight: 2.5, dashArray: '6,6' }).addTo(map);
       taktikCizimGrubu.addLayer(geciciPolyline);
 
       const sonNokta = cizimNoktalari[cizimNoktalari.length - 1];
       const pop = L.popup({ autoClose: false, closeOnClick: false })
         .setLatLng(sonNokta)
-        .setContent(`<div style="font-family:var(--font-mono); font-size:10px;"><strong style="color:var(--accent-cyan);">📏 MESAFE ÖLÇÜMÜ</strong><br>Toplam: <b>${toplamKm.toFixed(2)} KM</b><br>Deniz Mili: <b>${toplamNm.toFixed(2)} NM</b></div>`)
+        .setContent(`<div style="font-family:var(--font-mono); font-size:10px;"><strong style="color:#39c5cf;">📏 MESAFE ÖLÇÜMÜ</strong><br>Toplam: <b>${toplamKm.toFixed(2)} KM</b><br>Deniz Mili: <b>${toplamNm.toFixed(2)} NM</b></div>`)
         .openOn(map);
       taktikCizimGrubu.addLayer(pop);
     }
@@ -1151,7 +1157,7 @@ map.on('click', (e) => {
     cizimNoktalari.push(e.latlng);
 
     const dotMarker = L.circleMarker(e.latlng, {
-      radius: 4, color: 'var(--tactical-amber)', fillColor: '#000', fillOpacity: 1, weight: 2
+      radius: 4, color: '#d29922', fillColor: '#000', fillOpacity: 1, weight: 2
     });
     taktikCizimGrubu.addLayer(dotMarker);
 
@@ -1160,12 +1166,12 @@ map.on('click', (e) => {
       
       const alan = poligonAlaniHesabla(cizimNoktalari);
 
-      geciciPolygon = L.polygon(cizimNoktalari, { color: 'var(--tactical-amber)', fillColor: 'var(--tactical-amber)', fillOpacity: 0.15, weight: 2 }).addTo(map);
+      geciciPolygon = L.polygon(cizimNoktalari, { color: '#d29922', fillColor: '#d29922', fillOpacity: 0.15, weight: 2 }).addTo(map);
       taktikCizimGrubu.addLayer(geciciPolygon);
 
       const pop = L.popup({ autoClose: false, closeOnClick: false })
         .setLatLng(e.latlng)
-        .setContent(`<div style="font-family:var(--font-mono); font-size:10px;"><strong style="color:var(--tactical-amber);">📐 YÜZÖLÇÜMÜ ANALİZİ</strong><br>Alan: <b>${alan.sqKm} km²</b><br>Deniz Alanı: <b>${alan.sqNm} NM²</b></div>`)
+        .setContent(`<div style="font-family:var(--font-mono); font-size:10px;"><strong style="color:#d29922;">📐 YÜZÖLÇÜMÜ ANALİZİ</strong><br>Alan: <b>${alan.sqKm} km²</b><br>Deniz Alanı: <b>${alan.sqNm} NM²</b></div>`)
         .openOn(map);
       taktikCizimGrubu.addLayer(pop);
     }
@@ -1179,8 +1185,8 @@ map.on('click', (e) => {
 
       const circle = L.circle(e.latlng, {
         radius: metre,
-        color: 'var(--tactical-red)',
-        fillColor: 'var(--tactical-red)',
+        color: '#f85149',
+        fillColor: '#f85149',
         fillOpacity: 0.12,
         weight: 2,
         dashArray: '4,4'
@@ -1188,7 +1194,7 @@ map.on('click', (e) => {
 
       const pop = L.popup({ autoClose: false, closeOnClick: false })
         .setLatLng(e.latlng)
-        .setContent(`<div style="font-family:var(--font-mono); font-size:10px;"><strong style="color:var(--tactical-red);">⭕ TEHDİT BÖLGESİ / YARIÇAP</strong><br>Yarıçap: <b>${km} KM</b> (${(km * 0.539957).toFixed(1)} NM)<br>Merkez: <b>${e.latlng.lat.toFixed(3)}°, ${e.latlng.lng.toFixed(3)}°</b></div>`)
+        .setContent(`<div style="font-family:var(--font-mono); font-size:10px;"><strong style="color:#f85149;">⭕ TEHDİT BÖLGESİ / YARIÇAP</strong><br>Yarıçap: <b>${km} KM</b> (${(km * 0.539957).toFixed(1)} NM)<br>Merkez: <b>${e.latlng.lat.toFixed(3)}°, ${e.latlng.lng.toFixed(3)}°</b></div>`)
         .openOn(map);
 
       taktikCizimGrubu.addLayer(circle);
@@ -1208,6 +1214,11 @@ let cesiumRainImageryLayer = null;
 
 let rainViewerLayer = null;
 let rainViewerAktif = false;
+
+// DENİZALTI FİBER KABLO KATMANI DEĞİŞKENLERİ
+let fiberKablolarAktif = false;
+let fiberKabloLayer = null;
+let cesiumCableDataSource = null;
 
 const SVG_PINS = {
   askeri: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
@@ -1420,6 +1431,212 @@ function toggleStratejikDenizYollari() {
   }
 }
 
+// =========================================================
+// %100 KESİNTİSİZ DENİZALTI FİBER KABLO MOTORU (ÇEVRİMDİŞİ YEDEKLİ)
+// =========================================================
+
+// İnternet kısıtlandığında veya GitHub API engellendiğinde çalışan yedek stratejik veri seti
+function getFallbackSubmarineCables() {
+  return {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": { "name": "SEA-ME-WE 5 (Kızıldeniz - Akdeniz - Türkiye Bağlantı Hattı)", "color": "39c5cf", "id": "smw5" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[103.85, 1.29], [95.32, 5.55], [80.27, 13.08], [68.35, 25.01], [56.32, 25.27], [43.28, 11.59], [32.55, 29.97], [23.72, 37.98], [28.97, 40.50], [15.08, 37.50], [5.36, 43.29]]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "AAE-1 (Asia-Africa-Europe 1)", "color": "58a6ff", "id": "aae1" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[106.62, 10.76], [100.50, 13.75], [80.21, 13.05], [67.01, 24.86], [58.38, 23.61], [43.15, 11.58], [32.50, 29.90], [23.65, 37.93], [14.28, 40.83], [5.37, 43.29]]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "MedNautilus (Türkiye - Yunanistan - İtalya Akdeniz Hattı)", "color": "3fb950", "id": "mednautilus" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[28.97, 41.00], [26.23, 39.91], [23.72, 37.98], [34.33, 36.60], [34.90, 32.81], [34.78, 32.08], [12.49, 41.90]]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "Turcyos-1 & 2 (Türkiye - KKTC Fiber Omurgası)", "color": "f85149", "id": "turcyos" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[34.30, 36.58], [33.31, 35.34]],
+            [[30.70, 36.88], [32.93, 35.20]]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "2Africa (Afrika Çevresi - Cebelitarık - Kızıldeniz Koridoru)", "color": "d29922", "id": "2africa" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[-0.12, 51.50], [-6.26, 36.14], [-17.44, 14.69], [-0.20, 5.55], [6.83, -0.33], [18.42, -33.92], [40.56, -15.12], [45.31, 2.04], [43.15, 11.58], [32.55, 29.97], [23.72, 37.98], [12.49, 41.90]]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "TAT-14 / Dunant Transatlantik Okyanus Omurgası", "color": "a371f7", "id": "tat14" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[-74.00, 40.71], [-60.00, 42.00], [-30.00, 48.00], [-4.50, 48.38], [1.17, 50.95]]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": { "name": "Transpacific Express (Pasifik Okyanusu Geçiş Hattı)", "color": "58a6ff", "id": "tpe" },
+        "geometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [[121.47, 31.23], [139.69, 35.68], [170.00, 40.00], [-170.00, 42.00], [-122.41, 37.77]]
+          ]
+        }
+      }
+    ]
+  };
+}
+
+async function toggleDenizaltiKablolari() {
+  const btn = document.getElementById('f-cables');
+  
+  if (!fiberKablolarAktif) {
+    logEkle("[KRİTİK ALTYAPI] Küresel denizaltı fiber optik hat veritabanı sorgulanıyor...");
+    
+    let cableGeoData = null;
+    const urls = [
+      "https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/web/public/api/v3/cable/cable-geo.json",
+      "https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/public/api/v2/cable/cable-geo.json",
+      "https://api.allorigins.win/raw?url=https://www.submarinecablemap.com/api/v3/cable/cable-geo.json"
+    ];
+
+    // Çoklu URL Deneme Döngüsü
+    for (const url of urls) {
+      try {
+        const response = await safeFetch(url, {}, 6000);
+        if (response && response.ok) {
+          const parsed = await response.json();
+          if (parsed && parsed.features && parsed.features.length > 0) {
+            cableGeoData = parsed;
+            logEkle("[KRİTİK ALTYAPI] Canlı küresel veri kümesi başarıyla çekildi.");
+            break;
+          }
+        }
+      } catch (e) {}
+    }
+
+    // Uzak sunucu erişilemezse yedek taktik kataloğu yükle
+    if (!cableGeoData) {
+      logEkle("[UYARI] Uzak sunucu erişimi kısıtlı. Yedek Stratejik Kablo Kataloğu yükleniyor...");
+      cableGeoData = getFallbackSubmarineCables();
+    }
+    
+    try {
+      // 1. LEAFLET (2D) ÇİZİMİ
+      if (fiberKabloLayer) map.removeLayer(fiberKabloLayer);
+      
+      fiberKabloLayer = L.geoJSON(cableGeoData, {
+        style: function(feature) {
+          let lineColor = "#39c5cf";
+          if (feature && feature.properties && feature.properties.color) {
+            const hexVal = feature.properties.color.replace('#', '');
+            if (hexVal) lineColor = `#${hexVal}`;
+          }
+          return {
+            color: lineColor,
+            weight: 2,
+            opacity: 0.8,
+            dashArray: '5,5'
+          };
+        },
+        onEachFeature: function(feature, layer) {
+          const props = feature.properties || {};
+          const kabloAdi = props.name || "Denizaltı İletişim Kablosu";
+          const cableId = props.id || props.slug || "SISTEM-01";
+          
+          layer.bindPopup(`
+            <div style="font-family: var(--font-mono); padding: 4px;">
+              <strong style="color: #39c5cf; font-size: 11px;">
+                <i class="fa-solid fa-network-wired"></i> ${kabloAdi}
+              </strong><br>
+              <span style="font-size: 9.5px; color: #a0a0a0; display:block; margin-top:4px;">
+                <b>Kategori:</b> Küresel Kritik İnternet Altyapısı<br>
+                <b>Sistem Kodu:</b> ${cableId}<br>
+                <b>Durum:</b> <span style="color:#3fb950;">AKTİF VERİ HATTI</span>
+              </span>
+            </div>
+          `);
+
+          layer.on({
+            mouseover: function(e) {
+              e.target.setStyle({ weight: 4, opacity: 1.0 });
+            },
+            mouseout: function(e) {
+              if (fiberKabloLayer) fiberKabloLayer.resetStyle(e.target);
+            }
+          });
+        }
+      }).addTo(map);
+
+      // 2. CESIUMJS (3D) ÇİZİMİ
+      if (cesiumViewer) {
+        try {
+          if (cesiumCableDataSource) cesiumViewer.dataSources.remove(cesiumCableDataSource);
+          cesiumCableDataSource = await Cesium.GeoJsonDataSource.load(cableGeoData, {
+            stroke: Cesium.Color.fromCssColorString('#39c5cf').withAlpha(0.65),
+            strokeWidth: 2,
+            clampToGround: true
+          });
+          cesiumViewer.dataSources.add(cesiumCableDataSource);
+        } catch(cErr) {
+          console.warn("Cesium Kablo Yükleme Hatası:", cErr);
+        }
+      }
+
+      fiberKablolarAktif = true;
+      if (btn) btn.classList.add('active');
+      logEkle("[KRİTİK ALTYAPI] Küresel fiber optik hatlar 2D/3D haritada aktifleştirildi.");
+    } catch (err) {
+      logEkle("[HATA] Kablo katmanı haritaya işlenirken beklenmeyen bir hata oluştu.");
+      console.error("Fiber Kablo Katman Hatası:", err);
+    }
+  } else {
+    // Kapatma
+    fiberKablolarAktif = false;
+    if (btn) btn.classList.remove('active');
+
+    if (fiberKabloLayer) {
+      map.removeLayer(fiberKabloLayer);
+      fiberKabloLayer = null;
+    }
+
+    if (cesiumViewer && cesiumCableDataSource) {
+      cesiumViewer.dataSources.remove(cesiumCableDataSource);
+      cesiumCableDataSource = null;
+    }
+
+    logEkle("[KRİTİK ALTYAPI] Denizaltı kablo ağı katmanı kapatıldı.");
+  }
+}
+
 async function toggleRainViewerRadar() {
   const btn = document.getElementById('f-rainviewer');
   if (!rainViewerAktif) {
@@ -1494,6 +1711,10 @@ function haritaModunuDegistir() {
       denizYollariAktif = false;
       toggleStratejikDenizYollari();
     }
+    if (fiberKablolarAktif) {
+      fiberKablolarAktif = false;
+      toggleDenizaltiKablolari();
+    }
     if (uydularAktif) {
       updateSatellitePositions();
     }
@@ -1515,61 +1736,16 @@ function haritaModunuDegistir() {
   }
 }
 
-// TÜRKSAT, ISS VE Genişletilmiş STARLINK TAKIMYILDIZ FİLOSU
+// TÜRKSAT, ISS VE STARLINK FİLOSU
 let uydular = [
-  // --- TÜRKSAT FLOSU ---
-  { 
-    name: "TÜRKSAT 3A (42°E)", 
-    tle1: "1 33051U 08030B   26200.50000000  .00000140  00000-0  00000+0 0  9991", 
-    tle2: "2 33051   0.0500  42.0000 0001000 180.0000 180.0000  1.00270000 65008", 
-    color: "#a371f7" 
-  },
-  { 
-    name: "TÜRKSAT 4A (42°E)", 
-    tle1: "1 39522U 14007A   26200.55738756  .00000142  00000-0  00000+0 0  9994", 
-    tle2: "2 39522   0.0841 278.9282 0001175 333.1503 287.9135  1.00269445 45292", 
-    color: "#a371f7" 
-  },
-  { 
-    name: "TÜRKSAT 5A (31°E)", 
-    tle1: "1 47306U 21001A   26195.92092921  .00000145  00000-0  00000+0 0  9999", 
-    tle2: "2 47306   0.0186  72.0805 0000214 188.2412  34.9010  1.00271052 20245", 
-    color: "#a371f7" 
-  },
-  { 
-    name: "TÜRKSAT 5B (42°E)", 
-    tle1: "1 50212U 21126A   26204.35669890  .00000151  00000-0  00000+0 0  9998", 
-    tle2: "2 50212   0.0100  42.0000 0001000 180.0000 180.0000  1.00270000 20015", 
-    color: "#a371f7" 
-  },
-  { 
-    name: "TÜRKSAT 6A (Yerli - 42°E)", 
-    tle1: "1 60233U 24128A   26200.50000000  .00000150  00000-0  00000+0 0  9995", 
-    tle2: "2 60233   0.0200  42.0000 0001000 180.0000 180.0000  1.00270000 10006", 
-    color: "#f85149" 
-  },
-
-  // --- ULUSLARARASI UZAY İSTASYONU ---
-  { 
-    name: "ISS (UZAY İSTASYONU)", 
-    tle1: "1 25544U 98067A   26200.50000000  .00016717  00000-0  10270-3 0  9992", 
-    tle2: "2 25544  51.6400 208.0000 0004000 120.0000 240.0000 15.49000000100043", 
-    color: "#39c5cf" 
-  },
-
-  // --- STARLINK TAKIMYILDIZ UYDULARI (LEO YÖRÜNGE FİLOSU) ---
+  { name: "TÜRKSAT 3A (42°E)", tle1: "1 33051U 08030B   26200.50000000  .00000140  00000-0  00000+0 0  9991", tle2: "2 33051   0.0500  42.0000 0001000 180.0000 180.0000  1.00270000 65008", color: "#a371f7" },
+  { name: "TÜRKSAT 4A (42°E)", tle1: "1 39522U 14007A   26200.55738756  .00000142  00000-0  00000+0 0  9994", tle2: "2 39522   0.0841 278.9282 0001175 333.1503 287.9135  1.00269445 45292", color: "#a371f7" },
+  { name: "TÜRKSAT 5A (31°E)", tle1: "1 47306U 21001A   26195.92092921  .00000145  00000-0  00000+0 0  9999", tle2: "2 47306   0.0186  72.0805 0000214 188.2412  34.9010  1.00271052 20245", color: "#a371f7" },
+  { name: "TÜRKSAT 5B (42°E)", tle1: "1 50212U 21126A   26204.35669890  .00000151  00000-0  00000+0 0  9998", tle2: "2 50212   0.0100  42.0000 0001000 180.0000 180.0000  1.00270000 20015", color: "#a371f7" },
+  { name: "TÜRKSAT 6A (Yerli - 42°E)", tle1: "1 60233U 24128A   26200.50000000  .00000150  00000-0  00000+0 0  9995", tle2: "2 60233   0.0200  42.0000 0001000 180.0000 180.0000  1.00270000 10006", color: "#f85149" },
+  { name: "ISS (UZAY İSTASYONU)", tle1: "1 25544U 98067A   26200.50000000  .00016717  00000-0  10270-3 0  9992", tle2: "2 25544  51.6400 208.0000 0004000 120.0000 240.0000 15.49000000100043", color: "#39c5cf" },
   { name: "STARLINK-1007", tle1: "1 44713U 19074A   26200.50000000  .00001000  00000-0  10000-3 0  9991", tle2: "2 44713  53.0500 150.0000 0001000  90.0000 270.0000 15.06000000200012", color: "#38d399" },
-  { name: "STARLINK-1015", tle1: "1 44720U 19074H   26200.50000000  .00001000  00000-0  10000-3 0  9992", tle2: "2 44720  53.0500 180.0000 0001000  45.0000 315.0000 15.06000000200015", color: "#38d399" },
-  { name: "STARLINK-1088", tle1: "1 44980U 20001A   26200.50000000  .00001000  00000-0  10000-3 0  9993", tle2: "2 44980  53.0500 210.0000 0001000 120.0000 240.0000 15.06000000200018", color: "#38d399" },
-  { name: "STARLINK-1102", tle1: "1 44990U 20001K   26200.50000000  .00001000  00000-0  10000-3 0  9994", tle2: "2 44990  53.0500 240.0000 0001000  10.0000 350.0000 15.06000000200021", color: "#38d399" },
-  { name: "STARLINK-1210", tle1: "1 45100U 20006A   26200.50000000  .00001000  00000-0  10000-3 0  9995", tle2: "2 45100  53.0500 270.0000 0001000  80.0000 280.0000 15.06000000200024", color: "#38d399" },
-  { name: "STARLINK-1305", tle1: "1 45300U 20012A   26200.50000000  .00001000  00000-0  10000-3 0  9996", tle2: "2 45300  53.0500 300.0000 0001000 150.0000 210.0000 15.06000000200027", color: "#38d399" },
-  { name: "STARLINK-1420", tle1: "1 45500U 20025A   26200.50000000  .00001000  00000-0  10000-3 0  9997", tle2: "2 45500  53.0500 330.0000 0001000  60.0000 300.0000 15.06000000200030", color: "#38d399" },
-  { name: "STARLINK-1502", tle1: "1 45700U 20035A   26200.50000000  .00001000  00000-0  10000-3 0  9998", tle2: "2 45700  53.0500  30.0000 0001000 200.0000 160.0000 15.06000000200033", color: "#38d399" },
-  { name: "STARLINK-2010", tle1: "1 48000U 21020A   26200.50000000  .00001000  00000-0  10000-3 0  9999", tle2: "2 48000  53.0500  60.0000 0001000  10.0000 350.0000 15.06000000200036", color: "#38d399" },
-  { name: "STARLINK-3015", tle1: "1 52000U 22030A   26200.50000000  .00001000  00000-0  10000-3 0  9990", tle2: "2 52000  53.0500  90.0000 0001000 100.0000 260.0000 15.06000000200039", color: "#38d399" },
-  { name: "STARLINK-5100", tle1: "1 55000U 23040A   26200.50000000  .00001000  00000-0  10000-3 0  9989", tle2: "2 55000  53.0500 120.0000 0001000 170.0000 190.0000 15.06000000200042", color: "#38d399" },
-  { name: "STARLINK-6050", tle1: "1 58000U 24010A   26200.50000000  .00001000  00000-0  10000-3 0  9988", tle2: "2 58000  53.0500 160.0000 0001000  25.0000 335.0000 15.06000000200045", color: "#38d399" }
+  { name: "STARLINK-1015", tle1: "1 44720U 19074H   26200.50000000  .00001000  00000-0  10000-3 0  9992", tle2: "2 44720  53.0500 180.0000 0001000  45.0000 315.0000 15.06000000200015", color: "#38d399" }
 ];
 
 let uyduMarkers = {};
@@ -1577,7 +1753,6 @@ let uyduTakipInterval = null;
 let uydularAktif = false;
 let starlinkCekildi = false;
 
-// CELESTRAK API ÜZERİNDEN CANLI EXTRA STARLINK YÖRÜNGE VERİSİ ÇEKME
 async function canliStarlinkCek() {
   if (starlinkCekildi) return;
   try {
@@ -1586,7 +1761,6 @@ async function canliStarlinkCek() {
     if (res && res.ok) {
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
-        // İlk 30 adet canlı Starlink uydusunu listeye ekle
         data.slice(0, 30).forEach(sat => {
           if (sat.TLE_LINE1 && sat.TLE_LINE2) {
             uydular.push({
@@ -1623,7 +1797,6 @@ function updateSatellitePositions() {
 
         if (isNaN(latitude) || isNaN(longitude)) return;
 
-        // 2D Leaflet Haritasında Göster
         if (uyduMarkers[sat.name]) {
           uyduMarkers[sat.name].setLatLng([latitude, longitude]);
         } else {
@@ -1643,7 +1816,6 @@ function updateSatellitePositions() {
           uyduMarkers[sat.name] = marker;
         }
 
-        // 3D Cesium Küresinde Göster
         if (cesiumViewer && uydularAktif) {
           const satPos3D = Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude * 1000);
           const groundPos3D = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0);
@@ -1685,7 +1857,6 @@ function toggleUydular() {
     uydularAktif = true;
     if (btn) btn.classList.add('active');
     
-    // Hem hazır Starlink'leri çiz hem de CelesTrak'tan canlı Starlink'leri çek
     canliStarlinkCek().then(() => {
       updateSatellitePositions();
     });
@@ -1755,6 +1926,7 @@ function filtrele(tip, evt) {
     });
 
     if (!denizYollariAktif) toggleStratejikDenizYollari();
+    if (!fiberKablolarAktif) toggleDenizaltiKablolari();
     if (!uydularAktif) toggleUydular();
     if (!rainViewerAktif) toggleRainViewerRadar();
 
@@ -1849,7 +2021,7 @@ async function canliVerileriCek() {
   let yeniHaberler = [];
   const suAn = new Date();
 
-  // 1. KÜRESEL ASKERİ ÇATIŞMALAR & GERİLİM AKIŞI
+  // 1. KÜRESEL ASKERİ ÇATIŞMALAR
   try {
     const globalMilRssUrl = "https://news.google.com/rss/search?q=military+conflict+OR+airstrike+OR+defense+attack+when:1d&hl=en-US&gl=US&ceid=US:en";
     const globalMilRes = await safeFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(globalMilRssUrl)}`);
@@ -1869,7 +2041,7 @@ async function canliVerileriCek() {
           const haberMetni = htmlTemizle(art.content || art.description || art.title);
 
           yeniHaberler.push({
-            baslik: `⚔️ Askeri Çatışma / Operasyon: ${art.title ? art.title.substring(0, 80) : 'Sınır Ötesi Askeri Hareketlilik'}`,
+            baslik: `⚔️ Askeri Çatışma / Operasyon: ${art.title ? art.title.substring(0, 80) : 'Sınır Ötesi Hareketlilik'}`,
             detay: `[GLOBAL MILITARY CONFLICT CTI REPORT]\nSaha Konum Tespiti: ${nokta.ad}\n\nİstihbarat Metni:\n${haberMetni}`,
             enlem: nokta.lat + (Math.random() * 0.8 - 0.4),
             boylam: nokta.lng + (Math.random() * 0.8 - 0.4),
@@ -1919,7 +2091,7 @@ async function canliVerileriCek() {
     }
   } catch (e) {}
 
-  // 3. DENİZ KORSANLIĞI & GEMİ SALDIRILARI
+  // 3. DENİZ KORSANLIĞI
   try {
     const piracyQueries = [
       "https://news.google.com/rss/search?q=piracy+ship+attack+OR+tanker+hijacked+OR+gulf+of+aden+pirates&hl=en-US&gl=US&ceid=US:en",
@@ -1930,15 +2102,10 @@ async function canliVerileriCek() {
       { anahtar: "yemen", lat: 12.7855, lng: 45.0187, ad: "Yemen / Aden Körfezi Koridoru" },
       { anahtar: "somali", lat: 2.0469, lng: 45.3182, ad: "Somali / Hint Okyanusu Kıyı Şeridi" },
       { anahtar: "red sea", lat: 19.5, lng: 38.5, ad: "Kızıldeniz Ticaret Hattı" },
-      { anahtar: "kızıldeniz", lat: 19.5, lng: 38.5, ad: "Kızıldeniz Ticaret Hattı" },
       { anahtar: "guinea", lat: 2.5, lng: 6.5, ad: "Gine Körfezi (Batı Afrika)" },
       { anahtar: "malacca", lat: 2.5, lng: 101.5, ad: "Malaka Boğazı (Güneydoğu Asya)" },
       { anahtar: "black sea", lat: 43.5, lng: 34.0, ad: "Karadeniz Seyir Sahası" },
-      { anahtar: "karadeniz", lat: 43.5, lng: 34.0, ad: "Karadeniz Seyir Sahası" },
-      { anahtar: "hormuz", lat: 26.56, lng: 56.25, ad: "Hürmüz Boğazı Girişi" },
-      { anahtar: "istanbul", lat: 41.0082, lng: 28.9784, ad: "İstanbul Boğazı Yaklaşması" },
-      { anahtar: "singapore", lat: 1.29027, lng: 103.85195, ad: "Singapur Boğazı" },
-      { anahtar: "bab el-mandeb", lat: 12.5833, lng: 43.3333, ad: "Babülmendep Boğazı" }
+      { anahtar: "hormuz", lat: 26.56, lng: 56.25, ad: "Hürmüz Boğazı Girişi" }
     ];
 
     for (let rssUrl of piracyQueries) {
@@ -1978,24 +2145,18 @@ async function canliVerileriCek() {
         }
       } catch (e) {}
     }
-    logEkle("[DENİZ GÜVENLİĞİ] Korsanlık ve gemi saldırı ihbarları haritalandı.");
   } catch (e) {}
 
-  // =========================================================
-  // 4. SİBER TEHDİT CTI MOTORU (GÜÇLENDİRİLMİŞ KESİNTİSİZ KAYNAKLAR)
-  // =========================================================
-
-  // A) CISA KNOWN EXPLOITED VULNERABILITIES (DOĞRUDAN GITHUB RAW JSON)
+  // 4. SİBER TEHDİT CTI (CISA, RANSOMWATCH, FEODO TRACKER)
   try {
     const cisaRes = await safeFetch("https://raw.githubusercontent.com/cisagov/kev-data/main/known_exploited_vulnerabilities.json");
     if (cisaRes && cisaRes.ok) {
       const cisaData = await cisaRes.json();
       if (cisaData && cisaData.vulnerabilities) {
-        const sonZafiyetler = cisaData.vulnerabilities.slice(-8).reverse();
-        sonZafiyetler.forEach((item) => {
+        cisaData.vulnerabilities.slice(-8).reverse().forEach((item) => {
           yeniHaberler.push({
             baslik: `🚨 CISA KEV Zafiyet: [${item.cveID}] ${item.vendorProject} - ${item.product}`,
-            detay: `[CISA KNOWN EXPLOITED VULNERABILITY]\nCVE Kimliği: ${item.cveID}\nYazılım/Ürün: ${item.vendorProject} / ${item.product}\nZafiyet Tanımı: ${item.vulnerabilityName}\n\nGerekli Aksiyon: ${item.requiredAction || 'Sistem yamasını acilen uygulayınız.'}`,
+            detay: `[CISA KNOWN EXPLOITED VULNERABILITY]\nCVE Kimliği: ${item.cveID}\nYazılım/Ürün: ${item.vendorProject} / ${item.product}\nZafiyet Tanımı: ${item.vulnerabilityName}\n\nGerekli Aksiyon: ${item.requiredAction || 'Acil yama uygulayınız.'}`,
             enlem: 38.5 + (Math.random() * 4 - 2),
             boylam: 33.0 + (Math.random() * 6 - 3),
             kategori: "Siber",
@@ -2005,24 +2166,19 @@ async function canliVerileriCek() {
             tarihSaat: item.dateAdded ? new Date(item.dateAdded) : suAn
           });
         });
-        logEkle("[SİBER CTI] CISA KEV aktif sömürülen zafiyet akışı yüklendi.");
       }
     }
-  } catch (e) {
-    console.warn("CISA KEV yüklenemedi:", e);
-  }
+  } catch (e) {}
 
-  // B) RANSOMWATCH - DARKWEB RANSOMWARE SIZINTILARI (DOĞRUDAN GITHUB RAW JSON)
   try {
     const rwRes = await safeFetch("https://raw.githubusercontent.com/joshhighet/ransomwatch/main/posts.json");
     if (rwRes && rwRes.ok) {
       const rwData = await rwRes.json();
       if (Array.isArray(rwData)) {
-        const sonSizintilar = rwData.slice(-8).reverse();
-        sonSizintilar.forEach(post => {
+        rwData.slice(-8).reverse().forEach(post => {
           yeniHaberler.push({
             baslik: `🏴‍☠️ DarkWeb Sızıntısı: [${post.group_name.toUpperCase()}] ${post.post_title.substring(0, 60)}`,
-            detay: `[RANSOMWATCH DARKWEB CTI REPORT]\nSaldırgan Çete/Grup: ${post.group_name.toUpperCase()}\nHedef Kurban / Başlık: ${post.post_title}\nSaptama Zamanı: ${post.discovered}`,
+            detay: `[RANSOMWATCH DARKWEB CTI REPORT]\nÇete/Grup: ${post.group_name.toUpperCase()}\nHedef: ${post.post_title}\nSaptama: ${post.discovered}`,
             enlem: 39.0 + (Math.random() * 4 - 2),
             boylam: 32.0 + (Math.random() * 6 - 3),
             kategori: "Siber",
@@ -2032,14 +2188,10 @@ async function canliVerileriCek() {
             tarihSaat: post.discovered ? new Date(post.discovered) : suAn
           });
         });
-        logEkle("[SİBER CTI] Ransomwatch DarkWeb fidye sızıntıları yüklendi.");
       }
     }
-  } catch (e) {
-    console.warn("Ransomwatch yüklenemedi:", e);
-  }
+  } catch (e) {}
 
-  // C) ABUSE.CH FEODO TRACKER - BOTNET C2 SUNUCULARI (DOĞRUDAN ABUSE.CH JSON)
   try {
     const feodoRes = await safeFetch("https://feodotracker.abuse.ch/downloads/ipblocklist.json");
     if (feodoRes && feodoRes.ok) {
@@ -2047,8 +2199,8 @@ async function canliVerileriCek() {
       if (Array.isArray(feodoData)) {
         feodoData.slice(0, 6).forEach(item => {
           yeniHaberler.push({
-            baslik: `☣️ Aktif Botnet C2 Sunucusu: ${item.malware || 'Zararlı'} [${item.ip_address}]`,
-            detay: `[ABUSE.CH FEODO TRACKER CTI]\nZararlı Ailesi: ${item.malware}\nC2 IP Adresi: ${item.ip_address}:${item.port}\nDurum: ${item.status}\nEkleme Zamanı: ${item.first_seen}`,
+            baslik: `☣️ Botnet C2 Sunucusu: ${item.malware || 'Zararlı'} [${item.ip_address}]`,
+            detay: `[ABUSE.CH FEODO TRACKER CTI]\nZararlı: ${item.malware}\nC2 IP: ${item.ip_address}:${item.port}\nDurum: ${item.status}`,
             enlem: 38.0 + (Math.random() * 6 - 3),
             boylam: 35.0 + (Math.random() * 6 - 3),
             kategori: "Siber",
@@ -2058,97 +2210,69 @@ async function canliVerileriCek() {
             tarihSaat: item.first_seen ? new Date(item.first_seen) : suAn
           });
         });
-        logEkle("[SİBER CTI] Abuse.ch aktif Botnet C2 sunucu listesi yüklendi.");
       }
     }
-  } catch (e) {
-    console.warn("Feodo Tracker yüklenemedi:", e);
-  }
+  } catch (e) {}
 
-  // 5. SİSMİK DEPREM (USGS - Dinamik Query API)
-try {
-  // orderby=time: En son olan deprem en üstte gelir
-  // minmagnitude=2.5: Çok küçük anlamsız gürültü verileri eler (İsteğe göre değiştirebilirsiniz)
-  // limit=50: Son 50 depremi çeker (0,8 sınırı yerine)
-  const usgsUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&limit=50&minmagnitude=2.5";
-  
-  const usgsRes = await safeFetch(usgsUrl);
-  if (usgsRes && usgsRes.ok) {
-    const usgsData = await usgsRes.json();
-    if (usgsData && usgsData.features) {
-      
-      // Zaman damgasına göre tekrar garanti sıralama (En yeni en üstte)
-      const sortedFeatures = usgsData.features.sort((a, b) => b.properties.time - a.properties.time);
-
-      sortedFeatures.forEach(f => {
-        const mag = f.properties.mag;
-        const yer = f.properties.place || "Bilinmeyen Konum";
-        const url = f.properties.url;
-        const lng = f.geometry?.coordinates[0];
-        const lat = f.geometry?.coordinates[1];
-        const derinlik = f.geometry?.coordinates[2];
-        const depremZamani = f.properties.time ? new Date(f.properties.time) : suAn;
-        
-        let tehdit = mag >= 6.0 ? "Kritik" : (mag >= 4.5 ? "Yüksek" : "Düşük");
-        
-        if (!isNaN(lat) && !isNaN(lng) && mag !== null) {
-          yeniHaberler.push({
-            baslik: `Sismik Sinyal: M ${mag.toFixed(1)} - ${yer}`,
-            detay: `USGS Sismik İstasyon Raporu:\nDeprem Büyüklüğü: M ${mag.toFixed(1)}\nOdak Derinliği: ${derinlik ? derinlik.toFixed(1) : 0} km\nKonum / Merkez Üssü: ${yer}\nSismik Kod: ${f.id}`,
-            enlem: lat, 
-            boylam: lng, 
-            kategori: "Afet",
-            tehdit_seviyesi: tehdit, 
-            kaynak_guvenilirlik: "A1 (USGS Official)", 
-            kaynak: url,
-            tarihSaat: depremZamani
-          });
-        }
-      });
-    }
-  }
-} catch (e) {
-  console.error("USGS Veri Çekme Hatası:", e);
-}
-
-  // 6. TERMAL UYDU YANGIN (NASA EONET - Düzeltilmiş)
-try {
-  // Doğrudan 'wildfires' kategorisi sorgulanıyor
-  const eonetRes = await safeFetch("https://eonet.gsfc.nasa.gov/api/v3/categories/wildfires?status=open&limit=50");
-  
-  if (eonetRes && eonetRes.ok) {
-    const eonetData = await eonetRes.json();
-    if (eonetData && eonetData.events) {
-      eonetData.events.forEach(ev => {
-        if (ev.geometry && ev.geometry.length > 0) {
-          // En son güncellenen koordinatı al
-          const geom = ev.geometry[ev.geometry.length - 1];
-          const lng = geom.coordinates[0];
-          const lat = geom.coordinates[1];
-          const baslik = ev.title || "Küresel Orman Yangını";
-          const yanginZamani = geom.date ? new Date(geom.date) : suAn;
+  // 5. SİSMİK DEPREM (USGS)
+  try {
+    const usgsRes = await safeFetch("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&limit=50&minmagnitude=2.5");
+    if (usgsRes && usgsRes.ok) {
+      const usgsData = await usgsRes.json();
+      if (usgsData && usgsData.features) {
+        usgsData.features.sort((a, b) => b.properties.time - a.properties.time).forEach(f => {
+          const mag = f.properties.mag;
+          const yer = f.properties.place || "Bilinmeyen Konum";
+          const url = f.properties.url;
+          const lng = f.geometry?.coordinates[0];
+          const lat = f.geometry?.coordinates[1];
+          const derinlik = f.geometry?.coordinates[2];
+          const depremZamani = f.properties.time ? new Date(f.properties.time) : suAn;
+          let tehdit = mag >= 6.0 ? "Kritik" : (mag >= 4.5 ? "Yüksek" : "Düşük");
           
-          if (!isNaN(lat) && !isNaN(lng)) {
+          if (!isNaN(lat) && !isNaN(lng) && mag !== null) {
             yeniHaberler.push({
-              baslik: `🔥 Termal Uydu Tespiti: ${baslik}`,
-              detay: `NASA EONET Olay Raporu:\nOlay: ${ev.title}\nSaptama Zamanı: ${geom.date || 'Güncel'}`,
-              enlem: lat, 
-              boylam: lng, 
-              kategori: "Yangın", 
-              isYangin: true,
-              tehdit_seviyesi: "Kritik", 
-              kaynak_guvenilirlik: "A1 (NASA EONET)",
-              kaynak: ev.sources && ev.sources[0] ? ev.sources[0].url : "https://eonet.gsfc.nasa.gov/",
-              tarihSaat: yanginZamani
+              baslik: `Sismik Sinyal: M ${mag.toFixed(1)} - ${yer}`,
+              detay: `USGS Sismik İstasyon Raporu:\nDeprem Büyüklüğü: M ${mag.toFixed(1)}\nDerinlik: ${derinlik ? derinlik.toFixed(1) : 0} km\nMerkez Üssü: ${yer}`,
+              enlem: lat, boylam: lng, kategori: "Afet",
+              tehdit_seviyesi: tehdit, kaynak_guvenilirlik: "A1 (USGS Official)", kaynak: url,
+              tarihSaat: depremZamani
             });
           }
-        }
-      });
+        });
+      }
     }
-  }
-} catch (e) {
-  console.error("EONET Yangın Hatası:", e);
-}
+  } catch (e) {}
+
+  // 6. TERMAL UYDU YANGIN (NASA EONET)
+  try {
+    const eonetRes = await safeFetch("https://eonet.gsfc.nasa.gov/api/v3/categories/wildfires?status=open&limit=50");
+    if (eonetRes && eonetRes.ok) {
+      const eonetData = await eonetRes.json();
+      if (eonetData && eonetData.events) {
+        eonetData.events.forEach(ev => {
+          if (ev.geometry && ev.geometry.length > 0) {
+            const geom = ev.geometry[ev.geometry.length - 1];
+            const lng = geom.coordinates[0];
+            const lat = geom.coordinates[1];
+            const baslik = ev.title || "Küresel Orman Yangını";
+            const yanginZamani = geom.date ? new Date(geom.date) : suAn;
+            
+            if (!isNaN(lat) && !isNaN(lng)) {
+              yeniHaberler.push({
+                baslik: `🔥 Termal Uydu Tespiti: ${baslik}`,
+                detay: `NASA EONET Olay Raporu:\nOlay: ${ev.title}\nTarih: ${geom.date || 'Güncel'}`,
+                enlem: lat, boylam: lng, kategori: "Yangın", isYangin: true,
+                tehdit_seviyesi: "Kritik", kaynak_guvenilirlik: "A1 (NASA EONET)",
+                kaynak: ev.sources && ev.sources[0] ? ev.sources[0].url : "https://eonet.gsfc.nasa.gov/",
+                tarihSaat: yanginZamani
+              });
+            }
+          }
+        });
+      }
+    }
+  } catch (e) {}
   
   if (yeniHaberler.length > 0) {
     tumHaberler = yeniHaberler;
@@ -2300,28 +2424,28 @@ function detayAnalizAc(haber) {
   if (haber.isPiracy) {
     etkiAlani = "Ticari Deniz Taşıma Koridoru & Seyir Güvenliği";
     aktor = "Asimetrik Korsan Grupları / Deniz Haydutları";
-    aiOzet = `[DENİZ GÜVENLİK TEHDİDİ]\nHedef bölgede ticaret gemilerine yönelik asimetrik korsanlık veya taciz olayı rapor edilmiştir.\n\nOlay Tespiti:\n"${haber.baslik}"`;
-    tavsiye = "Bölgedeki askeri devriye gemileri ve UKMTO/IMB merkezleriyle anlık irtibat kurulmalı, korumalı seyrüsefer hattı kullanılmalıdır.";
+    aiOzet = `[DENİZ GÜVENLİK TEHDİDİ]\nHedef bölgede ticaret gemilerine yönelik asimetrik korsanlık olayı rapor edilmiştir.\n\nOlay Tespiti:\n"${haber.baslik}"`;
+    tavsiye = "Bölgedeki askeri devriye gemileri ve UKMTO merkezleriyle anlık irtibat kurulmalıdır.";
   } else if (haber.kategori === 'Askeri') {
     etkiAlani = "Milli Savunma, Donanma ve Sınır Güvenliği Çevresi";
     aktor = "Asimetrik / Düzenli Askeri Unsurlar";
-    aiOzet = `[ASKERİ OPERASYONEL RİSK]\nBölgedeki sinyaller operasyonel stratejik hat hareketliliğiyle örtüşmektedir.\n\nİstihbarat Özeti:\n${haber.detay.substring(0, 200)}...`;
-    tavsiye = "Hava ve deniz koridorlarında teyakkuz seviyesi artırılmalı, keşif-gözetleme vasıtaları aktif tutulmalıdır.";
+    aiOzet = `[ASKERİ OPERASYONEL RİSK]\nBölgedeki sinyaller operasyonel hareketlilikle örtüşmektedir.\n\nİstihbarat Özeti:\n${haber.detay.substring(0, 200)}...`;
+    tavsiye = "Hava ve deniz koridorlarında teyakkuz seviyesi artırılmalıdır.";
   } else if (haber.kategori === 'Siber') {
     etkiAlani = "Kurumsal Ağlar, Bulut ve Kritik BT Altyapısı";
     aktor = "Siber Tehdit Grupları / APT / Ransomware Aktörleri";
-    aiOzet = `[SİBER TEHDİT İSTİHBARATI]\nTespit edilen zararlı yazılım, zafiyet veya DarkWeb sızıntı ihbarı aktif olarak risk taşımaktadır.\n\nTeknik Detay:\n${haber.detay}`;
-    tavsiye = "Ağ güvenlik duvarında ilgili IOC bloklamaları yapılmalı, sistem yamaları ve sızıntı kontrolleri acilen uygulanmalıdır.";
+    aiOzet = `[SİBER TEHDİT İSTİHBARATI]\nTespit edilen zararlı yazılım/zafiyet ihbarı aktif risk taşımaktadır.\n\nTeknik Detay:\n${haber.detay}`;
+    tavsiye = "Ağ güvenlik duvarında ilgili IOC bloklamaları yapılmalı, sistem yamaları uygulanmalıdır.";
   } else if (haber.kategori === 'Afet') {
     etkiAlani = "Sismik Riskli Yerleşim Alanları ve Fay Hatları";
     aktor = "Doğal Sismik / Tektonik Enerji Boşalımı";
     aiOzet = `[SİSMİK DEPREM İHBARI]\nUSGS sensörlerinden alınan canlı veriler doğrultusunda tektonik hareketlilik kaydedildi.\n\nSismik Özet:\n${haber.detay}`;
-    tavsiye = "Sismik artçı dalga riski takip edilmeli, bölgesel afet arama-kurtarma birimleri bilgilendirilmelidir.";
+    tavsiye = "Sismik artçı dalga riski takip edilmelidir.";
   } else if (haber.kategori === 'Yangın') {
     etkiAlani = "Ormanlık Alanlar, Flora ve Ekolojik Denge";
     aktor = "Termal / İklimsel / Beşeri Kaynaklı Odaklar";
-    aiOzet = `[NASA TERMAL UYDU TESPİTİ]\nNASA EONET uydularından alınan anlık verilere göre kızılötesi ısı anomalisi tespit edildi.\n\nUydu Detayı:\n${haber.detay}`;
-    tavsiye = "Yangın söndürme hava araçları ve kara müdahale ekipleri ilgili koordinata sevk edilmelidir.";
+    aiOzet = `[NASA TERMAL UYDU TESPİTİ]\nNASA EONET uydularından alınan verilere göre kızılötesi ısı anomalisi tespit edildi.\n\nUydu Detayı:\n${haber.detay}`;
+    tavsiye = "Yangın söndürme ekipleri ilgili koordinata sevk edilmelidir.";
   }
 
   document.getElementById('detay-etki-alani').innerText = etkiAlani;
