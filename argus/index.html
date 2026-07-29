@@ -2065,34 +2065,51 @@ async function canliVerileriCek() {
     console.warn("Feodo Tracker yüklenemedi:", e);
   }
 
-  // 5. SİSMİK DEPREM (USGS)
-  try {
-    const usgsRes = await safeFetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson");
-    if (usgsRes && usgsRes.ok) {
-      const usgsData = await usgsRes.json();
-      if (usgsData && usgsData.features) {
-        usgsData.features.slice(0, 8).forEach(f => {
-          const mag = f.properties.mag;
-          const yer = f.properties.place;
-          const url = f.properties.url;
-          const lng = f.geometry.coordinates[0];
-          const lat = f.geometry.coordinates[1];
-          const derinlik = f.geometry.coordinates[2];
-          const depremZamani = f.properties.time ? new Date(f.properties.time) : suAn;
-          let tehdit = mag >= 6.0 ? "Kritik" : (mag >= 4.5 ? "Yüksek" : "Düşük");
-          if (!isNaN(lat) && !isNaN(lng)) {
-            yeniHaberler.push({
-              baslik: `Sismik Sinyal: M ${mag.toFixed(1)} - ${yer}`,
-              detay: `USGS Sismik İstasyon Raporu:\nDeprem Büyüklüğü: M ${mag.toFixed(1)}\nOdak Derinliği: ${derinlik.toFixed(1)} km\nKonum / Merkez Üssü: ${yer}\nSismik Kod: ${f.id}`,
-              enlem: lat, boylam: lng, kategori: "Afet",
-              tehdit_seviyesi: tehdit, kaynak_guvenilirlik: "A1 (USGS Official)", kaynak: url,
-              tarihSaat: depremZamani
-            });
-          }
-        });
-      }
+  // 5. SİSMİK DEPREM (USGS - Dinamik Query API)
+try {
+  // orderby=time: En son olan deprem en üstte gelir
+  // minmagnitude=2.5: Çok küçük anlamsız gürültü verileri eler (İsteğe göre değiştirebilirsiniz)
+  // limit=50: Son 50 depremi çeker (0,8 sınırı yerine)
+  const usgsUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&limit=50&minmagnitude=2.5";
+  
+  const usgsRes = await safeFetch(usgsUrl);
+  if (usgsRes && usgsRes.ok) {
+    const usgsData = await usgsRes.json();
+    if (usgsData && usgsData.features) {
+      
+      // Zaman damgasına göre tekrar garanti sıralama (En yeni en üstte)
+      const sortedFeatures = usgsData.features.sort((a, b) => b.properties.time - a.properties.time);
+
+      sortedFeatures.forEach(f => {
+        const mag = f.properties.mag;
+        const yer = f.properties.place || "Bilinmeyen Konum";
+        const url = f.properties.url;
+        const lng = f.geometry?.coordinates[0];
+        const lat = f.geometry?.coordinates[1];
+        const derinlik = f.geometry?.coordinates[2];
+        const depremZamani = f.properties.time ? new Date(f.properties.time) : suAn;
+        
+        let tehdit = mag >= 6.0 ? "Kritik" : (mag >= 4.5 ? "Yüksek" : "Düşük");
+        
+        if (!isNaN(lat) && !isNaN(lng) && mag !== null) {
+          yeniHaberler.push({
+            baslik: `Sismik Sinyal: M ${mag.toFixed(1)} - ${yer}`,
+            detay: `USGS Sismik İstasyon Raporu:\nDeprem Büyüklüğü: M ${mag.toFixed(1)}\nOdak Derinliği: ${derinlik ? derinlik.toFixed(1) : 0} km\nKonum / Merkez Üssü: ${yer}\nSismik Kod: ${f.id}`,
+            enlem: lat, 
+            boylam: lng, 
+            kategori: "Afet",
+            tehdit_seviyesi: tehdit, 
+            kaynak_guvenilirlik: "A1 (USGS Official)", 
+            kaynak: url,
+            tarihSaat: depremZamani
+          });
+        }
+      });
     }
-  } catch (e) {}
+  }
+} catch (e) {
+  console.error("USGS Veri Çekme Hatası:", e);
+}
 
   // 6. TERMAL UYDU YANGIN (NASA EONET)
   try {
