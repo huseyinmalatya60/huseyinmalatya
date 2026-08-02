@@ -687,7 +687,7 @@ body {
       { tag: "OK", tagCls: "ok", msg: "Kuantum dirençli el sıkışma protokolü tamamlandı.", pct: 30, delay: 550 },
       { tag: "SYS", tagCls: "sys", msg: "Genişletilmiş Coğrafi Şehir & Ülke Veritabanı Yüklendi.", pct: 50, delay: 900 },
       { tag: "OK", tagCls: "ok", msg: "Google Canlı Yol Trafik Yoğunluğu Katmanı Senkronize Edildi.", pct: 68, delay: 1300 },
-      { tag: "WARN", tagCls: "warn", msg: "GPS Jamming ve Sinyal Karıştırma Katmanı Senkronize Edildi.", pct: 85, delay: 1700 },
+      { tag: "WARN", tagCls: "warn", msg: "GPS Jamming ve Küresel Fiber/IXP Katmanı Senkronize Edildi.", pct: 85, delay: 1700 },
       { tag: "OK", tagCls: "ok", msg: "Görsel Taktik Harita Arayüzü hazır. Sistem çevrimiçi.", pct: 100, delay: 2100 }
     ];
 
@@ -786,7 +786,8 @@ body {
         <i class="fa-solid fa-anchor"></i> STRATEJİK DENİZ
       </button>
 
-      <button class="filter-btn active" id="f-fiber-ixp" onclick="toggleFiberVeIXPAgi()">
+      <!-- FİBER KABLO & IXP KATMANI - VARSAYILAN OLARAK PASİF -->
+      <button class="filter-btn" id="f-fiber-ixp" onclick="toggleFiberVeIXPAgi()">
         <i class="fa-solid fa-network-wired"></i> FİBER KABLO & IXP
       </button>
 
@@ -944,16 +945,6 @@ body {
           <label>MUHTEMEL TEHDİT AKTÖRÜ / UNSUR</label>
           <val id="detay-aktor" style="color: #a371f7;">-</val>
         </div>
-      </div>
-
-      <div class="detail-box" style="margin-bottom: 8px;">
-        <label>TAKTİK ÖZET & RİSK KORELASYONU</label>
-        <div id="detay-ai-ozet" style="font-size: 10px; color: var(--text-main); line-height: 1.4; margin-top: 3px; white-space: pre-line;">-</div>
-      </div>
-
-      <div class="detail-box" style="margin-bottom: 8px; border-color: rgba(63,185,80,0.3);">
-        <label style="color: var(--tactical-green);">TAVSİYE EDİLEN AKSİYON PLANI</label>
-        <div id="detay-tavsiye" style="font-size: 10px; color: #c9d1d9; line-height: 1.4; margin-top: 3px; white-space: pre-line;">-</div>
       </div>
 
       <div class="detail-box">
@@ -1491,6 +1482,17 @@ const SVG_PINS = {
       <circle cx="32" cy="44" r="3.5" fill="#f85149"/>
       <line x1="16" y1="16" x2="48" y2="48" stroke="#f85149" stroke-width="3.5"/>
     </svg>
+  `),
+  serverIcon: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="28" fill="#0d1117" fill-opacity="0.88" stroke="#e040fb" stroke-width="2.5"/>
+      <rect x="18" y="18" width="28" height="8" rx="2" fill="none" stroke="#e040fb" stroke-width="2"/>
+      <rect x="18" y="28" width="28" height="8" rx="2" fill="none" stroke="#e040fb" stroke-width="2"/>
+      <rect x="18" y="38" width="28" height="8" rx="2" fill="none" stroke="#e040fb" stroke-width="2"/>
+      <circle cx="23" cy="22" r="1.5" fill="#3fb950"/>
+      <circle cx="23" cy="32" r="1.5" fill="#3fb950"/>
+      <circle cx="23" cy="42" r="1.5" fill="#3fb950"/>
+    </svg>
   `)
 };
 
@@ -1701,7 +1703,7 @@ function toggleGPSJamming() {
             verticalOrigin: Cesium.VerticalOrigin.CENTER,
             heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
           },
-          position: Cesium.Cartesian3.fromDegrees(saha.merkez[1], saha.merkez[2])
+          position: Cesium.Cartesian3.fromDegrees(saha.merkez[1], saha.merkez[0])
         });
         cesiumGpsJamEntities.push(eJam);
       }
@@ -1967,22 +1969,173 @@ function toggleKureselDenizUsleri() {
   }
 }
 
+// =========================================================
+// KÜRESEL IXP (INTERNET EXCHANGE) VE CABLE LANDING STATIONS (CLS)
+// DÜNYA GENELİNDEKİ TÜM KRİTİK VERİ VE DİJİTAL ALTYAPI HUBLARI
+// =========================================================
 const kureselIxpVeLandingKatalogu = [
-  { ad: "Marseille CLS & France-IX (Marsilya / Fransa)", tip: "Akdeniz Ana Kablo Karaya Çıkış Hub'ı", lat: 43.2965, lng: 5.3698, detay: "Asya, Ortadoğu ve Afrika'dan gelen 15+ transatlantik denizaltı kablosunun Avrupa'ya giriş kapısı." },
-  { ad: "DE-CIX Frankfurt (Dünyanın En Büyük IXP Merkezi)", tip: "Küresel Ana İnternet Değişim Noktası", lat: 50.1109, lng: 8.6821, detay: "14+ Terabit/sn veri trafiğiyle Doğu Avrupa, Ortadoğu ve Asya omurgasının kalbi." },
-  { ad: "İstanbul IXP & Marmara Kablo Santrali (Equinix)", tip: "Bölgesel Transit & Karaya Çıkış Hub'ı", lat: 41.0082, lng: 28.9784, detay: "Avrupa-Asya karasal ve denizaltı fiber hatlarının (MedNautilus, Turcyos) birleştiği kilit santral." },
-  { ad: "Suez & Alexandria Cable Hub (İskenderiye / Süveyş)", tip: "Kızıldeniz - Akdeniz Fiber Darboğazı", lat: 31.2001, lng: 29.9187, detay: "Avrupa-Asya arası denizaltı verisinin %90'ının geçtiği kritik coğrafi geçit." },
-  { ad: "Fujairah Cable Landing Station (Fucayra / BAE)", tip: "Basra Körfezi & Hint Okyanusu Santrali", lat: 25.1288, lng: 56.3265, detay: "Hürmüz Boğazı dışındaki en büyük Ortadoğu kablo çıkış ve veri dağıtım noktası." }
+  // --- TÜRKİYE & DOĞU AKDENİZ ---
+  { ad: "İstanbul IXP & Equinix IS2 (İstanbul / Türkiye)", tip: "Bölgesel Transit IXP & CLS Hub", lat: 41.0082, lng: 28.9784, detay: "Doğu Avrupa, Karadeniz ve Orta Doğu verilerinin birleştiği Türkiye ana omurga santrali." },
+  { ad: "Marmaris Cable Landing Station (Muğla / Türkiye)", tip: "Doğu Akdeniz CLS", lat: 36.8500, lng: 28.2667, detay: "MedNautilus denizaltı fiber optik kablo ağının Türkiye karaya çıkış terminali." },
+  { ad: "İskenderun & Mersin CLS (Türkiye)", tip: "Güney Anadolu CLS Hub", lat: 36.5919, lng: 36.1772, detay: "KKTC (Turcyos 1-2) ve Orta Doğu fiber bağlantı hatlarının ana karaya çıkış noktası." },
+
+  // --- AVRUPA HUBLARI ---
+  { ad: "DE-CIX Frankfurt (Almanya)", tip: "Dünyanın En Büyük IXP Merkezi", lat: 50.1109, lng: 8.6821, detay: "14+ Terabit/sn anlık veri trafiğiyle küresel dijital iletişimin ve Avrasya omurgasının kalbi." },
+  { ad: "Marseille CLS & France-IX (Marsilya / Fransa)", tip: "Avrupa / Akdeniz CLS Mega Hub", lat: 43.2965, lng: 5.3698, detay: "Asya, Ortadoğu ve Afrika'dan gelen 15+ transatlantik/akdeniz denizaltı kablosunun Avrupa'ya ana giriş kapısı." },
+  { ad: "LINX London (Londra / İngiltere)", tip: "Batı Avrupa IXP Karargahı", lat: 51.5074, lng: -0.1278, detay: "Kuzey Amerika - Avrupa transatlantik veri trafiğinin ana dağıtım ve değişim noktası." },
+  { ad: "AMS-IX Amsterdam (Hollanda)", tip: "Kuzey Avrupa İnternet IXP Hub", lat: 52.3676, lng: 4.9041, detay: "Avrupa kıtasının en yüksek veri kapasiteli internet veri değişim platformlarından biri." },
+  { ad: "Bude & Porthcurno CLS (Cornwall / İngiltere)", tip: "Transatlantik CLS İstasyonu", lat: 50.8250, lng: -4.5440, detay: "Grace Hopper, Apollo ve TAT-14 transatlantik fiber hatlarının İngiltere karaya çıkış noktası." },
+  { ad: "Sopelana & Bilbao CLS (Bask / İspanya)", tip: "Güney Transatlantik CLS", lat: 43.3822, lng: -2.9814, detay: "MAREA ve Grace Hopper ultra yüksek kapasiteli transatlantik kablo karaya çıkış merkezi." },
+  { ad: "ESPANIX Madrid (İspanya)", tip: "İber Yarımadası & LATAM IXP Hub", lat: 40.4168, lng: -3.7038, detay: "Güney Avrupa, Kuzey Afrika ve Latin Amerika veri akışlarının kesişim santrali." },
+
+  // --- KUZEY AMERİKA HUBLARI ---
+  { ad: "Ashburn Data Center Alley & Equinix IBX (Virginia / ABD)", tip: "Dünyanın En Büyük Veri Trafik Hub'ı", lat: 39.0437, lng: -77.4875, detay: "Dünya internet trafiğinin %70'inden fazlasının geçtiği küresel veri merkezi yoğunlaşma noktası." },
+  { ad: "Virginia Beach CLS (Virginia / ABD)", tip: "Kuzey Amerika Transatlantik CLS", lat: 36.8529, lng: -75.9780, detay: "MAREA, Dunant ve BRUSA fiber denizaltı sistemlerinin ABD karaya çıkış ana terminali." },
+  { ad: "NYIIX & Equinix NY4 (New York / ABD)", tip: "Doğu Yakası Transatlantik IXP", lat: 40.7128, lng: -74.0060, detay: "ABD-Avrupa transatlantik finans ve kamu iletişim omurgası." },
+  { ad: "NAP of the Americas / AMPATH (Miami / ABD)", tip: "Kuzey-Latin Amerika Veri Hub'ı", lat: 25.7617, lng: -80.1918, detay: "Kuzey Amerika ile Karayipler, Orta ve Güney Amerika arasındaki tüm veri trafiğinin ana kapısı." },
+  { ad: "One Wilshire & LAIX (Los Angeles / ABD)", tip: "Transpasifik IXP & CLS Hub", lat: 34.0522, lng: -118.2437, detay: "Kuzey Amerika ile Asya-Pasifik arasındaki transpasifik denizaltı hatlarının ana bağlantı binası." },
+  { ad: "Silicon Valley / Equinix San Jose (Kaliforniya / ABD)", tip: "Küresel Teknoloji IXP Merkezi", lat: 37.3382, lng: -121.8863, detay: "Teknoloji devlerinin ana veri merkezleri ve transpasifik fiber iletişim omurgası." },
+
+  // --- LATİN AMERİKA HUBLARI ---
+  { ad: "Fortaleza Cable Landing Hub (Ceará / Brezilya)", tip: "Güney Atlantik Transatlantik CLS", lat: -3.7319, lng: -38.5267, detay: "Monet, Seabras-1, EllaLink (Brezilya-Avrupa) denizaltı kablolarının Güney Amerika ana karaya çıkış kapısı." },
+  { ad: "IX.br São Paulo (Brezilya)", tip: "Latin Amerika'nın En Büyük IXP Merkezi", lat: -23.5505, lng: -46.6333, detay: "Güney Amerika kıtasındaki en yüksek bant genişliğine sahip internet değişim noktası." },
+  { ad: "Valparaíso CLS (Şili)", tip: "Güney Pasifik CLS Terminali", lat: -33.0472, lng: -71.6127, detay: "Curie ve Güney Pasifik fiber kablo hatlarının Güney Amerika kıyısındaki çıkış noktası." },
+
+  // --- ORTA DOĞU VE AFİRKA HUBLARI ---
+  { ad: "Suez & Alexandria Cable Hub (İskenderiye / Süveyş / Mısır)", tip: "Kızıldeniz - Akdeniz Fiber Darboğazı", lat: 31.2001, lng: 29.9187, detay: "Avrupa ile Asya arasındaki denizaltı internet trafiğinin %90'ının geçtiği en kritik coğrafi geçit." },
+  { ad: "Fujairah CLS & UAE-IX (Fucayra / BAE)", tip: "Basra Körfezi & Hint Okyanusu Hub'ı", lat: 25.1288, lng: 56.3265, detay: "Hürmüz Boğazı dışındaki en büyük Orta Doğu kablo karaya çıkış ve veri dağıtım santrali." },
+  { ad: "Djibouti Data Center / DDC (Cibuti Şehri / Cibuti)", tip: "Doğu Afrika & Kızıldeniz CLS Hub", lat: 11.8251, lng: 42.5903, detay: "2Africa, SEA-ME-WE 5 ve AAE-1 kablolarının bağlandığı Doğu Afrika dijital altyapı düğümü." },
+  { ad: "Mombasa CLS & KIXP (Kenya)", tip: "Doğu Afrika İnternet Kapısı", lat: -4.0435, lng: 39.6682, detay: "Hint Okyanusu kıyısındaki Doğu ve Orta Afrika fiber internet dağıtım merkezi." },
+  { ad: "NAP Africa / JINX (Johannesburg / Güney Afrika)", tip: "Afrika Kıta İçi Ana IXP Hub'ı", lat: -26.2041, lng: 28.0473, detay: "Sahra Altı Afrika kıtasının en büyük internet değişim ve veri depolama merkezi." },
+  { ad: "Lagos MainOne / Equinix MDXi (Nijerya)", tip: "Batı Afrika CLS & IXP Hub", lat: 6.5244, lng: 3.3792, detay: "Equiano ve WACS denizaltı kablolarının bağlandığı Batı Afrika dijital merkezi." },
+
+  // --- ASYA - PASİFİK VE OKYANUSYA HUBLARI ---
+  { ad: "SGIX & Equinix SG1 (Singapur)", tip: "Güneydoğu Asya Ana Dijital Hub'ı", lat: 1.3521, lng: 103.8198, detay: "Hint Okyanusu ve Pasifik arasındaki tüm denizaltı fiber sistemlerinin kesiştiği Asya kalbi." },
+  { ad: "HKIX Hong Kong (Çin SAR)", tip: "Doğu Asya Finans & IXP Merkezi", lat: 22.3193, lng: 114.1694, detay: "Çin anakarası ile küresel internet ağları arasındaki en büyük veri değişim kapısı." },
+  { ad: "JPIX / BBIX Tokyo & Chikura CLS (Japonya)", tip: "Kuzeydoğu Asya Transpasifik Hub'ı", lat: 35.6762, lng: 139.6503, detay: "Unity, FASTER ve JUPITER transpasifik denizaltı hatlarının Japonya ana karaya çıkış noktası." },
+  { ad: "Mumbai Extreme IX & NIXI (Hindistan)", tip: "Güney Asya Ana Veri Hub'ı", lat: 19.0760, lng: 72.8777, detay: "Hint Okyanusu üzerindeki SEA-ME-WE ve AAE-1 kablolarının Hindistan karaya çıkış noktası." },
+  { ad: "IX-Australia & Equinix SY3 (Sidney / Avustralya)", tip: "Okyanusya Ana Dijital Kapısı", lat: -33.8688, lng: 151.2093, detay: "Avustralya'yı Kuzey Amerika ve Asya'ya bağlayan Southern Cross ve Indigo kablolarının terminali." }
 ];
 
+// =========================================================
+// KÜRESEL TRANS-OKYANUS SÜPER FİBER OPTİK KABLO HATALARI
+// TÜM OKYANUSLARI (ATLANTİK, PASİFİK, HİNT, AKDENİZ, AVRAASYA) KAPSAR
+// =========================================================
 function getPlugAndPlayCableData() {
   return {
     "type": "FeatureCollection",
     "features": [
-      { "type": "Feature", "properties": { "name": "SEA-ME-WE 5 (Kızıldeniz - Akdeniz - Türkiye)" }, "geometry": { "type": "MultiLineString", "coordinates": [[[103.85, 1.29], [95.32, 5.55], [80.27, 13.08], [68.35, 25.01], [56.32, 25.27], [43.28, 11.59], [32.55, 29.97], [23.72, 37.98], [28.97, 40.50], [15.08, 37.50], [5.36, 43.29]]] } },
-      { "type": "Feature", "properties": { "name": "AAE-1 (Asia-Africa-Europe 1)" }, "geometry": { "type": "MultiLineString", "coordinates": [[[106.62, 10.76], [100.50, 13.75], [80.21, 13.05], [67.01, 24.86], [58.38, 23.61], [43.15, 11.58], [32.50, 29.90], [23.65, 37.93], [14.28, 40.83], [5.37, 43.29]]] } },
-      { "type": "Feature", "properties": { "name": "MedNautilus (Türkiye - Akdeniz Omurgası)" }, "geometry": { "type": "MultiLineString", "coordinates": [[[28.97, 41.00], [26.23, 39.91], [23.72, 37.98], [34.33, 36.60], [34.90, 32.81], [34.78, 32.08], [12.49, 41.90]]] } },
-      { "type": "Feature", "properties": { "name": "Turcyos-1 & 2 (Türkiye - KKTC Fiber Hattı)" }, "geometry": { "type": "MultiLineString", "coordinates": [[[34.30, 36.58], [33.31, 35.34]], [[30.70, 36.88], [32.93, 35.20]]] } }
+      // 1. TRANSATLANTİK HATLAR (Kuzey Amerika - Avrupa)
+      { 
+        "type": "Feature", 
+        "properties": { "name": "MAREA Transatlantic (Virginia Beach, USA -> Sopelana, İspanya)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-75.97, 36.85], [-60.00, 38.00], [-35.00, 42.00], [-15.00, 44.00], [-2.98, 43.38]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Grace Hopper (New York, USA -> Bude, UK -> Bilbao, İspanya)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-74.00, 40.71], [-50.00, 43.00], [-20.00, 48.00], [-4.54, 50.82]], [[-20.00, 48.00], [-2.98, 43.38]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Dunant (Virginia Beach, USA -> Saint-Hilaire-de-Riez, Fransa)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-75.97, 36.85], [-55.00, 40.00], [-25.00, 45.00], [-1.94, 46.72]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "TAT-14 Cable System (USA -> UK -> Fransa -> Hollanda -> Almanya)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-73.90, 40.80], [-45.00, 46.00], [-4.50, 50.80], [1.80, 50.90], [4.90, 52.30], [8.60, 53.50]]] } 
+      },
+
+      // 2. AVRASYA - AKDENİZ - KIZILDENİZ - HİNT OKYANUSU HATALARI
+      { 
+        "type": "Feature", 
+        "properties": { "name": "SEA-ME-WE 5 (Singapur -> Cibuti -> Suudi Arabistan -> Mısır -> Türkiye -> Fransa)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[103.81, 1.35], [95.32, 5.55], [80.27, 13.08], [68.35, 25.01], [56.32, 25.27], [42.59, 11.82], [32.55, 29.97], [28.26, 36.85], [23.72, 37.98], [15.08, 37.50], [5.36, 43.29]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "AAE-1 (Asia-Africa-Europe 1 - Hong Kong -> Singapur -> Hindistan -> YSK -> Akdeniz)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[114.16, 22.31], [103.81, 1.35], [80.21, 13.05], [72.87, 19.07], [56.32, 25.12], [42.59, 11.82], [32.50, 29.90], [23.65, 37.93], [5.36, 43.29]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "FLAG Europe-Asia (FEA - İngiltere -> İspanya -> Mısır -> Hindistan -> Asya)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-0.12, 51.50], [-6.35, 36.63], [29.91, 31.20], [42.59, 11.82], [72.87, 19.07], [100.50, 13.75], [114.16, 22.31], [139.65, 35.67]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "PEACE Cable (Çin -> Pakistan -> Doğu Afrika -> Mısır -> Fransa)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[67.01, 24.86], [56.32, 25.12], [39.66, -4.04], [42.59, 11.82], [32.50, 29.90], [23.72, 37.98], [5.36, 43.29]]] } 
+      },
+
+      // 3. AFRİKA KITA ÇEVRESİ DENİZALTIN FİBER HATALARI
+      { 
+        "type": "Feature", 
+        "properties": { "name": "2Africa Cable System (Tüm Afrika Kıtasını Çevreleyen Süper Hat)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[5.36, 43.29], [-9.13, 38.72], [3.37, 6.52], [-22.95, -30.55], [28.04, -26.20], [39.66, -4.04], [42.59, 11.82], [32.50, 29.90], [34.78, 32.08]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Equiano Cable (Google - Portekiz -> Nijerya -> Güney Afrika)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-9.13, 38.72], [-17.44, 14.69], [3.37, 6.52], [-13.50, -8.83], [18.42, -33.92]]] } 
+      },
+
+      // 4. TRANSPASİFİK HATLAR (Kuzey Amerika - Asya / Okyanusya)
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Unity Transpacific (Chikura, Japonya -> Los Angeles, USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[139.65, 35.67], [170.00, 40.00], [-160.00, 38.00], [-118.24, 34.05]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "FASTER Cable System (Japonya / Tayvan -> Oregon, USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[121.88, 25.03], [139.65, 35.67], [175.00, 42.00], [-140.00, 45.00], [-123.96, 45.11]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "JUPITER (Japonya / Filipinler -> Washington / Kaliforniya, USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[120.98, 14.59], [139.65, 35.67], [-160.00, 42.00], [-122.41, 37.77]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Southern Cross Cable (Avustralya -> Yeni Zelanda -> Fiji -> Hawaii -> USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[151.20, -33.86], [174.76, -36.84], [178.44, -18.14], [-157.85, 21.30], [-122.41, 37.77]]] } 
+      },
+
+      // 5. PAN-AMERİKAN VE GÜNEY ATLANTİK HATALARI
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Monet Cable (Santos / Fortaleza, Brezilya -> Boca Raton, USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-46.63, -23.55], [-38.52, -3.73], [-60.00, 10.00], [-80.19, 25.76]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Seabras-1 (São Paulo, Brezilya -> New York, USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-46.63, -23.55], [-40.00, -10.00], [-65.00, 15.00], [-74.00, 40.71]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Curie Cable (Google - Valparaíso, Şili -> Los Angeles, USA)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[-71.61, -33.04], [-85.00, -10.00], [-100.00, 15.00], [-118.24, 34.05]]] } 
+      },
+
+      // 6. BÖLGESEL & TÜRKİYE FİBER AĞLARI
+      { 
+        "type": "Feature", 
+        "properties": { "name": "MedNautilus (Türkiye - Yunanistan - İtalya - İsrail Akdeniz Omurgası)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[28.97, 41.00], [28.26, 36.85], [23.72, 37.98], [34.78, 32.08], [12.49, 41.90]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "Turcyos-1 & 2 (Türkiye - KKTC Fiber Optik Deniz Hattı)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[36.17, 36.59], [33.31, 35.34]], [[30.70, 36.88], [32.93, 35.20]]] } 
+      },
+      { 
+        "type": "Feature", 
+        "properties": { "name": "BSFOCS (Black Sea Fiber Optic Cable System - Karadeniz Fiber Ağ)" }, 
+        "geometry": { "type": "MultiLineString", "coordinates": [[[28.68, 44.17], [27.91, 43.21], [41.63, 41.64], [37.61, 44.72]]] } 
+      }
     ]
   };
 }
@@ -1993,32 +2146,35 @@ async function toggleFiberVeIXPAgi() {
   if (!fiberIxpAktif) {
     fiberIxpAktif = true;
     if (btn) btn.classList.add('active');
-    logEkle("[KRİTİK ALTYAPI] Fiber Kablo Ağları ve Veri Santralleri (IXP/CLS) yükleniyor...");
+    logEkle("[KRİTİK ALTYAPI] Küresel Fiber Kablo Ağları ve Veri Santralleri (IXP/CLS) yükleniyor...");
 
     const cableGeoData = getPlugAndPlayCableData();
     const paneOpt = map.getPane('cablesPane') ? { pane: 'cablesPane' } : {};
+    
+    // 2D Leaflet Katmanı
     fiberIxpKabloLayer = L.geoJSON(cableGeoData, {
       ...paneOpt,
       style: { color: "#e040fb", weight: 2.2, opacity: 0.85, dashArray: '4, 6' },
       onEachFeature: (feature, layer) => {
         const kName = feature.properties ? (feature.properties.name || "Denizaltı Fiber Kablo Hattı") : "Fiber Kablo";
-        layer.bindPopup(`<div style="font-family:var(--font-mono); padding:3px;"><strong style="color:#e040fb; font-size:11px;"><i class="fa-solid fa-network-wired"></i> ${kName}</strong><br><span style="font-size:9px; color:#3fb950;">AKTİF VERİ HATTI</span></div>`, { autoPan: true });
+        layer.bindPopup(`<div style="font-family:var(--font-mono); padding:3px;"><strong style="color:#e040fb; font-size:11px;"><i class="fa-solid fa-network-wired"></i> ${kName}</strong><br><span style="font-size:9px; color:#3fb950;">AKTİF VERİ HATTI (TRANS-OKYANUS)</span></div>`, { autoPan: true });
         layer.on('mouseover', e => e.target.setStyle({ weight: 4.5, color: '#ffffff', opacity: 1.0 }));
         layer.on('mouseout', e => fiberIxpKabloLayer && fiberIxpKabloLayer.resetStyle(e.target));
       }
     }).addTo(map);
 
+    // 2D IXP & CLS Santral İşaretçileri
     kureselIxpVeLandingKatalogu.forEach(nokta => {
       const customIcon = L.divIcon({
         className: 'maritime-strait-icon',
-        html: `<div style="color: #a371f7; font-size: 15px; filter: drop-shadow(0 0 6px rgba(163, 113, 247, 0.9));"><i class="fa-solid fa-server"></i></div>`,
+        html: `<div style="color: #e040fb; font-size: 15px; filter: drop-shadow(0 0 6px rgba(224, 64, 251, 0.9));"><i class="fa-solid fa-server"></i></div>`,
         iconSize: [22, 22], iconAnchor: [11, 11]
       });
 
       const m = L.marker([nokta.lat, nokta.lng], { icon: customIcon }).addTo(map);
       m.bindPopup(`
         <div style="font-family: var(--font-mono); padding: 4px; min-width: 190px;">
-          <strong style="color: #a371f7; font-size: 11px;"><i class="fa-solid fa-server"></i> [IXP / CLS HUB]</strong><br>
+          <strong style="color: #e040fb; font-size: 11px;"><i class="fa-solid fa-server"></i> [IXP / CLS HUB]</strong><br>
           <span style="font-size: 11px; color: #fff; font-weight:bold; display:block; margin-top:3px;">${nokta.ad}</span>
           <span style="font-size: 9px; color: var(--accent-cyan); display:block; margin-top:2px;"><b>Sınıf:</b> ${nokta.tip}</span>
           <span style="font-size: 9.5px; color: #c9d1d9; display:block; margin-top:4px; line-height:1.4;">${nokta.detay}</span>
@@ -2028,7 +2184,43 @@ async function toggleFiberVeIXPAgi() {
       fiberIxpMarkersList.push(m);
     });
 
-    logEkle("[KRİTİK ALTYAPI] Fiber Kablo Ağları ve Veri Santralleri (IXP) 2D/3D aktifleşti.");
+    // 3D Cesium Entegrasyonu
+    if (cesiumViewer) {
+      // 3D Çizgiler (Denizaltı Kabloları)
+      cableGeoData.features.forEach(feat => {
+        if (feat.geometry && feat.geometry.coordinates) {
+          feat.geometry.coordinates.forEach(lineCoords => {
+            const cesiumPositions = lineCoords.map(c => Cesium.Cartesian3.fromDegrees(c[0], c[1]));
+            let eLine = cesiumViewer.entities.add({
+              polyline: {
+                positions: cesiumPositions,
+                width: 2.5,
+                material: new Cesium.PolylineDashMaterialProperty({ color: Cesium.Color.fromCssColorString('#e040fb'), dashLength: 10 }),
+                clampToGround: true
+              }
+            });
+            cesiumFiberIxpEntities.push(eLine);
+          });
+        }
+      });
+
+      // 3D İkonlar (Santraller / IXP)
+      kureselIxpVeLandingKatalogu.forEach(nokta => {
+        let eIxp = cesiumViewer.entities.add({
+          position: Cesium.Cartesian3.fromDegrees(nokta.lng, nokta.lat),
+          billboard: {
+            image: SVG_PINS.serverIcon,
+            scale: 0.6,
+            scaleByDistance: new Cesium.NearFarScalar(1.0e2, 0.65, 2.0e7, 0.35),
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+          }
+        });
+        cesiumFiberIxpEntities.push(eIxp);
+      });
+    }
+
+    logEkle("[KRİTİK ALTYAPI] Küresel Fiber Kablo Ağları ve Veri Santralleri (IXP) 2D/3D aktifleşti.");
   } else {
     fiberIxpAktif = false;
     if (btn) btn.classList.remove('active');
@@ -2036,6 +2228,11 @@ async function toggleFiberVeIXPAgi() {
     if (fiberIxpKabloLayer) { map.removeLayer(fiberIxpKabloLayer); fiberIxpKabloLayer = null; }
     fiberIxpMarkersList.forEach(m => map.removeLayer(m));
     fiberIxpMarkersList = [];
+
+    if (cesiumViewer) {
+      cesiumFiberIxpEntities.forEach(e => cesiumViewer.entities.remove(e));
+      cesiumFiberIxpEntities = [];
+    }
 
     logEkle("[KRİTİK ALTYAPI] Fiber Kablo ve IXP Santralleri kapatıldı.");
   }
@@ -2115,13 +2312,27 @@ function haritaModunuDegistir() {
   }
 }
 
+// =========================================================
+// CANLI UYDU TAKİP VERİTABANI (TÜRKSAT, ISS & STARLINK)
+// =========================================================
 let uydular = [
+  // TÜRKİYE TÜRKSAT FİLOSU
   { name: "TÜRKSAT 3A (42°E)", tle1: "1 33051U 08030B   26200.50000000  .00000140  00000-0  00000+0 0  9991", tle2: "2 33051   0.0500  42.0000 0001000 180.0000 180.0000  1.00270000 65008", color: "#a371f7" },
   { name: "TÜRKSAT 4A (42°E)", tle1: "1 39522U 14007A   26200.55738756  .00000142  00000-0  00000+0 0  9994", tle2: "2 39522   0.0841 278.9282 0001175 333.1503 287.9135  1.00269445 45292", color: "#a371f7" },
   { name: "TÜRKSAT 5A (31°E)", tle1: "1 47306U 21001A   26195.92092921  .00000145  00000-0  00000+0 0  9999", tle2: "2 47306   0.0186  72.0805 0000214 188.2412  34.9010  1.00271052 20245", color: "#a371f7" },
   { name: "TÜRKSAT 5B (42°E)", tle1: "1 50212U 21126A   26204.35669890  .00000151  00000-0  00000+0 0  9998", tle2: "2 50212   0.0100  42.0000 0001000 180.0000 180.0000  1.00270000 20015", color: "#a371f7" },
   { name: "TÜRKSAT 6A (Yerli - 42°E)", tle1: "1 60233U 24128A   26200.50000000  .00000150  00000-0  00000+0 0  9995", tle2: "2 60233   0.0200  42.0000 0001000 180.0000 180.0000  1.00270000 10006", color: "#f85149" },
-  { name: "ISS (UZAY İSTASYONU)", tle1: "1 25544U 98067A   26200.50000000  .00016717  00000-0  10270-3 0  9992", tle2: "2 25544  51.6400 208.0000 0004000 120.0000 240.0000 15.49000000100043", color: "#39c5cf" }
+  
+  // UZAY İSTASYONU
+  { name: "ISS (UZAY İSTASYONU)", tle1: "1 25544U 98067A   26200.50000000  .00016717  00000-0  10270-3 0  9992", tle2: "2 25544  51.6400 208.0000 0004000 120.0000 240.0000 15.49000000100043", color: "#39c5cf" },
+
+  // STARLINK UYDU TAKIMI (SPACEX STARLINK CONSTELLATION)
+  { name: "STARLINK-1007", tle1: "1 44713U 19074A   26200.50000000  .00001200  00000-0  10000-3 0  9991", tle2: "2 44713  53.0540 120.4500 0001200  90.1200 270.1500 15.06000000100012", color: "#58a6ff" },
+  { name: "STARLINK-1087", tle1: "1 44787U 19074CB  26200.50000000  .00001200  00000-0  10000-3 0  9992", tle2: "2 44787  53.0540 180.4500 0001200 120.1200 240.1500 15.06000000100013", color: "#58a6ff" },
+  { name: "STARLINK-3012", tle1: "1 51000U 22001A   26200.50000000  .00001200  00000-0  10000-3 0  9993", tle2: "2 51000  53.2000 240.4500 0001200 150.1200 210.1500 15.06000000100014", color: "#58a6ff" },
+  { name: "STARLINK-3105", tle1: "1 52000U 22030A   26200.50000000  .00001200  00000-0  10000-3 0  9994", tle2: "2 52000  53.2000 300.4500 0001200 180.1200 180.1500 15.06000000100015", color: "#58a6ff" },
+  { name: "STARLINK-5021", tle1: "1 55000U 23010A   26200.50000000  .00001200  00000-0  10000-3 0  9995", tle2: "2 55000  43.0000  60.4500 0001200 210.1200 150.1500 15.06000000100016", color: "#58a6ff" },
+  { name: "STARLINK-5144", tle1: "1 56000U 23040A   26200.50000000  .00001200  00000-0  10000-3 0  9996", tle2: "2 56000  53.0000 330.4500 0001200  45.1200 315.1500 15.06000000100017", color: "#58a6ff" }
 ];
 
 let uyduMarkers = {};
@@ -2145,6 +2356,7 @@ function updateSatellitePositions() {
 
         if (isNaN(latitude) || isNaN(longitude)) return;
 
+        // 2D Leaflet Harita Güncellemesi
         if (uyduMarkers[sat.name]) {
           uyduMarkers[sat.name].setLatLng([latitude, longitude]);
         } else {
@@ -2163,6 +2375,25 @@ function updateSatellitePositions() {
           `, { autoPan: true });
           uyduMarkers[sat.name] = marker;
         }
+
+        // 3D Cesium Yerleşimi ve Canlı Konum Güncellemesi
+        if (cesiumViewer) {
+          if (cesiumSatEntities[sat.name]) {
+            cesiumSatEntities[sat.name].position = Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude * 1000);
+          } else {
+            let e = cesiumViewer.entities.add({
+              name: sat.name,
+              position: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude * 1000),
+              billboard: {
+                image: SVG_PINS.uydu,
+                scale: 0.6,
+                scaleByDistance: new Cesium.NearFarScalar(1.0e2, 0.65, 2.0e7, 0.35),
+                verticalOrigin: Cesium.VerticalOrigin.CENTER
+              }
+            });
+            cesiumSatEntities[sat.name] = e;
+          }
+        }
       }
     } catch(err) {}
   });
@@ -2175,13 +2406,19 @@ function toggleUydular() {
     if (btn) btn.classList.add('active');
     updateSatellitePositions();
     uyduTakipInterval = setInterval(updateSatellitePositions, 2000);
-    logEkle("[UYDU TAKİP] Türksat ve ISS canlı yörüngeleri izleniyor.");
+    logEkle("[UYDU TAKİP] Türksat, ISS ve Starlink canlı yörüngeleri izleniyor.");
   } else {
     uydularAktif = false;
     if (btn) btn.classList.remove('active');
     clearInterval(uyduTakipInterval);
     Object.keys(uyduMarkers).forEach(key => { map.removeLayer(uyduMarkers[key]); });
     uyduMarkers = {};
+
+    if (cesiumViewer) {
+      Object.keys(cesiumSatEntities).forEach(key => { cesiumViewer.entities.remove(cesiumSatEntities[key]); });
+      cesiumSatEntities = {};
+    }
+
     logEkle("[UYDU TAKİP] Canlı uydu takibi kapatıldı.");
   }
 }
@@ -2207,7 +2444,7 @@ function logEkle(mesaj) {
 }
 
 function filtrele(tip, evt) {
-  const akisIds = ['f-all', 'f-askeri', 'f-siber', 'f-afet', 'f-yangin', 'f-piracy', 'f-gps-jam', 'f-meb', 'f-navtex', 'f-naval-bases', 'f-fiber-ixp'];
+  const akisIds = ['f-all', 'f-askeri', 'f-siber', 'f-afet', 'f-yangin', 'f-piracy', 'f-gps-jam', 'f-meb', 'f-navtex', 'f-naval-bases'];
   const btnMap = {
     'all': 'f-all',
     'Askeri': 'f-askeri',
@@ -2231,7 +2468,6 @@ function filtrele(tip, evt) {
     });
 
     if (!denizYollariAktif) toggleStratejikDenizYollari();
-    if (!fiberIxpAktif) toggleFiberVeIXPAgi();
     if (!mebAktif) toggleKureselMEB();
     if (!navtexAktif) toggleKureselNavtex();
     if (!gpsJamAktif) toggleGPSJamming();
@@ -2239,7 +2475,7 @@ function filtrele(tip, evt) {
     if (!uydularAktif) toggleUydular();
     if (!rainViewerAktif) toggleRainViewerRadar();
 
-    logEkle("TÜM AKIŞLAR VE TÜM HARİTA KATMANLARI AKTİFLEŞTİRİLDİ.");
+    logEkle("TÜM AKIŞLAR VE TEMEL HARİTA KATMANLARI AKTİFLEŞTİRİLDİ.");
   } 
   else {
     aktifKategori = tip;
@@ -2328,6 +2564,7 @@ async function canliVerileriCek() {
 
   let yeniHaberler = [];
   const suAn = new Date();
+  const ucGunMs = 3 * 24 * 60 * 60 * 1000; // 3 Günlük Zaman Filtresi (72 Saat)
 
   const trDefenseQuery = "savunma sanayii OR TSK OR SİHA OR İHA OR KAAN OR ASELSAN OR ROKETSAN OR HAVELSAN OR Mavi Vatan OR MSB OR harekat OR tatbikat";
   const trForeignMilQuery = "dünya ordusu OR askeri operasyon OR füze saldırısı OR savaş OR NATO OR Rusya ordusu OR ABD ordusu OR Çin ordusu OR İsrail ordusu OR donanma tatbikatı OR hava saldırısı";
@@ -2344,8 +2581,8 @@ async function canliVerileriCek() {
     safeFetch("https://raw.githubusercontent.com/cisagov/kev-data/main/known_exploited_vulnerabilities.json", {}, 3500),
     safeFetch("https://raw.githubusercontent.com/joshhighet/ransomwatch/main/posts.json", {}, 3500),
     safeFetch(feodoProxyUrl, {}, 3500),
-    safeFetch("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&limit=40&minmagnitude=2.5", {}, 3500),
-    safeFetch("https://eonet.gsfc.nasa.gov/api/v3/categories/wildfires?status=open&limit=40", {}, 3500)
+    safeFetch("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&limit=50&minmagnitude=4.5", {}, 3500),
+    safeFetch("https://eonet.gsfc.nasa.gov/api/v3/categories/wildfires?status=open&limit=50", {}, 3500)
   ]);
 
   const trDefRes      = results[0].status === 'fulfilled' ? results[0].value : null;
@@ -2451,6 +2688,7 @@ ${haberMetni}`;
           const haberMetni = htmlTemizle(art.content || art.description || art.title);
           const birlesikMetin = art.title + " " + haberMetni;
           const tespit = konumMetindenBul(birlesikMetin, "Aden Körfezi & Ticaret Koridoru", 12.5, 43.5);
+          const milZamani = art.pubDate ? new Date(art.pubDate) : suAn;
 
           yeniHaberler.push({
             baslik: `🏴‍☠️ KORSAN / GEMİ SALDIRISI: ${art.title ? art.title.substring(0, 80) : "Deniz Güvenlik İhlali"}`,
@@ -2458,7 +2696,7 @@ ${haberMetni}`;
             enlem: tespit.lat, boylam: tespit.lng,
             kategori: "Askeri", isPiracy: true,
             tehdit_seviyesi: "Kritik", kaynak_guvenilirlik: "A1 (Maritime Security)",
-            kaynak: art.link || "#", tarihSaat: art.pubDate ? new Date(art.pubDate) : suAn
+            kaynak: art.link || "#", tarihSaat: milZamani
           });
         });
       }
@@ -2470,8 +2708,9 @@ ${haberMetni}`;
     try {
       const cisaData = await cisaRes.json();
       if (cisaData && cisaData.vulnerabilities) {
-        cisaData.vulnerabilities.slice(-8).reverse().forEach((item, idx) => {
+        cisaData.vulnerabilities.slice(-15).reverse().forEach((item, idx) => {
           const hub = [{ lat: 39.9334, lng: 32.8597 }, { lat: 39.0437, lng: -77.4875 }, { lat: 50.1109, lng: 8.6821 }][idx % 3];
+          const zafiyetZamani = item.dateAdded ? new Date(item.dateAdded) : suAn;
 
           yeniHaberler.push({
             baslik: `🚨 CISA KEV Zafiyet: [${item.cveID}] ${item.vendorProject} - ${item.product}`,
@@ -2481,7 +2720,7 @@ ${haberMetni}`;
             kategori: "Siber", tehdit_seviyesi: "Kritik",
             kaynak_guvenilirlik: "A1 (US CISA Official)",
             kaynak: `https://nvd.nist.gov/vuln/detail/${item.cveID}`,
-            tarihSaat: item.dateAdded ? new Date(item.dateAdded) : suAn
+            tarihSaat: zafiyetZamani
           });
         });
       }
@@ -2545,11 +2784,19 @@ ${haberMetni}`;
     } catch (e) {}
   }
   
+  // 3 GÜNDEN (72 SAAT) ESKİ VERİLERİ OTOMATİK OLARAK FİLTRELE VE ELE
+  yeniHaberler = yeniHaberler.filter(haber => {
+    if (!haber.tarihSaat) return true;
+    const haberTarihi = new Date(haber.tarihSaat).getTime();
+    if (isNaN(haberTarihi)) return true;
+    return (suAn.getTime() - haberTarihi) <= ucGunMs;
+  });
+
   if (yeniHaberler.length > 0) {
     tumHaberler = yeniHaberler;
     document.getElementById("sync-status").innerText = "ONLINE";
     document.getElementById("sync-status").style.color = "var(--tactical-green)";
-    logEkle(`[SENKRONİZE] Toplam ${yeniHaberler.length} adet canlı haber ve siber/askeri ihbar yüklendi.`);
+    logEkle(`[SENKRONİZE] Son 3 güne ait ${yeniHaberler.length} adet canlı haber ve ihbar yüklendi.`);
   } else {
     document.getElementById("sync-status").innerText = "OFFLINE";
     document.getElementById("sync-status").style.color = "var(--tactical-red)";
@@ -2689,40 +2936,26 @@ function detayAnalizAc(haber) {
 
   let etkiAlani = "Bölgesel Sivil ve Kritik Altyapı";
   let aktor = "Bağımsız / Teyit Edilmemiş Unsurlar";
-  let aiOzet = "";
-  let tavsiye = "";
 
   if (haber.isPiracy) {
     etkiAlani = "Ticari Deniz Taşıma Koridoru & Seyir Güvenliği";
     aktor = "Asimetrik Korsan Grupları / Deniz Haydutları";
-    aiOzet = `[DENİZ GÜVENLİK TEHDİDİ]\nHedef bölgede ticaret gemilerine yönelik asimetrik korsanlık olayı rapor edilmiştir.\n\nOlay Tespiti:\n"${haber.baslik}"`;
-    tavsiye = "Bölgedeki askeri devriye gemileri ve UKMTO merkezleriyle anlık irtibat kurulmalıdır.";
   } else if (haber.kategori === 'Askeri') {
     etkiAlani = "Milli Savunma, Donanma ve Sınır Güvenliği Çevresi";
     aktor = "Asimetrik / Düzenli Askeri Unsurlar";
-    aiOzet = `[ASKERİ OPERASYONEL RİSK ANALİZİ]\nBölgedeki sinyaller askeri ve operasyonel hareketlilikle örtüşmektedir.\n\nSİTREP Özeti:\n${haber.baslik}`;
-    tavsiye = "Hava ve deniz koridorlarında teyakkuz seviyesi artırılmalı, ilgili sektördeki radar ve elektro-optik takip aktif tutulmalıdır.";
   } else if (haber.kategori === 'Siber') {
     etkiAlani = "Kurumsal Ağlar, Bulut ve Kritik BT Altyapısı";
     aktor = "Siber Tehdit Grupları / APT / Ransomware Aktörleri";
-    aiOzet = `[SİBER TEHDİT İSTİHBARATI]\nTespit edilen zararlı yazılım/zafiyet ihbarı aktif risk taşımaktadır.`;
-    tavsiye = "Ağ güvenlik duvarında ilgili IOC bloklamaları yapılmalı, sistem yamaları uygulanmalıdır.";
   } else if (haber.kategori === 'Afet') {
     etkiAlani = "Sismik Riskli Yerleşim Alanları ve Fay Hatları";
     aktor = "Doğal Sismik / Tektonik Enerji Boşalımı";
-    aiOzet = `[SİSMİK DEPREM İHBARI]\nUSGS sensörlerinden alınan canlı veriler doğrultusunda tektonik hareketlilik kaydedildi.`;
-    tavsiye = "Sismik artçı dalga riski takip edilmelidir.";
   } else if (haber.kategori === 'Yangın') {
     etkiAlani = "Ormanlık Alanlar, Flora ve Ekolojik Denge";
     aktor = "Termal / İklimsel / Beşeri Kaynaklı Odaklar";
-    aiOzet = `[NASA TERMAL UYDU TESPİTİ]\nNASA EONET uydularından alınan verilere göre kızılötesi ısı anomalisi tespit edildi.`;
-    tavsiye = "Yangın söndürme ekipleri ilgili koordinata sevk edilmelidir.";
   }
 
   document.getElementById('detay-etki-alani').innerText = etkiAlani;
   document.getElementById('detay-aktor').innerText = aktor;
-  document.getElementById('detay-ai-ozet').innerText = aiOzet;
-  document.getElementById('detay-tavsiye').innerText = tavsiye;
   document.getElementById('detay-tam-metin').innerText = haber.detay;
   document.getElementById('detay-kaynak-link').href = haber.kaynak || "#";
   
