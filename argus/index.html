@@ -2082,25 +2082,50 @@ function getPlugAndPlayCableData() {
       },
 
       // 4. TRANSPASİFİK HATLAR (Kuzey Amerika - Asya / Okyanusya)
+      // Antimeridyen (180°) bölünmesi uygulanmıştır.
       { 
         "type": "Feature", 
         "properties": { "name": "Unity Transpacific (Chikura, Japonya -> Los Angeles, USA)" }, 
-        "geometry": { "type": "MultiLineString", "coordinates": [[[139.65, 35.67], [170.00, 40.00], [-160.00, 38.00], [-118.24, 34.05]]] } 
+        "geometry": { 
+          "type": "MultiLineString", 
+          "coordinates": [
+            [[139.65, 35.67], [170.00, 40.00], [180.00, 39.00]],
+            [[-180.00, 39.00], [-160.00, 38.00], [-118.24, 34.05]]
+          ] 
+        } 
       },
       { 
         "type": "Feature", 
         "properties": { "name": "FASTER Cable System (Japonya / Tayvan -> Oregon, USA)" }, 
-        "geometry": { "type": "MultiLineString", "coordinates": [[[121.88, 25.03], [139.65, 35.67], [175.00, 42.00], [-140.00, 45.00], [-123.96, 45.11]]] } 
+        "geometry": { 
+          "type": "MultiLineString", 
+          "coordinates": [
+            [[121.88, 25.03], [139.65, 35.67], [175.00, 42.00], [180.00, 43.50]],
+            [[-180.00, 43.50], [-140.00, 45.00], [-123.96, 45.11]]
+          ] 
+        } 
       },
       { 
         "type": "Feature", 
         "properties": { "name": "JUPITER (Japonya / Filipinler -> Washington / Kaliforniya, USA)" }, 
-        "geometry": { "type": "MultiLineString", "coordinates": [[[120.98, 14.59], [139.65, 35.67], [-160.00, 42.00], [-122.41, 37.77]]] } 
+        "geometry": { 
+          "type": "MultiLineString", 
+          "coordinates": [
+            [[120.98, 14.59], [139.65, 35.67], [180.00, 40.00]],
+            [[-180.00, 40.00], [-160.00, 42.00], [-122.41, 37.77]]
+          ] 
+        } 
       },
       { 
         "type": "Feature", 
         "properties": { "name": "Southern Cross Cable (Avustralya -> Yeni Zelanda -> Fiji -> Hawaii -> USA)" }, 
-        "geometry": { "type": "MultiLineString", "coordinates": [[[151.20, -33.86], [174.76, -36.84], [178.44, -18.14], [-157.85, 21.30], [-122.41, 37.77]]] } 
+        "geometry": { 
+          "type": "MultiLineString", 
+          "coordinates": [
+            [[151.20, -33.86], [174.76, -36.84], [178.44, -18.14], [180.00, -15.00]],
+            [[-180.00, -15.00], [-157.85, 21.30], [-122.41, 37.77]]
+          ] 
+        } 
       },
 
       // 5. PAN-AMERİKAN VE GÜNEY ATLANTİK HATALARI
@@ -2149,17 +2174,16 @@ async function toggleFiberVeIXPAgi() {
     logEkle("[KRİTİK ALTYAPI] Küresel Fiber Kablo Ağları ve Veri Santralleri (IXP/CLS) yükleniyor...");
 
     const cableGeoData = getPlugAndPlayCableData();
-    const paneOpt = map.getPane('cablesPane') ? { pane: 'cablesPane' } : {};
     
     // 2D Leaflet Katmanı
     fiberIxpKabloLayer = L.geoJSON(cableGeoData, {
-      ...paneOpt,
+      pane: 'cablesPane',
       style: { color: "#e040fb", weight: 2.2, opacity: 0.85, dashArray: '4, 6' },
       onEachFeature: (feature, layer) => {
         const kName = feature.properties ? (feature.properties.name || "Denizaltı Fiber Kablo Hattı") : "Fiber Kablo";
         layer.bindPopup(`<div style="font-family:var(--font-mono); padding:3px;"><strong style="color:#e040fb; font-size:11px;"><i class="fa-solid fa-network-wired"></i> ${kName}</strong><br><span style="font-size:9px; color:#3fb950;">AKTİF VERİ HATTI (TRANS-OKYANUS)</span></div>`, { autoPan: true });
         layer.on('mouseover', e => e.target.setStyle({ weight: 4.5, color: '#ffffff', opacity: 1.0 }));
-        layer.on('mouseout', e => fiberIxpKabloLayer && fiberIxpKabloLayer.resetStyle(e.target));
+        layer.on('mouseout', e => layer.setStyle({ weight: 2.2, color: '#e040fb', opacity: 0.85 }));
       }
     }).addTo(map);
 
@@ -2171,7 +2195,7 @@ async function toggleFiberVeIXPAgi() {
         iconSize: [22, 22], iconAnchor: [11, 11]
       });
 
-      const m = L.marker([nokta.lat, nokta.lng], { icon: customIcon }).addTo(map);
+      const m = L.marker([nokta.lat, nokta.lng], { icon: customIcon, pane: 'cablesPane' }).addTo(map);
       m.bindPopup(`
         <div style="font-family: var(--font-mono); padding: 4px; min-width: 190px;">
           <strong style="color: #e040fb; font-size: 11px;"><i class="fa-solid fa-server"></i> [IXP / CLS HUB]</strong><br>
@@ -2662,7 +2686,7 @@ ${haberMetni}`;
       const data = await globalMilRes.json();
       if (data && data.items) {
         data.items.forEach((art) => {
-          const haberMetni = htmlTemizle(art.content || art.description || art.title);
+	  const haberMetni = htmlTemizle(art.content || art.description || art.title);
           const birlesikMetin = art.title + " " + haberMetni;
           const milZamani = art.pubDate ? new Date(art.pubDate) : suAn;
           const tespit = konumMetindenBul(birlesikMetin, "Global Military Conflict Zone", 35.0, 38.0);
