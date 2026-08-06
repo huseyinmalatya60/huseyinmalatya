@@ -106,7 +106,7 @@
     #canvas-container { flex: 1; position: relative; background: #030611; border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 10px; overflow: hidden; background-image: radial-gradient(rgba(0, 240, 255, 0.12) 1.5px, transparent 1.5px); background-size: 24px 24px; user-select: none; }
     #canvas-container.linking-mode { cursor: crosshair; border-color: #f59e0b; }
     
-    .node-inspector { width: 300px; background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-family: monospace; overflow-y: auto; }
+    .node-inspector { width: 320px; background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-family: monospace; overflow-y: auto; }
     .inspector-title { font-size: 11px; font-weight: bold; color: #00f0ff; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
 
     .canvas-node { position: absolute; width: 140px; background: rgba(10, 16, 30, 0.92); border: 1.5px solid #00f0ff; border-radius: 8px; padding: 8px 10px; cursor: grab; display: flex; flex-direction: column; gap: 4px; font-size: 10px; font-family: monospace; color: #fff; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7); z-index: 2; transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s; backdrop-filter: blur(8px); }
@@ -130,6 +130,9 @@
     .palette-section { background: rgba(8, 13, 26, 0.6); border: 1px solid rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .palette-btn { background: #0d1527; border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1; padding: 5px 10px; border-radius: 6px; font-size: 10px; font-family: monospace; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
     .palette-btn:hover { background: rgba(0,240,255,0.12); border-color: #00f0ff; color: #fff; transform: translateY(-1px); }
+
+    /* SIMULATION LOG STYLES */
+    .sim-log-box { background: #03050c; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px; font-family: monospace; font-size: 9px; max-height: 120px; overflow-y: auto; margin-top: 6px; }
 
     /* WIFI ANALYZER STYLES */
     .wifi-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; background: #080d1a; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); }
@@ -250,7 +253,6 @@
 
         <div class="nav-group">
           <div class="nav-title cucm-header">☎️ CUCM & VOIP SUITE</div>
-          <!-- BİRLEŞTİRİLMİŞ CUCM MASTER HUB -->
           <button onclick="showPanel('cucm-master')" id="btn-cucm-master" class="nav-btn cucm-btn" style="border-left: 3px solid #00f0ff; background: rgba(0, 240, 255, 0.08); font-weight: bold; color: #fff;">☎️ CUCM Master Suite Hub</button>
           <button onclick="showPanel('softphone')" id="btn-softphone" class="nav-btn cucm-btn">WebRTC / SIP Softphone Sim</button>
           <button onclick="showPanel('sip-parser')" id="btn-sip-parser" class="nav-btn cucm-btn">SIP Log Parser & Call Flow</button>
@@ -269,7 +271,6 @@
 
         <div class="nav-group">
           <div class="nav-title network-header">🌐 NETWORK SUITE</div>
-          <!-- GERİ EKLENEN NETWORK ARACLARİ -->
           <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn">Wi-Fi Signal & Wall Attenuation</button>
           <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn">Dynamic NAT & PAT Sim</button>
           <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn">Topology Canvas (Advanced)</button>
@@ -508,7 +509,7 @@ dial-peer voice 100 voip
           </div>
         </div>
 
-        <!-- GERİ EKLENEN WIFI ANALYZER PANEL -->
+        <!-- WIFI ANALYZER PANEL -->
         <div id="panel-wifi-analyzer" class="panel">
           <div class="panel-header">
             <div><div class="panel-title">📶 Wi-Fi Signal & Obstacle Simulator</div></div>
@@ -547,7 +548,7 @@ dial-peer voice 100 voip
           </div>
         </div>
 
-        <!-- GERİ EKLENEN NAT SIMULATOR -->
+        <!-- NAT SIMULATOR -->
         <div id="panel-nat" class="panel">
           <div class="panel-header"><div class="panel-title">🔀 Dynamic NAT & PAT Simulator</div><button onclick="clearNatTable()" class="btn btn-danger">Temizle</button></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
@@ -573,14 +574,16 @@ dial-peer voice 100 voip
           </div>
         </div>
 
-        <!-- GERİ EKLENEN TOPOLOGY CANVAS PANEL -->
+        <!-- TOPOLOGY CANVAS PANEL (SİMÜLASYON BUTONU BURAYA DAHİL EDİLDİ) -->
         <div id="panel-canvas" class="panel">
           <div class="panel-header">
             <div>
               <div class="panel-title">🌐 Interactive Topology Canvas (Pro Suite)</div>
-              <div class="panel-desc">Gelişmiş ağ ve VoIP topolojisi tasarlayın, sürükleyin, kablo çekin ve cihaz parametrelerini yapılandırın.</div>
+              <div class="panel-desc">Gelişmiş ağ ve VoIP topolojisi tasarlayın, sürükleyin, kablo çekin ve simülasyon testi yapın.</div>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <!-- İŞTE YENİ SİMÜLASYON BUTONUNUZ -->
+              <button onclick="runDefaultPingSimulation()" id="btn-sim-mode" class="btn" style="background:#10b981; color:#000;">▶️ Simülasyon (Ping Testi)</button>
               <button onclick="toggleLinkMode()" id="btn-link-mode" class="btn btn-secondary">🔗 Bağlantı Ekle</button>
               <button onclick="triggerJSONUpload()" class="btn btn-secondary">📂 JSON Yükle</button>
               <input type="file" id="json-file-input" style="display:none;" onchange="importJSON(event)">
@@ -618,6 +621,10 @@ dial-peer voice 100 voip
               </div>
               <div id="inspector-content" style="font-size:10px; color:#64748b;">
                 Düzenlemek için canvas üzerindeki herhangi bir cihaza tıklayın.
+              </div>
+              <div style="border-top:1px dashed rgba(255,255,255,0.1); margin-top:8px; padding-top:8px;">
+                <label style="color:#00f0ff;">📡 Simülasyon Akış Günlüğü (Event Log)</label>
+                <div id="sim-event-log" class="sim-log-box"><div style="color:#64748b;">Simülasyon olayları burada akacaktır...</div></div>
               </div>
             </div>
           </div>
@@ -1009,7 +1016,7 @@ dial-peer voice 100 voip
       if (id === 'cucm-master') calcQoSCombined();
     }
 
-    // BİRLEŞTİRİLMİŞ CUCM MASTER HUB SEKME GEZİNTİSİ
+    // CUCM MASTER HUB TAB NAVIGATION
     function switchCucmMasterTab(tabName) {
       const tabs = ['cluster', 'pipeline', 'reg', 'ports', 'cli', 'qos'];
       tabs.forEach(t => {
@@ -1030,7 +1037,7 @@ dial-peer voice 100 voip
       });
     }
 
-    // BİRLEŞTİRİLMİŞ QOS HESAPLAYICI
+    // QOS CALCULATOR
     function calcQoSCombined() {
       const val = document.getElementById('qos-val-master').value;
       const qosMap = {
@@ -1049,10 +1056,11 @@ dial-peer voice 100 voip
     }
 
     // ==========================================
-    // TOPOLOGY CANVAS ENGINE (GERİ EKLENDİ)
+    // TOPOLOGY CANVAS & SIMULATION ENGINE
     // ==========================================
     let canvasNodes = [], canvasLinks = [], canvasSelectedNode = null, canvasLinkSource = null;
     let isLinkMode = false, activeDraggingNodeId = null, dragOffset = { x: 0, y: 0 };
+    let isSimulating = false;
 
     const deviceIcons = {
       pc: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
@@ -1111,10 +1119,7 @@ dial-peer voice 100 voip
         }
       });
 
-      document.addEventListener('mouseup', () => {
-        activeDraggingNodeId = null;
-      });
-
+      document.addEventListener('mouseup', () => { activeDraggingNodeId = null; });
       loadDefaultTopology();
     }
 
@@ -1309,22 +1314,15 @@ dial-peer voice 100 voip
         });
       }
 
+      let targetOptions = `<option value="">-- Hedef Cihaz Seçin --</option>`;
+      canvasNodes.forEach(other => {
+        if (other.id !== n.id) {
+          targetOptions += `<option value="${other.id}">${other.type} (${other.ip})</option>`;
+        }
+      });
+
       document.getElementById('inspector-content').innerHTML = `
         <div class="form-group"><label>Cihaz Adı</label><input type="text" value="${n.type}" oninput="updateNodeProp('${n.id}', 'type', this.value)"></div>
-        <div class="form-group"><label>Cihaz Tipi</label>
-          <select onchange="updateNodeProp('${n.id}', 'devKey', this.value)">
-            <option value="pc" ${n.devKey==='pc'?'selected':''}>PC (Personal Computer)</option>
-            <option value="laptop" ${n.devKey==='laptop'?'selected':''}>Laptop Workstation</option>
-            <option value="server" ${n.devKey==='server'?'selected':''}>Datacenter Server</option>
-            <option value="switch" ${n.devKey==='switch'?'selected':''}>L2/L3 Switch</option>
-            <option value="router" ${n.devKey==='router'?'selected':''}>WAN Router</option>
-            <option value="firewall" ${n.devKey==='firewall'?'selected':''}>Next-Gen Firewall</option>
-            <option value="phone" ${n.devKey==='phone'?'selected':''}>VoIP IP Phone</option>
-            <option value="cucm" ${n.devKey==='cucm'?'selected':''}>CUCM Cluster Node</option>
-            <option value="cube" ${n.devKey==='cube'?'selected':''}>CUBE Voice Gateway</option>
-            <option value="ap" ${n.devKey==='ap'?'selected':''}>Wi-Fi Access Point</option>
-          </select>
-        </div>
         <div class="form-group"><label>IP Adresi</label><input type="text" value="${n.ip}" oninput="updateNodeProp('${n.id}', 'ip', this.value)"></div>
         <div class="form-group"><label>MAC Adresi</label><input type="text" value="${n.mac}" oninput="updateNodeProp('${n.id}', 'mac', this.value)"></div>
         <div class="form-group"><label>Durum</label>
@@ -1332,6 +1330,14 @@ dial-peer voice 100 voip
             <option value="ONLINE" ${n.status==='ONLINE'?'selected':''}>ONLINE</option>
             <option value="OFFLINE" ${n.status==='OFFLINE'?'selected':''}>OFFLINE</option>
           </select>
+        </div>
+        <div style="background:rgba(0,240,255,0.05); padding:10px; border-radius:6px; border:1px solid rgba(0,240,255,0.15); margin-top:8px;">
+          <label style="color:#00f0ff; font-weight:bold; margin-bottom:6px;">🚀 PAKET SİMÜLASYONU TESTİ</label>
+          <select id="sim-target-node" style="margin-bottom:8px;">${targetOptions}</select>
+          <div style="display:flex; gap:6px;">
+            <button class="btn" style="flex:1; font-size:10px; padding:6px;" onclick="startCustomPacketSim('${n.id}', 'icmp')">🟢 Ping (ICMP)</button>
+            <button class="btn btn-secondary" style="flex:1; font-size:10px; padding:6px; border-color:#00f0ff; color:#00f0ff;" onclick="startCustomPacketSim('${n.id}', 'sip')">🔵 SIP Call</button>
+          </div>
         </div>
         <div style="margin-top:6px; margin-bottom:10px;"><label style="color:#10b981;">🔗 Bağlı Komşuluklar (${connectedNeighbors.length}):</label>${linksHtml}</div>
         <button class="btn btn-danger" onclick="deleteNode('${n.id}')" style="width:100%; margin-top:8px;">Cihazı Sil</button>
@@ -1364,6 +1370,181 @@ dial-peer voice 100 voip
       renderCanvas();
     }
 
+    // ==========================================
+    // PACKET SIMULATION & ANIMATION ENGINE
+    // ==========================================
+    function logSimEvent(msg, color="#cbd5e1") {
+      const box = document.getElementById('sim-event-log');
+      if (!box) return;
+      const time = new Date().toTimeString().split(' ')[0];
+      const entry = document.createElement('div');
+      entry.style.marginBottom = '4px';
+      entry.innerHTML = `<span style="color:#64748b;">[${time}]</span> <span style="color:${color};">${msg}</span>`;
+      box.appendChild(entry);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function findShortestPath(startId, endId) {
+      if (startId === endId) return [startId];
+      let queue = [[startId]];
+      let visited = new Set([startId]);
+
+      while (queue.length > 0) {
+        let path = queue.shift();
+        let currNode = path[path.length - 1];
+
+        let neighbors = [];
+        canvasLinks.forEach(l => {
+          if (l.from === currNode && !visited.has(l.to)) neighbors.push(l.to);
+          if (l.to === currNode && !visited.has(l.from)) neighbors.push(l.from);
+        });
+
+        for (let neighbor of neighbors) {
+          visited.add(neighbor);
+          let newPath = [...path, neighbor];
+          if (neighbor === endId) return newPath;
+          queue.push(newPath);
+        }
+      }
+      return null;
+    }
+
+    function animatePacketStep(fromId, toId, color, label, speed, callback) {
+      const src = getNodeCenter(fromId);
+      const dst = getNodeCenter(toId);
+      const svg = document.getElementById('canvas-svg');
+      if (!svg) return;
+
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("r", "7");
+      circle.setAttribute("fill", color);
+      circle.setAttribute("cx", src.x);
+      circle.setAttribute("cy", src.y);
+      circle.style.filter = `drop-shadow(0 0 10px ${color})`;
+
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", src.x);
+      text.setAttribute("y", src.y - 12);
+      text.setAttribute("fill", "#ffffff");
+      text.setAttribute("font-size", "9px");
+      text.setAttribute("font-weight", "bold");
+      text.setAttribute("font-family", "monospace");
+      text.setAttribute("text-anchor", "middle");
+      text.textContent = label;
+
+      g.appendChild(circle);
+      g.appendChild(text);
+      svg.appendChild(g);
+
+      let progress = 0;
+      function step() {
+        progress += speed;
+        if (progress <= 1) {
+          const curX = src.x + (dst.x - src.x) * progress;
+          const curY = src.y + (dst.y - src.y) * progress;
+          circle.setAttribute("cx", curX);
+          circle.setAttribute("cy", curY);
+          text.setAttribute("x", curX);
+          text.setAttribute("y", curY - 12);
+          requestAnimationFrame(step);
+        } else {
+          g.remove();
+          if (callback) callback();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function sendMultiHopPacket(path, type, isReply = false) {
+      if (!path || path.length < 2) return;
+
+      let colors = { icmp: '#10b981', sip: '#00f0ff', arp: '#f59e0b' };
+      let labels = { 
+        icmp: isReply ? 'ICMP REPLY' : 'ICMP ECHO REQ', 
+        sip: isReply ? '200 OK' : 'SIP INVITE', 
+        arp: 'ARP REQ' 
+      };
+
+      let color = colors[type] || '#10b981';
+      let label = labels[type] || 'PACKET';
+      let hopIndex = 0;
+
+      function nextHop() {
+        if (hopIndex < path.length - 1) {
+          let from = path[hopIndex];
+          let to = path[hopIndex + 1];
+
+          let fromNode = canvasNodes.find(n => n.id === from);
+          let toNode = canvasNodes.find(n => n.id === to);
+
+          if (toNode && toNode.status === 'OFFLINE') {
+            logSimEvent(`❌ [DROP] Cihaz Kapalı (OFFLINE): ${toNode.type}`, '#f43f5e');
+            isSimulating = false;
+            return;
+          }
+
+          hopIndex++;
+          logSimEvent(`[${label}] ${fromNode ? fromNode.type : from} ➔ ${toNode ? toNode.type : to}`, color);
+          animatePacketStep(from, to, color, label, 0.02, nextHop);
+        } else {
+          if (!isReply && type === 'icmp') {
+            logSimEvent(`🎯 Hedef yanıt veriyor, ICMP Reply dönüyor...`, '#00f0ff');
+            setTimeout(() => {
+              let reversePath = [...path].reverse();
+              sendMultiHopPacket(reversePath, 'icmp', true);
+            }, 300);
+          } else {
+            logSimEvent(`✅ [SUCCESS] Paket transferi başarıyla tamamlandı!`, '#10b981');
+            isSimulating = false;
+          }
+        }
+      }
+      nextHop();
+    }
+
+    function startCustomPacketSim(srcId, type) {
+      if (isSimulating) return;
+      const targetSelect = document.getElementById('sim-target-node');
+      const dstId = targetSelect ? targetSelect.value : null;
+
+      if (!dstId) { alert("Lütfen bir hedef cihaz seçin!"); return; }
+
+      const path = findShortestPath(srcId, dstId);
+      if (!path) {
+        logSimEvent(`❌ [UNREACHABLE] Bağlantı Yolu Bulunamadı!`, '#f43f5e');
+        return;
+      }
+
+      const srcNode = canvasNodes.find(n => n.id === srcId);
+      const dstNode = canvasNodes.find(n => n.id === dstId);
+
+      isSimulating = true;
+      logSimEvent(`🚀 Simülasyon Başlatıldı: ${srcNode.type} ➔ ${dstNode.type}`, '#00f0ff');
+      sendMultiHopPacket(path, type);
+    }
+
+    function runDefaultPingSimulation() {
+      if (isSimulating) return;
+      if (canvasNodes.length < 2) { alert("Simülasyon için canvas üzerinde en az 2 cihaz ve bağlantı olmalıdır!"); return; }
+
+      const srcId = canvasNodes[canvasNodes.length - 1].id;
+      const dstId = canvasNodes[0].id;
+
+      const path = findShortestPath(srcId, dstId);
+      if (!path) {
+        logSimEvent(`❌ [UNREACHABLE] Bağlantı Yolu Bulunamadı!`, '#f43f5e');
+        return;
+      }
+
+      isSimulating = true;
+      const srcNode = canvasNodes.find(n => n.id === srcId);
+      const dstNode = canvasNodes.find(n => n.id === dstId);
+
+      logSimEvent(`🚀 [PING TEST] ${srcNode.type} (${srcNode.ip}) ➔ ${dstNode.type} (${dstNode.ip})`, '#10b981');
+      sendMultiHopPacket(path, 'icmp');
+    }
+
     function exportPNG() {
       const container = document.getElementById('canvas-container');
       if (window.html2canvas) {
@@ -1384,9 +1565,7 @@ dial-peer voice 100 voip
       downloadAnchor.click();
     }
 
-    function triggerJSONUpload() {
-      document.getElementById('json-file-input').click();
-    }
+    function triggerJSONUpload() { document.getElementById('json-file-input').click(); }
 
     function importJSON(e) {
       const file = e.target.files[0];
@@ -1404,7 +1583,7 @@ dial-peer voice 100 voip
     }
 
     // ==========================================
-    // WIFI ENGINE (GERİ EKLENDİ)
+    // WIFI ENGINE
     // ==========================================
     let wifiAP = { x: 150, y: 210 }, wifiRx = { x: 500, y: 210 };
     let wifiWalls = [{ x1: 300, y1: 50, x2: 300, y2: 370, loss: 15, name: 'Beton', color: '#ef4444' }];
@@ -1508,7 +1687,7 @@ dial-peer voice 100 voip
     }
 
     // ==========================================
-    // DYNAMIC NAT & PAT SIMULATOR (GERİ EKLENDİ)
+    // DYNAMIC NAT & PAT SIMULATOR
     // ==========================================
     let natTable = [];
     let allocatedPatPort = 10000;
@@ -2212,7 +2391,7 @@ To: <sip:2002@10.10.10.12>`;
       `;
     }
 
-    // MULTI-VENDOR GENERATOR
+    // MULTI VENDOR CONFIG PANEL
     function genVendor() {
       const vendor = document.getElementById('cfg-vendor').value;
       const iface = document.getElementById('cfg-iface').value.trim();
@@ -2409,7 +2588,10 @@ To: <sip:2002@10.10.10.12>`;
         if (cmd === 'help') res = "Komutlar: show status, show ip route, ping <ip>, cucm status, show dbreplication runstatus, utils service list, version, clear";
         else if (cmd === 'show status') res = "System Status: ONLINE | Kernel: v1.0 Engine | Active Modules: 24";
         else if (cmd === 'show ip route') res = "Codes: C - connected, S - static, O - OSPF\nC 192.168.1.0/24 is directly connected, Gi0/0\nS* 0.0.0.0/0 [1/0] via 192.168.1.254";
-        else if (cmd.startsWith('ping ')) res = `PING ${cmd.split(' ')[1]} 56(84) bytes of data.\n64 bytes from ${cmd.split(' ')[1]}: icmp_seq=1 ttl=64 time=1.24 ms\n64 bytes from ${cmd.split(' ')[1]}: icmp_seq=2 ttl=64 time=1.12 ms`;
+        else if (cmd.startsWith('ping ')) {
+          res = `PING ${cmd.split(' ')[1]} 56(84) bytes of data.\n64 bytes from ${cmd.split(' ')[1]}: icmp_seq=1 ttl=64 time=1.24 ms\n64 bytes from ${cmd.split(' ')[1]}: icmp_seq=2 ttl=64 time=1.12 ms`;
+          if (typeof runDefaultPingSimulation === 'function') runDefaultPingSimulation();
+        }
         else if (cmd === 'version') res = "ZeroPacket Unified Suite v1.0 — Architecture by H.Malatya";
         else if (cmd === 'cucm status' || cmd === 'show dbreplication runstatus') res = "CUCM Cluster Status:\nPub (10.10.10.11): Active Read/Write (Replication State 2 - GOOD)\nSub (10.10.10.12): Active Read-Only (Replication State 2 - GOOD)";
         else if (cmd === 'utils service list') res = "Cisco CallManager[STARTED]\nCisco TFTP[STARTED]\nCisco CTI Manager[STARTED]\nCisco AXL Web Service[STARTED]";
@@ -2430,6 +2612,7 @@ To: <sip:2002@10.10.10.12>`;
       toggleCiscoTmplFields();
       toggleAclFields();
       toggleCryptPlaceholder();
+      setTimeout(initTopologyEngine, 300);
     };
   </script>
 </body>
