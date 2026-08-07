@@ -247,45 +247,45 @@
     <aside>
       <div class="nav-container">
         <div class="nav-group">
-          <div class="nav-title sys-header">// MAIN OVERVIEW</div>
-          <button onclick="showPanel('dashboard')" id="btn-dashboard" class="nav-btn active">Dashboard Overview</button>
+          <div class="nav-title sys-header">// GENEL BAKIŞ</div>
+          <button onclick="showPanel('dashboard')" id="btn-dashboard" class="nav-btn active">Kontrol Paneli / Genel Bakış</button>
         </div>
 
         <div class="nav-group">
-          <div class="nav-title cucm-header">☎️ CUCM & VOIP SUITE</div>
-          <button onclick="showPanel('cucm-master')" id="btn-cucm-master" class="nav-btn cucm-btn" style="border-left: 3px solid #00f0ff; background: rgba(0, 240, 255, 0.08); font-weight: bold; color: #fff;">☎️ CUCM Master Suite Hub</button>
-          <button onclick="showPanel('softphone')" id="btn-softphone" class="nav-btn cucm-btn">WebRTC / SIP Softphone Sim</button>
-          <button onclick="showPanel('sip-parser')" id="btn-sip-parser" class="nav-btn cucm-btn">SIP Log Parser & Call Flow</button>
-          <button onclick="showPanel('cdr-analytics')" id="btn-cdr-analytics" class="nav-btn cucm-btn">CDR Analytics & Billing</button>
+          <div class="nav-title cucm-header">☎️ CUCM VE VOIP PAKETİ</div>
+          <button onclick="showPanel('cucm-master')" id="btn-cucm-master" class="nav-btn cucm-btn" style="border-left: 3px solid #00f0ff; background: rgba(0, 240, 255, 0.08); font-weight: bold; color: #fff;">☎️ CUCM Ana Yönetim Merkezi</button>
+          <button onclick="showPanel('softphone')" id="btn-softphone" class="nav-btn cucm-btn">WebRTC / SIP Yazılımsal Telefon</button>
+          <button onclick="showPanel('sip-parser')" id="btn-sip-parser" class="nav-btn cucm-btn">SIP Log Çözümleyici & Çağrı Akışı</button>
+          <button onclick="showPanel('cdr-analytics')" id="btn-cdr-analytics" class="nav-btn cucm-btn">CDR Çağrı Analizi & Faturalandırma</button>
         </div>
 
         <div class="nav-group">
-          <div class="nav-title" style="color: #f59e0b; border-bottom: 1px dashed rgba(245, 158, 11, 0.3); padding-bottom: 4px;">🦎 CISCO SUITE</div>
-          <button onclick="showPanel('cisco-range')" id="btn-cisco-range" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Interface Range & Bulk VLANs</button>
-          <button onclick="showPanel('cisco-syslog')" id="btn-cisco-syslog" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco Syslog & Anomaly Parser</button>
-          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco IOS Config Boilerplates</button>
-          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco ACL Generator</button>
-          <button onclick="showPanel('cisco-trouble')" id="btn-cisco-trouble" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco IP Phone Troubleshooter</button>
-          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco Password Tool (Type 7)</button>
+          <div class="nav-title" style="color: #f59e0b; border-bottom: 1px dashed rgba(245, 158, 11, 0.3); padding-bottom: 4px;">🦎 CISCO GELİŞMİŞ PAKETİ</div>
+          <button onclick="showPanel('cisco-range')" id="btn-cisco-range" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Arayüz Aralığı & Toplu VLAN Yapılandırma</button>
+          <button onclick="showPanel('cisco-syslog')" id="btn-cisco-syslog" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco Syslog & Anomali Çözümleyici</button>
+          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco IOS Yapılandırma Taslakları</button>
+          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco ACL (Erişim Listesi) Oluşturucu</button>
+          <button onclick="showPanel('cisco-trouble')" id="btn-cisco-trouble" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco IP Telefon Sorun Giderici</button>
+          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cucm-btn" style="border-left: 3px solid #f59e0b;">Cisco Şifre Çözücü (Type 7)</button>
         </div>
 
         <div class="nav-group">
-          <div class="nav-title network-header">🌐 NETWORK SUITE</div>
-          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn">Wi-Fi Signal & Wall Attenuation</button>
-          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn">Dynamic NAT & PAT Sim</button>
-          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn">Topology Canvas (Advanced)</button>
+          <div class="nav-title network-header">🌐 AĞ ALTYAPI PAKETİ</div>
+          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn">Wi-Fi Sinyal & Duvar Sönümleme</button>
+          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn">Dinamik NAT & PAT Simülasyonu</button>
+          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn">Gelişmiş Ağ Topolojisi Çizimi</button>
 
-          <button onclick="showPanel('multivendor')" id="btn-multivendor" class="nav-btn net-btn">Multi-Vendor Config Generator</button>
-          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn">Subnet Calculator</button>
-          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn">VLSM Subnet Splitter</button>
-          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn net-btn">IP Class Analyzer</button>
-          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn net-btn">IPv6 Expander</button>
-          <button onclick="showPanel('stp')" id="btn-stp" class="nav-btn net-btn">STP Cost Calculator</button>
-          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn net-btn">IPSec MSS Calc</button>
-          <button onclick="showPanel('bgpasn')" id="btn-bgpasn" class="nav-btn net-btn">BGP ASN Lookup</button>
-          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn net-btn">MAC OUI Lookup</button>
-          <button onclick="showPanel('rtt')" id="btn-rtt" class="nav-btn net-btn">RTT Latency Estimator</button>
-          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn net-btn">Wildcard Mask Calc</button>
+          <button onclick="showPanel('multivendor')" id="btn-multivendor" class="nav-btn net-btn">Çoklu Üretici Yapılandırma Üretici</button>
+          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn">Alt Ağ (Subnet) Hesaplayıcı</button>
+          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn">VLSM Alt Ağ Bölücü</button>
+          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn net-btn">IP Sınıfı Analizcisi</button>
+          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn net-btn">IPv6 Adres Genişletici</button>
+          <button onclick="showPanel('stp')" id="btn-stp" class="nav-btn net-btn">STP Maliyet Hesaplayıcı</button>
+          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn net-btn">IPSec MSS Hesaplayıcı</button>
+          <button onclick="showPanel('bgpasn')" id="btn-bgpasn" class="nav-btn net-btn">BGP ASN Sorgulama</button>
+          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn net-btn">MAC OUI Üretici Sorgulama</button>
+          <button onclick="showPanel('rtt')" id="btn-rtt" class="nav-btn net-btn">RTT Gecikme Süresi Tahmincisi</button>
+          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn net-btn">Wildcard Maske Hesaplayıcı</button>
         </div>
       </div>
 
@@ -308,7 +308,7 @@
         <div id="panel-dashboard" class="panel active">
           <div class="panel-header">
             <div>
-              <div class="panel-title">System Directory & Technical Quick-Reference Hub</div>
+              <div class="panel-title">Sistem Dizini & Teknik Hızlı Başvuru Merkezi</div>
               <div class="panel-desc">Ağ ve CUCM ses altyapı araçlarının görev tanımlarını listeleyen hızlı başvuru dizini.</div>
             </div>
           </div>
@@ -320,42 +320,43 @@
 
           <div class="directory-grid">
             <div class="dir-category">
-              <div class="dir-category-title" style="color: #38edf8;">☎️ CUCM & VOIP SUITE DIRECTORY</div>
-              <div class="dir-item" onclick="showPanel('cucm-master')" style="border:1px solid rgba(0, 240, 255, 0.3); background: rgba(0, 240, 255, 0.05);"><div class="dir-item-header"><span class="dir-item-title" style="color:#00f0ff;">☎️ CUCM Master Suite Hub</span><span class="dir-item-tag">Hepsi Bir Arada</span></div><div class="dir-item-desc">Architecture Deep Dive, Firewall Port Matrix, Linux OS CLI Komutları ve VoIP QoS/DSCP Dönüştürücüsünün birleştirilmiş versiyonu.</div></div>
-              <div class="dir-item" onclick="showPanel('softphone')"><div class="dir-item-header"><span class="dir-item-title">WebRTC / SIP Softphone Sim</span><span class="dir-item-tag">Simülatör</span></div><div class="dir-item-desc">Tarayıcı tabanlı telefon arayüzü ile DTMF tonları üretir ve SIP REGISTER/INVITE mesaj trafiklerini canlı olarak analiz etmenizi sağlar.</div></div>
-              <div class="dir-item" onclick="showPanel('sip-parser')"><div class="dir-item-header"><span class="dir-item-title">SIP Log Parser & Call Flow</span><span class="dir-item-tag">Ayrıştırıcı</span></div><div class="dir-item-desc">Karışık ham SIP log metinlerini işleyerek, arama adımlarını ve SDP protokol parametrelerini sıralı bir sinyalleşme diyagramına dönüştürür.</div></div>
-              <div class="dir-item" onclick="showPanel('cdr-analytics')"><div class="dir-item-header"><span class="dir-item-title">CDR Analytics & Billing</span><span class="dir-item-tag">Metrik</span></div><div class="dir-item-desc">Çağrı Detay Kayıtlarını (CDR) tarayarak ACD (Ortalama Çağrı Süresi), ASR (Çağrı Başarı Oranı) ve çağrı sonlanma maliyetlerini hesaplar.</div></div>
+              <div class="dir-category-title" style="color: #38edf8;">☎️ CUCM VE VOIP PAKETİ DİZİNİ</div>
+              <div class="dir-item" onclick="showPanel('cucm-master')" style="border:1px solid rgba(0, 240, 255, 0.3); background: rgba(0, 240, 255, 0.05);"><div class="dir-item-header"><span class="dir-item-title" style="color:#00f0ff;">☎️ CUCM Ana Yönetim Merkezi</span><span class="dir-item-tag">Hepsi Bir Arada</span></div><div class="dir-item-desc">Architecture Deep Dive, Firewall Port Matrix, Linux OS CLI Komutları ve VoIP QoS/DSCP Dönüştürücüsünün birleştirilmiş versiyonu.</div></div>
+              <div class="dir-item" onclick="showPanel('softphone')"><div class="dir-item-header"><span class="dir-item-title">WebRTC / SIP Yazılımsal Telefon</span><span class="dir-item-tag">Simülatör</span></div><div class="dir-item-desc">Tarayıcı tabanlı telefon arayüzü ile DTMF tonları üretir ve SIP REGISTER/INVITE mesaj trafiklerini canlı olarak analiz etmenizi sağlar.</div></div>
+              <div class="dir-item" onclick="showPanel('sip-parser')"><div class="dir-item-header"><span class="dir-item-title">SIP Log Çözümleyici & Çağrı Akışı</span><span class="dir-item-tag">Ayrıştırıcı</span></div><div class="dir-item-desc">Karışık ham SIP log metinlerini işleyerek, arama adımlarını ve SDP protokol parametrelerini sıralı bir sinyalleşme diyagramına dönüştürür.</div></div>
+              <div class="dir-item" onclick="showPanel('cdr-analytics')"><div class="dir-item-header"><span class="dir-item-title">CDR Çağrı Analizi & Faturalandırma</span><span class="dir-item-tag">Metrik</span></div><div class="dir-item-desc">Çağrı Detay Kayıtlarını (CDR) tarayarak ACD (Ortalama Çağrı Süresi), ASR (Çağrı Başarı Oranı) ve çağrı sonlanma maliyetlerini hesaplar.</div></div>
             </div>
 
             <div class="dir-category">
-              <div class="dir-category-title" style="color: #f59e0b;">🦎 CISCO ADVANCED SUITE DIRECTORY</div>
-              <div class="dir-item" onclick="showPanel('cisco-range')"><div class="dir-item-header"><span class="dir-item-title">Interface Range & Bulk VLANs</span><span class="dir-item-tag">Switching</span></div><div class="dir-item-desc">Toplu port yapılandırması (Access/Trunk, Data/Voice VLAN, Port Security, Portfast) için hatasız Cisco CLI kodları üretir.</div></div>
-              <div class="dir-item" onclick="showPanel('cisco-syslog')"><div class="dir-item-header"><span class="dir-item-title">Cisco Syslog & Anomaly Parser</span><span class="dir-item-tag">Log Analizi</span></div><div class="dir-item-desc">Ham Cisco syslog mesajlarını ayrıştırır, MNEMONIC kodlarını tespit eder, ciddiyet seviyelerini gruplar ve çözüm sunar.</div></div>
-              <div class="dir-item" onclick="showPanel('cisco-templates')"><div class="dir-item-header"><span class="dir-item-title">Cisco IOS Config Boilerplates</span><span class="dir-item-tag">CLI</span></div><div class="dir-item-desc">OSPF, EIGRP, eBGP, HSRP ve IP SLA için hazır CLI kod blokları üretir.</div></div>
-              <div class="dir-item" onclick="showPanel('cisco-acl')"><div class="dir-item-header"><span class="dir-item-title">Cisco ACL Generator</span><span class="dir-item-tag">Güvenlik</span></div><div class="dir-item-desc">Standard ve Extended ACL kurallarını wildcard maskelerine çevirerek yazar.</div></div>
-              <div class="dir-item" onclick="showPanel('cisco-trouble')"><div class="dir-item-header"><span class="dir-item-title">Cisco IP Phone Troubleshooter</span><span class="dir-item-tag">Hata Analizi</span></div><div class="dir-item-desc">ITL sertifikası, Preserving Connection gibi ekran hataları için çözüm rehberi.</div></div>
-              <div class="dir-item" onclick="showPanel('cisco-crypt')"><div class="dir-item-header"><span class="dir-item-title">Cisco Password Tool (Type 7)</span><span class="dir-item-tag">Kriptoloji</span></div><div class="dir-item-desc">Type 7 şifreleri çözer veya şifreler.</div></div>
+              <div class="dir-category-title" style="color: #f59e0b;">🦎 CISCO GELİŞMİŞ PAKETİ DİZİNİ</div>
+              <div class="dir-item" onclick="showPanel('cisco-range')"><div class="dir-item-header"><span class="dir-item-title">Arayüz Aralığı & Toplu VLAN Yapılandırma</span><span class="dir-item-tag">Switching</span></div><div class="dir-item-desc">Toplu port yapılandırması (Access/Trunk, Data/Voice VLAN, Port Security, Portfast) için hatasız Cisco CLI kodları üretir.</div></div>
+              <div class="dir-item" onclick="showPanel('cisco-syslog')"><div class="dir-item-header"><span class="dir-item-title">Cisco Syslog & Anomali Çözümleyici</span><span class="dir-item-tag">Log Analizi</span></div><div class="dir-item-desc">Ham Cisco syslog mesajlarını ayrıştırır, MNEMONIC kodlarını tespit eder, ciddiyet seviyelerini gruplar ve çözüm sunar.</div></div>
+              <div class="dir-item" onclick="showPanel('cisco-templates')"><div class="dir-item-header"><span class="dir-item-title">Cisco IOS Yapılandırma Taslakları</span><span class="dir-item-tag">CLI</span></div><div class="dir-item-desc">OSPF, EIGRP, eBGP, HSRP ve IP SLA için hazır CLI kod blokları üretir.</div></div>
+              <div class="dir-item" onclick="showPanel('cisco-acl')"><div class="dir-item-header"><span class="dir-item-title">Cisco ACL (Erişim Listesi) Oluşturucu</span><span class="dir-item-tag">Güvenlik</span></div><div class="dir-item-desc">Standard ve Extended ACL kurallarını wildcard maskelerine çevirerek yazar.</div></div>
+              <div class="dir-item" onclick="showPanel('cisco-trouble')"><div class="dir-item-header"><span class="dir-item-title">Cisco IP Telefon Sorun Giderici</span><span class="dir-item-tag">Hata Analizi</span></div><div class="dir-item-desc">ITL sertifikası, Preserving Connection gibi ekran hataları için çözüm rehberi.</div></div>
+              <div class="dir-item" onclick="showPanel('cisco-crypt')"><div class="dir-item-header"><span class="dir-item-title">Cisco Şifre Çözücü (Type 7)</span><span class="dir-item-tag">Kriptoloji</span></div><div class="dir-item-desc">Type 7 şifreleri çözer veya şifreler.</div></div>
             </div>
 
             <div class="dir-category">
-              <div class="dir-category-title" style="color: #10b981;">🌐 NETWORK INFRASTRUCTURE DIRECTORY</div>
-              <div class="dir-item" onclick="showPanel('wifi-analyzer')"><div class="dir-item-header"><span class="dir-item-title">Wi-Fi Signal & Wall Attenuation</span><span class="dir-item-tag">RF</span></div><div class="dir-item-desc">Duvar engellerinin sinyal sönümleme etkisini canlı simüle eder.</div></div>
-              <div class="dir-item" onclick="showPanel('nat')"><div class="dir-item-header"><span class="dir-item-title">Dynamic NAT & PAT Sim</span><span class="dir-item-tag">NAT</span></div><div class="dir-item-desc">Inside Local IP dönüşüm süreçlerini ve NAT tablosunu simüle eder.</div></div>
-              <div class="dir-item" onclick="showPanel('canvas')"><div class="dir-item-header"><span class="dir-item-title">Topology Canvas (Advanced)</span><span class="dir-item-tag">Tasarım</span></div><div class="dir-item-desc">Sürükle-bırak destekli ağ topolojisi çizim alanı.</div></div>
-              <div class="dir-item" onclick="showPanel('multivendor')"><div class="dir-item-header"><span class="dir-item-title">Multi-Vendor Config Generator</span><span class="dir-item-tag">CLI</span></div><div class="dir-item-desc">Cisco, Juniper ve MikroTik temel IP konfigürasyonu üretir.</div></div>
-              <div class="dir-item" onclick="showPanel('subnet')"><div class="dir-item-header"><span class="dir-item-title">Subnet Calculator</span><span class="dir-item-tag">IP</span></div><div class="dir-item-desc">CIDR adres formatına göre subnet detaylarını çıkarır.</div></div>
-              <div class="dir-item" onclick="showPanel('vlsm')"><div class="dir-item-header"><span class="dir-item-title">VLSM Subnet Splitter</span><span class="dir-item-tag">IP</span></div><div class="dir-item-desc">IP bloklarını belirtilen sayıda alt ağlara böler.</div></div>
-              <div class="dir-item" onclick="showPanel('ipclass')"><div class="dir-item-header"><span class="dir-item-title">IP Class Analyzer</span><span class="dir-item-tag">IP</span></div><div class="dir-item-desc">IP sınıfı ve RFC 1918/6598 kapsamını analiz eder.</div></div>
-              <div class="dir-item" onclick="showPanel('ipv6')"><div class="dir-item-header"><span class="dir-item-title">IPv6 Expander</span><span class="dir-item-tag">IPv6</span></div><div class="dir-item-desc">Sıkıştırılmış IPv6 adreslerini genişletir.</div></div>
-              <div class="dir-item" onclick="showPanel('stp')"><div class="dir-item-header"><span class="dir-item-title">STP Cost Calculator</span><span class="dir-item-tag">STP</span></div><div class="dir-item-desc">Port hızlarının STP maliyetlerini gösterir.</div></div>
-              <div class="dir-item" onclick="showPanel('ipsec')"><div class="dir-item-header"><span class="dir-item-title">IPSec MSS Calc</span><span class="dir-item-tag">Tünel</span></div><div class="dir-item-desc">MTU limitinden TCP MSS boyutunu hesaplar.</div></div>
-              <div class="dir-item" onclick="showPanel('bgpasn')"><div class="dir-item-header"><span class="dir-item-title">BGP ASN Lookup</span><span class="dir-item-tag">BGP</span></div><div class="dir-item-desc">BGP ASN genel/özel kullanım kontrolü yapar.</div></div>
-              <div class="dir-item" onclick="showPanel('mac')"><div class="dir-item-header"><span class="dir-item-title">MAC OUI Lookup</span><span class="dir-item-tag">L2</span></div><div class="dir-item-desc">MAC adresinden cihaz markasını sorgular.</div></div>
-              <div class="dir-item" onclick="showPanel('rtt')"><div class="dir-item-header"><span class="dir-item-title">RTT Latency Estimator</span><span class="dir-item-tag">Fiziksel</span></div><div class="dir-item-desc">Fiber mesafe gecikmesini hesaplar.</div></div>
-              <div class="dir-item" onclick="showPanel('wildcard')"><div class="dir-item-header"><span class="dir-item-title">Wildcard Mask Calc</span><span class="dir-item-tag">Maske</span></div><div class="dir-item-desc">Subnet maskeyi wildcard maskeye çevirir.</div></div>
+              <div class="dir-category-title" style="color: #10b981;">🌐 AĞ ALTYAPI PAKETİ DİZİNİ</div>
+              <div class="dir-item" onclick="showPanel('wifi-analyzer')"><div class="dir-item-header"><span class="dir-item-title">Wi-Fi Sinyal & Duvar Sönümleme</span><span class="dir-item-tag">RF</span></div><div class="dir-item-desc">Duvar engellerinin sinyal sönümleme etkisini canlı simüle eder.</div></div>
+              <div class="dir-item" onclick="showPanel('nat')"><div class="dir-item-header"><span class="dir-item-title">Dinamik NAT & PAT Simülasyonu</span><span class="dir-item-tag">NAT</span></div><div class="dir-item-desc">Inside Local IP dönüşüm süreçlerini ve NAT tablosunu simüle eder.</div></div>
+              <div class="dir-item" onclick="showPanel('canvas')"><div class="dir-item-header"><span class="dir-item-title">Gelişmiş Ağ Topolojisi Çizimi</span><span class="dir-item-tag">Tasarım</span></div><div class="dir-item-desc">Sürükle-bırak destekli ağ topolojisi çizim alanı.</div></div>
+              <div class="dir-item" onclick="showPanel('multivendor')"><div class="dir-item-header"><span class="dir-item-title">Çoklu Üretici Yapılandırma Üretici</span><span class="dir-item-tag">CLI</span></div><div class="dir-item-desc">Cisco, Juniper ve MikroTik temel IP konfigürasyonu üretir.</div></div>
+              <div class="dir-item" onclick="showPanel('subnet')"><div class="dir-item-header"><span class="dir-item-title">Alt Ağ (Subnet) Hesaplayıcı</span><span class="dir-item-tag">IP</span></div><div class="dir-item-desc">CIDR adres formatına göre subnet detaylarını çıkarır.</div></div>
+              <div class="dir-item" onclick="showPanel('vlsm')"><div class="dir-item-header"><span class="dir-item-title">VLSM Alt Ağ Bölücü</span><span class="dir-item-tag">IP</span></div><div class="dir-item-desc">IP bloklarını belirtilen sayıda alt ağlara böler.</div></div>
+              <div class="dir-item" onclick="showPanel('ipclass')"><div class="dir-item-header"><span class="dir-item-title">IP Sınıfı Analizcisi</span><span class="dir-item-tag">IP</span></div><div class="dir-item-desc">IP sınıfı ve RFC 1918/6598 kapsamını analiz eder.</div></div>
+              <div class="dir-item" onclick="showPanel('ipv6')"><div class="dir-item-header"><span class="dir-item-title">IPv6 Adres Genişletici</span><span class="dir-item-tag">IPv6</span></div><div class="dir-item-desc">Sıkıştırılmış IPv6 adreslerini genişletir.</div></div>
+              <div class="dir-item" onclick="showPanel('stp')"><div class="dir-item-header"><span class="dir-item-title">STP Maliyet Hesaplayıcı</span><span class="dir-item-tag">STP</span></div><div class="dir-item-desc">Port hızlarının STP maliyetlerini gösterir.</div></div>
+              <div class="dir-item" onclick="showPanel('ipsec')"><div class="dir-item-header"><span class="dir-item-title">IPSec MSS Hesaplayıcı</span><span class="dir-item-tag">Tünel</span></div><div class="dir-item-desc">MTU limitinden TCP MSS boyutunu hesaplar.</div></div>
+              <div class="dir-item" onclick="showPanel('bgpasn')"><div class="dir-item-header"><span class="dir-item-title">BGP ASN Sorgulama</span><span class="dir-item-tag">BGP</span></div><div class="dir-item-desc">BGP ASN genel/özel kullanım kontrolü yapar.</div></div>
+              <div class="dir-item" onclick="showPanel('mac')"><div class="dir-item-header"><span class="dir-item-title">MAC OUI Üretici Sorgulama</span><span class="dir-item-tag">L2</span></div><div class="dir-item-desc">MAC adresinden cihaz markasını sorgular.</div></div>
+              <div class="dir-item" onclick="showPanel('rtt')"><div class="dir-item-header"><span class="dir-item-title">RTT Gecikme Süresi Tahmincisi</span><span class="dir-item-tag">Fiziksel</span></div><div class="dir-item-desc">Fiber mesafe gecikmesini hesaplar.</div></div>
+              <div class="dir-item" onclick="showPanel('wildcard')"><div class="dir-item-header"><span class="dir-item-title">Wildcard Maske Hesaplayıcı</span><span class="dir-item-tag">Maske</span></div><div class="dir-item-desc">Subnet maskeyi wildcard maskeye çevirir.</div></div>
             </div>
           </div>
         </div>
+
 
         <!-- BİRLEŞTİRİLMİŞ CUCM MASTER SUITE & ARCHITECTURE HUB -->
         <div id="panel-cucm-master" class="panel">
@@ -574,7 +575,7 @@ dial-peer voice 100 voip
           </div>
         </div>
 
-        <!-- TOPOLOGY CANVAS PANEL (SİMÜLASYON BUTONU BURAYA DAHİL EDİLDİ) -->
+        <!-- TOPOLOGY CANVAS PANEL -->
         <div id="panel-canvas" class="panel">
           <div class="panel-header">
             <div>
@@ -582,7 +583,6 @@ dial-peer voice 100 voip
               <div class="panel-desc">Gelişmiş ağ ve VoIP topolojisi tasarlayın, sürükleyin, kablo çekin ve simülasyon testi yapın.</div>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <!-- İŞTE YENİ SİMÜLASYON BUTONUNUZ -->
               <button onclick="runDefaultPingSimulation()" id="btn-sim-mode" class="btn" style="background:#10b981; color:#000;">▶️ Simülasyon (Ping Testi)</button>
               <button onclick="toggleLinkMode()" id="btn-link-mode" class="btn btn-secondary">🔗 Bağlantı Ekle</button>
               <button onclick="triggerJSONUpload()" class="btn btn-secondary">📂 JSON Yükle</button>
