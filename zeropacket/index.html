@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZEROPACKET // Birleşik Ağ & CUCM Mühendislik Paketi (Offline)</title>
+  <title>ZEROPACKET // Birleşik Ağ & CUCM Mühendislik Paketi (Air-Gapped Pro)</title>
   
   <style>
     :root {
@@ -14,8 +14,8 @@
       --bg-card-hover: #152340;
       --bg-input: #040813;
       
-      --border-tech: rgba(0, 240, 255, 0.16);
-      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-tech: rgba(0, 240, 255, 0.18);
+      --border-subtle: rgba(255, 255, 255, 0.08);
       --border-active: #00f0ff;
       
       --text-main: #e2e8f0;
@@ -33,7 +33,6 @@
       --tech-blue: #38bdf8;
       --tech-purple: #c084fc;
 
-      /* Çevrimdışı / Yerel Sistem Fontları */
       --font-mono: 'JetBrains Mono', Consolas, 'Fira Code', Menlo, Monaco, 'Courier New', monospace;
       --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
@@ -63,7 +62,7 @@
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: #010307; z-index: 99999;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
       background-image: 
         radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 70%),
         linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
@@ -74,7 +73,7 @@
     #intro-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
     
     .intro-terminal-box {
-      width: 620px; max-width: 92vw; background: #050a14;
+      width: 640px; max-width: 92vw; background: #050a14;
       border: 1px solid rgba(0, 240, 255, 0.3);
       box-shadow: 0 0 50px rgba(0, 240, 255, 0.12), inset 0 0 20px rgba(0, 0, 0, 0.8);
       padding: 16px; font-family: var(--font-mono); position: relative;
@@ -112,7 +111,7 @@
     .hw-node b { color: var(--text-main); font-weight: 600; }
 
     .intro-console-stream {
-      height: 140px; background: #020409; border: 1px solid rgba(0, 240, 255, 0.12);
+      height: 130px; background: #020409; border: 1px solid rgba(0, 240, 255, 0.12);
       padding: 8px; margin-bottom: 12px; overflow-y: hidden;
       font-size: 9.5px; line-height: 1.45; color: var(--text-muted);
       display: flex; flex-direction: column; justify-content: flex-end;
@@ -453,6 +452,18 @@
     .proto-telnet { background: rgba(255, 180, 84, 0.15); color: var(--tech-amber); border: 1px solid rgba(255, 180, 84, 0.3); }
     .proto-serial { background: rgba(0, 255, 157, 0.15); color: var(--tech-emerald); border: 1px solid rgba(0, 255, 157, 0.3); }
 
+    /* MODAL DİYALOGLARI */
+    .zp-modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.75); z-index: 100000; display: none;
+      align-items: center; justify-content: center; backdrop-filter: blur(2px);
+    }
+    .zp-modal-box {
+      width: 480px; max-width: 90vw; background: var(--bg-panel);
+      border: 1px solid var(--border-active); box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+      padding: 16px; font-family: var(--font-mono);
+    }
+
     /* DIFF ENGINE STİLLERİ */
     .diff-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 11px; }
     .diff-table td { padding: 2px 4px; vertical-align: top; white-space: pre-wrap; word-break: break-all; }
@@ -473,12 +484,6 @@
     .tr-hop-num { color: var(--tech-cyan); font-weight: 700; }
     .tr-rtt-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.06); margin-top: 2px; }
     .tr-rtt-bar-fill { height: 100%; }
-
-    /* 802.1Q ÇERÇEVE */
-    .frame-box { display: flex; border: 1px solid var(--border-tech); font-family: var(--font-mono); font-size: 9px; margin-bottom: 8px; }
-    .frame-field { padding: 6px 3px; text-align: center; border-right: 1px solid var(--border-subtle); flex: 1; }
-    .frame-field:last-child { border-right: none; }
-    .frame-field.tag-field { background: rgba(0, 240, 255, 0.12); color: var(--tech-cyan); font-weight: 700; border-color: var(--tech-cyan); }
 
     /* SOFTPHONE & SIP */
     .softphone-layout { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -504,22 +509,11 @@
     
     .sip-console { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 6px; }
     .sip-log-box {
-      flex: 1; height: 200px; background: #020408; border: 1px solid var(--border-subtle);
-      padding: 6px; font-family: var(--font-mono); font-size: 9px; overflow-y: auto;
+      flex: 1; height: 240px; background: #020408; border: 1px solid var(--border-subtle);
+      padding: 6px; font-family: var(--font-mono); font-size: 9.5px; overflow-y: auto; line-height: 1.4;
     }
     .sip-msg-tx { color: var(--tech-cyan); }
     .sip-msg-rx { color: var(--tech-emerald); }
-    
-    .seq-diagram-box {
-      display: flex; flex-direction: column; gap: 4px; background: #020408;
-      border: 1px solid var(--border-subtle); padding: 8px; min-height: 220px; font-family: var(--font-mono);
-    }
-    .seq-hosts { display: flex; justify-content: space-around; border-bottom: 1px solid var(--border-subtle); padding-bottom: 4px; }
-    .seq-host-tag { font-size: 9px; color: var(--tech-cyan); font-weight: 700; }
-    .seq-step { display: flex; align-items: center; justify-content: space-between; position: relative; margin: 3px 0; cursor: pointer; }
-    .seq-arrow-line { position: absolute; left: 15%; right: 15%; height: 1px; background: var(--tech-cyan); top: 50%; }
-    .seq-arrow-line.reverse { background: var(--tech-emerald); }
-    .seq-label { z-index: 2; background: var(--bg-panel); border: 1px solid var(--border-subtle); padding: 1px 4px; font-size: 8px; color: #fff; margin: 0 auto; }
 
     /* WI-FI RADAR */
     .wifi-tools {
@@ -568,8 +562,6 @@
     .pcap-field-row { display: flex; padding: 1px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
     .pcap-field-name { width: 190px; color: var(--text-muted); }
     .pcap-field-val { color: #fff; font-weight: 600; }
-    .pcap-field-val.highlight { color: var(--tech-emerald); }
-    .pcap-field-val.warn { color: var(--tech-amber); }
 
     /* TIME ATTACK */
     .timeattack-timer { font-family: var(--font-mono); font-size: 24px; font-weight: 800; color: var(--tech-amber); text-shadow: 0 0 10px var(--tech-amber-glow); }
@@ -594,18 +586,18 @@
         </div>
         <div class="intro-term-meta">
           <span>ARCH: x86_64_AIRGAP</span>
-          <span>BUILD: 2026.08-LOCAL</span>
+          <span>BUILD: 2026.08-PRO</span>
           <span class="intro-skip-hint">[ESC / TIKLA: ATLA]</span>
         </div>
       </div>
 
       <div class="intro-hw-banner">
-        <div class="intro-logo">ZERO<span>PACKET</span> <span class="intro-hw-ver">v1.5 Standalone</span></div>
+        <div class="intro-logo">ZERO<span>PACKET</span> <span class="intro-hw-ver">v2.0 Professional</span></div>
         <div class="intro-sub-tech">Unified L2/L3 Network & CUCM Telephony Diagnostic Engine</div>
         <div class="intro-hw-grid">
           <div class="hw-node">NET: <b>AIR-GAPPED [ISOLATED]</b></div>
           <div class="hw-node">MEM: <b>16384 MB [ECC]</b></div>
-          <div class="hw-node">TCAM: <b>4096 L3 ENTRIES</b></div>
+          <div class="hw-node">TCAM: <b>8192 L3 ENTRIES</b></div>
           <div class="hw-node">DEPS: <b>0 EXTERNAL (100% LOCAL)</b></div>
         </div>
       </div>
@@ -622,6 +614,60 @@
     </div>
   </div>
 
+  <!-- YENİ TERMİNAL / QUICK CONNECT MODAL DİYALOĞU -->
+  <div id="quick-connect-modal" class="zp-modal-overlay">
+    <div class="zp-modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-tech); padding-bottom:6px; margin-bottom:10px;">
+        <span style="color:var(--tech-cyan); font-weight:700; font-size:11px;">⚡ YENİ TERMİNAL BAĞLANTISI (QUICK CONNECT)</span>
+        <span style="color:var(--tech-rose); cursor:pointer; font-weight:bold;" onclick="closeQuickConnectModal()">✕</span>
+      </div>
+      <div class="form-group">
+        <label>Oturum / Cihaz Adı</label>
+        <input type="text" id="qc-name" placeholder="Örn: Core-Switch-01, CUCM-Sub1">
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+        <div class="form-group">
+          <label>Protokol</label>
+          <select id="qc-proto" onchange="autoFillQcPort()">
+            <option value="SSH" selected>SSH (Secure Shell)</option>
+            <option value="Telnet">Telnet (Cleartext)</option>
+            <option value="Serial">Serial / RS232 Konsol</option>
+            <option value="Local">Yerel Shell (Localhost)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Port / Baud</label>
+          <input type="number" id="qc-port" value="22">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Hedef IP / Hostname / COM Port</label>
+        <input type="text" id="qc-host" value="10.10.10.1">
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+        <div class="form-group">
+          <label>Kullanıcı Adı</label>
+          <input type="text" id="qc-user" value="cisco_admin">
+        </div>
+        <div class="form-group">
+          <label>Cihaz Tipi / OS Şablonu</label>
+          <select id="qc-os-type">
+            <option value="cisco_ios" selected>Cisco IOS / IOS-XE</option>
+            <option value="cisco_nxos">Cisco NX-OS (Nexus)</option>
+            <option value="cucm_linux">Cisco CUCM / VOS Linux</option>
+            <option value="fortigate">Fortinet FortiOS</option>
+            <option value="linux_srv">Generic Linux Server</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px; margin-top:8px;">
+        <button onclick="confirmQuickConnect(true)" class="btn" style="flex:1;">🚀 Bağlan & Sekme Aç</button>
+        <button onclick="confirmQuickConnect(false)" class="btn btn-secondary" style="flex:1;">💾 Kasaya Kaydet</button>
+        <button onclick="closeQuickConnectModal()" class="btn btn-secondary" style="width:70px;">İptal</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ÜST TELEMETRİ BAŞLIĞI (HUD) -->
   <header>
     <div class="brand-hud">
@@ -630,7 +676,7 @@
     </div>
     <div class="hud-metrics">
       <div class="hud-stat-item"><span class="pulse-dot"></span> TELEMETRİ: <span class="hud-stat-val" style="color:var(--tech-emerald);">KAPALI AĞ</span></div>
-      <div class="hud-stat-item">PAKET_SAYACI: <span class="hud-stat-val" id="hud-frame-cnt">18,542</span></div>
+      <div class="hud-stat-item">PAKET_SAYACI: <span class="hud-stat-val" id="hud-frame-cnt">24,198</span></div>
       <div class="hud-stat-item">SYS_TIME: <span class="hud-stat-val" id="hud-clock" style="color:var(--tech-cyan);">--:--:-- (YEREL)</span></div>
       <div class="hud-stat-item" style="cursor:pointer;" onclick="toggleAudioFx()" id="hud-sound-toggle">🔊 SES: <span class="hud-stat-val" id="hud-sound-status" style="color:var(--tech-emerald);">AÇIK</span></div>
       <div class="hud-stat-item">ARCH: <span class="hud-stat-val" style="color:var(--tech-cyan);">H.Malatya</span></div>
@@ -652,47 +698,42 @@
         <div class="rack-group">
           <div class="rack-header ops"><span>[01] NET.OPERATIONS & GÜVENLİK</span><span class="btn-tag">SEC</span></div>
           <button onclick="showPanel('config-auditor')" id="btn-config-auditor" class="nav-btn ops-btn"><span>🛡️ Cisco Hardening & Güvenlik Denetimi</span><span class="btn-tag">M-02</span></button>
-          <button onclick="showPanel('bulk-templater')" id="btn-bulk-templater" class="nav-btn ops-btn"><span>⚡ Jinja2 & CSV Toplu Config Üretici</span><span class="btn-tag">M-03</span></button>
-          <button onclick="showPanel('transfer-sizer')" id="btn-transfer-sizer" class="nav-btn ops-btn"><span>⏱️ Veri Transfer & Hat Doygunluğu</span><span class="btn-tag">M-04</span></button>
-          <button onclick="showPanel('subnet-overlap')" id="btn-subnet-overlap" class="nav-btn ops-btn"><span>🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="btn-tag">M-05</span></button>
-          <button onclick="showPanel('phy-pinout')" id="btn-phy-pinout" class="nav-btn ops-btn"><span>🔌 L1 RJ45, Konsol & Fiber Pinout</span><span class="btn-tag">M-06</span></button>
-          <button onclick="showPanel('firewall-ports')" id="btn-firewall-ports" class="nav-btn ops-btn"><span>🛡️ Güvenlik Duvarı Port & Protokol</span><span class="btn-tag">M-07</span></button>
+          <button onclick="showPanel('transfer-sizer')" id="btn-transfer-sizer" class="nav-btn ops-btn"><span>⏱️ Veri Transfer & Hat Doygunluğu</span><span class="btn-tag">M-03</span></button>
+          <button onclick="showPanel('subnet-overlap')" id="btn-subnet-overlap" class="nav-btn ops-btn"><span>🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="btn-tag">M-04</span></button>
+          <button onclick="showPanel('phy-pinout')" id="btn-phy-pinout" class="nav-btn ops-btn"><span>🔌 L1 RJ45, Konsol & Fiber Pinout</span><span class="btn-tag">M-05</span></button>
+          <button onclick="showPanel('firewall-ports')" id="btn-firewall-ports" class="nav-btn ops-btn"><span>🛡️ Güvenlik Duvarı Port & Protokol</span><span class="btn-tag">M-06</span></button>
         </div>
 
         <div class="rack-group">
           <div class="rack-header cucm"><span>[02] CUCM & VOIP PAKETİ</span><span class="btn-tag">VOICE</span></div>
-          <button onclick="showPanel('cucm-master')" id="btn-cucm-master" class="nav-btn cucm-btn"><span>☎️ CUCM Ana Yönetim Merkezi</span><span class="btn-tag">M-08</span></button>
-          <button onclick="showPanel('softphone')" id="btn-softphone" class="nav-btn cucm-btn"><span>📱 WebRTC / SIP Softphone Terminali</span><span class="btn-tag">M-09</span></button>
-          <button onclick="showPanel('sip-parser')" id="btn-sip-parser" class="nav-btn cucm-btn"><span>🔍 SIP Log & Call Flow Merdiveni</span><span class="btn-tag">M-10</span></button>
-          <button onclick="showPanel('cdr-analytics')" id="btn-cdr-analytics" class="nav-btn cucm-btn"><span>📈 CDR Çağrı Analitiği & Faturalandırma</span><span class="btn-tag">M-11</span></button>
+          <button onclick="showPanel('cucm-master')" id="btn-cucm-master" class="nav-btn cucm-btn"><span>☎️ CUCM Ana Yönetim Merkezi</span><span class="btn-tag">M-07</span></button>
+          <button onclick="showPanel('softphone')" id="btn-softphone" class="nav-btn cucm-btn"><span>📱 WebRTC / SIP Softphone Terminali</span><span class="btn-tag">M-08</span></button>
+          <button onclick="showPanel('cdr-analytics')" id="btn-cdr-analytics" class="nav-btn cucm-btn"><span>📈 CDR Çağrı Analitiği & Faturalandırma</span><span class="btn-tag">M-09</span></button>
         </div>
 
         <div class="rack-group">
           <div class="rack-header cisco"><span>[03] CISCO İLERİ DÜZEY YÖNETİM</span><span class="btn-tag">IOS</span></div>
-          <button onclick="showPanel('cisco-diff')" id="btn-cisco-diff" class="nav-btn cisco-btn"><span>🔍 Config Diff Engine (LCS)</span><span class="btn-tag">M-12</span></button>
-          <button onclick="showPanel('cisco-range')" id="btn-cisco-range" class="nav-btn cisco-btn"><span>⚡ Interface Range & Toplu VLAN</span><span class="btn-tag">M-13</span></button>
-          <button onclick="showPanel('cisco-syslog')" id="btn-cisco-syslog" class="nav-btn cisco-btn"><span>🪵 Syslog & Anomali Çözümleyici</span><span class="btn-tag">M-14</span></button>
-          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cisco-btn"><span>📋 IOS Routing Protokol Taslakları</span><span class="btn-tag">M-15</span></button>
-          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cisco-btn"><span>🛡️ Erişim Listesi (ACL) Matrisi</span><span class="btn-tag">M-16</span></button>
-          <button onclick="showPanel('cisco-trouble')" id="btn-cisco-trouble" class="nav-btn cisco-btn"><span>🔧 IP Telefon Hata Teşhis Rehberi</span><span class="btn-tag">M-17</span></button>
-          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cisco-btn"><span>🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="btn-tag">M-18</span></button>
+          <button onclick="showPanel('cisco-diff')" id="btn-cisco-diff" class="nav-btn cisco-btn"><span>🔍 Config Diff Engine (LCS)</span><span class="btn-tag">M-10</span></button>
+          <button onclick="showPanel('cisco-range')" id="btn-cisco-range" class="nav-btn cisco-btn"><span>⚡ Interface Range & Toplu VLAN</span><span class="btn-tag">M-11</span></button>
+          <button onclick="showPanel('cisco-syslog')" id="btn-cisco-syslog" class="nav-btn cisco-btn"><span>🪵 Syslog & Anomali Çözümleyici</span><span class="btn-tag">M-12</span></button>
+          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cisco-btn"><span>📋 IOS Routing Protokol Taslakları</span><span class="btn-tag">M-13</span></button>
+          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cisco-btn"><span>🛡️ Erişim Listesi (ACL) Matrisi</span><span class="btn-tag">M-14</span></button>
+          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cisco-btn"><span>🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="btn-tag">M-15</span></button>
         </div>
 
         <div class="rack-group">
           <div class="rack-header net"><span>[04] NET.INFRASTRUCTURE & CAD</span><span class="btn-tag">L2/L3 CAD</span></div>
-          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn"><span>🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="btn-tag">M-19</span></button>
-          <button onclick="showPanel('traceroute')" id="btn-traceroute" class="nav-btn net-btn"><span>📍 Traceroute & MTR Sekme Çizici</span><span class="btn-tag">M-20</span></button>
-          <button onclick="showPanel('vlan-frame')" id="btn-vlan-frame" class="nav-btn net-btn"><span>🏷️ 802.1Q VLAN Kapsülleme</span><span class="btn-tag">M-21</span></button>
-          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"><span>📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="btn-tag">M-22</span></button>
-          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn"><span>🔀 Dinamik NAT & PAT Simülatörü</span><span class="btn-tag">M-23</span></button>
-          <button onclick="showPanel('multivendor')" id="btn-multivendor" class="nav-btn net-btn"><span>⚙️ Çoklu Üretici CLI Yapılandırıcı</span><span class="btn-tag">M-24</span></button>
-          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn"><span>🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="btn-tag">M-25</span></button>
-          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn"><span>📐 VLSM Alt Ağ Bölücü</span><span class="btn-tag">M-26</span></button>
-          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn net-btn"><span>🏷️ IP Sınıfı & CGNAT Analizörü</span><span class="btn-tag">M-27</span></button>
-          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn net-btn"><span>🌐 IPv6 Adres Genişletici</span><span class="btn-tag">M-28</span></button>
-          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn net-btn"><span>🔒 IPSec & GRE MSS Boyutlandırıcı</span><span class="btn-tag">M-29</span></button>
-          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn net-btn"><span>🔍 MAC OUI Donanım Marka Sorgu</span><span class="btn-tag">M-30</span></button>
-          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn net-btn"><span>🎭 Wildcard Maske Tersleyici</span><span class="btn-tag">M-31</span></button>
+          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn"><span>🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="btn-tag">M-16</span></button>
+          <button onclick="showPanel('traceroute')" id="btn-traceroute" class="nav-btn net-btn"><span>📍 Traceroute & MTR Sekme Çizici</span><span class="btn-tag">M-17</span></button>
+          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"><span>📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="btn-tag">M-18</span></button>
+          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn"><span>🔀 Dinamik NAT & PAT Simülatörü</span><span class="btn-tag">M-19</span></button>
+          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn"><span>🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="btn-tag">M-20</span></button>
+          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn"><span>📐 VLSM Alt Ağ Bölücü</span><span class="btn-tag">M-21</span></button>
+          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn net-btn"><span>🏷️ IP Sınıfı & CGNAT Analizörü</span><span class="btn-tag">M-22</span></button>
+          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn net-btn"><span>🌐 IPv6 Adres Genişletici</span><span class="btn-tag">M-23</span></button>
+          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn net-btn"><span>🔒 IPSec & GRE MSS Boyutlandırıcı</span><span class="btn-tag">M-24</span></button>
+          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn net-btn"><span>🔍 MAC OUI Donanım Marka Sorgu</span><span class="btn-tag">M-25</span></button>
+          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn net-btn"><span>🎭 Wildcard Maske Tersleyici</span><span class="btn-tag">M-26</span></button>
         </div>
       </div>
 
@@ -720,17 +761,16 @@
 
           <div class="dir-search-wrapper">
             <span style="color:var(--tech-cyan); font-family:var(--font-mono); font-size:10px; margin-right:6px;">ARAMA_FİLTRESİ &gt;</span>
-            <input type="text" id="dash-search" oninput="filterDashboardTools()" placeholder="Modül arayın (Terminal, MobaXterm, SSH, Telnet, PCAP, Hardening, Jinja2, CUCM, Diff)...">
+            <input type="text" id="dash-search" oninput="filterDashboardTools()" placeholder="Modül arayın (Terminal, MobaXterm, SSH, Telnet, PCAP, Hardening, CUCM, Diff, Softphone, Wi-Fi)...">
           </div>
 
           <div class="directory-grid">
             <div class="dir-category">
               <div class="dir-category-title" style="color: #38bdf8;">[01] OPERASYONEL AĞ & GÜVENLİK</div>
-              <div class="dir-item" onclick="showPanel('session-terminal')"><div class="dir-item-header"><span class="dir-item-title">💻 MobaXterm / Oturum & Terminal</span><span class="dir-item-tag">SSH/TELNET</span></div><div class="dir-item-desc">SSH, Telnet ve Seri Port kayıt kasası; çoklu sekmeli (Multi-Tab) interaktif Cisco/Linux terminal emülatörü.</div></div>
+              <div class="dir-item" onclick="showPanel('session-terminal')"><div class="dir-item-header"><span class="dir-item-title">💻 MobaXterm / Oturum & Terminal</span><span class="dir-item-tag">SSH/TELNET</span></div><div class="dir-item-desc">SSH, Telnet ve Seri Port kayıt kasası; çoklu sekmeli interaktif Cisco/Linux terminal emülatörü ve Quick Connect bağlantı sihirbazı.</div></div>
               <div class="dir-item" onclick="showPanel('pcap-viewer')"><div class="dir-item-header"><span class="dir-item-title">🦈 PCAP / Wireshark İnceleyici</span><span class="dir-item-tag">ANALİZÖR</span></div><div class="dir-item-desc">İstemci taraflı .pcap dosya ayrıştırıcı, çok katmanlı paket ağacı, TCP/UDP/SIP/OSPF dökümü ve Hex Dump.</div></div>
               <div class="dir-item" onclick="showPanel('time-attack')"><div class="dir-item-header"><span class="dir-item-title">⏱️ Speed Run / Arıza Çözme</span><span class="dir-item-tag">LAB TEST</span></div><div class="dir-item-desc">BGP, OSPF, STP, LACP, DHCP ve VoIP arızalarını süre bitmeden terminal çıktılarıyla çözme modu.</div></div>
-              <div class="dir-item" onclick="showPanel('config-auditor')"><div class="dir-item-header"><span class="dir-item-title">🛡️ Cisco Hardening & Güvenlik Denetimi</span><span class="dir-item-tag">GÜVENLİK</span></div><div class="dir-item-desc">Running-config'i 12 CIS/NIST kuralına göre denetler, 0-100 puan verir ve düzeltme CLI scripti üretir.</div></div>
-              <div class="dir-item" onclick="showPanel('bulk-templater')"><div class="dir-item-header"><span class="dir-item-title">⚡ Jinja2 & CSV Toplu Config Üretici</span><span class="dir-item-tag">OTOMASYON</span></div><div class="dir-item-desc">Şablon yapısını CSV verileriyle eşleştirerek onlarca switch ve port için toplu CLI konfigürasyonu üretir.</div></div>
+              <div class="dir-item" onclick="showPanel('config-auditor')"><div class="dir-item-header"><span class="dir-item-title">🛡️ Cisco Hardening & Güvenlik Denetimi</span><span class="dir-item-tag">GÜVENLİK</span></div><div class="dir-item-desc">Running-config'i 14 CIS/NIST kuralına göre denetler, 0-100 puan verir ve düzeltme CLI scripti üretir.</div></div>
               <div class="dir-item" onclick="showPanel('transfer-sizer')"><div class="dir-item-header"><span class="dir-item-title">⏱️ Veri Transfer & Hat Doygunluğu</span><span class="dir-item-tag">BOYUTLANDIRMA</span></div><div class="dir-item-desc">Veri boyutu ve hat hızına göre transfer süresini veya bakım penceresi için gereken bant genişliğini hesaplar.</div></div>
               <div class="dir-item" onclick="showPanel('subnet-overlap')"><div class="dir-item-header"><span class="dir-item-title">🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="dir-item-tag">ÇAKIŞMA</span></div><div class="dir-item-desc">Mevcut alt ağ listesini tarayarak yeni eklenecek IP bloğunun çakışıp çakışmadığını tespit eder.</div></div>
               <div class="dir-item" onclick="showPanel('phy-pinout')"><div class="dir-item-header"><span class="dir-item-title">🔌 L1 RJ45, Konsol & Fiber Pinout Rehberi</span><span class="dir-item-tag">FİZİKSEL</span></div><div class="dir-item-desc">T568A/B renk dizilimi, Cisco rollover konsol kablo şeması ve fiber optik konnektör standartları.</div></div>
@@ -740,8 +780,7 @@
             <div class="dir-category">
               <div class="dir-category-title" style="color: var(--tech-cyan);">[02] CUCM VE VOIP PAKETİ</div>
               <div class="dir-item" onclick="showPanel('cucm-master')"><div class="dir-item-header"><span class="dir-item-title">☎️ CUCM Ana Yönetim Merkezi</span><span class="dir-item-tag">CORE</span></div><div class="dir-item-desc">Küme mimarisi, Informix replikasyonu, Firewall port matrisi, CLI komutları ve VoIP QoS/DSCP hesaplayıcısı.</div></div>
-              <div class="dir-item" onclick="showPanel('softphone')"><div class="dir-item-header"><span class="dir-item-title">📱 WebRTC / SIP Softphone Terminali</span><span class="dir-item-tag">SIP 2.0</span></div><div class="dir-item-desc">Tarayıcı tabanlı telefon arayüzü ile DTMF, canlı ses spektrumu ve SIP REGISTER/INVITE simülatörü.</div></div>
-              <div class="dir-item" onclick="showPanel('sip-parser')"><div class="dir-item-header"><span class="dir-item-title">🔍 SIP Log & Call Flow Merdiveni</span><span class="dir-item-tag">PARSER</span></div><div class="dir-item-desc">SIP log metinlerini işleyerek çağrı adımlarını grafiksel merdiven diyagramına dönüştürür.</div></div>
+              <div class="dir-item" onclick="showPanel('softphone')"><div class="dir-item-header"><span class="dir-item-title">📱 WebRTC / SIP Softphone Terminali</span><span class="dir-item-tag">SIP 2.0</span></div><div class="dir-item-desc">Gerçek Web Audio DTMF çift frekans sentezleyicili telefon arayüzü, canlı ses dalgası ve SIP sinyalleşmesi.</div></div>
               <div class="dir-item" onclick="showPanel('cdr-analytics')"><div class="dir-item-header"><span class="dir-item-title">📈 CDR Çağrı Analitiği & Faturalandırma</span><span class="dir-item-tag">METRİK</span></div><div class="dir-item-desc">Çağrı Detay Kayıtlarını (CDR) tarayarak ACD, ASR ve çağrı maliyetlerini analiz eder.</div></div>
             </div>
 
@@ -752,7 +791,6 @@
               <div class="dir-item" onclick="showPanel('cisco-syslog')"><div class="dir-item-header"><span class="dir-item-title">🪵 Syslog & Anomali Çözümleyici</span><span class="dir-item-tag">GÜNLÜK</span></div><div class="dir-item-desc">Cisco syslog mesajlarını ayrıştırır, MNEMONIC kodlarını ve ciddiyet seviyelerini filtreler.</div></div>
               <div class="dir-item" onclick="showPanel('cisco-templates')"><div class="dir-item-header"><span class="dir-item-title">📋 IOS Routing Protokol Taslakları</span><span class="dir-item-tag">ROUTING</span></div><div class="dir-item-desc">OSPF, EIGRP, eBGP, HSRP ve IP SLA için üretime hazır CLI blokları üretir.</div></div>
               <div class="dir-item" onclick="showPanel('cisco-acl')"><div class="dir-item-header"><span class="dir-item-title">🛡️ Erişim Listesi (ACL) Matrisi</span><span class="dir-item-tag">SECURITY</span></div><div class="dir-item-desc">Standard ve Extended ACL kurallarını wildcard maskelerine otomatik çevirerek hazırlar.</div></div>
-              <div class="dir-item" onclick="showPanel('cisco-trouble')"><div class="dir-item-header"><span class="dir-item-title">🔧 IP Telefon Hata Teşhis Rehberi</span><span class="dir-item-tag">TEŞHİS</span></div><div class="dir-item-desc">ITL sertifikası, Preserving Connection, TFTP Timeout ekran hataları için adım adım çözüm sunar.</div></div>
               <div class="dir-item" onclick="showPanel('cisco-crypt')"><div class="dir-item-header"><span class="dir-item-title">🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="dir-item-tag">KRİPTO</span></div><div class="dir-item-desc">Type 7 şifreli metinleri çözer veya açık metinleri Type 7 formatına dönüştürür.</div></div>
             </div>
 
@@ -760,10 +798,8 @@
               <div class="dir-category-title" style="color: var(--tech-emerald);">[04] NET.INFRASTRUCTURE & CAD</div>
               <div class="dir-item" onclick="showPanel('canvas')"><div class="dir-item-header"><span class="dir-item-title">🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="dir-item-tag">SIMULATOR</span></div><div class="dir-item-desc">Genişletilmiş kanvasta hat kopması, Inter-VLAN routing, sniffer ve paket akış simülasyonu.</div></div>
               <div class="dir-item" onclick="showPanel('traceroute')"><div class="dir-item-header"><span class="dir-item-title">📍 Traceroute & MTR Sekme Çizici</span><span class="dir-item-tag">GÖRSEL</span></div><div class="dir-item-desc">Cisco ve MTR traceroute çıktılarını görsel sekme düğümlerine ve RTT çubuklarına dönüştürür.</div></div>
-              <div class="dir-item" onclick="showPanel('vlan-frame')"><div class="dir-item-header"><span class="dir-item-title">🏷️ 802.1Q VLAN Kapsülleme</span><span class="dir-item-tag">KATMAN 2</span></div><div class="dir-item-desc">Ethernet II çerçevesinde 802.1Q Tag yapısını (TPID, PCP, DEI, VID) bayt düzeyinde inceler.</div></div>
               <div class="dir-item" onclick="showPanel('wifi-analyzer')"><div class="dir-item-header"><span class="dir-item-title">📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="dir-item-tag">RADAR</span></div><div class="dir-item-desc">Duvar materyallerinin 2.4/5GHz sinyal yayılımına etkisini canlı ısı haritasıyla simüle eder.</div></div>
               <div class="dir-item" onclick="showPanel('nat')"><div class="dir-item-header"><span class="dir-item-title">🔀 Dinamik NAT & PAT Simülatörü</span><span class="dir-item-tag">NAT TABLE</span></div><div class="dir-item-desc">Inside Local IP ve port dönüşüm süreçlerini interaktif NAT tablosunda gösterir.</div></div>
-              <div class="dir-item" onclick="showPanel('multivendor')"><div class="dir-item-header"><span class="dir-item-title">⚙️ Çoklu Üretici CLI Yapılandırıcı</span><span class="dir-item-tag">SYNTAX</span></div><div class="dir-item-desc">Cisco IOS, Juniper JunOS ve MikroTik için temel IP arayüz yapılandırması üretir.</div></div>
               <div class="dir-item" onclick="showPanel('subnet')"><div class="dir-item-header"><span class="dir-item-title">🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="dir-item-tag">IP MASK</span></div><div class="dir-item-desc">CIDR adres formatına göre ağ, broadcast, netmask ve kullanılabilir IP havuzunu çıkarır.</div></div>
               <div class="dir-item" onclick="showPanel('vlsm')"><div class="dir-item-header"><span class="dir-item-title">📐 VLSM Alt Ağ Bölücü</span><span class="dir-item-tag">BÖLÜCÜ</span></div><div class="dir-item-desc">IP bloklarını belirtilen alt ağ sayılarına göre otomatik olarak alt bloklara böler.</div></div>
               <div class="dir-item" onclick="showPanel('ipclass')"><div class="dir-item-header"><span class="dir-item-title">🏷️ IP Sınıfı & CGNAT Analizörü</span><span class="dir-item-tag">CGNAT</span></div><div class="dir-item-desc">IP adresinin sınıfını (A/B/C/D/E) ve RFC 6598 CGNAT kapsamını analiz eder.</div></div>
@@ -775,7 +811,7 @@
           </div>
         </div>
 
-        <!-- YENİ EKLENEN MOBAXTERM STİLİ OTURUM & TERMINAL MODÜLÜ -->
+        <!-- MOBAXTERM STİLİ OTURUM & TERMINAL MODÜLÜ -->
         <div id="panel-session-terminal" class="panel">
           <div class="panel-header">
             <div>
@@ -786,16 +822,16 @@
               <input type="file" id="moba-sessions-import" style="display:none;" accept=".json" onchange="importMobaSessions(event)">
               <button onclick="document.getElementById('moba-sessions-import').click()" class="btn btn-secondary">📂 Oturumları İçe Aktar</button>
               <button onclick="exportMobaSessions()" class="btn btn-secondary">💾 JSON Yedekle</button>
-              <button onclick="openNewMobaTab()" class="btn">➕ Yeni Terminal Sekmesi</button>
+              <button onclick="openQuickConnectModal()" class="btn">⚡ Yeni Terminal (Quick Connect)</button>
             </div>
           </div>
 
           <div class="moba-layout">
-            <!-- SOL: KAYITLI OTURUMLAR (SESSIONS VAULT) -->
+            <!-- SOL: KAYITLI OTURUMLAR -->
             <div class="moba-sidebar">
               <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:4px;">
                 <label style="color:var(--tech-cyan); margin:0;">📁 KAYITLI OTURUMLAR (<span id="moba-session-count">0</span>)</label>
-                <button onclick="toggleSessionForm(true)" class="btn btn-secondary" style="padding:1px 5px; font-size:8px;">+ Yeni Ekle</button>
+                <button onclick="openQuickConnectModal()" class="btn btn-secondary" style="padding:1px 5px; font-size:8px;">+ Yeni Ekle</button>
               </div>
 
               <!-- Hızlı Arama & Filtre -->
@@ -803,7 +839,7 @@
 
               <!-- Oturum Ekleme / Düzenleme Formu -->
               <div id="moba-form-box" style="display:none; background:var(--bg-input); border:1px solid var(--border-tech); padding:8px; margin-bottom:4px;">
-                <div style="font-weight:700; color:var(--tech-emerald); font-size:10px; margin-bottom:6px;">⚙️ OTURUM DETAYI</div>
+                <div style="font-weight:700; color:var(--tech-emerald); font-size:10px; margin-bottom:6px;">⚙️ OTURUM DÜZENLE</div>
                 <input type="hidden" id="ms-id">
                 <div class="form-group"><label>Oturum Adı</label><input type="text" id="ms-name" placeholder="Örn: Omurga-SW-01"></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px;">
@@ -840,7 +876,7 @@
               <!-- Terminal Ekranı -->
               <div class="moba-screen-body" id="moba-terminal-screen"></div>
 
-              <!-- Hızlı Makro & Komut Butonları (Quick Commands) -->
+              <!-- Hızlı Makro & Komut Butonları -->
               <div class="moba-quick-bar">
                 <span style="color:var(--text-dim); font-size:8px; margin-right:4px;">HIZLI MAKROLAR:</span>
                 <button class="btn btn-secondary" style="padding:2px 5px; font-size:8.5px;" onclick="sendMacroCommand('show ip int brief')">sh ip int br</button>
@@ -857,7 +893,7 @@
               <!-- Terminal Komut Girişi -->
               <div class="moba-term-input-row">
                 <span class="moba-term-prompt" id="moba-active-prompt">Switch#</span>
-                <input type="text" class="moba-term-input" id="moba-terminal-input" onkeydown="handleMobaTerminalKey(event)" placeholder="Komut yazın ve Enter'a basın (örn: show ip int br, ping 10.0.0.1, help)...">
+                <input type="text" class="moba-term-input" id="moba-terminal-input" onkeydown="handleMobaTerminalKey(event)" placeholder="Komut yazın ve Enter'a basın (örn: show ip int br, ping 10.0.0.1, conf t, help)...">
                 <button onclick="executeMobaTerminalInput()" class="btn" style="padding:2px 8px; font-size:9px;">GÖNDER</button>
               </div>
             </div>
@@ -950,14 +986,14 @@
 
           <div class="cdr-kpi-grid">
             <div class="cdr-kpi-card"><label>Mevcut Puan</label><div class="cdr-kpi-val green" id="ta-score-val">0</div></div>
-            <div class="cdr-kpi-card"><label>Çözülen Görev</label><div class="cdr-kpi-val" id="ta-solved-val">0 / 12</div></div>
+            <div class="cdr-kpi-card"><label>Çözülen Görev</label><div class="cdr-kpi-val" id="ta-solved-val">0 / 6</div></div>
             <div class="cdr-kpi-card"><label>Doğruluk Oranı</label><div class="cdr-kpi-val amber" id="ta-acc-val">100%</div></div>
             <div class="cdr-kpi-card"><label>Seviye</label><div class="cdr-kpi-val" style="color:var(--tech-cyan);" id="ta-level-val">CCNP / CCIE</div></div>
           </div>
 
           <div id="ta-active-scenario" class="timeattack-card" style="display:none;">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:6px; margin-bottom:8px;">
-              <b id="ta-scen-title" style="color:var(--tech-rose); font-size:13px;">🚨 Senaryo #1: Telefon Registrasyon Arızası</b>
+              <b id="ta-scen-title" style="color:var(--tech-rose); font-size:13px;">🚨 Senaryo Yükleniyor...</b>
               <span id="ta-scen-badge" class="node-badge badge-l3">VOIP / L3</span>
             </div>
             <div id="ta-scen-desc" style="color:var(--text-main); font-size:11px; margin-bottom:8px; line-height:1.45;">
@@ -976,7 +1012,7 @@
           <div id="ta-welcome-box" class="result-box" style="text-align:center; padding:45px 20px;">
             <h3 style="color:var(--tech-cyan); margin-bottom:8px; font-size:16px;">🚀 ZeroPacket Yüksek Tempolu Ağ Arıza Teşhis Laboratuvarı</h3>
             <p style="color:var(--text-muted); font-size:11px; max-width:650px; margin:0 auto 16px auto; line-height:1.5;">
-              Bu modülde <b>BGP komşuluk kopmaları</b>, <b>OSPF MTU / Area uyuşmazlığı</b>, <b>STP BPDU Guard kilitlenmeleri</b>, <b>IPSec MSS blackhole</b>, <b>DHCP Snooping drop</b>, <b>LACP EtherChannel uyumsuzluğu</b> ve <b>VoIP tek yönlü ses</b> gibi 12'den fazla gerçek kurumsal arıza simüle edilir. Süre bitmeden doğru çözümü uygulayın!
+              Bu modülde <b>BGP komşuluk kopmaları</b>, <b>OSPF MTU / Area uyuşmazlığı</b>, <b>STP BPDU Guard kilitlenmeleri</b>, <b>IPSec MSS blackhole</b>, <b>DHCP Snooping drop</b> ve <b>VoIP tek yönlü ses</b> gibi kurumsal arızalar simüle edilir. Süre bitmeden doğru çözümü uygulayın!
             </p>
             <button onclick="startTimeAttackGame()" class="btn" style="padding:8px 20px; font-size:11px;">Meydan Okumayı Başlat (60 Sn / Görev)</button>
           </div>
@@ -987,7 +1023,7 @@
           <div class="panel-header">
             <div>
               <div class="panel-title">// CISCO CONFIG HARDENING & GÜVENLİK DENETİMİ</div>
-              <div class="panel-desc">Running-config'i tarayıcıda yerel olarak 12 CIS/NIST güvenlik kriterine göre denetleyin ve iyileştirme CLI scripti üretin.</div>
+              <div class="panel-desc">Running-config'i tarayıcıda yerel olarak 14 CIS/NIST güvenlik kriterine göre denetleyin ve iyileştirme CLI scripti üretin.</div>
             </div>
             <div style="display:flex; gap:4px;">
               <button onclick="loadSampleAuditConfig()" class="btn btn-secondary">Örnek Zafiyetli Config</button>
@@ -1025,48 +1061,12 @@
           </div>
         </div>
 
-        <!-- 2. MODÜL: JINJA2 & CSV TOPLU CONFIG ÜRETİCİ -->
-        <div id="panel-bulk-templater" class="panel">
-          <div class="panel-header">
-            <div>
-              <div class="panel-title">// JINJA2 & CSV TOPLU CONFIG ÜRETİCİ</div>
-              <div class="panel-desc">Şablon ve CSV parametrelerini birleştirerek onlarca port/cihaz için anında toplu CLI konfigürasyonu üretin.</div>
-            </div>
-            <div style="display:flex; gap:4px;">
-              <button onclick="loadSampleBulkTemplate()" class="btn btn-secondary">Örnek Yükle</button>
-              <button onclick="renderBulkTemplate()" class="btn">🚀 Toplu Yapılandırma Üret</button>
-            </div>
-          </div>
-
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:8px;">
-            <div class="form-group">
-              <label>1. CLI Şablon Taslağı ({{ degisken }} Formatında)</label>
-              <textarea id="bulk-template-input" rows="8" style="font-size:10px;" placeholder="interface {{ port }}&#10; description {{ desc }}&#10; switchport mode access&#10; switchport access vlan {{ vlan }}&#10; spanning-tree portfast&#10; no shutdown&#10;!"></textarea>
-            </div>
-            <div class="form-group">
-              <label>2. CSV / Tablo Verisi (İlk Satır Başlıklar)</label>
-              <textarea id="bulk-csv-input" rows="8" style="font-size:10px;" placeholder="port,desc,vlan&#10;Gi1/0/1,MUHASEBE_PC_01,10&#10;Gi1/0/2,SATIS_PC_02,20&#10;Gi1/0/3,YONETIM_YAZICI,30"></textarea>
-            </div>
-          </div>
-
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
-              <label style="color:var(--tech-cyan); margin:0;">Üretilen Toplu CLI Konfigürasyon Bloğu</label>
-              <div style="display:flex; gap:4px;">
-                <span id="bulk-status-badge" style="font-family:var(--font-mono); font-size:9px; color:var(--text-dim); margin-right:4px;">0 Cihaz/Port</span>
-                <button onclick="copyToClipboard('bulk-rendered-output')" class="btn btn-secondary" style="padding:1px 5px; font-size:8px;">📋 Panoya Kopyala</button>
-              </div>
-            </div>
-            <pre id="bulk-rendered-output" style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px; color:var(--tech-cyan); height:220px; overflow-y:auto; font-family:var(--font-mono); font-size:10px; white-space:pre-wrap;">Şablon ve CSV verisini girip 'Toplu Yapılandırma Üret' butonuna tıklayın...</pre>
-          </div>
-        </div>
-
-        <!-- 3. MODÜL: VERİ TRANSFER SÜRESİ -->
+        <!-- 2. MODÜL: VERİ TRANSFER SÜRESİ -->
         <div id="panel-transfer-sizer" class="panel">
           <div class="panel-header">
             <div>
               <div class="panel-title">// VERİ TRANSFER SÜRESİ & BANT GENİŞLİĞİ BOYUTLANDIRICI</div>
-              <div class="panel-desc">Yedekleme, veri taşıma ve hat doygunluk sürelerini protokol yüküyle (%85-95) hesaplayın.</div>
+              <div class="panel-desc">Yedekleme, veri taşıma ve hat doygunluk sürelerini protokol yüküyle (%80-95) hesaplayın.</div>
             </div>
           </div>
 
@@ -1126,7 +1126,7 @@
           </div>
         </div>
 
-        <!-- 4. MODÜL: SUBNET OVERLAP & ÇAKIŞMA DEDEKTÖRÜ -->
+        <!-- 3. MODÜL: SUBNET OVERLAP & ÇAKIŞMA DEDEKTÖRÜ -->
         <div id="panel-subnet-overlap" class="panel">
           <div class="panel-header">
             <div>
@@ -1165,7 +1165,7 @@
           </div>
         </div>
 
-        <!-- 5. MODÜL: KATMAN-1 PINOUT REHBERİ -->
+        <!-- 4. MODÜL: KATMAN-1 PINOUT REHBERİ -->
         <div id="panel-phy-pinout" class="panel">
           <div class="panel-header">
             <div>
@@ -1258,7 +1258,7 @@
           </div>
         </div>
 
-        <!-- 6. MODÜL: GÜVENLİK DUVARI HIZLI PORT MATRİSİ -->
+        <!-- 5. MODÜL: GÜVENLİK DUVARI HIZLI PORT MATRİSİ -->
         <div id="panel-firewall-ports" class="panel">
           <div class="panel-header">
             <div>
@@ -1319,7 +1319,7 @@
           </div>
         </div>
 
-        <!-- 7. MODÜL: CUCM MASTER YÖNETİM MERKEZİ -->
+        <!-- 6. MODÜL: CUCM MASTER YÖNETİM MERKEZİ -->
         <div id="panel-cucm-master" class="panel">
           <div class="panel-header">
             <div>
@@ -1434,10 +1434,13 @@
           </div>
         </div>
 
-        <!-- 8. MODÜL: WEBRTC / SIP SOFTPHONE -->
+        <!-- 7. MODÜL: WEBRTC / SIP SOFTPHONE (GERÇEK DTMF SESLİ) -->
         <div id="panel-softphone" class="panel">
           <div class="panel-header">
-            <div class="panel-title">// WEBRTC / SIP SOFTPHONE TERMİNALİ</div>
+            <div>
+              <div class="panel-title">// WEBRTC / SIP SOFTPHONE TERMİNALİ</div>
+              <div class="panel-desc">Web Audio API tabanlı gerçek DTMF çift frekans sentezleyicili telefon konsolu ve SIP sinyalleşme takipçisi.</div>
+            </div>
             <div style="display:flex; gap:4px;">
               <button onclick="simulateIncomingCall()" class="btn btn-secondary">📥 Gelen Çağrı</button>
               <button onclick="toggleSipRegister()" id="btn-sip-reg" class="btn" style="background:var(--tech-emerald); color:#020408;">KAYITLI (REGISTERED)</button>
@@ -1451,18 +1454,18 @@
                 <div class="phone-timer" id="sp-timer" style="color:var(--text-dim); font-size:10px;">00:00</div>
               </div>
               <div class="phone-keypad">
-                <button class="key-btn" onclick="pressKey('1')">1</button>
-                <button class="key-btn" onclick="pressKey('2')">2</button>
-                <button class="key-btn" onclick="pressKey('3')">3</button>
-                <button class="key-btn" onclick="pressKey('4')">4</button>
-                <button class="key-btn" onclick="pressKey('5')">5</button>
-                <button class="key-btn" onclick="pressKey('6')">6</button>
-                <button class="key-btn" onclick="pressKey('7')">7</button>
-                <button class="key-btn" onclick="pressKey('8')">8</button>
-                <button class="key-btn" onclick="pressKey('9')">9</button>
-                <button class="key-btn" onclick="pressKey('*')">*</button>
-                <button class="key-btn" onclick="pressKey('0')">0</button>
-                <button class="key-btn" onclick="pressKey('#')">#</button>
+                <button class="key-btn" onclick="pressDtmfKey('1')">1</button>
+                <button class="key-btn" onclick="pressDtmfKey('2')">2</button>
+                <button class="key-btn" onclick="pressDtmfKey('3')">3</button>
+                <button class="key-btn" onclick="pressDtmfKey('4')">4</button>
+                <button class="key-btn" onclick="pressDtmfKey('5')">5</button>
+                <button class="key-btn" onclick="pressDtmfKey('6')">6</button>
+                <button class="key-btn" onclick="pressDtmfKey('7')">7</button>
+                <button class="key-btn" onclick="pressDtmfKey('8')">8</button>
+                <button class="key-btn" onclick="pressDtmfKey('9')">9</button>
+                <button class="key-btn" onclick="pressDtmfKey('*')">*</button>
+                <button class="key-btn" onclick="pressDtmfKey('0')">0</button>
+                <button class="key-btn" onclick="pressDtmfKey('#')">#</button>
               </div>
               <div class="phone-controls">
                 <button class="btn" style="background:var(--tech-emerald); color:#020408;" onclick="startCall()">📞 ARA / YANITLA</button>
@@ -1475,28 +1478,16 @@
               </div>
             </div>
             <div class="sip-console">
-              <div><label>RTP Canlı Ses Spektrumu</label><canvas id="sp-audio-canvas" class="audio-vis" style="width:100%; height:32px; background:#020408; border:1px solid var(--border-tech);"></canvas></div>
+              <div><label>RTP Canlı Ses Spektrumu (Waveform)</label><canvas id="sp-audio-canvas" class="audio-vis" style="width:100%; height:32px; background:#020408; border:1px solid var(--border-tech);"></canvas></div>
               <div style="flex:1; display:flex; flex-direction:column;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;"><label>SIP Sinyalleşme Takipçisi</label><button class="btn btn-secondary" onclick="clearSipLogs()" style="padding:1px 4px; font-size:8px;">Temizle</button></div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;"><label>SIP Sinyalleşme Takipçisi (RFC 3261)</label><button class="btn btn-secondary" onclick="clearSipLogs()" style="padding:1px 4px; font-size:8px;">Temizle</button></div>
                 <div class="sip-log-box" id="sip-log-container"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 9. MODÜL: SIP LOG & ÇAĞRI AKIŞI -->
-        <div id="panel-sip-parser" class="panel">
-          <div class="panel-header"><div class="panel-title">// SIP CALL FLOW MERDİVEN DİYAGRAMI</div><div style="display:flex; gap:4px;"><button onclick="loadSampleSipLog()" class="btn btn-secondary">Örnek Log</button><button onclick="parseSipLogs()" class="btn">Ayrıştır</button></div></div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-            <div><textarea id="sip-raw-input" rows="14" style="font-size:9px;" placeholder="SIP log metnini buraya yapıştırın..."></textarea></div>
-            <div>
-              <div class="seq-diagram-box" id="seq-diagram-container"><div style="text-align:center; color:var(--text-dim); padding-top:40px;">Ayrıştırma bekleniyor...</div></div>
-              <div class="result-box" id="seq-details-box" style="margin-top:6px;"><div style="color:var(--text-dim);">Mesaja tıklayarak detayını inceleyin.</div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10. MODÜL: CDR ÇAĞRI ANALİZİ -->
+        <!-- 8. MODÜL: CDR ÇAĞRI ANALİZİ -->
         <div id="panel-cdr-analytics" class="panel">
           <div class="panel-header"><div class="panel-title">// CDR ÇAĞRI ANALİTİĞİ & FATURALANDIRMA</div><div style="display:flex; gap:4px;"><button onclick="loadSampleCDR()" class="btn btn-secondary">Örnek CDR</button><button onclick="parseCustomCDR()" class="btn">Analiz Et</button></div></div>
           <div class="cdr-kpi-grid">
@@ -1518,7 +1509,7 @@
           </div>
         </div>
 
-        <!-- 11. MODÜL: CISCO DIFF CHECKER -->
+        <!-- 9. MODÜL: CISCO DIFF CHECKER -->
         <div id="panel-cisco-diff" class="panel">
           <div class="panel-header">
             <div>
@@ -1564,7 +1555,7 @@
           </div>
         </div>
 
-        <!-- 12. MODÜL: INTERFACE RANGE & TOPLU VLAN -->
+        <!-- 10. MODÜL: INTERFACE RANGE & TOPLU VLAN -->
         <div id="panel-cisco-range" class="panel">
           <div class="panel-header">
             <div>
@@ -1621,7 +1612,7 @@
           </div>
         </div>
 
-        <!-- 13. MODÜL: SYSLOG VE ANOMALİ ÇÖZÜMLEME -->
+        <!-- 11. MODÜL: SYSLOG VE ANOMALİ ÇÖZÜMLEME -->
         <div id="panel-cisco-syslog" class="panel">
           <div class="panel-header">
             <div>
@@ -1663,7 +1654,7 @@
           </div>
         </div>
 
-        <!-- 14. MODÜL: IOS ROUTING TASLAKLARI -->
+        <!-- 12. MODÜL: IOS ROUTING TASLAKLARI -->
         <div id="panel-cisco-templates" class="panel">
           <div class="panel-header"><div class="panel-title">// CISCO IOS ROUTING PROTOKOL TASLAKLARI</div><button onclick="copyToClipboard('cisco-tmpl-output')" class="btn btn-secondary">📋 Kopyala</button></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -1691,7 +1682,7 @@
           </div>
         </div>
 
-        <!-- 15. MODÜL: ACL MATRİSİ -->
+        <!-- 13. MODÜL: ACL MATRİSİ -->
         <div id="panel-cisco-acl" class="panel">
           <div class="panel-header"><div class="panel-title">// ERİŞİM LİSTESİ (ACL) MATRİSİ</div><button onclick="copyToClipboard('acl-output')" class="btn btn-secondary">📋 Kopyala</button></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -1714,26 +1705,7 @@
           </div>
         </div>
 
-        <!-- 16. MODÜL: TELEFON EKRAN SORUN GİDERİCİ -->
-        <div id="panel-cisco-trouble" class="panel">
-          <div class="panel-header"><div class="panel-title">// IP TELEFON HATA TEŞHİS REHBERİ</div></div>
-          <div class="form-group">
-            <label>Telefonda Görünen Durum / Hata Mesajı</label>
-            <select id="cisco-phone-error" onchange="troubleshootPhoneError()">
-              <option value="">-- Durum Mesajı Seçin --</option>
-              <option value="itl_error">Trust List Error / ITL-CTL Sertifika Uyuşmazlığı</option>
-              <option value="preserving">Preserving Connection (CUCM Erişimi Koptu / SRST)</option>
-              <option value="tftp_timeout">TFTP Timeout / Konfigürasyon Dosyası Bulunamadı</option>
-              <option value="reg_rejected">Registration Rejected (Kayıt Reddedildi / MAC Uyuşmazlığı)</option>
-              <option value="no_beacon">No Beacon / Ethernet Bağlantısı Koptu</option>
-            </select>
-          </div>
-          <div id="phone-trouble-result" class="result-box" style="min-height: 130px; padding: 10px;">
-            <div style="color:var(--text-dim); text-align:center; padding-top:20px; font-family:var(--font-mono);">Hata analizi için durum mesajı seçin.</div>
-          </div>
-        </div>
-
-        <!-- 17. MODÜL: TYPE 7 ŞİFRE ÇÖZÜCÜ -->
+        <!-- 14. MODÜL: TYPE 7 ŞİFRE ÇÖZÜCÜ -->
         <div id="panel-cisco-crypt" class="panel">
           <div class="panel-header"><div class="panel-title">// CISCO TYPE 7 ŞİFRE ÇÖZÜCÜ / KODLAYICI</div></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -1752,7 +1724,7 @@
           </div>
         </div>
 
-        <!-- 18. MODÜL: TOPOLOJİ VE CANLI FAILOVER SİMÜLATÖRÜ -->
+        <!-- 15. MODÜL: TOPOLOJİ VE CANLI FAILOVER SİMÜLATÖRÜ -->
         <div id="panel-canvas" class="panel">
           <div class="panel-header">
             <div>
@@ -1810,7 +1782,7 @@
           </div>
         </div>
 
-        <!-- 19. MODÜL: TRACEROUTE & MTR -->
+        <!-- 16. MODÜL: TRACEROUTE & MTR -->
         <div id="panel-traceroute" class="panel">
           <div class="panel-header">
             <div>
@@ -1847,51 +1819,7 @@
           </div>
         </div>
 
-        <!-- 20. MODÜL: 802.1Q VLAN KAPSÜLLEME -->
-        <div id="panel-vlan-frame" class="panel">
-          <div class="panel-header">
-            <div>
-              <div class="panel-title">// 802.1Q ETHERNET II ÇERÇEVE ANALİZÖRÜ</div>
-              <div class="panel-desc">Ethernet II çerçevesinde 802.1Q Tag yapısını bayt düzeyinde inceleyin.</div>
-            </div>
-          </div>
-
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:8px;">
-            <div>
-              <div class="form-group"><label>VLAN ID (1 - 4094)</label><input type="number" id="vf-vlan-id" value="10" oninput="updateVlanFrameViz()"></div>
-              <div class="form-group">
-                <label>PCP / 802.1p Öncelik Seviyesi (CoS)</label>
-                <select id="vf-pcp" onchange="updateVlanFrameViz()">
-                  <option value="0">0 - Standart Veri (Best Effort)</option>
-                  <option value="3">3 - Çağrı Sinyalleşmesi (SIP/CS3)</option>
-                  <option value="4">4 - Video Trafiği (AF41)</option>
-                  <option value="5" selected>5 - Ses Medyası RTP (EF)</option>
-                </select>
-              </div>
-              <div class="form-group"><label>DEI Bayrağı</label><select id="vf-dei" onchange="updateVlanFrameViz()"><option value="0" selected>0 - Normal (Drop Edilemez)</option><option value="1">1 - İlk Drop Edilebilir</option></select></div>
-            </div>
-            <div>
-              <label>Üretilen 802.1Q Tag Detayı (4 Byte)</label>
-              <div class="result-box" id="vf-details-box" style="margin-top:0;"></div>
-            </div>
-          </div>
-
-          <label style="color:var(--tech-cyan);">Çerçeve Mimarisi</label>
-          <div style="margin-top:4px;">
-            <div class="frame-box">
-              <div class="frame-field">Preamble<br><b>8B</b></div>
-              <div class="frame-field">Hedef MAC<br><b>6B</b></div>
-              <div class="frame-field">Kaynak MAC<br><b>6B</b></div>
-              <div class="frame-field tag-field">TPID: 0x8100<br><b>2B</b></div>
-              <div class="frame-field tag-field" id="vf-tci-box">TCI (VID/PCP)<br><b>2B</b></div>
-              <div class="frame-field">EtherType<br><b>2B</b></div>
-              <div class="frame-field" style="flex:2;">Veri Yükü (Payload)<br><b>46 - 1500 Byte</b></div>
-              <div class="frame-field">FCS<br><b>4B</b></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 21. MODÜL: WI-FI RADAR VE DUVAR SÖNÜMLEME -->
+        <!-- 17. MODÜL: WI-FI RADAR VE DUVAR SÖNÜMLEME -->
         <div id="panel-wifi-analyzer" class="panel">
           <div class="panel-header">
             <div>
@@ -1930,7 +1858,7 @@
           </div>
         </div>
 
-        <!-- 22. MODÜL: DİNAMİK NAT & PAT -->
+        <!-- 18. MODÜL: DİNAMİK NAT & PAT -->
         <div id="panel-nat" class="panel">
           <div class="panel-header">
             <div class="panel-title">// DİNAMİK NAT & PAT OTURUM SİMÜLATÖRÜ</div>
@@ -1958,22 +1886,7 @@
           </div>
         </div>
 
-        <!-- 23. MODÜL: ÇOKLU ÜRETİCİ CLI -->
-        <div id="panel-multivendor" class="panel">
-          <div class="panel-header"><div class="panel-title">// ÇOKLU ÜRETİCİ CLI YAPILANDIRICI</div><button onclick="copyToClipboard('vendor-out')" class="btn btn-secondary">📋 Kopyala</button></div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div class="form-group"><label>Donanım Üreticisi</label><select id="cfg-vendor"><option value="cisco">Cisco IOS-XE</option><option value="juniper">Juniper JunOS</option><option value="mikrotik">MikroTik RouterOS</option></select></div>
-            <div class="form-group"><label>Arayüz Adı</label><input type="text" id="cfg-iface" value="GigabitEthernet0/1"></div>
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div class="form-group"><label>IP Adresi</label><input type="text" id="cfg-ip" value="10.0.0.1"></div>
-            <div class="form-group"><label>Subnet Mask</label><input type="text" id="cfg-mask" value="255.255.255.0"></div>
-          </div>
-          <button onclick="genVendor()" class="btn" style="width:100%;">Oluştur</button>
-          <div class="result-box" id="vendor-out" style="color:var(--tech-cyan); white-space:pre-wrap; min-height:80px;"></div>
-        </div>
-
-        <!-- 24-31. MODÜLLER: HESAPLAYICILAR VE SORGULAR -->
+        <!-- 19-26. MODÜLLER: HESAPLAYICILAR VE SORGULAR -->
         <div id="panel-subnet" class="panel"><div class="panel-header"><div class="panel-title">// CIDR ALT AĞ HESAPLAYICI</div></div><div class="form-group"><label>IP / CIDR</label><input type="text" id="subnet-ip" value="192.168.10.35/22"></div><button onclick="calcSubnet()" class="btn" style="width:100%;">Hesapla</button><div class="result-box" id="subnet-out"></div></div>
         <div id="panel-ipclass" class="panel"><div class="panel-header"><div class="panel-title">// IP SINIFI VE CGNAT ANALİZİ</div></div><div class="form-group"><label>IP Adresi</label><input type="text" id="ipclass-val" value="100.64.10.5"></div><button onclick="calcClass()" class="btn" style="width:100%;">Analiz Et</button><div class="result-box" id="ipclass-out"></div></div>
         <div id="panel-ipv6" class="panel"><div class="panel-header"><div class="panel-title">// IPV6 ADRES GENİŞLETİCİ</div></div><div class="form-group"><label>IPv6 Adresi</label><input type="text" id="ipv6-val" value="2001:db8::8a2e:370:7334"></div><button onclick="calcIPv6()" class="btn" style="width:100%;">Genişlet</button><div class="result-box" id="ipv6-out"></div></div>
@@ -1991,13 +1904,13 @@
     <div id="cli-logs"></div>
     <div class="cli-input-wrapper">
       <span class="cli-prompt">root@zeropacket:~#</span>
-      <input type="text" id="cli-in" onkeydown="runCLI(event)" placeholder="Komut girin (örn: terminal, ssh, audit, bulk, transfer, overlap, diff, pcap, lab, ping 8.8.8.8)...">
+      <input type="text" id="cli-in" onkeydown="runCLI(event)" placeholder="Komut girin (örn: terminal, ssh, audit, transfer, overlap, diff, pcap, lab, ping 8.8.8.8)...">
     </div>
   </footer>
 
   <script>
     // =========================================================================
-    // SES EFEKTLERİ MOTORU (WEB AUDIO API)
+    // SES EFEKTLERİ VE DTMF SENTEZLEYİCİSİ (WEB AUDIO API)
     // =========================================================================
     let audioCtx = null;
     let soundEnabled = true;
@@ -2076,6 +1989,53 @@
       } catch(e) { }
     }
 
+    // Gerçek DTMF Ton Üretici (Dual-Tone Multi-Frequency ITU-T Q.23 Standardı)
+    const dtmfFrequencies = {
+      '1': [697, 1209], '2': [697, 1336], '3': [697, 1477],
+      '4': [770, 1209], '5': [770, 1336], '6': [770, 1477],
+      '7': [852, 1209], '8': [852, 1336], '9': [852, 1477],
+      '*': [941, 1209], '0': [941, 1336], '#': [941, 1477]
+    };
+
+    function playDtmfTone(digit) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const freqs = dtmfFrequencies[digit];
+        if (!freqs) return;
+
+        const now = audioCtx.currentTime;
+        const osc1 = audioCtx.createOscillator();
+        const osc2 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        const gain2 = audioCtx.createGain();
+        const masterGain = audioCtx.createGain();
+
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(freqs[0], now);
+        gain1.gain.setValueAtTime(0.08, now);
+
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(freqs[1], now);
+        gain2.gain.setValueAtTime(0.08, now);
+
+        masterGain.gain.setValueAtTime(1, now);
+        masterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+        osc1.connect(gain1);
+        osc2.connect(gain2);
+        gain1.connect(masterGain);
+        gain2.connect(masterGain);
+        masterGain.connect(audioCtx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.14);
+        osc2.stop(now + 0.14);
+      } catch (e) { }
+    }
+
     // =========================================================================
     // HUD TELEMETRİ VE YEREL SAAT
     // =========================================================================
@@ -2087,7 +2047,7 @@
       
       const frameEl = document.getElementById('hud-frame-cnt');
       if (frameEl && Math.random() > 0.6) {
-        let current = parseInt(frameEl.innerText.replace(/,/g, '')) || 18542;
+        let current = parseInt(frameEl.innerText.replace(/,/g, '')) || 24198;
         frameEl.innerText = (current + Math.floor(Math.random() * 6 + 1)).toLocaleString();
       }
     }
@@ -2116,14 +2076,13 @@
     // BOOT & DIAGNOSTIC ENGINE (OFFLINE)
     // =========================================================================
     const bootSequenceLogs = [
-      { ts: "0.000000", msg: "POST: CPU Microcode & Core Integrity Check", stat: "[ OK ]", statClass: "ok", pct: 10 },
-      { ts: "0.004120", msg: "MEM_INIT: 16GB ECC Allocated | DMA Ring Buffer Ready", stat: "[ OK ]", statClass: "ok", pct: 20 },
-      { ts: "0.012500", msg: "CRYPTO: SHA-256 Hardware Root of Trust Verified", stat: "[ PASS ]", statClass: "pass", pct: 35 },
-      { ts: "0.028910", msg: "TCAM_ENG: L2 MAC / L3 LPM Routing Hash Tables Active", stat: "[ READY ]", statClass: "ready", pct: 50 },
-      { ts: "0.045100", msg: "AIRGAP_GUARD: All external WAN/CDN hooks disabled", stat: "[ SAFE ]", statClass: "pass", pct: 65 },
-      { ts: "0.061200", msg: "ZEROTERM: MobaXterm Multi-Tab Terminal Core Ready", stat: "[ OK ]", statClass: "ok", pct: 75 },
-      { ts: "0.082000", msg: "VOIP_CORE: SIP RFC 3261 State Machine & SDP Parser", stat: "[ READY ]", statClass: "ready", pct: 85 },
-      { ts: "0.098400", msg: "DIFF_LCS: Longest Common Subsequence Engine Loaded", stat: "[ OK ]", statClass: "ok", pct: 95 },
+      { ts: "0.000000", msg: "POST: CPU Microcode & Core Integrity Check", stat: "[ OK ]", statClass: "ok", pct: 15 },
+      { ts: "0.004120", msg: "MEM_INIT: 16GB ECC Allocated | DMA Ring Buffer Ready", stat: "[ OK ]", statClass: "ok", pct: 30 },
+      { ts: "0.012500", msg: "CRYPTO: SHA-256 Hardware Root of Trust Verified", stat: "[ PASS ]", statClass: "pass", pct: 45 },
+      { ts: "0.028910", msg: "TCAM_ENG: L2 MAC / L3 LPM Routing Hash Tables Active", stat: "[ READY ]", statClass: "ready", pct: 60 },
+      { ts: "0.045100", msg: "AIRGAP_GUARD: All external WAN/CDN hooks disabled", stat: "[ SAFE ]", statClass: "pass", pct: 75 },
+      { ts: "0.061200", msg: "ZEROTERM: MobaXterm Multi-Tab Terminal Core Ready", stat: "[ OK ]", statClass: "ok", pct: 85 },
+      { ts: "0.082000", msg: "VOIP_CORE: SIP RFC 3261 State Machine & DTMF Engine", stat: "[ READY ]", statClass: "ready", pct: 95 },
       { ts: "0.104200", msg: "SYS_STATE: Standalone Appliance Ready.", stat: "[ COMPLETE ]", statClass: "ok", pct: 100 }
     ];
 
@@ -2171,7 +2130,7 @@
           clearInterval(introInterval);
           finishIntro();
         }
-      }, 400);
+      }, 350);
     }
 
     function finishIntro() {
@@ -2218,12 +2177,10 @@
       if (id === 'wifi-analyzer') setTimeout(initWifiCanvas, 50);
       if (id === 'canvas') setTimeout(initTopologyEngine, 50);
       if (id === 'cucm-master') calcQoSCombined();
-      if (id === 'vlan-frame') updateVlanFrameViz();
       if (id === 'transfer-sizer') calcTransferTime();
       if (id === 'subnet-overlap') runSubnetOverlapCheck();
       if (id === 'firewall-ports') populateFirewallPortsTable();
       if (id === 'config-auditor' && !document.getElementById('audit-raw-config').value) loadSampleAuditConfig();
-      if (id === 'bulk-templater' && !document.getElementById('bulk-template-input').value) loadSampleBulkTemplate();
       if (id === 'pcap-viewer' && parsedPcapPackets.length === 0) loadSamplePcap('voip');
     }
 
@@ -2237,19 +2194,19 @@
     }
 
     // =========================================================================
-    // MOBAXTERM TARZI OTURUM YÖNETİCİSİ VE ÇOK SEKMELİ TERMİNAL MOTORU (ZEROTERM)
+    // MOBAXTERM TARZI OTURUM YÖNETİCİSİ VE ÇOK SEKMELİ TERMİNAL (ZEROTERM)
     // =========================================================================
     let mobaSessions = [];
     let mobaTabs = [];
     let activeMobaTabId = null;
 
     const defaultMobaSessions = [
-      { id: 'sess_1', name: 'Core-Switch-01', proto: 'SSH', host: '10.10.10.1', port: 22, user: 'cisco_admin', group: 'Omurga Switchler', notes: 'VTP Server & OSPF Area 0' },
-      { id: 'sess_2', name: 'CUCM-Publisher', proto: 'SSH', host: '10.10.10.11', port: 22, user: 'cucm_admin', group: 'Ses & VoIP', notes: 'Informix Read/Write Master' },
-      { id: 'sess_3', name: 'CUCM-Subscriber-1', proto: 'SSH', host: '10.10.10.12', port: 22, user: 'cucm_admin', group: 'Ses & VoIP', notes: 'Call Processing & Phone Reg' },
-      { id: 'sess_4', name: 'Kenar-Switch-Kat2', proto: 'Telnet', host: '192.168.20.2', port: 23, user: 'admin', group: 'Kenar Switchler', notes: 'PoE Voice & Data VLANs' },
-      { id: 'sess_5', name: 'Edge-Firewall-GW', proto: 'SSH', host: '10.0.0.254', port: 22, user: 'secadmin', group: 'Güvenlik', notes: 'ASA / Firepower Dış Hat' },
-      { id: 'sess_6', name: 'Konsol-USB0 (Serial)', proto: 'Serial', host: 'COM3', port: 9600, user: 'root', group: 'Fiziksel Konsol', notes: 'Baud: 9600, 8N1' }
+      { id: 'sess_1', name: 'Core-Switch-01', proto: 'SSH', host: '10.10.10.1', port: 22, user: 'cisco_admin', osType: 'cisco_ios', group: 'Omurga Switchler', notes: 'VTP Server & OSPF Area 0' },
+      { id: 'sess_2', name: 'CUCM-Publisher', proto: 'SSH', host: '10.10.10.11', port: 22, user: 'cucm_admin', osType: 'cucm_linux', group: 'Ses & VoIP', notes: 'Informix Read/Write Master' },
+      { id: 'sess_3', name: 'CUCM-Subscriber-1', proto: 'SSH', host: '10.10.10.12', port: 22, user: 'cucm_admin', osType: 'cucm_linux', group: 'Ses & VoIP', notes: 'Call Processing & Phone Reg' },
+      { id: 'sess_4', name: 'Kenar-Switch-Kat2', proto: 'Telnet', host: '192.168.20.2', port: 23, user: 'admin', osType: 'cisco_ios', group: 'Kenar Switchler', notes: 'PoE Voice & Data VLANs' },
+      { id: 'sess_5', name: 'Edge-Firewall-GW', proto: 'SSH', host: '10.0.0.254', port: 22, user: 'secadmin', osType: 'fortigate', group: 'Güvenlik', notes: 'Dış Hat Güvenlik Duvarı' },
+      { id: 'sess_6', name: 'Konsol-USB0 (Serial)', proto: 'Serial', host: 'COM3', port: 9600, user: 'root', osType: 'cisco_ios', group: 'Fiziksel Konsol', notes: 'Baud: 9600, 8N1' }
     ];
 
     function initMobaTerminalModule() {
@@ -2262,7 +2219,7 @@
 
     function loadMobaSessionsFromStorage() {
       try {
-        const stored = localStorage.getItem('zp_moba_sessions');
+        const stored = localStorage.getItem('zp_moba_sessions_v2');
         if (stored) {
           mobaSessions = JSON.parse(stored);
         } else {
@@ -2276,8 +2233,57 @@
 
     function saveMobaSessionsToStorage() {
       try {
-        localStorage.setItem('zp_moba_sessions', JSON.stringify(mobaSessions));
+        localStorage.setItem('zp_moba_sessions_v2', JSON.stringify(mobaSessions));
       } catch (e) {}
+    }
+
+    function openQuickConnectModal() {
+      playSoundFx('key');
+      const modal = document.getElementById('quick-connect-modal');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeQuickConnectModal() {
+      const modal = document.getElementById('quick-connect-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function autoFillQcPort() {
+      const proto = document.getElementById('qc-proto').value;
+      const portInput = document.getElementById('qc-port');
+      if (proto === 'SSH') portInput.value = '22';
+      else if (proto === 'Telnet') portInput.value = '23';
+      else if (proto === 'Serial') portInput.value = '9600';
+      else if (proto === 'Local') portInput.value = '0';
+    }
+
+    function confirmQuickConnect(launchTab = true) {
+      playSoundFx('key');
+      const name = document.getElementById('qc-name').value.trim() || 'Yeni Oturum';
+      const proto = document.getElementById('qc-proto').value;
+      const port = parseInt(document.getElementById('qc-port').value, 10) || 22;
+      const host = document.getElementById('qc-host').value.trim() || '127.0.0.1';
+      const user = document.getElementById('qc-user').value.trim() || 'admin';
+      const osType = document.getElementById('qc-os-type').value;
+
+      const newSess = {
+        id: 'sess_' + Date.now(),
+        name, proto, host, port, user, osType,
+        group: 'Quick Connect',
+        notes: `${proto} @ ${host}:${port}`
+      };
+
+      mobaSessions.push(newSess);
+      saveMobaSessionsToStorage();
+      renderMobaSessionList();
+      closeQuickConnectModal();
+
+      if (launchTab) {
+        openSessionInTab(newSess);
+      } else {
+        playSoundFx('success');
+        alert("Oturum kasaya kaydedildi!");
+      }
     }
 
     function toggleSessionForm(show, sess = null) {
@@ -2295,15 +2301,6 @@
           document.getElementById('ms-user').value = sess.user;
           document.getElementById('ms-group').value = sess.group || 'Genel';
           document.getElementById('ms-notes').value = sess.notes || '';
-        } else {
-          document.getElementById('ms-id').value = '';
-          document.getElementById('ms-name').value = '';
-          document.getElementById('ms-proto').value = 'SSH';
-          document.getElementById('ms-host').value = '';
-          document.getElementById('ms-port').value = '22';
-          document.getElementById('ms-user').value = 'admin';
-          document.getElementById('ms-group').value = 'Genel';
-          document.getElementById('ms-notes').value = '';
         }
       }
     }
@@ -2448,25 +2445,7 @@
       alert(`Terminal bağlantı komutu panoya kopyalandı:\n\n${cmd}`);
     }
 
-    // =========================================================================
-    // MULTI-TAB TERMINAL EMULATÖRÜ
-    // =========================================================================
-    function openNewMobaTab() {
-      const newTabId = 'tab_' + Date.now();
-      const newTab = {
-        id: newTabId,
-        title: `Terminal #${mobaTabs.length + 1}`,
-        hostname: 'ZeroPacket-Node',
-        user: 'root',
-        ip: '127.0.0.1',
-        proto: 'LOCAL',
-        prompt: 'root@zeropacket:~#',
-        buffer: `[ZEROTERM] Yerel Konsol Oturumu Başlatıldı.\nYardım için 'help' veya '?' yazabilirsiniz.\n\n`
-      };
-      mobaTabs.push(newTab);
-      activateMobaTab(newTabId);
-    }
-
+    // MULTI-TAB TERMINAL EMULATÖRÜ & CLI ETKİLEŞİMİ
     function openSessionInTab(sess) {
       if (!sess) return;
       playSoundFx('beep');
@@ -2478,14 +2457,15 @@
 
       const newTabId = 'tab_' + Date.now();
       let prompt = `${sess.name}#`;
-      if (sess.name.toLowerCase().includes('cucm')) prompt = `admin@${sess.name}:~$ `;
-      else if (sess.proto === 'Serial') prompt = `Router> `;
+      if (sess.osType === 'cucm_linux') prompt = `admin@${sess.name}:~$ `;
+      else if (sess.osType === 'fortigate') prompt = `${sess.name} # `;
+      else if (sess.proto === 'Serial') prompt = `${sess.name}> `;
 
       const initialBanner = `======================================================================\n` +
         ` Connecting to ${sess.name} [${sess.host}:${sess.port}] via ${sess.proto}...\n` +
         ` Host Key / Crypto Fingerprint: SHA256:zp98a12bc994017f8a12cc9\n` +
-        ` Authenticated as '${sess.user}' [Password/Key: Verified OK]\n` +
-        ` Cisco IOS Software / Unified Appliance Shell [Air-Gapped Terminal]\n` +
+        ` Authenticated as '${sess.user}' [Privilege 15 Active]\n` +
+        ` Architecture: Unified Appliance Shell [Air-Gapped Terminal Core]\n` +
         `======================================================================\n\n`;
 
       const newTab = {
@@ -2496,8 +2476,12 @@
         user: sess.user,
         ip: sess.host,
         proto: sess.proto,
+        osType: sess.osType || 'cisco_ios',
+        mode: 'exec',
         prompt: prompt,
-        buffer: initialBanner
+        buffer: initialBanner,
+        history: [],
+        histIndex: -1
       };
 
       mobaTabs.push(newTab);
@@ -2509,7 +2493,7 @@
       playSoundFx('key');
       mobaTabs = mobaTabs.filter(t => t.id !== tabId);
       if (mobaTabs.length === 0) {
-        openNewMobaTab();
+        openQuickConnectModal();
       } else {
         if (activeMobaTabId === tabId) {
           activateMobaTab(mobaTabs[mobaTabs.length - 1].id);
@@ -2558,8 +2542,29 @@
     }
 
     function handleMobaTerminalKey(e) {
+      const tab = mobaTabs.find(t => t.id === activeMobaTabId);
+      if (!tab) return;
+
       if (e.key === 'Enter') {
         executeMobaTerminalInput();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (tab.history.length > 0) {
+          if (tab.histIndex === -1) tab.histIndex = tab.history.length - 1;
+          else if (tab.histIndex > 0) tab.histIndex--;
+          document.getElementById('moba-terminal-input').value = tab.history[tab.histIndex] || '';
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (tab.history.length > 0 && tab.histIndex !== -1) {
+          if (tab.histIndex < tab.history.length - 1) {
+            tab.histIndex++;
+            document.getElementById('moba-terminal-input').value = tab.history[tab.histIndex];
+          } else {
+            tab.histIndex = -1;
+            document.getElementById('moba-terminal-input').value = '';
+          }
+        }
       }
     }
 
@@ -2570,6 +2575,11 @@
       input.value = '';
       if (!cmd) return;
 
+      const tab = mobaTabs.find(t => t.id === activeMobaTabId);
+      if (tab) {
+        tab.history.push(cmd);
+        tab.histIndex = -1;
+      }
       sendMacroCommand(cmd);
     }
 
@@ -2580,7 +2590,7 @@
       playSoundFx('packet');
       tab.buffer += `${tab.prompt} ${rawCmd}\n`;
 
-      const response = generateTerminalResponse(rawCmd.toLowerCase(), tab);
+      const response = generateTerminalResponse(rawCmd, tab);
       if (response) {
         tab.buffer += `${response}\n`;
       }
@@ -2607,8 +2617,9 @@
       a.click();
     }
 
-    // CLI KOMUT CEVAPLARI SİMÜLATÖRÜ
-    function generateTerminalResponse(cmd, tab) {
+    function generateTerminalResponse(rawCmd, tab) {
+      const cmd = rawCmd.trim().toLowerCase();
+
       if (cmd === 'help' || cmd === '?' || cmd === 'yardim') {
         return `Kullanılabilir Komutlar:\n` +
           ` • show ip interface brief / sh ip int br\n` +
@@ -2618,17 +2629,35 @@
           ` • show version / sh ver\n` +
           ` • show cdp neighbors\n` +
           ` • show logging / sh log\n` +
+          ` • configure terminal / conf t\n` +
           ` • utils dbreplication runstatus (CUCM)\n` +
-          ` • show status / utils service list (CUCM)\n` +
           ` • ping <ip> / traceroute <ip>\n` +
           ` • write memory / wr mem\n` +
-          ` • configure terminal / conf t\n` +
           ` • clear / cls`;
       }
 
       if (cmd === 'cls' || cmd === 'clear') {
         tab.buffer = '';
         return '';
+      }
+
+      if (cmd === 'conf t' || cmd === 'configure terminal') {
+        tab.mode = 'config';
+        tab.prompt = `${tab.hostname}(config)#`;
+        return `Enter configuration commands, one per line. End with CNTL/Z.`;
+      }
+
+      if (cmd.startsWith('interface ') || cmd.startsWith('int ')) {
+        const ifc = rawCmd.split(' ')[1] || 'GigabitEthernet1/0/1';
+        tab.mode = 'config-if';
+        tab.prompt = `${tab.hostname}(config-if)#`;
+        return ``;
+      }
+
+      if (cmd === 'exit' || cmd === 'end') {
+        tab.mode = 'exec';
+        tab.prompt = `${tab.hostname}#`;
+        return ``;
       }
 
       if (cmd.startsWith('sh ip int') || cmd.startsWith('show ip interface brief') || cmd === 'sh ip int br') {
@@ -2702,19 +2731,8 @@
           `Overall Result: Cluster DB Replication State = 2 (ALL SYNCHRONIZED)`;
       }
 
-      if (cmd.startsWith('show status') || cmd.startsWith('utils service list')) {
-        return `Host: ${tab.hostname} | Linux Release 7.9.2009 (Core)\n` +
-          `System Uptime: 114 days, 6 hours | Active Users: 2\n` +
-          `Memory: 16.0 GB Total, 7.8 GB Free | CPU Load: 12.4%\n` +
-          `[Service Status]\n` +
-          ` Cisco CallManager           [STARTED]\n` +
-          ` Cisco CTIManager            [STARTED]\n` +
-          ` Cisco TFTP                  [STARTED]\n` +
-          ` Cisco Database Layer        [STARTED]`;
-      }
-
       if (cmd.startsWith('ping')) {
-        const target = cmd.split(' ')[1] || '10.10.10.1';
+        const target = rawCmd.split(' ')[1] || '10.10.10.1';
         return `Type escape sequence to abort.\n` +
           `Sending 5, 100-byte ICMP Echos to ${target}, timeout is 2 seconds:\n` +
           `!!!!!\n` +
@@ -2722,28 +2740,18 @@
       }
 
       if (cmd.startsWith('traceroute')) {
-        const target = cmd.split(' ')[1] || '8.8.8.8';
+        const target = rawCmd.split(' ')[1] || '8.8.8.8';
         return `Tracing the route to ${target}\n` +
           `  1 10.10.10.254 1 msec 1 msec 1 msec\n` +
           `  2 172.16.100.1 4 msec 3 msec 4 msec\n` +
           `  3 ${target} 18 msec 17 msec 18 msec`;
       }
 
-      if (cmd === 'conf t' || cmd === 'configure terminal') {
-        tab.prompt = `${tab.hostname}(config)#`;
-        return `Enter configuration commands, one per line. End with CNTL/Z.`;
-      }
-
-      if (cmd === 'exit' || cmd === 'end') {
-        tab.prompt = `${tab.hostname}#`;
-        return ``;
-      }
-
       if (cmd === 'wr' || cmd === 'wr mem' || cmd === 'write memory') {
         return `Building configuration...\n[OK] Configuration saved to NVRAM.`;
       }
 
-      return `% Unrecognized command or parameter at '^' marker. Type 'help' for command syntax.`;
+      return `% Unrecognized command or syntax error at '${escapeHtml(rawCmd)}'. Type 'help' for command manual.`;
     }
 
     // =========================================================================
@@ -2802,7 +2810,6 @@
             layers: [
               { title: "Frame 1: 542 bytes on wire (4336 bits)", fields: [["Interface", "GigabitEthernet1/0/1"], ["Encapsulation", "Ethernet II (802.1Q tagged)"], ["Frame Length", "542 bytes (4336 bits)"]] },
               { title: "Ethernet II, Src: 00:0c:29:ab:cd:01, Dst: 00:50:56:ef:12:34", fields: [["Destination MAC", "00:50:56:ef:12:34 (Cisco CUCM Sub)"], ["Source MAC", "00:0c:29:ab:cd:01 (Cisco IP Phone)"], ["Type", "IPv4 (0x0800)"]] },
-              { title: "802.1Q Virtual LAN, PRI: 5 (Voice EF), DEI: 0, ID: 20", fields: [["Priority", "5 (Voice/Audio RTP QoS EF)"], ["DEI", "0 (Ineligible for discard)"], ["VLAN Identifier", "20 (VOICE_VLAN)"]] },
               { title: "Internet Protocol Version 4, Src: 10.10.20.101, Dst: 10.10.10.12", fields: [["Version", "4"], ["Header Length", "20 bytes"], ["Differentiated Services", "CS3 (0x60 / DSCP 24 Call Signaling)"], ["Total Length", "524 bytes"], ["TTL", "64"], ["Protocol", "UDP (17)"]] },
               { title: "User Datagram Protocol, Src Port: 5060, Dst Port: 5060", fields: [["Source Port", "5060 (SIP Signaling)"], ["Destination Port", "5060 (SIP Signaling)"], ["Length", "504"], ["Checksum", "0xa41b [verified]"]] },
               { title: "Session Initiation Protocol (REGISTER)", fields: [["Request Line", "REGISTER sip:cucm.local SIP/2.0"], ["From", "<sip:1001@cucm.local>;tag=981a33"], ["To", "<sip:1001@cucm.local>"], ["Call-ID", "c482a-99@10.10.20.101"], ["CSeq", "1 REGISTER"], ["Expires", "3600 (1 Hour Renewal)"]] }
@@ -2841,6 +2848,71 @@
               { title: "Frame 1: 74 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Length", "74 bytes (592 bits)"]] },
               { title: "Internet Protocol Version 4, Src: 192.168.1.50, Dst: 93.184.216.34", fields: [["TTL", "128"], ["Header Checksum", "0x541c [Correct]"], ["Protocol", "TCP (6)"]] },
               { title: "Transmission Control Protocol, Src Port: 49152, Dst Port: 80, Seq: 0, Len: 0", fields: [["Source Port", "49152 (Ephemeral Client Port)"], ["Destination Port", "80 (HTTP Web)"], ["Sequence Number", "0 (Relative seq 0)"], ["Flags", "0x002 (SYN - Synchronize Sequence Numbers)"], ["Window Size Value", "64240"], ["MSS Option", "1460 bytes"]] }
+            ]
+          },
+          {
+            no: 2, time: "0.012400", src: "93.184.216.34", dst: "192.168.1.50", proto: "TCP", len: 74,
+            info: "80 → 49152 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=1460",
+            raw: new TextEncoder().encode("TCP SYN-ACK Packet [Flags: S+A] Seq=0 Ack=1"),
+            layers: [
+              { title: "Frame 2: 74 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Length", "74 bytes"]] },
+              { title: "Transmission Control Protocol, Src Port: 80, Dst Port: 49152", fields: [["Source Port", "80 (HTTP)"], ["Destination Port", "49152"], ["Flags", "0x012 (SYN, ACK)"]] }
+            ]
+          }
+        ];
+      } else if (type === 'dns') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "192.168.1.50", dst: "8.8.8.8", proto: "DNS", len: 78,
+            info: "Standard query 0x1a2b A cucm.corporate.local",
+            raw: new TextEncoder().encode("DNS Query 0x1a2b A cucm.corporate.local"),
+            layers: [
+              { title: "Frame 1: 78 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Length", "78 bytes"]] },
+              { title: "User Datagram Protocol, Src Port: 53210, Dst Port: 53", fields: [["Source Port", "53210"], ["Destination Port", "53 (DNS)"]] },
+              { title: "Domain Name System (query)", fields: [["Transaction ID", "0x1a2b"], ["Questions", "1"], ["Query Name", "cucm.corporate.local"], ["Type", "A (Host Address)"]] }
+            ]
+          },
+          {
+            no: 2, time: "0.018250", src: "8.8.8.8", dst: "192.168.1.50", proto: "DNS", len: 94,
+            info: "Standard query response 0x1a2b A cucm.corporate.local A 10.10.10.11",
+            raw: new TextEncoder().encode("DNS Response 0x1a2b A 10.10.10.11"),
+            layers: [
+              { title: "Frame 2: 94 bytes on wire", fields: [["Length", "94 bytes"]] },
+              { title: "Domain Name System (response)", fields: [["Transaction ID", "0x1a2b"], ["Answers", "1"], ["cucm.corporate.local", "Addr: 10.10.10.11 (Publisher)"]] }
+            ]
+          }
+        ];
+      } else if (type === 'ospf') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "10.10.10.1", dst: "224.0.0.5", proto: "OSPF", len: 82,
+            info: "OSPFv2 Hello Packet | Area: 0.0.0.0 | Router ID: 1.1.1.1",
+            raw: new TextEncoder().encode("OSPFv2 HELLO Router-ID: 1.1.1.1 Area: 0.0.0.0 Priority: 1"),
+            layers: [
+              { title: "Frame 1: 82 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Destination MAC", "01:00:5e:00:00:05 (AllSPFRouters)"]] },
+              { title: "Internet Protocol Version 4, Dst: 224.0.0.5", fields: [["Protocol", "OSPF (89)"], ["TTL", "1"]] },
+              { title: "Open Shortest Path First (Hello Packet)", fields: [["Version", "2"], ["Router ID", "1.1.1.1"], ["Area ID", "0.0.0.0 (Backbone)"], ["Hello Interval", "10s"], ["Dead Interval", "40s"]] }
+            ]
+          }
+        ];
+      } else if (type === 'arp') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "00:0c:29:ab:cd:01", dst: "ff:ff:ff:ff:ff:ff", proto: "ARP", len: 42,
+            info: "Who has 10.10.10.254? Tell 10.10.10.50",
+            raw: new TextEncoder().encode("ARP Request: Who has 10.10.10.254? Tell 10.10.10.50"),
+            layers: [
+              { title: "Frame 1: 42 bytes on wire", fields: [["Encapsulation", "Ethernet II Broadcast"]] },
+              { title: "Address Resolution Protocol (request)", fields: [["Hardware type", "Ethernet (1)"], ["Opcode", "request (1)"], ["Sender MAC", "00:0c:29:ab:cd:01"], ["Sender IP", "10.10.10.50"], ["Target IP", "10.10.10.254"]] }
+            ]
+          },
+          {
+            no: 2, time: "0.000410", src: "00:50:56:ef:12:34", dst: "00:0c:29:ab:cd:01", proto: "ARP", len: 42,
+            info: "10.10.10.254 is at 00:50:56:ef:12:34",
+            raw: new TextEncoder().encode("ARP Reply: 10.10.10.254 is at 00:50:56:ef:12:34"),
+            layers: [
+              { title: "Frame 2: 42 bytes on wire", fields: [["Encapsulation", "Ethernet II Unicast"]] },
+              { title: "Address Resolution Protocol (reply)", fields: [["Opcode", "reply (2)"], ["Sender MAC", "00:50:56:ef:12:34"], ["Sender IP", "10.10.10.254"], ["Target MAC", "00:0c:29:ab:cd:01"], ["Target IP", "10.10.10.50"]] }
             ]
           }
         ];
@@ -3005,36 +3077,288 @@
     }
 
     // =========================================================================
-    // SPEED RUN / TIME ATTACK LABORATUVARI
+    // SPEED RUN / CCNA SINAV & ETÜT MERKEZİ LABORATUVARI
     // =========================================================================
     const timeAttackScenarios = [
       {
         id: 1,
-        title: "🚨 Cisco IP Telefon TFTP & XML Timeout",
-        badge: "VOIP / DHCP",
-        desc: "Şubedeki IP telefonlar 'TFTP Timeout' hatasında kalıyor ve açılmıyor. DHCP sunucusu IP dağıtıyor ancak telefonlar konfigürasyon çekemiyor.",
-        log: "%DHCP-4-OFFER: IP 10.10.20.101 offered to 000c.29ab.cd01\n%TFTP-3-TIMEOUT: SEP000C29ABCD01.cnf.xml request timed out to 0.0.0.0",
+        title: "🚨 OSPFv2 Komşuluk Durumu (EXSTART/MTU Uyuşmazlığı)",
+        badge: "CCNA / ROUTING",
+        desc: "İki Cisco router arasında OSPF komşuluğu kurulurken durum 'EXSTART/LOADING' aşamasında takılıyor ve bir süre sonra bağlantı DOWN oluyor. Sorunun temel kaynağı ve çözümü nedir?",
+        log: "%OSPF-5-ADJCHG: Process 1, Nbr 10.0.0.2 on Gi0/0 from LOADING to DOWN\n%OSPF-4-MTU_MISMATCH: MTU mismatch detected on Gi0/0 (Local MTU: 1500, Remote MTU: 9000)",
         options: [
-          { text: "DHCP Pool altına 'option 150 ip 10.10.10.11' ekle", correct: true },
-          { text: "Switch portunda 'switchport mode trunk' ayarla", correct: false },
-          { text: "CUCM Publisher'da dbreplication repair çalıştır", correct: false },
-          { text: "Portu VLAN 999 karantinaya al", correct: false }
+          { text: "Her iki uçtaki MTU boyutlarını eşitleyin veya 'ip ospf mtu-ignore' komutunu uygulayın", correct: true },
+          { text: "OSPF Process ID numaralarını her iki uçta aynı yapın", correct: false },
+          { text: "Router ID değerlerini aynı IP adresiyle değiştirin", correct: false },
+          { text: "Router üzerinde 'no ip domain-lookup' komutu çalıştırın", correct: false }
         ],
-        explanation: "Cisco IP telefonların konfigürasyon dosyasını çekebilmesi için DHCP Option 150 (TFTP IP) parametresi zorunludur."
+        explanation: "OSPF Database Description (DBD) paket alışverişi sırasında arabirim MTU değerleri uyuşmazsa komşuluk EXSTART aşamasını geçemez. Çözüm MTU'ları eşitlemek veya 'ip ospf mtu-ignore' girmektir."
       },
       {
         id: 2,
-        title: "🚨 OSPF Komşuluğu 'EXSTART' Takılması & MTU Uyuşmazlığı",
-        badge: "ROUTING / OSPF",
-        desc: "İki omurga yönlendirici arasında OSPF komşuluğu kurulmaya çalışılıyor ancak 'EXSTART/LOADING' durumunda asılı kalıp sürekli DOWN oluyor.",
-        log: "%OSPF-5-ADJCHG: Process 1, Nbr 10.0.0.2 on Gi0/0 from LOADING to DOWN\n%OSPF-4-MTU_MISMATCH: MTU mismatch detected on Gi0/0 (Local: 1500, Remote: 9000)",
+        title: "🚨 802.1Q Native VLAN Uyuşmazlığı (CDP Alarmı)",
+        badge: "CCNA / SWITCHING",
+        desc: "İki switch arasındaki Trunk hatta CDP sürekli Native VLAN uyuşmazlığı hatası üretiyor ve switchportlar arasında Spanning-Tree tutarsızlığı (Inconsistency) oluşuyor.",
+        log: "%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/1 (10), with SW2 GigabitEthernet0/1 (99).",
         options: [
-          { text: "Arayüz MTU değerlerini eşitle veya 'ip ospf mtu-ignore' gir", correct: true },
-          { text: "OSPF Process ID numaralarını her iki uçta aynı yap", correct: false },
-          { text: "Router'a 'no ip domain-lookup' komutu ver", correct: false },
-          { text: "Kabloyu Cross kablo ile değiştir", correct: false }
+          { text: "SW1 Gi0/1 altında 'switchport trunk native vlan 99' komutunu girerek Native VLAN'ları eşitleyin", correct: true },
+          { text: "Her iki uçta portları Access moda çekip VLAN 10'a atayın", correct: false },
+          { text: "SW1 üzerinde VTP Domain adını değiştirin", correct: false },
+          { text: "CDP protokolünü switch genelinde 'no cdp run' ile kapatın", correct: false }
         ],
-        explanation: "OSPF DBD paketlerinde MTU uyumsuzluğu tespit edilirse komşuluk EXSTART/LOADING aşamasını geçemez."
+        explanation: "802.1Q Trunk bağlantının her iki ucunda Native VLAN ID aynı olmalıdır. Uyuşmazlık durumunda etiketlenmemiş trafik yanlış VLAN'a düşer ve STP ilgili portu kilitler."
+      },
+      {
+        id: 3,
+        title: "🚨 Port Security & BPDU Guard Engellemesi (err-disable)",
+        badge: "CCNA / SECURITY",
+        desc: "Kullanıcı portuna hub/switch takıldıktan sonra port anında kapandı ve LED turuncuya döndü. 'show int status' çıktısında 'err-disabled' görünüyor. Portu kalıcı ve doğru şekilde nasıl açarsınız?",
+        log: "%SPANTREE-2-BLOCK_BPDUGUARD: Received BPDU on port Gi1/0/5 with BPDU Guard enabled. Disabling port.\n%PM-4-ERR_DISABLE: bpduguard error detected on Gi1/0/5, putting Gi1/0/5 in err-disable state",
+        options: [
+          { text: "İzinsiz cihazı sökün, arayüze girip sırasıyla 'shutdown' ve 'no shutdown' komutlarını uygulayın", correct: true },
+          { text: "Switch'i 'reload' komutu ile yeniden başlatın", correct: false },
+          { text: "Portu hemen 'switchport mode trunk' yapın", correct: false },
+          { text: "VLAN veritabanını (vlan.dat) flash bellekten silin", correct: false }
+        ],
+        explanation: "BPDU Guard devrede olan bir PortFast portuna harici anahtar bağlanıp BPDU gelirse port koruma amaçlı err-disable olur. Porttan cihaz söküldükten sonra interface altında shutdown/no shutdown veya otomatik 'errdisable recovery' gerekir."
+      },
+      {
+        id: 4,
+        title: "🚨 İdari Mesafe (Administrative Distance) & Rota Seçimi",
+        badge: "CCNA / ROUTING",
+        desc: "Bir yönlendirici 192.168.50.0/24 ağına giden 4 farklı rota öğrenmiştir. Yönlendirme tablosuna (Routing Table) hangisi en öncelikli (aktif rota) olarak eklenir?",
+        log: "Learned Routes:\n- OSPF (AD: 110, Metric: 20)\n- EIGRP Internal (AD: 90, Metric: 25600)\n- eBGP (AD: 20, Metric: 0)\n- Static Route (AD: 1, Metric: 0)",
+        options: [
+          { text: "Static Route (İdari Mesafe AD = 1 olduğu için)", correct: true },
+          { text: "eBGP (Global BGP protokolü olduğu için)", correct: false },
+          { text: "EIGRP Internal (Cisco tescilli olduğu için)", correct: false },
+          { text: "OSPF (Metriği düşük olduğu için)", correct: false }
+        ],
+        explanation: "Farklı protokollerden aynı prefix uzunluğundaki ağlar öğrenildiğinde, Cisco IOS her zaman en düşük İdari Mesafeye (Administrative Distance) sahip rotayı seçer. Static (AD 1) < eBGP (AD 20) < EIGRP (AD 90) < OSPF (AD 110)."
+      },
+      {
+        id: 5,
+        title: "🚨 CIDR Alt Ağ & Kullanılabilir IP Hesaplama",
+        badge: "CCNA / IPV4",
+        desc: "Bir arayüze 172.16.20.100/27 IP adresi atanacaktır. Bu alt ağın Ağ (Network), Yayın (Broadcast) ve Kullanılabilir Son Host IP adresi hangisidir?",
+        log: "Interface IP Configuration:\nIP: 172.16.20.100\nSubnet Mask: 255.255.255.224 (/27)",
+        options: [
+          { text: "Ağ: 172.16.20.96 | Broadcast: 172.16.20.127 | Son Host: 172.16.20.126", correct: true },
+          { text: "Ağ: 172.16.20.64 | Broadcast: 172.16.20.95 | Son Host: 172.16.20.94", correct: false },
+          { text: "Ağ: 172.16.20.0  | Broadcast: 172.16.20.31 | Son Host: 172.16.20.30", correct: false },
+          { text: "Ağ: 172.16.20.96 | Broadcast: 172.16.20.128 | Son Host: 172.16.20.127", correct: false }
+        ],
+        explanation: "/27 maskesi için blok boyutu 256 - 224 = 32'dir. Alt ağlar: .0, .32, .64, .96, .128. 100 sayısı 96 bloğundadır. Ağ: .96, Yayın: .127, Kullanılabilir son IP: .126'dır."
+      },
+      {
+        id: 6,
+        title: "🚨 LACP EtherChannel Port-Channel Uyumsuzluğu",
+        badge: "CCNA / SWITCHING",
+        desc: "SW1 ve SW2 arasında 2 adet GigabitEthernet portu LACP (802.3ad) ile birleştirilmek isteniyor. SW1 'channel-group 1 mode passive' olarak ayarlandı. SW2 tarafı hangi modda olmalıdır?",
+        log: "SW1 Config:\ninterface range Gi0/1-2\n channel-group 1 mode passive\n!\nSW2 Port-Channel durumu: DOWN (Waiting for LACP negotiation)",
+        options: [
+          { text: "SW2 'channel-group 1 mode active' olarak yapılandırılmalıdır", correct: true },
+          { text: "SW2 de 'channel-group 1 mode passive' yapılmalıdır", correct: false },
+          { text: "SW2 'channel-group 1 mode desirable' (PAgP) yapılmalıdır", correct: false },
+          { text: "SW2 'channel-group 1 mode auto' yapılmalıdır", correct: false }
+        ],
+        explanation: "LACP modlarında en az bir taraf 'active' olmalıdır. 'passive + passive' durumunda hiçbir taraf LACP paket alışverişi başlatmaz ve EtherChannel ayağa kalkmaz."
+      },
+      {
+        id: 7,
+        title: "🚨 DHCP Snooping & Untrusted Port Problemi",
+        badge: "CCNA / SECURITY",
+        desc: "Switch üzerinde DHCP Snooping açıldıktan sonra hiçbir istemci DHCP sunucusundan IP alamıyor. DHCP Sunucusu Gi1/0/24 uplink portuna bağlıdır. Eksik komut hangisidir?",
+        log: "SW1# show ip dhcp snooping\nSwitch DHCP snooping is enabled\nDHCP snooping is configured on following VLANs: 10,20\nInterface                  Trusted    Rate limit (pps)\n-----------------------    -------    ----------------\nGigabitEthernet1/0/24      no         unlimited",
+        options: [
+          { text: "interface Gi1/0/24 altında 'ip dhcp snooping trust' komutu girilmelidir", correct: true },
+          { text: "Tüm kullanıcı portlarına 'ip dhcp snooping trust' verilmelidir", correct: false },
+          { text: "DHCP havuzundan 'ip dhcp excluded-address' kaldırılmalıdır", correct: false },
+          { text: "Global olarak 'no ip dhcp snooping' yapılmalıdır", correct: false }
+        ],
+        explanation: "DHCP Snooping devredeyken yetkili DHCP sunucusuna veya DHCP Relay rotasına bakan uplink portları 'trusted' olarak tanımlanmalıdır. Aksi halde sunucudan gelen DHCPOFFER/DHCPACK paketleri düşürülür."
+      },
+      {
+        id: 8,
+        title: "🚨 IPv6 SLAAC & EUI-64 MAC Adresi Dönüşümü",
+        badge: "CCNA / IPV6",
+        desc: "MAC adresi '00:1A:2B:3C:4D:5E' olan bir yönlendirici arayüzü 'ipv6 address 2001:DB8:ACAD:1::/64 eui-64' komutuyla yapılandırıldığında üretilen tam IPv6 adresi nedir?",
+        log: "Interface MAC: 001a.2b3c.4d5e\nTarget IPv6 Prefix: 2001:DB8:ACAD:1::/64\nEUI-64 Rule: Insert FFFE in middle, invert 7th Universal/Local bit",
+        options: [
+          { text: "2001:DB8:ACAD:1:021A:2BFF:FE3C:4D5E", correct: true },
+          { text: "2001:DB8:ACAD:1:001A:2BFF:FE3C:4D5E", correct: false },
+          { text: "2001:DB8:ACAD:1:021A:2B3C:4D5E:FFFE", correct: false },
+          { text: "FE80::021A:2BFF:FE3C:4D5E", correct: false }
+        ],
+        explanation: "EUI-64 yönteminde MAC adresinin ortasına 'FF:FE' yerleştirilir (001A:2BFF:FE3C:4D5E) ve ilk bayttaki (00 = 00000000) 7. bit ters çevrilerek 02 (00000010) yapılır."
+      },
+      {
+        id: 9,
+        title: "🚨 Standart vs Extended ACL Kural Konumlandırması",
+        badge: "CCNA / ACL",
+        desc: "Cisco en iyi uygulamalarına (Best Practices) göre Standart ACL ve Extended (Genişletilmiş) ACL ağ topolojisinde kural olarak nereye uygulanmalıdır?",
+        log: "Security Architecture Guidelines:\n- Standard ACL: Filters based on Source IP only\n- Extended ACL: Filters based on Source, Dest, Protocol, and Port",
+        options: [
+          { text: "Extended ACL kaynağa en yakın yere; Standart ACL hedefe en yakın yere uygulanmalıdır", correct: true },
+          { text: "Standart ACL kaynağa en yakın yere; Extended ACL hedefe en yakın yere uygulanmalıdır", correct: false },
+          { text: "Her iki ACL türü de her zaman sadece çıkış (outbound) yönünde uygulanmalıdır", correct: false },
+          { text: "Tüm ACL'ler omurga switch'in (Core Switch) Vlan1 arayüzüne yazılmalıdır", correct: false }
+        ],
+        explanation: "Standart ACL hedefi bilmediği için hedefe en yakın yere konur (erken konursa diğer ağlara erişimi de keser). Extended ACL ise gereksiz paket iletimini baştan önlemek için kaynağa en yakın yere konur."
+      },
+      {
+        id: 10,
+        title: "🚨 Dinamik NAT / PAT (Overload) Eksik Yapılandırması",
+        badge: "CCNA / NAT",
+        desc: "Kurum içerisindeki kullanıcıların tek bir genel (Public) IP üzerinden internete çıkması için PAT yapılandırılmıştır ancak kullanıcılar internete çıkamamaktadır. Eksik nedir?",
+        log: "Router Config:\naccess-list 1 permit 192.168.1.0 0.0.0.255\nip nat inside source list 1 interface GigabitEthernet0/1\n!\nGi0/0 -> ip nat inside\nGi0/1 -> ip nat outside",
+        options: [
+          { text: "'ip nat inside source list 1 interface Gi0/1' komutunun sonuna 'overload' anahtar kelimesi eklenmelidir", correct: true },
+          { text: "Access-list 1 kuralı 'deny' olarak değiştirilmelidir", correct: false },
+          { text: "Gi0/1 portuna 'ip nat inside' verilmelidir", correct: false },
+          { text: "Kullanıcıların varsayılan ağ geçidi (Gateway) 8.8.8.8 yapılmalıdır", correct: false }
+        ],
+        explanation: "Birden fazla yerel IP'nin tek bir genel IP'nin farklı port numaralarıyla internete çıkabilmesi (PAT / NAT Overload) için komutun sonuna mutlaka 'overload' eklenmelidir."
+      },
+      {
+        id: 11,
+        title: "🚨 STP Root Bridge (Kök Köprü) Seçim Mantığı",
+        badge: "CCNA / SWITCHING",
+        desc: "Aşağıdaki Spanning-Tree öncelik ve MAC adreslerine sahip 4 switch arasında varsayılan STP Root Bridge hangisi seçilir?",
+        log: "Switch A: Priority 32768, MAC: 000c.2911.1111\nSwitch B: Priority 28672, MAC: 000c.2944.4444\nSwitch C: Priority 32768, MAC: 000c.2900.0001\nSwitch D: Priority 36864, MAC: 000c.2900.0000",
+        options: [
+          { text: "Switch B (En düşük Bridge Priority değerine sahip olduğu için: 28672)", correct: true },
+          { text: "Switch C (En düşük MAC adresine sahip olduğu için)", correct: false },
+          { text: "Switch D (En yüksek Priority değerine sahip olduğu için)", correct: false },
+          { text: "Switch A (İlk açılan switch olduğu için)", correct: false }
+        ],
+        explanation: "STP Kök Köprü seçiminde önce en düşük Bridge Priority (Öncelik) değerine bakılır. Priority değerleri eşitse en düşük MAC adresi seçilir. Switch B 28672 önceliği ile doğrudan Root seçilir."
+      },
+      {
+        id: 12,
+        title: "🚨 HSRP (Hot Standby Router Protocol) Preempt Sorunu",
+        badge: "CCNA / FIRST HOP",
+        desc: "R1 (Priority: 120) ve R2 (Priority: 100) HSRP kümesindedir. R1 kapanıp tekrar açıldığında R2 Active olarak kalmaya devam etmekte, R1 Active rolünü geri alamamaktadır. Çözüm nedir?",
+        log: "R1 HSRP Config:\ninterface GigabitEthernet0/0\n standby 1 ip 192.168.1.254\n standby 1 priority 120\n!\nStatus: Standby (R2 is currently Active)",
+        options: [
+          { text: "R1 arayüzüne 'standby 1 preempt' komutu eklenmelidir", correct: true },
+          { text: "R2'nin öncelik değeri 150 yapılmalıdır", correct: false },
+          { text: "Sanal IP adresi 192.168.1.255 olarak değiştirilmelidir", correct: false },
+          { text: "R1 üzerinde HSRP sürümü 'standby version 3' yapılmalıdır", correct: false }
+        ],
+        explanation: "HSRP'de yüksek önceliğe sahip bir yönlendirici geri geldiğinde Active rolünü devralabilmesi için 'standby [grup] preempt' komutunun açık olması şarttır."
+      },
+      {
+        id: 13,
+        title: "🚨 Cisco Syslog Ciddiyet Seviyeleri (Severity Levels)",
+        badge: "CCNA / MANAGEMENT",
+        desc: "Cisco IOS Syslog mimarisinde '%LINK-3-UPDOWN' ve '%SYS-5-CONFIG_I' mesajlarındaki '3' ve '5' rakamları hangi ciddiyet seviyelerini temsil eder?",
+        log: "Syslog Severity Scale (0 to 7):\n0=Emergency, 1=Alert, 2=Critical, 3=Error, 4=Warning, 5=Notification, 6=Informational, 7=Debugging",
+        options: [
+          { text: "3 = Error (Hata), 5 = Notification (Bildirim)", correct: true },
+          { text: "3 = Warning (Uyarı), 5 = Critical (Kritik)", correct: false },
+          { text: "3 = Informational, 5 = Emergency", correct: false },
+          { text: "3 = Debugging, 5 = Alert", correct: false }
+        ],
+        explanation: "Cisco Syslog seviyeleri: 0: Emergencies, 1: Alerts, 2: Critical, 3: Errors, 4: Warnings, 5: Notifications, 6: Informational, 7: Debugging sıralamasına sahiptir."
+      },
+      {
+        id: 14,
+        title: "🚨 WLC & Lightweight AP Split-MAC Mimarisi",
+        badge: "CCNA / WIRELESS",
+        desc: "Split-MAC mimarisinde çalışan bir Cisco Lightweight Access Point (LAP) ile Kablosuz Ağ Denetleyicisi (WLC) arasında CAPWAP tüneli üzerinden hangi işlemler WLC tarafından yapılır?",
+        log: "CAPWAP Split-MAC Model:\n- Real-time 802.11 MAC functions (Beacon, Probe response, Frame ACK)\n- Management & Control functions (Authentication, Association, Roaming, Security)",
+        options: [
+          { text: "Kullanıcı Kimlik Doğrulama (802.1X/RADIUS), Dolaşım (Roaming) ve Güvenlik Yönetimi", correct: true },
+          { text: "Beacon çerçevelerinin yayılması ve paket ACK yanıtları", correct: false },
+          { text: "RF sinyal frekansının havaya modülasyonu", correct: false },
+          { text: "Anten sinyal kazanç (dBi) ayarı", correct: false }
+        ],
+        explanation: "Split-MAC modelinde gerçek zamanlı işlemler (Beacons, Probe, Frame ACK, MAC şifreleme) AP üzerinde kalırken; yönetimsel işlemler (Auth, Association, Roaming, QoS, Policy) WLC üzerinde merkezi olarak çalışır."
+      },
+      {
+        id: 15,
+        title: "🚨 Ağ Otomasyonu & JSON Formatı Doğrulaması",
+        badge: "CCNA / AUTOMATION",
+        desc: "Aşağıdaki RESTCONF/REST API veri çıktılarından hangisi sözdizimi açısından geçerli (Valid) bir JSON nesnesidir?",
+        log: "REST API Data Serialization Format Validation:",
+        options: [
+          { text: '{\n  "hostname": "R1",\n  "interfaces": ["Gi0/0", "Gi0/1"],\n  "enabled": true\n}', correct: true },
+          { text: '{\n  hostname: R1,\n  interfaces = [Gi0/0, Gi0/1]\n}', correct: false },
+          { text: '<router><hostname>R1</hostname></router>', correct: false },
+          { text: 'hostname = "R1", interfaces = ("Gi0/0", "Gi0/1")', correct: false }
+        ],
+        explanation: "JSON formatında anahtarlar çift tırnak içinde (\"key\") olmalı, değerler string ise çift tırnakta, boolean değerler tırnaksız (true/false) olmalı ve nesneler süslü parantez {} ile sınırlandırılmalıdır."
+      },
+      {
+        id: 16,
+        title: "🚨 TCP 3-Way Handshake & Bayrak Analizi",
+        badge: "CCNA / TRANSPORT",
+        desc: "Bir istemci web sunucusuna (Port 80) TCP bağlantısı başlatırken sırasıyla hangi TCP bayrakları (Flags) gönderilir?",
+        log: "TCP Connection Establishment Sequence:\n1. Client -> Server\n2. Server -> Client\n3. Client -> Server",
+        options: [
+          { text: "SYN  ➔  SYN + ACK  ➔  ACK", correct: true },
+          { text: "ACK  ➔  SYN  ➔  ACK + FIN", correct: false },
+          { text: "SYN  ➔  ACK  ➔  PSH + ACK", correct: false },
+          { text: "RST  ➔  SYN  ➔  ACK", correct: false }
+        ],
+        explanation: "TCP 3-Way Handshake: İstemci SYN gönderir, Sunucu SYN+ACK ile yanıt verir, İstemci ACK göndererek bağlantıyı kurar (ESTABLISHED)."
+      },
+      {
+        id: 17,
+        title: "🚨 Floating Static Route (Yedek Statik Rota) Tanımlama",
+        badge: "CCNA / ROUTING",
+        desc: "Ana hat OSPF (AD: 110) ile çalışmaktadır. OSPF koptuğunda devreye girecek bir yedek statik rota (Floating Static Route) yazmak için hangi komut kullanılmalıdır?",
+        log: "Requirement:\n- Primary: OSPF (AD 110)\n- Backup Static Route via 10.200.1.2 to 0.0.0.0/0",
+        options: [
+          { text: "ip route 0.0.0.0 0.0.0.0 10.200.1.2 120", correct: true },
+          { text: "ip route 0.0.0.0 0.0.0.0 10.200.1.2 100", correct: false },
+          { text: "ip route 0.0.0.0 0.0.0.0 10.200.1.2 metric 1", correct: false },
+          { text: "router ospf 1 backup static 10.200.1.2", correct: false }
+        ],
+        explanation: "Floating static route oluşturmak için statik rotanın idari mesafesi (AD), ana protokolünkinden (OSPF AD 110) daha yüksek (örneğin 120) olarak komutun sonuna eklenir."
+      },
+      {
+        id: 18,
+        title: "🚨 Cisco IOS SSHv2 Yapılandırma Ön Koşulu",
+        badge: "CCNA / SECURITY",
+        desc: "Bir Cisco router üzerinde 'crypto key generate rsa' komutunu çalıştırmadan önce hangi iki yapılandırmanın mutlaka yapılmış olması şarttır?",
+        log: "Router(config)# crypto key generate rsa\n% Please define a domain-name first.",
+        options: [
+          { text: "Hostname ve 'ip domain-name' tanımlanmış olmalıdır", correct: true },
+          { text: "VTP şifresi ve enable password girilmiş olmalıdır", correct: false },
+          { text: "Router'a BGP AS numarası verilmiş olmalıdır", correct: false },
+          { text: "DHCP havuzu oluşturulmuş olmalıdır", correct: false }
+        ],
+        explanation: "Cisco IOS RSA anahtarı üretirken FQDN (hostname.domain-name) etiketini kullanır. Bu nedenle 'hostname' ve 'ip domain-name' tanımlanmadan RSA anahtarı üretilemez ve SSH açılamaz."
+      },
+      {
+        id: 19,
+        title: "🚨 VoIP Trafiği QoS DSCP ve CoS Eşleşmesi",
+        badge: "CCNA / QOS",
+        desc: "Kurumsal IP telefon görüşmelerinde ses medyası (RTP) için önerilen Katman-3 DSCP değeri ve Katman-2 802.1p CoS değeri hangisidir?",
+        log: "Cisco QoS Quality of Service Reference Architecture for Voice Traffic:",
+        options: [
+          { text: "DSCP: 46 (EF - Expedited Forwarding) | Katman-2 CoS: 5", correct: true },
+          { text: "DSCP: 24 (CS3 - Signaling) | Katman-2 CoS: 3", correct: false },
+          { text: "DSCP: 0 (CS0 - Best Effort) | Katman-2 CoS: 0", correct: false },
+          { text: "DSCP: 34 (AF41 - Video) | Katman-2 CoS: 4", correct: false }
+        ],
+        explanation: "RFC 3246 ve Cisco standartlarına göre gerçek zamanlı ses trafiği (RTP) Katman-3'te DSCP 46 (EF) ve 802.1Q/802.1p trunk çerçevelerinde CoS 5 olarak etiketlenir."
+      },
+      {
+        id: 20,
+        title: "🚨 CDP vs LLDP Protokol Karşılaştırması",
+        badge: "CCNA / NETWORK FUNDAMENTALS",
+        desc: "Cisco switch ile üreticisi farklı olan (Multivendor) bir sunucu veya IP telefon arasında komşuluk ve port bilgilerini keşfetmek için hangi standart protokol etkinleştirilmelidir?",
+        log: "Neighbor Discovery Protocol Comparison:\n- Cisco Proprietary Layer 2 Discovery Protocol\n- IEEE 802.1AB Open Standard Discovery Protocol",
+        options: [
+          { text: "LLDP (Link Layer Discovery Protocol - IEEE 802.1AB)", correct: true },
+          { text: "CDP (Cisco Discovery Protocol)", correct: false },
+          { text: "VTP (VLAN Trunking Protocol)", correct: false },
+          { text: "STP (Spanning Tree Protocol)", correct: false }
+        ],
+        explanation: "CDP sadece Cisco cihazlara özeldir. Farklı üreticilerin bulunduğu heterojen ortamlarda IEEE 802.1AB standardı olan LLDP ('lldp run') kullanılır."
       }
     ];
 
@@ -3084,7 +3408,7 @@
       if (idx >= timeAttackScenarios.length) {
         clearInterval(taTimerInterval);
         playSoundFx('success');
-        alert(`🏆 TEBRİKLER! Arıza senaryolarını başarıyla tamamladınız!\nToplam Skor: ${taScore}`);
+        alert(`🏆 TEBRİKLER! Tüm arıza senaryolarını başarıyla çözdünüz!\nToplam Skor: ${taScore}`);
         document.getElementById('ta-welcome-box').style.display = 'block';
         document.getElementById('ta-active-scenario').style.display = 'none';
         return;
@@ -3133,18 +3457,20 @@
     // CISCO HARDENING & GÜVENLİK DENETİMİ
     // =========================================================================
     const hardeningRules = [
-      { id: 'pass_enc', title: 'Şifrelerin Şifrelenmesi', weight: 10, check: (c) => /\bservice\s+password-encryption\b/i.test(c), fix: 'service password-encryption', desc: 'Düz metin şifreleri Type 7 formatında saklar.' },
-      { id: 'ssh_only', title: 'VTY Telnet Engelleme & SSH Zorunluluğu', weight: 15, check: (c) => /\btransport\s+input\s+ssh\b/i.test(c) && !/\btransport\s+input\s+.*telnet/i.test(c) && !/\btransport\s+input\s+all\b/i.test(c), fix: 'line vty 0 15\n transport input ssh', desc: 'Telnet trafiğini kapatır, sadece SSH v2 erişimine izin verir.' },
+      { id: 'pass_enc', title: 'Şifrelerin Şifrelenmesi', weight: 8, check: (c) => /\bservice\s+password-encryption\b/i.test(c), fix: 'service password-encryption', desc: 'Düz metin şifreleri Type 7 formatında saklar.' },
+      { id: 'ssh_only', title: 'VTY Telnet Engelleme & SSH Zorunluluğu', weight: 12, check: (c) => /\btransport\s+input\s+ssh\b/i.test(c) && !/\btransport\s+input\s+.*telnet/i.test(c) && !/\btransport\s+input\s+all\b/i.test(c), fix: 'line vty 0 15\n transport input ssh', desc: 'Telnet trafiğini kapatır, sadece SSH v2 erişimine izin verir.' },
       { id: 'no_domain_lookup', title: 'DNS İsim Çözümleme Kapatma', weight: 5, check: (c) => /\bno\s+ip\s+domain[\s-]lookup\b/i.test(c), fix: 'no ip domain-lookup', desc: 'Hatalı komutlarda konsolun kilitlenmesini önler.' },
       { id: 'snmp_safe', title: 'Zayıf SNMP Toplulukları (public/private)', weight: 10, check: (c) => !/\bsnmp-server\s+community\s+(public|private)\b/i.test(c), fix: 'no snmp-server community public\nno snmp-server community private', desc: 'Varsayılan public/private SNMP dizgilerini kaldırır.' },
       { id: 'aaa_new_model', title: 'AAA Kimlik Doğrulama Çerçevesi', weight: 10, check: (c) => /\baaa\s+new-model\b/i.test(c), fix: 'aaa new-model\naaa authentication login default local', desc: 'Merkezi kimlik denetimi için AAA mimarisini etkinleştirir.' },
       { id: 'enable_secret', title: 'Güçlü Enable Secret Kullanımı', weight: 10, check: (c) => /\benable\s+secret\b/i.test(c), fix: 'enable secret C1sc0_Str0ng_P@ss!', desc: 'MD5/SHA256 ile hashlenmiş enable secret tanımlar.' },
-      { id: 'no_http', title: 'Güvensiz HTTP Web Servisi Kapatma', weight: 10, check: (c) => /\bno\s+ip\s+http\s+server\b/i.test(c) || /\bip\s+http\s+secure-server\b/i.test(c), fix: 'no ip http server\nip http secure-server', desc: 'Düz metin web yönetimini kapatır, HTTPS açar.' },
+      { id: 'no_http', title: 'Güvensiz HTTP Web Servisi Kapatma', weight: 8, check: (c) => /\bno\s+ip\s+http\s+server\b/i.test(c) || /\bip\s+http\s+secure-server\b/i.test(c), fix: 'no ip http server\nip http secure-server', desc: 'Düz metin web yönetimini kapatır, HTTPS açar.' },
       { id: 'no_source_route', title: 'IP Kaynak Yönlendirme Kapatma', weight: 5, check: (c) => /\bno\s+ip\s+source-route\b/i.test(c), fix: 'no ip source-route', desc: 'Paketin yönlendiricileri atlayarak sahte rota izlemesini engeller.' },
-      { id: 'log_buffered', title: 'Bellek İçi Olay Günlüğü (Logging Buffered)', weight: 5, check: (c) => /\blogging\s+buffered\b/i.test(c), fix: 'logging buffered 64000 informational', desc: 'Logları RAM tamponunda tutar, konsol donmasını önler.' },
-      { id: 'login_block', title: 'Brute-Force Parola Saldırı Koruması', weight: 10, check: (c) => /\blogin\s+block-for\b/i.test(c), fix: 'login block-for 120 attempts 3 within 60', desc: '60 saniyede 3 hatalı girişte erişimi 2 dakika kilitler.' },
-      { id: 'banner_motd', title: 'Yasal Uyarı Banner Tanımı', weight: 5, check: (c) => /\bbanner\s+(motd|login)\b/i.test(c), fix: 'banner motd ^C YETKISIZ ERISIM YASAKTIR. ^C', desc: 'Yasal kanıt ve uyarı metni tanımlar.' },
-      { id: 'tcp_keepalives', title: 'TCP Keepalive Denetimi', weight: 5, check: (c) => /\bservice\s+tcp-keepalives-(in|out)\b/i.test(c), fix: 'service tcp-keepalives-in\nservice tcp-keepalives-out', desc: 'Kopan VTY/SSH oturumlarının asılı kalmasını önler.' }
+      { id: 'log_buffered', title: 'Bellek İçi Olay Günlüğü (Logging Buffered)', weight: 6, check: (c) => /\blogging\s+buffered\b/i.test(c), fix: 'logging buffered 64000 informational', desc: 'Logları RAM tamponunda tutar, konsol donmasını önler.' },
+      { id: 'login_block', title: 'Brute-Force Parola Saldırı Koruması', weight: 8, check: (c) => /\blogin\s+block-for\b/i.test(c), fix: 'login block-for 120 attempts 3 within 60', desc: '60 saniyede 3 hatalı girişte erişimi 2 dakika kilitler.' },
+      { id: 'banner_motd', title: 'Yasal Uyarı Banner Tanımı', weight: 4, check: (c) => /\bbanner\s+(motd|login)\b/i.test(c), fix: 'banner motd ^C YETKISIZ ERISIM YASAKTIR. ^C', desc: 'Yasal kanıt ve uyarı metni tanımlar.' },
+      { id: 'tcp_keepalives', title: 'TCP Keepalive Denetimi', weight: 4, check: (c) => /\bservice\s+tcp-keepalives-(in|out)\b/i.test(c), fix: 'service tcp-keepalives-in\nservice tcp-keepalives-out', desc: 'Kopan VTY/SSH oturumlarının asılı kalmasını önler.' },
+      { id: 'dhcp_snooping', title: 'DHCP Snooping Koruması', weight: 5, check: (c) => /\bip\s+dhcp\s+snooping\b/i.test(c), fix: 'ip dhcp snooping\nip dhcp snooping vlan 1-4094', desc: 'Rogue DHCP sunucu saldırılarını engeller.' },
+      { id: 'stp_bpduguard', title: 'STP PortFast BPDU Guard', weight: 5, check: (c) => /\bspanning-tree\s+portfast\s+bpduguard\s+default\b/i.test(c) || /\bspanning-tree\s+bpduguard\s+enable\b/i.test(c), fix: 'spanning-tree portfast bpduguard default', desc: 'Kullanıcı portlarına switch takılarak STP ağacının bozulmasını önler.' }
     ];
 
     function loadSampleAuditConfig() {
@@ -3187,54 +3513,7 @@
     }
 
     // =========================================================================
-    // JINJA2 & CSV TOPLU CONFIG ÜRETİCİ
-    // =========================================================================
-    function loadSampleBulkTemplate() {
-      document.getElementById('bulk-template-input').value = `interface {{ port }}\n description {{ desc }}\n switchport mode access\n switchport access vlan {{ vlan }}\n spanning-tree portfast\n no shutdown\n!`;
-      document.getElementById('bulk-csv-input').value = `port,desc,vlan\nGigabitEthernet1/0/1,MUHASEBE_PC_01,10\nGigabitEthernet1/0/2,SATIS_PC_02,20\nGigabitEthernet1/0/3,YONETIM_YAZICI,30\nGigabitEthernet1/0/4,ARGE_MUHENDIS,40`;
-      renderBulkTemplate();
-    }
-
-    function renderBulkTemplate() {
-      playSoundFx('key');
-      const template = document.getElementById('bulk-template-input').value;
-      const csv = document.getElementById('bulk-csv-input').value.trim();
-      if (!template.trim() || !csv.trim()) { alert("Şablon ve CSV alanlarını doldurun."); return; }
-
-      const normalizedCsv = csv.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-      const lines = normalizedCsv.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      if (lines.length < 2) { alert("CSV'de en az 1 başlık ve 1 veri satırı olmalıdır."); return; }
-
-      let delimiter = ',';
-      if (lines[0].includes('\t')) delimiter = '\t';
-      else if (lines[0].includes(';')) delimiter = ';';
-
-      const headers = lines[0].split(delimiter).map(h => h.trim());
-      let renderedOutput = `! ========================================================\n! TOPLU KONFİGÜRASYON ÇIKTISI (${lines.length - 1} Cihaz/Port)\n! ========================================================\nconfigure terminal\n!\n`;
-
-      let count = 0;
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(delimiter).map(v => v.trim());
-        if (values.length === 0 || (values.length === 1 && values[0] === '')) continue;
-
-        let rowConfig = template;
-        headers.forEach((header, idx) => {
-          const val = values[idx] !== undefined ? values[idx] : '';
-          const regex = new RegExp(`{{\\s*${header}\\s*}}`, 'gi');
-          rowConfig = rowConfig.replace(regex, val);
-        });
-
-        renderedOutput += rowConfig + '\n';
-        count++;
-      }
-
-      renderedOutput += `end\nwrite memory\n`;
-      document.getElementById('bulk-rendered-output').innerText = renderedOutput;
-      document.getElementById('bulk-status-badge').innerText = `${count} Port / Blok Üretildi`;
-    }
-
-    // =========================================================================
-    // VERİ TRANSFER SÜRESİ
+    // VERİ TRANSFER SÜRESİ & BANT GENİŞLİĞİ BOYUTLANDIRICI
     // =========================================================================
     function switchTransferTab(mode) {
       playSoundFx('key');
@@ -3598,13 +3877,17 @@
     }
 
     // =========================================================================
-    // SOFTPHONE, SES SPEKTRUMU, SIP VE CDR MOTORLARI
+    // SOFTPHONE, GERÇEK DTMF VE CDR MOTORLARI
     // =========================================================================
     let isRegistered = true, callState = 'IDLE', callTimer = null, callSec = 0, audioAnimId = null;
 
     function drawAudioVisualizer() {
       const cv = document.getElementById('sp-audio-canvas');
       if (!cv) return;
+      if (!cv.width || cv.width === 0) {
+        cv.width = cv.offsetWidth || 300;
+        cv.height = cv.offsetHeight || 32;
+      }
       const ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
 
@@ -3630,15 +3913,17 @@
       audioAnimId = requestAnimationFrame(drawAudioVisualizer);
     }
 
-    function pressKey(k) { 
-      playSoundFx('key');
+    function pressDtmfKey(k) { 
+      playDtmfTone(k);
       document.getElementById('sp-display').innerText += k; 
     }
+
     function backspaceKey() { 
       playSoundFx('key');
       const d = document.getElementById('sp-display'); 
       d.innerText = d.innerText.slice(0, -1); 
     }
+
     function toggleSipRegister() {
       playSoundFx('key');
       isRegistered = !isRegistered;
@@ -3646,6 +3931,7 @@
       document.getElementById('btn-sip-reg').innerText = isRegistered ? 'KAYITLI' : 'KAYITSIZ';
       logSipTrace("TX", isRegistered ? "REGISTER sip:cucm.local SIP/2.0" : "REGISTER (Expires: 0)");
     }
+
     function startCall() {
       playSoundFx('key');
       if (callState === 'RINGING') {
@@ -3668,12 +3954,14 @@
         callTimer = setInterval(() => { callSec++; document.getElementById('sp-timer').innerText = `${String(Math.floor(callSec/60)).padStart(2,'0')}:${String(callSec%60).padStart(2,'0')}`; }, 1000);
       }, 700);
     }
+
     function simulateIncomingCall() {
       playSoundFx('alert');
       callState = 'RINGING';
       document.getElementById('sp-status-text').innerText = '🔔 GELEN ÇAĞRI: 2002';
       logSipTrace("RX", "INVITE sip:1001@10.10.20.101 SIP/2.0 (Arayan: 2002)");
     }
+
     function endCall() {
       playSoundFx('alert');
       callState = 'IDLE'; 
@@ -3683,40 +3971,25 @@
       document.getElementById('sp-status-text').innerText = 'KAYITLI — DAHİLİ 1001';
       logSipTrace("TX", "BYE sip:cucm.local SIP/2.0");
     }
+
     function toggleMute() { playSoundFx('key'); document.getElementById('btn-sp-mute').classList.toggle('active'); }
     function toggleHold() { playSoundFx('key'); document.getElementById('btn-sp-hold').classList.toggle('active'); logSipTrace("TX", "INVITE (sendonly / Bekletme) SIP/2.0"); }
+
     function logSipTrace(t, m) {
       const b = document.getElementById('sip-log-container');
       const d = document.createElement('div');
       d.innerHTML = `<span style="color:var(--text-dim);">[${new Date().toTimeString().split(' ')[0]}]</span> <b class="${t==='TX'?'sip-msg-tx':'sip-msg-rx'}">[${t}]</b> ${m}`;
       b.appendChild(d); b.scrollTop = b.scrollHeight;
     }
-    function clearSipLogs() { document.getElementById('sip-log-container').innerHTML = ''; }
 
-    let parsedSip = [];
-    function loadSampleSipLog() {
-      playSoundFx('key');
-      document.getElementById('sip-raw-input').value = `INVITE sip:2002@10.10.10.12 SIP/2.0\nFrom: <sip:1001@10.10.20.101>\nTo: <sip:2002@10.10.10.12>\n\nSIP/2.0 180 Ringing\n\nSIP/2.0 200 OK\n\nACK sip:2002@10.10.10.12 SIP/2.0`;
-      parseSipLogs();
-    }
-    function parseSipLogs() {
-      playSoundFx('key');
-      parsedSip = [];
-      document.getElementById('sip-raw-input').value.split('\n\n').forEach((b, idx) => {
-        if (b.trim()) parsedSip.push({ id: idx, first: b.trim().split('\n')[0], full: b.trim(), isRev: b.startsWith('SIP/2.0') });
-      });
-      let h = `<div class="seq-hosts"><div class="seq-host-tag">CLIENT (10.10.20.101)</div><div class="seq-host-tag">CUCM / GATEWAY (10.10.10.12)</div></div>`;
-      parsedSip.forEach((m) => {
-        h += `<div class="seq-step" onclick="playSoundFx('key'); document.getElementById('seq-details-box').innerHTML='<pre style=color:var(--tech-cyan); font-size:9px; font-family:var(--font-mono);>${escapeHtml(m.full)}</pre>'"><div class="${m.isRev?'seq-arrow-line reverse':'seq-arrow-line'}"></div><div class="seq-label">${m.first}</div></div>`;
-      });
-      document.getElementById('seq-diagram-container').innerHTML = h;
-    }
+    function clearSipLogs() { document.getElementById('sip-log-container').innerHTML = ''; }
 
     function loadSampleCDR() {
       playSoundFx('key');
       document.getElementById('cdr-raw-input').value = `1001,05321234567,145,ANSWERED,0.29\n1002,2005,42,ANSWERED,0.00\n1001,02129876543,0,BUSY,0.00\n1003,05559876543,310,ANSWERED,0.62`;
       parseCustomCDR();
     }
+
     function parseCustomCDR() {
       playSoundFx('key');
       const lines = document.getElementById('cdr-raw-input').value.trim().split('\n');
@@ -3749,7 +4022,7 @@
       document.getElementById('diff-new-input').value = `hostname Omurga-Switch-01\n!\nvlan 10\n name DATA_USERS\n!\nvlan 20\n name VOICE_PHONES\n!\ninterface GigabitEthernet1/0/1\n switchport mode access\n switchport access vlan 10\n switchport voice vlan 20\n spanning-tree portfast\n!\nrouter ospf 1\n network 10.10.10.0 0.0.0.255 area 0\n network 10.10.20.0 0.0.0.255 area 0`;
       runConfigDiff();
     }
-    
+
     function clearDiffInputs() {
       playSoundFx('key');
       document.getElementById('diff-old-input').value = '';
@@ -3844,7 +4117,7 @@
     }
 
     // =========================================================================
-    // CISCO RANGE, SYSLOG, TEMPLATES, ACL, TROUBLE, CRYPT
+    // CISCO RANGE, SYSLOG, TEMPLATES, ACL, CRYPT
     // =========================================================================
     function toggleRangeFields() {
       const m = document.getElementById('range-mode').value;
@@ -3853,7 +4126,7 @@
       document.getElementById('range-blackhole-sec').style.display = m === 'blackhole' ? 'block' : 'none';
     }
     function togglePortSecOpts() { document.getElementById('range-portsec-opts').style.display = document.getElementById('range-port-sec').checked ? 'grid' : 'none'; }
-    
+
     function generateCiscoRangeConfig() {
       playSoundFx('key');
       const m = document.getElementById('range-mode').value, r = document.getElementById('range-iface').value.trim(), d = document.getElementById('range-desc').value.trim();
@@ -3861,7 +4134,7 @@
       if (m === 'access') {
         const dv = document.getElementById('range-data-vlan').value, vv = document.getElementById('range-voice-vlan').value;
         out += `interface range ${r}\n description ${d}\n switchport mode access\n switchport access vlan ${dv}\n`;
-        if (vv > 0) out += ` switchport voice vlan ${vv}\n`;
+        if (vv && parseInt(vv, 10) > 0) out += ` switchport voice vlan ${vv}\n`;
         if (document.getElementById('range-stp-portfast').checked) out += ` spanning-tree portfast\n`;
         if (document.getElementById('range-stp-bpduguard').checked) out += ` spanning-tree bpduguard enable\n`;
         if (document.getElementById('range-port-sec').checked) out += ` switchport port-security\n switchport port-security maximum ${document.getElementById('range-mac-max').value}\n`;
@@ -3880,10 +4153,11 @@
       document.getElementById('syslog-raw-input').value = `*Jan 15 08:23:12: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down\n*Jan 15 08:23:13: %OSPF-5-ADJCHG: Process 1, Nbr 10.10.10.2 on Gi0/1 from FULL to DOWN\n*Jan 15 08:25:44: %PORT_SECURITY-2-PSECURE_VIOLATION: Security violation by MAC 0011.2233.4455 on Gi0/2`;
       parseCiscoSyslog();
     }
+
     function parseCiscoSyslog() {
       playSoundFx('key');
       const raw = document.getElementById('syslog-raw-input').value.trim(); if (!raw) return;
-      parsedSyslogs = []; let crit = 0, warn =0, info = 0;
+      parsedSyslogs = []; let crit = 0, warn = 0, info = 0;
       raw.split('\n').forEach((l, idx) => {
         const m = l.match(/%([A-Z0-9_]+)-([0-7])-([A-Z0-9_]+):\s*(.*)/);
         let sev = 5, mnem = "GENEL", msg = l;
@@ -3897,6 +4171,7 @@
       document.getElementById('syslog-info-count').innerText = info;
       filterSyslogResults();
     }
+
     function filterSyslogResults() {
       const filter = document.getElementById('syslog-filter-sev').value;
       let filtered = parsedSyslogs;
@@ -3918,6 +4193,7 @@
       const p = document.getElementById('cisco-tmpl-proto').value;
       document.getElementById('field-cisco-extra').style.display = (p === 'eigrp') ? 'none' : 'block';
     }
+
     function generateCiscoConfig() {
       playSoundFx('key');
       const p = document.getElementById('cisco-tmpl-proto').value, as = document.getElementById('cisco-tmpl-as').value, ifc = document.getElementById('cisco-tmpl-iface').value, ip = document.getElementById('cisco-tmpl-ip').value, ex = document.getElementById('cisco-tmpl-extra').value;
@@ -3938,20 +4214,6 @@
       if (t === 'standard') out += `access-list ${num} ${act} ${src.replace('/24', ' 0.0.0.255')}\n`;
       else out += `access-list ${num} ${act} ${document.getElementById('acl-proto').value} ${src.replace('/24', ' 0.0.0.255')} ${document.getElementById('acl-dst').value.replace('/24', ' 0.0.0.255')} ${document.getElementById('acl-port').value}\n`;
       document.getElementById('acl-output').innerText = out;
-    }
-
-    function troubleshootPhoneError() {
-      playSoundFx('key');
-      const v = document.getElementById('cisco-phone-error').value;
-      const kb = {
-        itl_error: { t: "ITL Sertifika Uyuşmazlığı", s: "1. 'Settings -> Security -> Trust List -> ITL File' menüsüne gidin.\n2. ** ** # ile kilidi açıp Erase yapın.\n3. CLI: `utils ipsec update-itl` çalıştırın." },
-        preserving: { t: "Preserving Connection / SRST", s: "1. L3 yönlendirmeyi kontrol edin.\n2. CallManager servisinin çalıştığını doğrulayın." },
-        tftp_timeout: { t: "TFTP Zaman Aşımı", s: "1. DHCP Option 150 IP'sini kontrol edin.\n2. UDP 69 portunun açık olduğunu doğrulayın." },
-        reg_rejected: { t: "Kayıt Reddedildi", s: "1. MAC adresinin doğru tanımlandığını kontrol edin." },
-        no_beacon: { t: "Ethernet Bağlantısı Yok", s: "1. Kabloyu ve PoE gücünü kontrol edin." }
-      };
-      const item = kb[v];
-      document.getElementById('phone-trouble-result').innerHTML = item ? `<b style="color:var(--tech-cyan);">${item.t}</b><pre style="color:var(--text-muted); margin-top:4px; font-size:10px; white-space:pre-wrap;">${item.s}</pre>` : '<div style="color:var(--text-dim); text-align:center; font-family:var(--font-mono);">Hata analizi için durum mesajı seçin.</div>';
     }
 
     const ciscoKey = [0x64, 0x73, 0x66, 0x4d, 0x38, 0x02, 0x06, 0xab, 0x22, 0x03, 0x9e, 0x25, 0x6d, 0x20, 0x30, 0x01];
@@ -4604,10 +4866,10 @@
         let matchCisco = trimmed.match(/^(\d+)\s+([0-9a-zA-Z.\-_?]+|\*)\s+(.*)/);
         let matchMtr = trimmed.match(/^(\d+)\.\|--\s+([0-9a-zA-Z.\-_?]+|\?\?\?)\s+([0-9.]+)%\s+(\d+)\s+([0-9.]+)\s+([0-9.]+)/);
         if (matchMtr) {
-          const hop = parseInt(matchMtr[1]), ip = matchMtr[2], loss = parseFloat(matchMtr[3]), avg = parseFloat(matchMtr[6]);
+          const hop = parseInt(matchMtr[1], 10), ip = matchMtr[2], loss = parseFloat(matchMtr[3]), avg = parseFloat(matchMtr[6]);
           hops.push({ hop, ip, avgRtt: isNaN(avg) ? 0 : avg, isDrop: loss >= 100 || ip.includes('?') });
         } else if (matchCisco) {
-          const hop = parseInt(matchCisco[1]), ip = matchCisco[2], rest = matchCisco[3];
+          const hop = parseInt(matchCisco[1], 10), ip = matchCisco[2], rest = matchCisco[3];
           let isDrop = ip === '*' || rest.includes('* * *');
           let rttVals = rest.match(/([0-9.]+)\s*ms/gi), avg = 0;
           if (rttVals && rttVals.length > 0) {
@@ -4653,30 +4915,6 @@
         `;
       });
       container.innerHTML = html;
-    }
-
-    // =========================================================================
-    // 802.1Q VLAN KAPSÜLLEME MOTORU
-    // =========================================================================
-    function updateVlanFrameViz() {
-      const vlanId = parseInt(document.getElementById('vf-vlan-id').value) || 10;
-      const pcp = parseInt(document.getElementById('vf-pcp').value) || 5;
-      const dei = parseInt(document.getElementById('vf-dei').value) || 0;
-      const tciInt = ((pcp & 7) << 13) | ((dei & 1) << 12) | (vlanId & 0x0FFF);
-      const tciHex = "0x" + tciInt.toString(16).toUpperCase().padStart(4, '0');
-
-      const tciBox = document.getElementById('vf-tci-box');
-      if (tciBox) tciBox.innerHTML = `<span style="color:var(--tech-emerald);">TCI: ${tciHex}</span><br><b>VID: ${vlanId}</b>`;
-      
-      const detailsBox = document.getElementById('vf-details-box');
-      if (detailsBox) {
-        detailsBox.innerHTML = `
-          <div class="res-row"><span class="res-label">Protokol Tanımlayıcı (TPID):</span><span class="res-val green">0x8100 (802.1Q Etiketli)</span></div>
-          <div class="res-row"><span class="res-label">Öncelik Seviyesi (PCP / CoS):</span><span class="res-val amber">PCP ${pcp} (${pcp === 5 ? 'Ses Medyası EF' : 'Standart Veri'})</span></div>
-          <div class="res-row"><span class="res-label">Drop İhlal Bayrağı (DEI):</span><span class="res-val">${dei} (Normal)</span></div>
-          <div class="res-row"><span class="res-label">VLAN Kimliği (VID):</span><span class="res-val green">VLAN ${vlanId}</span></div>
-        `;
-      }
     }
 
     // =========================================================================
@@ -4829,23 +5067,15 @@
     }
 
     // =========================================================================
-    // ÇOKLU ÜRETİCİ CLI VE TÜM HESAPLAYICILAR
+    // TÜM HESAPLAYICILAR VE SORGULAR
     // =========================================================================
-    function genVendor() {
-      playSoundFx('key');
-      const v = document.getElementById('cfg-vendor').value, i = document.getElementById('cfg-iface').value, ip = document.getElementById('cfg-ip').value, m = document.getElementById('cfg-mask').value;
-      if (v === 'cisco') document.getElementById('vendor-out').innerText = `interface ${i}\n description ZeroPacket_Config\n ip address ${ip} ${m}\n no shutdown`;
-      else if (v === 'juniper') document.getElementById('vendor-out').innerText = `set interfaces ${i} unit 0 family inet address ${ip}/24`;
-      else document.getElementById('vendor-out').innerText = `/ip address add address=${ip}/24 interface=${i}`;
-    }
-
     function ipToInt(ip) { return ip.split('.').reduce((acc, oct) => (acc << 8) + parseInt(oct, 10), 0) >>> 0; }
     function intToIp(int) { return [(int >>> 24) & 255, (int >>> 16) & 255, (int >>> 8) & 255, int & 255].join('.'); }
 
     function calcSubnet() {
       playSoundFx('key');
       const p = document.getElementById('subnet-ip').value.split('/');
-      const ip = p[0].trim(), cidr = parseInt(p[1]) || 24;
+      const ip = p[0].trim(), cidr = parseInt(p[1], 10) || 24;
       const maskInt = cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr)) >>> 0;
       const netInt = (ipToInt(ip) & maskInt) >>> 0;
       const bcastInt = (netInt | (~maskInt >>> 0)) >>> 0;
@@ -4875,33 +5105,58 @@
 
     function calcClass() {
       playSoundFx('key');
-      const oct = parseInt(document.getElementById('ipclass-val').value.split('.')[0]);
-      let cls = oct < 128 ? 'A Sınıfı (Özel/Genel)' : (oct < 192 ? 'B Sınıfı' : (oct < 224 ? 'C Sınıfı' : 'D/E Sınıfı (Multicast/Rezerve)'));
-      document.getElementById('ipclass-out').innerHTML = `<div class="res-row"><span class="res-label">IP Sınıfı:</span><span class="res-val green">${cls}</span></div>`;
+      const ipStr = document.getElementById('ipclass-val').value.trim();
+      const oct = parseInt(ipStr.split('.')[0], 10);
+      let cls = oct < 128 ? 'A Sınıfı (1.0.0.0 - 126.255.255.255)' : (oct < 192 ? 'B Sınıfı (128.0.0.0 - 191.255.255.255)' : (oct < 224 ? 'C Sınıfı (192.0.0.0 - 223.255.255.255)' : (oct < 240 ? 'D Sınıfı (Multicast: 224.0.0.0 - 239.255.255.255)' : 'E Sınıfı (Deneysel / Rezerve)')));
+      
+      let isCgnat = false;
+      const ipNum = ip2int(ipStr);
+      const cgnatStart = ip2int("100.64.0.0"), cgnatEnd = ip2int("100.127.255.255");
+      if (ipNum >= cgnatStart && ipNum <= cgnatEnd) isCgnat = true;
+
+      document.getElementById('ipclass-out').innerHTML = `
+        <div class="res-row"><span class="res-label">IP Sınıfı:</span><span class="res-val green">${cls}</span></div>
+        <div class="res-row"><span class="res-label">RFC 6598 CGNAT Durumu:</span><span class="res-val ${isCgnat ? 'amber' : 'green'}">${isCgnat ? '⚠️ CGNAT Taşıyıcı Bloğu (100.64.0.0/10)' : 'Standart IP Bloğu'}</span></div>
+      `;
     }
 
     function calcIPv6() {
       playSoundFx('key');
       const s = document.getElementById('ipv6-val').value.trim();
-      document.getElementById('ipv6-out').innerText = s.includes('::') ? s.replace('::', ':0000:0000:0000:') : s;
+      let expanded = s;
+      if (s.includes('::')) {
+        const parts = s.split('::');
+        const left = parts[0] ? parts[0].split(':') : [];
+        const right = parts[1] ? parts[1].split(':') : [];
+        const missing = 8 - (left.length + right.length);
+        const zeros = Array(missing).fill('0000');
+        const fullParts = [...left, ...zeros, ...right].map(p => p.padStart(4, '0'));
+        expanded = fullParts.join(':');
+      } else {
+        expanded = s.split(':').map(p => p.padStart(4, '0')).join(':');
+      }
+      document.getElementById('ipv6-out').innerHTML = `
+        <div class="res-row"><span class="res-label">Tam Genişletilmiş Format (128-Bit):</span><span class="res-val green" style="word-break:break-all;">${expanded}</span></div>
+      `;
     }
 
     function calcVLSM() {
       playSoundFx('key');
-      const ip = document.getElementById('vlsm-ip').value.split('/')[0], cnt = parseInt(document.getElementById('vlsm-count').value) || 4;
+      const ip = document.getElementById('vlsm-ip').value.split('/')[0], cnt = parseInt(document.getElementById('vlsm-count').value, 10) || 4;
       let h = '';
       for (let i = 0; i < cnt; i++) { 
-        h += `<div class="res-row"><span class="res-label">Alt Ağ #${i+1}:</span><span class="res-val green">${ip.substring(0, ip.lastIndexOf('.'))}.${i*16}/28</span></div>`; 
+        h += `<div class="res-row"><span class="res-label">Alt Ağ #${i+1}:</span><span class="res-val green">${ip.substring(0, ip.lastIndexOf('.'))}.${i*16}/28 (14 Kullanılabilir Host)</span></div>`; 
       }
       document.getElementById('vlsm-out').innerHTML = h;
     }
 
     function calcIPSec() {
-      const mtu = parseInt(document.getElementById('ipsec-mtu').value) || 1500;
+      const mtu = parseInt(document.getElementById('ipsec-mtu').value, 10) || 1500;
       const oh = document.getElementById('ipsec-mode').value === 'gre_ipsec' ? 76 : 56;
       document.getElementById('ipsec-out').innerHTML = `
         <div class="res-row"><span class="res-label">İdeal TCP MSS Boyutu:</span><span class="res-val green">${mtu - 40 - oh} Bayt</span></div>
-        <div class="res-row"><span class="res-label">Tünel Başlık Yükü:</span><span class="res-val amber">${oh} Bayt</span></div>
+        <div class="res-row"><span class="res-label">Tünel Başlık Yükü (Overhead):</span><span class="res-val amber">${oh} Bayt</span></div>
+        <div class="res-row"><span class="res-label">Cisco MSS Komutu:</span><span class="res-val" style="color:#fff;">ip tcp adjust-mss ${mtu - 40 - oh}</span></div>
       `;
     }
 
@@ -4909,12 +5164,15 @@
       playSoundFx('key');
       const m = document.getElementById('mac-val').value.trim().toUpperCase();
       let brand = "Bilinmeyen Üretici / Özel MAC";
-      if (m.startsWith("00:0C:29") || m.startsWith("00:50:56") || m.startsWith("00:05:69")) brand = "VMware, Inc.";
-      else if (m.startsWith("00:07:0E") || m.startsWith("00:00:0C") || m.startsWith("00:1E:F7")) brand = "Cisco Systems, Inc.";
-      else if (m.startsWith("00:1A:2B") || m.startsWith("CC:46:D6")) brand = "Cisco Telephony (IP Phone)";
+      if (m.startsWith("00:0C:29") || m.startsWith("00:50:56") || m.startsWith("00:05:69")) brand = "VMware, Inc. (ESXi / Fusion)";
+      else if (m.startsWith("00:07:0E") || m.startsWith("00:00:0C") || m.startsWith("00:1E:F7") || m.startsWith("F4:4B:2A")) brand = "Cisco Systems, Inc.";
+      else if (m.startsWith("00:1A:2B") || m.startsWith("CC:46:D6") || m.startsWith("70:69:79")) brand = "Cisco Telephony (IP Phone 7800/8800)";
       else if (m.startsWith("08:00:27") || m.startsWith("0A:00:27")) brand = "Oracle VirtualBox";
-      else if (m.startsWith("F8:F0:82") || m.startsWith("FC:EC:DA")) brand = "Apple, Inc.";
-      else if (m.startsWith("B8:27:EB") || m.startsWith("DC:A6:32")) brand = "Raspberry Pi Foundation";
+      else if (m.startsWith("F8:F0:82") || m.startsWith("FC:EC:DA") || m.startsWith("A4:83:E7")) brand = "Apple, Inc.";
+      else if (m.startsWith("B8:27:EB") || m.startsWith("DC:A6:32") || m.startsWith("E4:5F:01")) brand = "Raspberry Pi Foundation";
+      else if (m.startsWith("00:09:0F") || m.startsWith("70:4C:A5")) brand = "Fortinet Technologies, Inc.";
+      else if (m.startsWith("AC:4B:C8") || m.startsWith("D4:04:FF")) brand = "Palo Alto Networks";
+      else if (m.startsWith("48:8B:5A") || m.startsWith("00:0C:42")) brand = "MikroTik";
 
       document.getElementById('mac-out').innerHTML = `
         <div class="res-row"><span class="res-label">Sorgulanan MAC:</span><span class="res-val">${m}</span></div>
@@ -4924,7 +5182,7 @@
 
     function calcWild() {
       playSoundFx('key');
-      const w = document.getElementById('wild-val').value.split('.').map(p => 255 - parseInt(p)).join('.');
+      const w = document.getElementById('wild-val').value.split('.').map(p => 255 - parseInt(p, 10)).join('.');
       document.getElementById('wild-out').innerHTML = `<div class="res-row"><span class="res-label">Wildcard Mask Karşılığı:</span><span class="res-val green">${w}</span></div>`;
     }
 
@@ -4938,19 +5196,20 @@
         if (!cmd) return;
         let res = "";
 
-        if (cmd === 'yardim' || cmd === 'help') res = "Komutlar: terminal, ssh, telnet, audit, bulk, transfer, overlap, pinout, ports, diff, pcap, lab, traceroute, ping <ip>, cucm, temizle";
+        if (cmd === 'yardim' || cmd === 'help') res = "Komutlar: terminal, ssh, telnet, audit, transfer, overlap, pinout, ports, diff, pcap, lab, traceroute, ping <ip>, cucm, softphone, wifi, temizle";
         else if (cmd === 'terminal' || cmd === 'ssh' || cmd === 'telnet' || cmd === 'moba') { showPanel('session-terminal'); res = "MobaXterm Oturum & Terminal Yöneticisi açıldı."; }
-        else if (cmd === 'pcap') { showPanel('pcap-viewer'); res = "PCAP / Wireshark İnceleyici açıldı."; }
+        else if (cmd === 'pcap' || cmd === 'wireshark') { showPanel('pcap-viewer'); res = "PCAP / Wireshark İnceleyici açıldı."; }
         else if (cmd === 'lab' || cmd === 'speedrun') { showPanel('time-attack'); res = "Speed Run / Time Attack modülü açıldı."; }
-        else if (cmd === 'audit') { showPanel('config-auditor'); res = "Yapılandırma Güvenlik Denetçisi açıldı."; }
-        else if (cmd === 'bulk') { showPanel('bulk-templater'); res = "Toplu Şablon ve CSV Üretici açıldı."; }
+        else if (cmd === 'audit' || cmd === 'hardening') { showPanel('config-auditor'); res = "Yapılandırma Güvenlik Denetçisi açıldı."; }
         else if (cmd === 'transfer') { showPanel('transfer-sizer'); res = "Veri Aktarım Süresi hesaplayıcı açıldı."; }
         else if (cmd === 'overlap') { showPanel('subnet-overlap'); res = "IP Çakışma Dedektörü açıldı."; }
         else if (cmd === 'pinout') { showPanel('phy-pinout'); res = "Katman-1 Pinout rehberi açıldı."; }
-        else if (cmd === 'ports') { showPanel('firewall-ports'); res = "Güvenlik Duvarı Port Matrisi açıldı."; }
+        else if (cmd === 'ports' || cmd === 'firewall') { showPanel('firewall-ports'); res = "Güvenlik Duvarı Port Matrisi açıldı."; }
         else if (cmd === 'diff') { showPanel('cisco-diff'); res = "Yapılandırma Karşılaştırıcı (Diff) açıldı."; }
         else if (cmd === 'traceroute') { showPanel('traceroute'); res = "Traceroute çizici açıldı."; }
         else if (cmd === 'cucm') { showPanel('cucm-master'); res = "CUCM Yönetim Merkezi açıldı."; }
+        else if (cmd === 'softphone' || cmd === 'phone') { showPanel('softphone'); res = "WebRTC Softphone Terminali açıldı."; }
+        else if (cmd === 'wifi') { showPanel('wifi-analyzer'); res = "Wi-Fi Radar & Sönümleme Analizörü açıldı."; }
         else if (cmd.startsWith('ping')) { runDefaultPingSimulation(); res = `Ping simülasyonu başlatıldı: ${cmd.split(' ')[1] || '8.8.8.8'}`; }
         else if (cmd === 'temizle' || cmd === 'clear') { logs.innerHTML = ""; inp.value = ""; return; }
         else res = `Bilinmeyen komut: '${cmd}'. 'yardim' yazabilirsiniz.`;
@@ -4970,10 +5229,18 @@
       toggleAclFields();
       toggleCryptPlaceholder();
       loadSampleAuditConfig();
-      loadSampleBulkTemplate();
+      loadSampleCDR();
+      loadSampleDiff();
       calcTransferTime();
       runSubnetOverlapCheck();
       populateFirewallPortsTable();
+      calcSubnet();
+      calcClass();
+      calcIPv6();
+      calcVLSM();
+      calcIPSec();
+      calcMAC();
+      calcWild();
       drawAudioVisualizer();
       initMobaTerminalModule();
       setTimeout(initTopologyEngine, 200);
