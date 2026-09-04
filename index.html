@@ -32,6 +32,7 @@
       --tech-rose-glow: rgba(255, 51, 102, 0.2);
       --tech-blue: #38bdf8;
       --tech-purple: #c084fc;
+      --tech-orange: #f59e0b;
 
       --font-mono: 'JetBrains Mono', Consolas, 'Fira Code', Menlo, Monaco, 'Courier New', monospace;
       --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -577,7 +578,7 @@
       gap: 6px;
     }
 
-    /* DATACENTER 42U RACK PLANNER CSS */
+    /* 42U RACK CABINET CSS */
     .rack-frame {
       width: 320px;
       background: #020409;
@@ -728,7 +729,6 @@
           <button onclick="showPanel('recovery-hub')" id="btn-recovery-hub" class="nav-btn ops-btn"><span>🔄 Cihaz Kurtarma & Reset (Recovery Hub)</span><span class="btn-tag">RECOVER</span></button>
         </div>
 
-        <!-- 4. KATEGORİ: SAHA TEKNİSYENİ & VERİ MERKEZİ (DATACENTER / L1-L2 OPS) -->
         <div class="rack-group">
           <div class="rack-header dc"><span>[01] SAHA & VERİ MERKEZİ (L1-L2 OPS)</span><span class="btn-tag">DC-OPS</span></div>
           <button onclick="showPanel('dc-power')" id="btn-dc-power" class="nav-btn dc-btn"><span>⚡ Güç (PDU/kW), UPS & Isı (BTU)</span><span class="btn-tag">M-24</span></button>
@@ -806,7 +806,6 @@
           </div>
 
           <div class="directory-grid">
-            <!-- YENİ EKLENEN SAHA TEKNİSYENİ & VERİ MERKEZİ GRUBU -->
             <div class="dir-category">
               <div class="dir-category-title" style="color: #f59e0b;">[01] SAHA TEKNİSYENİ & VERİ MERKEZİ (DATACENTER / L1-L2 OPS)</div>
               <div class="dir-item" onclick="showPanel('dc-power')"><div class="dir-item-header"><span class="dir-item-title">⚡ Veri Merkezi Güç, UPS & BTU Isı Yükü</span><span class="dir-item-tag" style="color:#f59e0b; border-color:#f59e0b;">M-24</span></div><div class="dir-item-desc">Kabin başı PDU akımı, tek/üç faz kW hesabı, UPS kVA boyutlandırma ve gereken klima soğutma gücü (BTU/saat).</div></div>
@@ -864,10 +863,6 @@
             </div>
           </div>
         </div>
-
-        <!-- ========================================================================= -->
-        <!-- YENİ EKLENEN 3 SAHA TEKNİSYENİ & VERİ MERKEZİ PANELİ -->
-        <!-- ========================================================================= -->
 
         <!-- M-24: VERİ MERKEZİ GÜÇ, UPS & BTU HESAPLAYICI -->
         <div id="panel-dc-power" class="panel">
@@ -1063,7 +1058,7 @@
           </div>
         </div>
 
-        <!-- DİĞER MEVCUT PANELLER (BİREBİR KORUNMUŞTUR) -->
+        <!-- GERÇEK KONSOL -->
         <div id="panel-real-console" class="panel">
           <div class="panel-header">
             <div>
@@ -1117,6 +1112,7 @@
           </div>
         </div>
 
+        <!-- MINI IPAM -->
         <div id="panel-mini-ipam" class="panel">
           <div class="panel-header">
             <div>
@@ -1208,6 +1204,7 @@
           </div>
         </div>
 
+        <!-- AĞ BAKIM TAKVİMİ -->
         <div id="panel-calendar" class="panel">
           <div class="panel-header">
             <div>
@@ -1289,6 +1286,7 @@
           </div>
         </div>
 
+        <!-- BACKUP & ROLLBACK HUB -->
         <div id="panel-backup-rollback" class="panel">
           <div class="panel-header">
             <div>
@@ -1410,6 +1408,7 @@
           </div>
         </div>
 
+        <!-- UZMAN TEŞHİS MOTORU -->
         <div id="panel-expert-engine" class="panel">
           <div class="panel-header">
             <div>
@@ -1482,6 +1481,7 @@
           </div>
         </div>
 
+        <!-- PCAP / WIRESHARK İNCELEYİCİ -->
         <div id="panel-pcap-viewer" class="panel">
           <div class="panel-header">
             <div>
@@ -1551,6 +1551,7 @@
           </div>
         </div>
 
+        <!-- RECOVERY HUB -->
         <div id="panel-recovery-hub" class="panel">
           <div class="panel-header">
             <div>
@@ -1567,7 +1568,7 @@
             <button class="tab-btn" id="rec-tab-switch" onclick="switchRecoveryTab('switch')">🔀 Catalyst Switch (Mode Buton)</button>
             <button class="tab-btn" id="rec-tab-rommon" onclick="switchRecoveryTab('rommon')">⚡ ROMMON & TFTPdnld İmaj</button>
             <button class="tab-btn" id="rec-tab-asa" onclick="switchRecoveryTab('asa')">🛡️ Cisco ASA & Fortigate Reset</button>
-            <button class="tab-btn" id="rec-tab-confreg" onclick="switchRecoveryTab('confreg')">🧮 Confreg Register Hesaplayıcı</button>
+            <button class="tab-btn" id="rec-confreg-tab" onclick="switchRecoveryTab('confreg')">🧮 Confreg Register Hesaplayıcı</button>
           </div>
 
           <div id="rec-sec-router" class="rec-sub-sec">
@@ -1734,6 +1735,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 1. MODÜL: CISCO HARDENING -->
         <div id="panel-config-auditor" class="panel">
           <div class="panel-header">
             <div>
@@ -1776,6 +1778,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 2. MODÜL: TRANSFER SIZER -->
         <div id="panel-transfer-sizer" class="panel">
           <div class="panel-header">
             <div>
@@ -1840,6 +1843,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 3. MODÜL: SUBNET OVERLAP -->
         <div id="panel-subnet-overlap" class="panel">
           <div class="panel-header">
             <div>
@@ -1878,6 +1882,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 4. MODÜL: PINOUT -->
         <div id="panel-phy-pinout" class="panel">
           <div class="panel-header">
             <div>
@@ -1954,6 +1959,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 5. MODÜL: GÜVENLİK DUVARI HIZLI PORT MATRİSİ -->
         <div id="panel-firewall-ports" class="panel">
           <div class="panel-header">
             <div>
@@ -2013,6 +2019,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 6. MODÜL: CONFIG DIFF -->
         <div id="panel-cisco-diff" class="panel">
           <div class="panel-header">
             <div>
@@ -2058,6 +2065,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 7. MODÜL: CISCO RANGE -->
         <div id="panel-cisco-range" class="panel">
           <div class="panel-header">
             <div>
@@ -2111,6 +2119,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 8. MODÜL: CISCO SYSLOG -->
         <div id="panel-cisco-syslog" class="panel">
           <div class="panel-header">
             <div>
@@ -2152,6 +2161,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 9. MODÜL: CISCO TEMPLATES -->
         <div id="panel-cisco-templates" class="panel">
           <div class="panel-header"><div class="panel-title">// CISCO IOS ROUTING PROTOKOL TASLAKLARI</div><button onclick="copyToClipboard('cisco-tmpl-output')" class="btn btn-secondary">📋 Kopyala</button></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -2179,6 +2189,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 10. MODÜL: CISCO ACL -->
         <div id="panel-cisco-acl" class="panel">
           <div class="panel-header"><div class="panel-title">// ERİŞİM LİSTESİ (ACL) MATRİSİ</div><button onclick="copyToClipboard('acl-output')" class="btn btn-secondary">📋 Kopyala</button></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -2201,6 +2212,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 11. MODÜL: CISCO CRYPT -->
         <div id="panel-cisco-crypt" class="panel">
           <div class="panel-header"><div class="panel-title">// CISCO TYPE 7 ŞİFRE ÇÖZÜCÜ / KODLAYICI</div></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -2219,6 +2231,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 12. MODÜL: TOPOLOJİ VE CANLI FAILOVER SİMÜLATÖRÜ -->
         <div id="panel-canvas" class="panel">
           <div class="panel-header">
             <div>
@@ -2271,6 +2284,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 13. MODÜL: TRACEROUTE & MTR -->
         <div id="panel-traceroute" class="panel">
           <div class="panel-header">
             <div>
@@ -2307,6 +2321,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 14. MODÜL: WIFI RADAR -->
         <div id="panel-wifi-analyzer" class="panel">
           <div class="panel-header">
             <div>
@@ -2345,6 +2360,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 15. MODÜL: DİNAMİK NAT & PAT -->
         <div id="panel-nat" class="panel">
           <div class="panel-header">
             <div class="panel-title">// DİNAMİK NAT & PAT OTURUM SİMÜLATÖRÜ</div>
@@ -2372,6 +2388,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 16. MODÜL: CIDR ALT AĞ HESAPLAYICI -->
         <div id="panel-subnet" class="panel">
           <div class="panel-header"><div class="panel-title">// CIDR ALT AĞ HESAPLAYICI</div></div>
           <div class="form-group"><label>IP / CIDR</label><input type="text" id="subnet-ip" value="192.168.10.35/22"></div>
@@ -2379,6 +2396,7 @@ write memory</pre>
           <div class="result-box" id="subnet-out"></div>
         </div>
 
+        <!-- 17. MODÜL: VLSM ALT AĞ BÖLÜCÜ -->
         <div id="panel-vlsm" class="panel">
           <div class="panel-header"><div class="panel-title">// VLSM ALT AĞ BÖLÜCÜ</div></div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
@@ -2389,6 +2407,7 @@ write memory</pre>
           <div class="result-box" id="vlsm-out"></div>
         </div>
 
+        <!-- 18. MODÜL: WILDCARD MASKE TERSLEYİCİ -->
         <div id="panel-wildcard" class="panel">
           <div class="panel-header">
             <div>
@@ -2438,6 +2457,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 19. MODÜL: MAC OUI DONANIM SORGULAMA -->
         <div id="panel-mac" class="panel">
           <div class="panel-header">
             <div>
@@ -2478,6 +2498,7 @@ write memory</pre>
           </div>
         </div>
 
+        <!-- 20. MODÜL: IPSEC & GRE MSS BOYUTLANDIRICI -->
         <div id="panel-ipsec" class="panel">
           <div class="panel-header">
             <div>
@@ -2491,16 +2512,6 @@ write memory</pre>
             <div>
               <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:6px;">
                 <div class="form-group">
-		
-		İşte dosyanızın kaldığı yerden (panel-ipsec panelinin giriş alanından) dosya
-sonuna kadar olan eksiksiz, kesintisiz ve tam kod bloğu.
-
-Bu bölüm; IPSec & GRE MSS Boyutlandırıcı, IPv6 Analizör, IP Sınıfı & CGNAT
-Analizi panellerini, yeni eklenen 3 Saha & Veri Merkezi (Datacenter / L1-L2 Ops)
-modülünün tam JavaScript motorlarını (calcDcPower, renderRackCabinet,
-addDeviceToRack, saveFieldNotes vb.), ses efektlerini, boot sekansını ve
-tümleşik sistem başlatıcısını içerir:
-
                   <label>Fiziksel Hat Arayüz MTU'su</label>
                   <input type="number" id="ipsec-mtu" value="1500" oninput="calcIPSec()">
                 </div>
@@ -2546,6 +2557,7 @@ tümleşik sistem başlatıcısını içerir:
           </div>
         </div>
 
+        <!-- 21. MODÜL: IPV6 GENİŞLETİCİ / ANALİZÖR -->
         <div id="panel-ipv6" class="panel">
           <div class="panel-header">
             <div>
@@ -2586,6 +2598,7 @@ tümleşik sistem başlatıcısını içerir:
           </div>
         </div>
 
+        <!-- 22. MODÜL: IP SINIFI VE CGNAT ANALİZİ -->
         <div id="panel-ipclass" class="panel">
           <div class="panel-header">
             <div>
@@ -3356,6 +3369,3360 @@ tümleşik sistem başlatıcısını içerir:
       area.value += tmpl;
       saveFieldNotes();
       area.scrollTop = area.scrollHeight;
+    }
+
+    // =========================================================================
+    // ZEROCONSOLE WEB SERIAL DONANIM MOTORU (GERÇEK KABLO KONSOLU)
+    // =========================================================================
+    let serialPort = null;
+    let serialReader = null;
+    let serialWriter = null;
+    let serialIsConnected = false;
+    let serialSessionLogBuffer = "";
+
+    async function toggleSerialConnection() {
+      if (!("serial" in navigator)) {
+        alert("⚠️ Web Serial API bu tarayıcıda desteklenmiyor!\nLütfen Google Chrome, Microsoft Edge, Opera veya Brave kullanın.\n(Air-Gapped ortamlarda bu tarayıcılar USB-Konsol kablolarına doğrudan donanımsal erişim sağlar).");
+        return;
+      }
+
+      if (serialIsConnected) {
+        await disconnectSerialPort();
+      } else {
+        await connectSerialPort();
+      }
+    }
+
+    async function connectSerialPort() {
+      try {
+        const baudRate = parseInt(document.getElementById('serial-baud-rate').value, 10) || 9600;
+        const flowControl = document.getElementById('serial-flow-control').value;
+
+        serialPort = await navigator.serial.requestPort();
+        
+        await serialPort.open({
+          baudRate: baudRate,
+          dataBits: 8,
+          stopBits: 1,
+          parity: "none",
+          flowControl: flowControl
+        });
+
+        serialIsConnected = true;
+        updateSerialUI(true);
+        appendSerialTerminalText(`\n[+] DONANIM PORTU BAĞLANDI (Baud: ${baudRate}, 8-N-1, Akış: ${flowControl})\n[+] Gerçek Switch/Router konsoluna doğrudan bağlandınız.\n\n`);
+        playSoundFx('success');
+
+        const term = document.getElementById('serial-term-output');
+        if (term) term.focus();
+
+        readSerialStream();
+      } catch (err) {
+        console.error("Seri Port Bağlantı Hatası:", err);
+        if (err.name !== 'NotFoundError') {
+          alert("Port açılırken hata oluştu: " + err.message);
+        }
+      }
+    }
+
+    async function disconnectSerialPort() {
+      try {
+        serialIsConnected = false;
+        if (serialReader) {
+          await serialReader.cancel();
+          serialReader = null;
+        }
+        if (serialWriter) {
+          await serialWriter.close();
+          serialWriter = null;
+        }
+        if (serialPort) {
+          await serialPort.close();
+          serialPort = null;
+        }
+        updateSerialUI(false);
+        appendSerialTerminalText(`\n[-] SERİ PORT BAĞLANTISI KESİLDİ.\n`);
+        playSoundFx('alert');
+      } catch (err) {
+        console.error("Port kapatma hatası:", err);
+      }
+    }
+
+    async function readSerialStream() {
+      const textDecoder = new TextDecoder();
+      while (serialPort && serialPort.readable && serialIsConnected) {
+        try {
+          serialReader = serialPort.readable.getReader();
+          while (true) {
+            const { value, done } = await serialReader.read();
+            if (done) break;
+            if (value) {
+              const text = textDecoder.decode(value);
+              appendSerialTerminalText(text);
+            }
+          }
+        } catch (err) {
+          console.warn("Seri akış okuma sonlandı:", err);
+          break;
+        } finally {
+          if (serialReader) {
+            serialReader.releaseLock();
+          }
+        }
+      }
+    }
+
+    async function writeSerialData(str) {
+      if (!serialPort || !serialPort.writable || !serialIsConnected) {
+        alert("Cihaz bağlı değil! Lütfen önce 'Konsol Portu Seç & Bağlan' butonuna tıklayın.");
+        return;
+      }
+      try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(str);
+        const writer = serialPort.writable.getWriter();
+        await writer.write(data);
+        writer.releaseLock();
+      } catch (err) {
+        console.error("Seri porta veri gönderme hatası:", err);
+      }
+    }
+
+    async function sendSerialBreak() {
+      if (!serialPort || !serialIsConnected) {
+        alert("BREAK sinyali göndermek için önce seri porta bağlı olmalısınız.");
+        return;
+      }
+      try {
+        await serialPort.setSignals({ break: true });
+        setTimeout(async () => {
+          await serialPort.setSignals({ break: false });
+          appendSerialTerminalText(`\n[!] DONANIMSAL SERIAL BREAK SİNYALİ GÖNDERİLDİ [ROMMON TETİKLEMESİ]\n`);
+          playSoundFx('alert');
+        }, 250);
+      } catch (err) {
+        alert("Break sinyali gönderilemedi: " + err.message);
+      }
+    }
+
+    function appendSerialTerminalText(txt) {
+      const term = document.getElementById('serial-term-output');
+      if (!term) return;
+      term.textContent += txt;
+      serialSessionLogBuffer += txt;
+      term.scrollTop = term.scrollHeight;
+    }
+
+    function clearSerialScreen() {
+      const term = document.getElementById('serial-term-output');
+      if (term) term.textContent = "";
+      playSoundFx('key');
+    }
+
+    function downloadSerialSessionLog() {
+      if (!serialSessionLogBuffer) {
+        alert("Henüz kaydedilecek bir oturum verisi yok.");
+        return;
+      }
+      const blob = new Blob([serialSessionLogBuffer], { type: "text/plain;charset=utf-8" });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `zeroconsole_session_${Date.now()}.txt`;
+      a.click();
+      playSoundFx('success');
+    }
+
+    function updateSerialUI(connected) {
+      const statusEl = document.getElementById('serial-conn-status');
+      const btn = document.getElementById('btn-serial-connect');
+      if (statusEl && btn) {
+        if (connected) {
+          statusEl.innerText = "● BAĞLI (CANLI SERİ HAT)";
+          statusEl.style.color = "var(--tech-emerald)";
+          btn.innerText = "❌ Bağlantıyı Kes";
+          btn.style.background = "var(--tech-rose)";
+          btn.style.color = "#fff";
+        } else {
+          statusEl.innerText = "● BAĞLI DEĞİL";
+          statusEl.style.color = "var(--tech-rose)";
+          btn.innerText = "🔌 Konsol Portu Seç & Bağlan";
+          btn.style.background = "var(--tech-emerald)";
+          btn.style.color = "#020408";
+        }
+      }
+    }
+
+    function handleSerialRawKeyDown(e) {
+      if (!serialIsConnected) return;
+      
+      if (e.key === "Tab") {
+        e.preventDefault();
+        writeSerialData("\t");
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        writeSerialData("\r");
+      } else if (e.key === "Backspace") {
+        e.preventDefault();
+        writeSerialData("\b");
+      } else if (e.ctrlKey && e.key === "c") {
+        e.preventDefault();
+        writeSerialData("\x03");
+      } else if (e.ctrlKey && e.key === "z") {
+        e.preventDefault();
+        writeSerialData("\x1A");
+      } else if (e.key.length === 1 && !e.altKey && !e.metaKey) {
+        writeSerialData(e.key);
+      }
+    }
+
+    function handleSerialQuickInputKey(e) {
+      if (e.key === "Enter") {
+        sendSerialQuickInput();
+      }
+    }
+
+    function sendSerialQuickInput() {
+      const input = document.getElementById('serial-quick-input');
+      if (!input) return;
+      const val = input.value;
+      input.value = "";
+      if (val) {
+        writeSerialData(val + "\r");
+      }
+    }
+
+    // =========================================================================
+    // ÇEVRİMDIŞI MİNİ IPAM MOTORU
+    // =========================================================================
+    let ipamDatabase = {};
+    let activeIpamSubnet = "192.168.1.0/24";
+
+    function initIpamEngine() {
+      try {
+        const stored = localStorage.getItem('zp_mini_ipam_db_v1');
+        if (stored) {
+          ipamDatabase = JSON.parse(stored);
+        } else {
+          createDefaultIpamSubnet("192.168.1.0/24");
+          createDefaultIpamSubnet("10.10.10.0/24");
+        }
+      } catch (e) {
+        ipamDatabase = {};
+        createDefaultIpamSubnet("192.168.1.0/24");
+      }
+      populateSubnetDropdown();
+      renderIpamGrid();
+    }
+
+    function saveIpamToStorage() {
+      try {
+        localStorage.setItem('zp_mini_ipam_db_v1', JSON.stringify(ipamDatabase));
+      } catch(e) {}
+    }
+
+    function createDefaultIpamSubnet(subnetCidr) {
+      const base = subnetCidr.split('/')[0].replace(/\.\d+$/, '');
+      const records = {};
+
+      records[1] = { ip: `${base}.1`, status: "gw", hostname: "Default-Gateway", mac: "00:00:0C:07:AC:01", vlan: 10, desc: "Omurga Router HSRP VIP" };
+      records[2] = { ip: `${base}.2`, status: "static", hostname: "Core-Switch-01", mac: "F4:4B:2A:11:22:01", vlan: 10, desc: "Yönetim Switchportu" };
+      records[10] = { ip: `${base}.10`, status: "static", hostname: "DC-DNS-Server", mac: "00:50:56:AB:12:34", vlan: 10, desc: "Active Directory & DNS" };
+      
+      for (let i = 100; i <= 140; i++) {
+        records[i] = { ip: `${base}.${i}`, status: "dhcp", hostname: `DHCP-Pool-${i}`, mac: "", vlan: 10, desc: "Dinamik İstemci Havuzu" };
+      }
+
+      ipamDatabase[subnetCidr] = records;
+      saveIpamToStorage();
+    }
+
+    function populateSubnetDropdown() {
+      const select = document.getElementById('ipam-subnet-select');
+      if (!select) return;
+      select.innerHTML = "";
+      Object.keys(ipamDatabase).forEach(cidr => {
+        const opt = document.createElement('option');
+        opt.value = cidr;
+        opt.innerText = cidr;
+        if (cidr === activeIpamSubnet) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function changeIpamSubnet() {
+      playSoundFx('key');
+      activeIpamSubnet = document.getElementById('ipam-subnet-select').value;
+      renderIpamGrid();
+    }
+
+    function addNewIpamSubnetPrompt() {
+      const newSubnet = prompt("Eklemek istediğiniz /24 alt ağını girin (Örn: 172.16.20.0/24):", "172.16.20.0/24");
+      if (!newSubnet || !newSubnet.includes('/24')) {
+        alert("Lütfen geçerli bir /24 formatı girin (Örn: 10.0.1.0/24)");
+        return;
+      }
+      if (!ipamDatabase[newSubnet]) {
+        createDefaultIpamSubnet(newSubnet);
+        activeIpamSubnet = newSubnet;
+        populateSubnetDropdown();
+        renderIpamGrid();
+        playSoundFx('success');
+      } else {
+        alert("Bu alt ağ zaten mevcut.");
+      }
+    }
+
+    function renderIpamGrid() {
+      const container = document.getElementById('ipam-grid-container');
+      if (!container) return;
+
+      const currentRecords = ipamDatabase[activeIpamSubnet] || {};
+      const base = activeIpamSubnet.split('/')[0].replace(/\.\d+$/, '');
+      const filterQuery = (document.getElementById('ipam-search-filter')?.value || "").toLowerCase().trim();
+
+      let html = "";
+      let freeCount = 0, staticCount = 0, dhcpCount = 0, gwCount = 0, reservedCount = 0;
+
+      for (let hostId = 1; hostId <= 254; hostId++) {
+        const rec = currentRecords[hostId];
+        const fullIp = `${base}.${hostId}`;
+
+        let status = "free";
+        let hostname = "";
+        let mac = "";
+        let desc = "";
+
+        if (rec) {
+          status = rec.status;
+          hostname = rec.hostname || "";
+          mac = rec.mac || "";
+          desc = rec.desc || "";
+        }
+
+        if (status === "free") freeCount++;
+        else if (status === "static") staticCount++;
+        else if (status === "dhcp") dhcpCount++;
+        else if (status === "gw") gwCount++;
+        else if (status === "reserved") reservedCount++;
+
+        if (filterQuery) {
+          const match = fullIp.includes(filterQuery) || hostname.toLowerCase().includes(filterQuery) || mac.toLowerCase().includes(filterQuery) || desc.toLowerCase().includes(filterQuery);
+          if (!match) continue;
+        }
+
+        html += `
+          <div class="ipam-cell ipam-${status}" onclick="selectIpamCell(${hostId})" title="${fullIp} | ${hostname || 'Boş'} | ${desc}">
+            <span>.${hostId}</span>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      updateIpamStats(freeCount, staticCount, dhcpCount, gwCount, reservedCount);
+    }
+
+    function selectIpamCell(hostId) {
+      playSoundFx('key');
+      const base = activeIpamSubnet.split('/')[0].replace(/\.\d+$/, '');
+      const fullIp = `${base}.${hostId}`;
+      const rec = (ipamDatabase[activeIpamSubnet] && ipamDatabase[activeIpamSubnet][hostId]) || null;
+
+      document.getElementById('ipam-edit-ip').value = hostId;
+      document.getElementById('ipam-detail-title').innerText = `IP: ${fullIp}`;
+      
+      const badge = document.getElementById('ipam-detail-badge');
+
+      if (rec) {
+        document.getElementById('ipam-edit-status').value = rec.status;
+        document.getElementById('ipam-edit-hostname').value = rec.hostname || "";
+        document.getElementById('ipam-edit-mac').value = rec.mac || "";
+        document.getElementById('ipam-edit-vlan').value = rec.vlan || 10;
+        document.getElementById('ipam-edit-desc').value = rec.desc || "";
+
+        badge.innerText = rec.status.toUpperCase();
+        badge.className = `audit-badge ${rec.status === 'free' ? 'badge-pass' : 'badge-fail'}`;
+      } else {
+        document.getElementById('ipam-edit-status').value = "free";
+        document.getElementById('ipam-edit-hostname').value = "";
+        document.getElementById('ipam-edit-mac').value = "";
+        document.getElementById('ipam-edit-vlan').value = 10;
+        document.getElementById('ipam-edit-desc').value = "";
+
+        badge.innerText = "BOŞ (KULLANILABİLİR)";
+        badge.className = "audit-badge badge-pass";
+      }
+    }
+
+    function saveIpamRecord() {
+      const hostId = parseInt(document.getElementById('ipam-edit-ip').value, 10);
+      if (!hostId) {
+        alert("Lütfen önce soldaki matristen bir IP kutucuğu seçin.");
+        return;
+      }
+
+      const base = activeIpamSubnet.split('/')[0].replace(/\.\d+$/, '');
+      const status = document.getElementById('ipam-edit-status').value;
+      const hostname = document.getElementById('ipam-edit-hostname').value.trim();
+      const mac = document.getElementById('ipam-edit-mac').value.trim();
+      const vlan = parseInt(document.getElementById('ipam-edit-vlan').value, 10) || 10;
+      const desc = document.getElementById('ipam-edit-desc').value.trim();
+
+      if (!ipamDatabase[activeIpamSubnet]) ipamDatabase[activeIpamSubnet] = {};
+
+      if (status === 'free') {
+        delete ipamDatabase[activeIpamSubnet][hostId];
+      } else {
+        ipamDatabase[activeIpamSubnet][hostId] = {
+          ip: `${base}.${hostId}`,
+          status, hostname, mac, vlan, desc,
+          updatedAt: new Date().toLocaleDateString('tr-TR')
+        };
+      }
+
+      saveIpamToStorage();
+      renderIpamGrid();
+      selectIpamCell(hostId);
+      playSoundFx('success');
+    }
+
+    function releaseIpamRecord() {
+      const hostId = parseInt(document.getElementById('ipam-edit-ip').value, 10);
+      if (!hostId) return;
+
+      if (ipamDatabase[activeIpamSubnet] && ipamDatabase[activeIpamSubnet][hostId]) {
+        delete ipamDatabase[activeIpamSubnet][hostId];
+        saveIpamToStorage();
+        renderIpamGrid();
+        selectIpamCell(hostId);
+        playSoundFx('alert');
+      }
+    }
+
+    function clearCurrentIpamSubnet() {
+      if (confirm(`${activeIpamSubnet} ağındaki TÜM tahsis kayıtlarını temizleyip ağı boşa çıkarmak istediğinize emin misiniz?`)) {
+        ipamDatabase[activeIpamSubnet] = {};
+        saveIpamToStorage();
+        renderIpamGrid();
+        playSoundFx('alert');
+      }
+    }
+
+    function updateIpamStats(free, st, dhcp, gw, res) {
+      const total = 254;
+      const used = st + dhcp + gw + res;
+      const usedPct = Math.round((used / total) * 100);
+
+      document.getElementById('ipam-stats-box').innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span class="res-label">Ağ Doluluk Oranı:</span>
+          <span class="res-val ${usedPct > 80 ? 'rose' : (usedPct > 50 ? 'amber' : 'green')}">%${usedPct} (${used} / 254 IP)</span>
+        </div>
+        <div class="tr-rtt-bar-bg" style="height:6px; margin-bottom:8px;">
+          <div class="tr-rtt-bar-fill" style="width:${usedPct}%; background:${usedPct > 80 ? 'var(--tech-rose)' : 'var(--tech-cyan)'};"></div>
+        </div>
+        <div class="res-row"><span class="res-label">Statik Cihazlar:</span><span class="res-val" style="color:#ff85a1;">${st} IP</span></div>
+        <div class="res-row"><span class="res-label">Ağ Geçidi / Gateway:</span><span class="res-val" style="color:#38bdf8;">${gw} IP</span></div>
+        <div class="res-row"><span class="res-label">DHCP Havuz Tahsisi:</span><span class="res-val" style="color:#ffc97a;">${dhcp} IP</span></div>
+        <div class="res-row"><span class="res-label">Rezerve:</span><span class="res-val" style="color:var(--tech-purple);">${res} IP</span></div>
+        <div class="res-row"><span class="res-label">Kullanılabilir Boş:</span><span class="res-val green">${free} IP</span></div>
+      `;
+    }
+
+    function filterIpamGrid() {
+      renderIpamGrid();
+    }
+
+    function exportIpamJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ipamDatabase, null, 2));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = `zeropacket_ipam_db_${Date.now()}.json`;
+      a.click();
+      playSoundFx('success');
+    }
+
+    function importIpamJson(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (typeof parsed === 'object') {
+            ipamDatabase = parsed;
+            saveIpamToStorage();
+            populateSubnetDropdown();
+            renderIpamGrid();
+            playSoundFx('success');
+            alert("IPAM veritabanı başarıyla içe aktarıldı!");
+          }
+        } catch(err) {
+          alert("Geçersiz JSON IPAM dosyası.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // CALENDAR LOGIC
+    // =========================================================================
+    let calCurrentDate = new Date();
+    let calEvents = [];
+    let activeModalEventId = null;
+
+    function initCalendarEngine() {
+      try {
+        const stored = localStorage.getItem('zp_calendar_events_v2');
+        calEvents = stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        calEvents = [];
+      }
+      const todayStr = new Date().toISOString().split('T')[0];
+      const crDateInput = document.getElementById('cr-date');
+      if (crDateInput) crDateInput.value = todayStr;
+      renderCalendarGrid();
+    }
+
+    function saveCalendarEvents() {
+      try { localStorage.setItem('zp_calendar_events_v2', JSON.stringify(calEvents)); } catch (e) {}
+    }
+
+    function changeCalMonth(delta) {
+      playSoundFx('key');
+      calCurrentDate.setMonth(calCurrentDate.getMonth() + delta);
+      renderCalendarGrid();
+    }
+
+    function renderCalendarGrid() {
+      const tbody = document.getElementById('cal-grid-tbody');
+      const titleEl = document.getElementById('cal-current-month-year');
+      if (!tbody) return;
+
+      const year = calCurrentDate.getFullYear(), month = calCurrentDate.getMonth();
+      const monthNamesTr = ["OCAK", "ŞUBAT", "MART", "NİSAN", "MAYIS", "HAZİRAN", "TEMMUZ", "AĞUSTOS", "EYLÜL", "EKİM", "KASIM", "ARALIK"];
+      if (titleEl) titleEl.innerText = `${monthNamesTr[month]} ${year}`;
+
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+
+      let startDayOfWeek = firstDayOfMonth.getDay();
+      startDayOfWeek = (startDayOfWeek === 0) ? 6 : startDayOfWeek - 1;
+
+      const totalDays = lastDayOfMonth.getDate();
+      const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+      let html = "<tr>";
+      let nextMonthDay = 1;
+      const today = new Date();
+      const isThisMonth = (today.getFullYear() === year && today.getMonth() === month);
+
+      for (let i = 0; i < startDayOfWeek; i++) {
+        const dayNum = prevMonthLastDay - startDayOfWeek + i + 1;
+        html += `<td class="cal-cell other-month"><span class="cal-day-num">${dayNum}</span></td>`;
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const cellIndex = (startDayOfWeek + day - 1) % 7;
+        if (cellIndex === 0 && (startDayOfWeek + day - 1) > 0) html += `</tr><tr>`;
+
+        const isToday = isThisMonth && (today.getDate() === day);
+        const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayEvents = calEvents.filter(ev => ev.date === dateKey);
+
+        let pillsHtml = "";
+        dayEvents.forEach(ev => {
+          let pillClass = 'cal-pill-normal';
+          if (ev.risk === 'critical') pillClass = 'cal-pill-critical';
+          else if (ev.risk === 'warning') pillClass = 'cal-pill-warning';
+
+          pillsHtml += `<span class="cal-event-pill ${pillClass}" onclick="openCalendarEventDetail('${ev.id}', event)" title="Detay için tıklayın">${escapeHtml(ev.title)}</span>`;
+        });
+
+        html += `
+          <td class="cal-cell ${isToday ? 'today' : ''}" onclick="selectCalendarDay('${dateKey}')">
+            <span class="cal-day-num">${day}</span>
+            <div style="overflow-y:auto; max-height:50px;">${pillsHtml}</div>
+          </td>
+        `;
+      }
+
+      const totalCellsFilled = startDayOfWeek + totalDays;
+      const remainingCells = (7 - (totalCellsFilled % 7)) % 7;
+      for (let i = 0; i < remainingCells; i++) {
+        html += `<td class="cal-cell other-month"><span class="cal-day-num">${nextMonthDay++}</span></td>`;
+      }
+
+      html += "</tr>";
+      tbody.innerHTML = html;
+      renderCalendarEventsList();
+    }
+
+    function selectCalendarDay(dateStr) {
+      playSoundFx('key');
+      const dateInput = document.getElementById('cr-date');
+      if (dateInput) dateInput.value = dateStr;
+    }
+
+    function addCalendarEvent() {
+      playSoundFx('key');
+      const date = document.getElementById('cr-date').value;
+      const title = document.getElementById('cr-title').value.trim();
+      const time = document.getElementById('cr-time').value.trim() || '00:00 - 02:00';
+      const risk = document.getElementById('cr-risk').value;
+      const device = document.getElementById('cr-device').value.trim() || 'Genel Cihaz / Servis';
+      const rollback = document.getElementById('cr-rollback').value.trim() || 'Otomatik / Manuel Geri Alma Planı';
+
+      if (!date || !title) {
+        alert("Lütfen bakım tarihi ve başlığını eksiksiz girin.");
+        return;
+      }
+
+      const newEvent = {
+        id: 'ev_' + Date.now(),
+        date, title, time, risk, device, rollback,
+        createdAt: new Date().toLocaleString('tr-TR')
+      };
+
+      calEvents.push(newEvent);
+      saveCalendarEvents();
+      renderCalendarGrid();
+      
+      document.getElementById('cr-title').value = '';
+      playSoundFx('success');
+      alert("Ağ bakım penceresi (CR) takvime kaydedildi!");
+    }
+
+    function deleteCalendarEvent(id, e) {
+      if (e) e.stopPropagation();
+      playSoundFx('alert');
+      if (confirm("Bu bakım penceresi kaydını silmek istediğinize emin misiniz?")) {
+        calEvents = calEvents.filter(ev => ev.id !== id);
+        saveCalendarEvents();
+        renderCalendarGrid();
+        closeCalendarEventDetail();
+      }
+    }
+
+    function clearAllCalendarEvents() {
+      playSoundFx('alert');
+      if (calEvents.length === 0) {
+        alert("Takvimde silinecek kayıt bulunmuyor.");
+        return;
+      }
+      if (confirm("Takvimdeki TÜM bakım pencerelerini temizlemek istediğinize emin misiniz?")) {
+        calEvents = [];
+        saveCalendarEvents();
+        renderCalendarGrid();
+        playSoundFx('success');
+      }
+    }
+
+    function openCalendarEventDetail(id, e) {
+      if (e) e.stopPropagation();
+      playSoundFx('beep');
+      const ev = calEvents.find(x => x.id === id);
+      if (!ev) return;
+
+      activeModalEventId = id;
+      const modal = document.getElementById('cal-event-detail-modal');
+      const modalBody = document.getElementById('cal-detail-modal-body');
+
+      let riskText = '<span class="audit-badge badge-pass">DÜŞÜK RİSK (ETKİSİZ)</span>';
+      if (ev.risk === 'critical') riskText = '<span class="audit-badge badge-fail">🔴 YÜKSEK RİSK / KESİNTİLİ</span>';
+      else if (ev.risk === 'warning') riskText = '<span class="audit-badge" style="background:rgba(255,180,84,0.2); color:var(--tech-amber); border:1px solid rgba(255,180,84,0.4);">🟡 ORTA RİSK / YEDEKLİ</span>';
+
+      modalBody.innerHTML = `
+        <div style="background:#02050b; border:1px solid var(--border-subtle); padding:10px; margin-bottom:8px;">
+          <div style="font-size:8.5px; color:var(--text-dim); text-transform:uppercase;">CR REFERANS NO: #${ev.id}</div>
+          <div style="font-size:13px; font-weight:800; color:#fff; margin-top:2px;">${escapeHtml(ev.title)}</div>
+        </div>
+
+        <div class="result-box" style="margin-top:0;">
+          <div class="res-row"><span class="res-label">Bakım Tarihi:</span><span class="res-val green">${ev.date}</span></div>
+          <div class="res-row"><span class="res-label">Zaman Aralığı:</span><span class="res-val">${escapeHtml(ev.time)}</span></div>
+          <div class="res-row"><span class="res-label">Risk Seviyesi:</span><span>${riskText}</span></div>
+          <div class="res-row"><span class="res-label">Etkilenen Cihaz / Servis:</span><span class="res-val amber">${escapeHtml(ev.device)}</span></div>
+          <div class="res-row"><span class="res-label">Kayıt Zamanı:</span><span class="res-val" style="color:var(--text-muted);">${ev.createdAt || 'Yerel'}</span></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <label style="color:var(--tech-cyan);">🛡️ Geri Alma (Rollback) & Acil Durum Planı:</label>
+          <pre style="background:#020408; border:1px solid var(--border-tech); padding:8px; color:var(--tech-emerald); font-size:10px; line-height:1.4; white-space:pre-wrap; max-height:90px; overflow-y:auto;">${escapeHtml(ev.rollback)}</pre>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+    }
+
+    function closeCalendarEventDetail() {
+      const modal = document.getElementById('cal-event-detail-modal');
+      if (modal) modal.style.display = 'none';
+      activeModalEventId = null;
+    }
+
+    function deleteEventFromModal() {
+      if (activeModalEventId) deleteCalendarEvent(activeModalEventId);
+    }
+
+    function copyCurrentEventDetail() {
+      const ev = calEvents.find(x => x.id === activeModalEventId);
+      if (!ev) return;
+      const text = `--- AĞ BAKIM PENCERESİ (CHANGE REQUEST) ---\n` +
+        `Başlık: ${ev.title}\n` +
+        `Tarih: ${ev.date} (${ev.time})\n` +
+        `Risk Seviyesi: ${ev.risk.toUpperCase()}\n` +
+        `Etkilenen Cihazlar: ${ev.device}\n` +
+        `Rollback Planı: ${ev.rollback}\n` +
+        `CR ID: ${ev.id}`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        playSoundFx('beep');
+        alert("Bakım detayları panoya kopyalandı!");
+      });
+    }
+
+    function renderCalendarEventsList() {
+      const container = document.getElementById('cal-events-list');
+      const countEl = document.getElementById('cal-event-count');
+      if (!container) return;
+
+      if (countEl) countEl.innerText = calEvents.length;
+
+      if (calEvents.length === 0) {
+        container.innerHTML = `<div style="color:var(--text-dim); text-align:center; padding:15px; font-size:10px; font-family:var(--font-mono);">Kayıtlı bakım penceresi bulunamadı.</div>`;
+        return;
+      }
+
+      const sorted = [...calEvents].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      let html = "";
+      sorted.forEach(ev => {
+        let riskBadge = '<span class="audit-badge badge-pass">DÜŞÜK</span>';
+        if (ev.risk === 'critical') riskBadge = '<span class="audit-badge badge-fail">KRİTİK</span>';
+        else if (ev.risk === 'warning') riskBadge = '<span class="audit-badge" style="background:rgba(255,180,84,0.15); color:var(--tech-amber); border:1px solid rgba(255,180,84,0.3);">ORTA</span>';
+
+        html += `
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); padding:6px 8px; margin-bottom:4px; font-family:var(--font-mono); font-size:9.5px; cursor:pointer;" onclick="openCalendarEventDetail('${ev.id}')">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+              <b style="color:var(--tech-cyan); font-size:10px;">${ev.date} // ${escapeHtml(ev.time)}</b>
+              <div style="display:flex; align-items:center; gap:4px;">
+                ${riskBadge}
+                <span style="color:var(--tech-rose); cursor:pointer; font-weight:bold; font-size:11px;" onclick="deleteCalendarEvent('${ev.id}', event)" title="Sil">✕</span>
+              </div>
+            </div>
+            <div style="font-weight:700; color:#fff; font-size:10.5px; margin:2px 0;">${escapeHtml(ev.title)}</div>
+            <div style="color:var(--text-muted); font-size:9px;">Cihaz: <span style="color:var(--text-main);">${escapeHtml(ev.device)}</span></div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function exportCalendarEvents() {
+      playSoundFx('key');
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(calEvents, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `zeropacket-calendar-events-${Date.now()}.json`);
+      a.click();
+    }
+
+    function importCalendarEvents(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (Array.isArray(parsed)) {
+            calEvents = parsed;
+            saveCalendarEvents();
+            renderCalendarGrid();
+            playSoundFx('success');
+            alert("Bakım takvimi verileri başarıyla içe aktarıldı!");
+          }
+        } catch(err) {
+          alert("Geçersiz JSON takvim dosyası.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // CISCO BACKUP & ROLLBACK LOGIC
+    // =========================================================================
+    function switchBackupTab(tab) {
+      playSoundFx('key');
+      ['archive', 'rollback', 'diffsnap'].forEach(t => {
+        const b = document.getElementById('br-tab-' + t);
+        const s = document.getElementById('br-sec-' + t);
+        if (b) b.classList.toggle('active', t === tab);
+        if (s) s.style.display = (t === tab) ? 'block' : 'none';
+      });
+      if (tab === 'archive') generateBackupCli();
+      if (tab === 'rollback') generateRollbackTimerCli();
+    }
+
+    function generateBackupCli() {
+      const proto = document.getElementById('bk-proto').value;
+      const srv = document.getElementById('bk-server-ip').value.trim() || '192.168.1.100';
+      const path = document.getElementById('bk-path').value.trim() || 'cisco_backups/';
+      const period = document.getElementById('bk-period').value;
+      const maxFiles = document.getElementById('bk-max-files').value || 14;
+      const writeMem = document.getElementById('bk-write-memory').checked;
+      const hidekeys = document.getElementById('bk-hidekeys').checked;
+
+      let targetUrl = "";
+      if (proto === 'tftp') targetUrl = `tftp://${srv}/${path}$h-$t`;
+      else if (proto === 'scp') targetUrl = `scp://cisco_backup:${srv}/${path}$h-$t`;
+      else if (proto === 'ftp') targetUrl = `ftp://admin:pass@${srv}/${path}$h-$t`;
+      else targetUrl = `flash:archive/$h-$t`;
+
+      let cli = `! ========================================================\n`;
+      cli += `! CISCO IOS OTOMATİK ARŞİV VE YEDEKLEME YAPILANDIRMASI\n`;
+      cli += `! ========================================================\n`;
+      cli += `configure terminal\narchive\n path ${targetUrl}\n maximum ${maxFiles}\n`;
+      if (writeMem) cli += ` write-memory\n`;
+      if (period !== 'custom') cli += ` time-period ${period}\n`;
+      if (hidekeys) cli += ` hidekeys\n`;
+      cli += `exit\n!\n`;
+
+      if (period === 'custom') {
+        cli += `! Cisco Kron ile Özel Günlük Yedekleme Görevi (Her Gece 03:00)\n`;
+        cli += `kron policy-list GUNLUK_YEDEK_POLITIKASI\n cli archive config\nexit\n!\n`;
+        cli += `kron occurrence HER_GECE_0300 at 3:00 recurring\n policy-list GUNLUK_YEDEK_POLITIKASI\nexit\n!\n`;
+      }
+
+      cli += `! Manuel Hemen Yedek Alma Komutu:\n! Router# archive config\n`;
+      cli += `! Arşivleri Listeleme Komutu:\n! Router# show archive\nend\nwrite memory\n`;
+
+      const out = document.getElementById('backup-active-cli');
+      if (out) out.innerText = cli;
+    }
+
+    function generateRollbackTimerCli() {
+      const timerVal = document.getElementById('rb-timer-val').value;
+      const filePath = document.getElementById('rb-file-path').value.trim() || 'flash:golden_config.cfg';
+
+      let cli = `! ========================================================\n`;
+      cli += `! CISCO IOS GÜVENLİ GERİ DÖNÜŞ VE COMMIT CONFIRMED (REVERT)\n`;
+      cli += `! ========================================================\n\n`;
+      cli += `! 1. ADIM: Güvenli Altın Konfigürasyon Yedeğini Flash'a Kaydedin\nRouter# copy running-config ${filePath}\n\n`;
+      cli += `! 2. ADIM: Geri Dönüş Zamanlayıcısını Başlatın (${timerVal} Dakika)\nRouter# configure terminal revert timer ${timerVal}\n\n`;
+      cli += `! 3. ADIM: Riskli Değişiklikleri Yapın (Örn: BGP, ACL, IP Değişimi)\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.200.1.1 255.255.255.0\nRouter(config-if)# exit\n\n`;
+      cli += `! 4. ADIM: EĞER HER ŞEY YOLUNDAYSA DEĞİŞİKLİĞİ ONAYLAYIN (COMMIT):\nRouter# configure confirm\n\n`;
+      cli += `! ⚠️ DİKKAT: Eğer ${timerVal} dakika içinde 'configure confirm' komutunu girmezseniz\n`;
+      cli += `! veya bağlantınız koparsa cihaz otomatik olarak ${filePath} yedeğine dönecektir!\n\n`;
+      cli += `! Acil Durumda Manuel Eski Konfigürasyona Dönme Komutu:\nRouter# configure replace ${filePath} force\n`;
+
+      const out = document.getElementById('rollback-timer-output');
+      if (out) out.innerText = cli;
+    }
+
+    function generateInverseRollbackCli() {
+      playSoundFx('key');
+      const newConfig = document.getElementById('snap-new-config').value.trim();
+      if (!newConfig) {
+        alert("Lütfen geri alınacak konfigürasyon bloğunu girin.");
+        return;
+      }
+
+      const lines = newConfig.split('\n');
+      let rollbackLines = [];
+
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('!')) return;
+
+        if (trimmed.startsWith('interface ') || trimmed.startsWith('router ') || trimmed.startsWith('vlan ')) {
+          rollbackLines.push(line);
+        } else if (trimmed.startsWith('no ')) {
+          rollbackLines.push(" " + trimmed.substring(3));
+        } else {
+          rollbackLines.push(" no " + trimmed);
+        }
+      });
+
+      let cli = `! Otomatik Üretilen Inverse (Geri Alma / Rollback) Bloğu:\nconfigure terminal\n`;
+      cli += rollbackLines.join('\n') + `\nend\nwrite memory\n`;
+      document.getElementById('snap-rollback-output').innerText = cli;
+    }
+
+    // =========================================================================
+    // RECOVERY HUB LOGIC
+    // =========================================================================
+    function switchRecoveryTab(tab) {
+      playSoundFx('key');
+      ['router', 'switch', 'rommon', 'asa', 'confreg'].forEach(t => {
+        const b = document.getElementById(t === 'confreg' ? 'rec-confreg-tab' : 'rec-tab-' + t);
+        const s = document.getElementById('rec-sec-' + t);
+        if (b) b.classList.toggle('active', t === tab);
+        if (s) s.style.display = (t === tab) ? 'block' : 'none';
+      });
+      if (tab === 'rommon') generateTftpDnldScript();
+    }
+
+    function generateTftpDnldScript() {
+      const ip = document.getElementById('rec-tftp-ip').value.trim() || '192.168.1.50';
+      const srv = document.getElementById('rec-tftp-srv').value.trim() || '192.168.1.100';
+      const gw = document.getElementById('rec-tftp-gw').value.trim() || '192.168.1.1';
+      const file = document.getElementById('rec-tftp-file').value.trim() || 'c2900-universalk9-mz.SPA.157-3.M8.bin';
+
+      const script = `! ROMMON Ortamında Acil Durum TFTP İmaj Kurtarma
+rommon 1 > IP_ADDRESS=${ip}
+rommon 2 > IP_SUBNET_MASK=255.255.255.0
+rommon 3 > DEFAULT_GATEWAY=${gw}
+rommon 4 > TFTP_SERVER=${srv}
+rommon 5 > TFTP_FILE=${file}
+rommon 6 > tftpdnld
+
+! İndirme onayına 'y' deyin. Flash yazımı bitince:
+rommon 7 > boot flash:${file}`;
+
+      document.getElementById('rec-tftpdnld-output').innerText = script;
+    }
+
+    function applyConfregPreset() {
+      playSoundFx('key');
+      const val = document.getElementById('rec-confreg-preset').value;
+      const detailsEl = document.getElementById('rec-confreg-details');
+      const cliEl = document.getElementById('rec-confreg-cli');
+
+      if (val === '0x2102') {
+        detailsEl.innerHTML = `
+          <b style="color:var(--tech-cyan);">Seçili Register Değeri: 0x2102</b><br>
+          • <b>Boot Field (Bit 0-3):</b> 0x2 (Flash bellekteki ilk geçerli IOS imajından boot et)<br>
+          • <b>NVRAM Check (Bit 6):</b> 0 (Startup-config dosyasını normal olarak OKU)<br>
+          • <b>Baud Rate (Bit 5, 12-13):</b> 9600 bps Konsol Hızı<br>
+          • <b>Break Key (Bit 8):</b> 0 (Açılışta Break tuşunu tanı ve ROMMON'a geçişe izin ver)
+        `;
+        cliEl.innerText = `configure terminal\nconfig-register 0x2102\nend\nwrite memory`;
+      } else if (val === '0x2142') {
+        detailsEl.innerHTML = `
+          <b style="color:var(--tech-rose);">Seçili Register Değeri: 0x2142 (Password Recovery)</b><br>
+          • <b>Boot Field (Bit 0-3):</b> 0x2 (Normal Flash Boot)<br>
+          • <b>NVRAM Check (Bit 6):</b> 1 (Startup-config dosyasını YOK SAY / BYPASS ET)<br>
+          • <b>Kullanım:</b> Şifresi unutulan router'a şifresiz girmek için ROMMON'da girilir.<br>
+          • <b>Dikkat:</b> Kurtarma tamamlanınca tekrar 0x2102 yapılmalıdır!
+        `;
+        cliEl.innerText = `! ROMMON modunda çalıştırma:\nrommon 1 > confreg 0x2142\nrommon 2 > reset`;
+      } else if (val === '0x2101') {
+        detailsEl.innerHTML = `
+          <b style="color:var(--tech-amber);">Seçili Register Değeri: 0x2101 (Bootstrap / ROM Boot)</b><br>
+          • <b>Boot Field:</b> 0x1 (İlk olarak dahili ROM mikro-kodundan boot etmeyi dener)<br>
+          • <b>Kullanım:</b> Flash bozulmalarında acil durum min-IOS çalıştırma modu.
+        `;
+        cliEl.innerText = `configure terminal\nconfig-register 0x2101\nend\nwrite memory`;
+      } else if (val === '0x2100') {
+        detailsEl.innerHTML = `
+          <b style="color:var(--tech-rose);">Seçili Register Değeri: 0x2100 (Direct ROMMON)</b><br>
+          • <b>Boot Field:</b> 0x0 (Otomatik IOS boot kapalıdır)<br>
+          • <b>Davranış:</b> Router her açılışta doğrudan <code>rommon &gt;</code> istemcisine düşer.
+        `;
+        cliEl.innerText = `configure terminal\nconfig-register 0x2100\nend\nwrite memory`;
+      }
+    }
+
+    // =========================================================================
+    // UZMAN TEŞHİS MOTORU KURAL TABANI
+    // =========================================================================
+    const expertKnowledgeBase = [
+      {
+        id: "RULE_MTU_MSS_BLACKHOLE",
+        title: "IPSec / GRE Tünel MTU & TCP MSS Blackhole Arızası",
+        category: "Katman-3 / Tünel & PMTUD",
+        conditions: { pingSmallOk: true, largeTransferFails: true, isTunnelPath: true },
+        confidence: 0.98,
+        rootCause: "IPSec/GRE başlıkları standart 1500 baytlık MTU çerçevesini aşıyor. DF (Don't Fragment) biti açık ve aradaki cihazlar ICMP Type 3 Code 4 mesajlarını engellediği için büyük TCP aktarımları kilitleniyor.",
+        cliFix: `! Tünel Arayüzü MSS Boyutlandırma Reçetesi\nconfigure terminal\ninterface Tunnel1\n ip tcp adjust-mss 1360\n ip mtu 1400\nend\nwrite memory`
+      },
+      {
+        id: "RULE_DUPLEX_MISMATCH",
+        title: "Katman-1/2 Duplex Uyuşmazlığı (Half / Full Collision)",
+        category: "Katman-1/2 & Fiziksel Hat",
+        conditions: { crcErrorsRising: true, linkSpeedSlow: true },
+        confidence: 0.94,
+        rootCause: "Portun bir ucu Auto/Full iken diğer ucu Auto/Half modunda. Çarpışmalar (Late Collisions) ve CRC hataları tırmanarak hattı tıkıyor.",
+        cliFix: `! Port Hız ve Duplex Sabitleme Reçetesi\nconfigure terminal\ninterface GigabitEthernet1/0/1\n speed auto\n duplex full\n no shutdown\nend`
+      },
+      {
+        id: "RULE_OSPF_MTU_EXSTART",
+        title: "OSPFv2 Komşuluğunda MTU Uyuşmazlığı (EXSTART Kilitlenmesi)",
+        category: "Katman-3 / Dinamik Routing",
+        conditions: { ospfExstartState: true },
+        confidence: 0.96,
+        rootCause: "OSPF DBD paket boyutları port MTU değerleri ile uyuşmuyor; komşuluk EXSTART/LOADING aşamasında takılıyor.",
+        cliFix: `! OSPF MTU Yoksayma veya Eşitleme Reçetesi\nconfigure terminal\ninterface GigabitEthernet0/0\n ip mtu 1500\n ip ospf mtu-ignore\nend`
+      },
+      {
+        id: "RULE_DHCP_SNOOPING_UNTRUSTED",
+        title: "DHCP Snooping Untrusted Port Drop (IP Alamama)",
+        category: "Katman-2 Güvenlik",
+        conditions: { dhcpLeaseFails: true },
+        confidence: 0.92,
+        rootCause: "DHCP Snooping devrede fakat sunucu/relay yönündeki port 'trusted' olarak tanımlanmamış. DHCPOFFER paketleri düşürülüyor.",
+        cliFix: `! DHCP Sunucu Uplink Portunu Yetkilendirme (Trust)\nconfigure terminal\ninterface GigabitEthernet1/0/24\n ip dhcp snooping trust\nend`
+      },
+      {
+        id: "RULE_NATIVE_VLAN_CDP_MISMATCH",
+        title: "802.1Q Native VLAN Uyuşmazlığı & STP Tutarsızlığı",
+        category: "Katman-2 Switching",
+        conditions: { nativeVlanMismatch: true },
+        confidence: 0.95,
+        rootCause: "Trunk hattın iki ucundaki Native VLAN ID'leri farklı. STP portu tutarsızlık sebebiyle bloke ediyor.",
+        cliFix: `! Trunk Hattı Native VLAN Eşitleme Reçetesi\nconfigure terminal\ninterface GigabitEthernet1/0/24\n switchport trunk native vlan 99\n switchport trunk allowed vlan add 10,20,99\nend`
+      },
+      {
+        id: "RULE_ERR_DISABLED_BPDUGUARD",
+        title: "BPDU Guard Koruması & Port Kilitlenmesi (err-disable)",
+        category: "Katman-2 Güvenlik & STP",
+        conditions: { errDisabledPort: true },
+        confidence: 0.93,
+        rootCause: "Portfast aktif olan bir erişim portuna switch/hub bağlandı ve gelen BPDU sebebiyle BPDU Guard portu err-disable moduna aldı.",
+        cliFix: `! Portu Kurtarma ve Otomatik Onarım\nconfigure terminal\nerrdisable recovery cause bpduguard\nerrdisable recovery interval 30\ninterface GigabitEthernet1/0/5\n shutdown\n no shutdown\nend`
+      },
+      {
+        id: "RULE_BGP_IDLE_FLAP",
+        title: "BGP Oturumu IDLE Durumu & TCP 179 / Rota Yokluğu",
+        category: "Katman-3 / BGP Core",
+        conditions: { bgpIdleFlapping: true },
+        confidence: 0.91,
+        rootCause: "BGP komşusuna IP rotası eksik, TTL=1 yetersiz veya ara güvenlik duvarında TCP 179 engelleniyor.",
+        cliFix: `! BGP Komşuluk ve eBGP Multihop Düzeltmesi\nconfigure terminal\nrouter bgp 65001\n neighbor 10.200.1.1 ebgp-multihop 2\n neighbor 10.200.1.1 update-source Loopback0\nend`
+      },
+      {
+        id: "RULE_HSRP_SPLIT_BRAIN",
+        title: "HSRP / VRRP Çift Aktiflik (Split-Brain / Dual Active)",
+        category: "Katman-3 / First Hop Redundancy",
+        conditions: { hsrpSplitBrain: true },
+        confidence: 0.94,
+        rootCause: "İki yönlendirici birbirinin Hello paketlerini (UDP 1985 / 224.0.0.2) alamıyor; her ikisi de kendini Active ilan edip IP çakışması yaratıyor.",
+        cliFix: `! HSRP Hello İletişimi ve Port Kontrolü\nconfigure terminal\ninterface GigabitEthernet0/0\n standby 1 ip 192.168.1.254\n standby 1 priority 110\n standby 1 preempt\n no ip access-group OUTBOUND_BLOCK in\nend`
+      }
+    ];
+
+    function updateFactsCount() {
+      const checked = document.querySelectorAll('.exp-fact:checked').length;
+      const cntEl = document.getElementById('expert-active-facts-count');
+      if (cntEl) cntEl.innerText = `${checked} Semptom Seçili`;
+    }
+
+    function clearExpertFacts() {
+      playSoundFx('key');
+      document.querySelectorAll('.exp-fact').forEach(cb => cb.checked = false);
+      document.getElementById('expert-raw-log').value = '';
+      updateFactsCount();
+      document.getElementById('expert-results-container').innerHTML = `
+        <div style="color:var(--text-dim); text-align:center; padding-top:120px; font-family:var(--font-mono); font-size:11px;">
+          Semptomları işaretleyin veya yukarıdaki hazır senaryolardan birini seçip <b>'Teşhisi Başlat'</b> butonuna tıklayın.
+        </div>
+      `;
+    }
+
+    function loadExpertPreset(preset) {
+      playSoundFx('key');
+      clearExpertFacts();
+      if (preset === 'mtu') {
+        setFactChecked('pingSmallOk', true);
+        setFactChecked('largeTransferFails', true);
+        setFactChecked('isTunnelPath', true);
+        document.getElementById('expert-raw-log').value = "%IP-4-FRAG_NEEDED: Packet to 10.50.1.10 exceeded MTU 1500, DF bit is set.\nTCP transfer stalled across Tunnel1 (IPSec).";
+      } else if (preset === 'duplex') {
+        setFactChecked('crcErrorsRising', true);
+        setFactChecked('linkSpeedSlow', true);
+        document.getElementById('expert-raw-log').value = "GigabitEthernet1/0/1 is up, line protocol is up\n  54291 input errors, 48120 CRC, 1204 late collision, 0 lost carrier";
+      } else if (preset === 'ospf') {
+        setFactChecked('ospfExstartState', true);
+        document.getElementById('expert-raw-log').value = "%OSPF-5-ADJCHG: Process 1, Nbr 10.0.0.2 on Gi0/0 from EXSTART to DOWN, Seq Number Mismatch\nLocal MTU 1500, Remote MTU 9000";
+      }
+      updateFactsCount();
+      runExpertInference();
+    }
+
+    function setFactChecked(val, state) {
+      const el = document.querySelector(`.exp-fact[value="${val}"]`);
+      if (el) el.checked = state;
+    }
+
+    function autoExtractFactsFromLog() {
+      playSoundFx('packet');
+      const log = document.getElementById('expert-raw-log').value.toLowerCase();
+      if (!log.trim()) { alert("Lütfen önce bir log metni yapıştırın."); return; }
+
+      let hitCount = 0;
+      if (log.includes('crc') || log.includes('late collision') || log.includes('input error')) { setFactChecked('crcErrorsRising', true); hitCount++; }
+      if (log.includes('exstart') || log.includes('loading to down') || log.includes('mtu mismatch')) { setFactChecked('ospfExstartState', true); hitCount++; }
+      if (log.includes('err-disable') || log.includes('bpduguard') || log.includes('block_bpduguard')) { setFactChecked('errDisabledPort', true); hitCount++; }
+      if (log.includes('native_vlan_mismatch') || log.includes('native vlan mismatch')) { setFactChecked('nativeVlanMismatch', true); hitCount++; }
+      if (log.includes('df bit') || log.includes('frag_needed') || log.includes('fragmentation needed') || log.includes('tunnel')) { setFactChecked('pingSmallOk', true); setFactChecked('largeTransferFails', true); setFactChecked('isTunnelPath', true); hitCount++; }
+      if (log.includes('dhcp snooping') || log.includes('dhcp drop') || log.includes('untrusted port')) { setFactChecked('dhcpLeaseFails', true); hitCount++; }
+      if (log.includes('mac flapping') || log.includes('flapping between') || log.includes('duplicate mac')) { setFactChecked('macFlapping', true); hitCount++; }
+      if (log.includes('bgp') && (log.includes('idle') || log.includes('active') || log.includes('connect'))) { setFactChecked('bgpIdleFlapping', true); hitCount++; }
+
+      updateFactsCount();
+      if (hitCount > 0) {
+        playSoundFx('success');
+        runExpertInference();
+      } else {
+        alert("Log metninde bilinen semptom anahtar kelimeleri bulunamadı. Lütfen listeden manuel işaretleyin.");
+      }
+    }
+
+    function runExpertInference() {
+      playSoundFx('key');
+      const userFacts = {};
+      document.querySelectorAll('.exp-fact').forEach(cb => {
+        if (cb.checked) userFacts[cb.value] = true;
+      });
+
+      if (Object.keys(userFacts).length === 0) {
+        document.getElementById('expert-results-container').innerHTML = `
+          <div style="color:var(--tech-amber); text-align:center; padding-top:100px; font-family:var(--font-mono);">
+            ⚠️ Lütfen en az bir semptom işaretleyin veya log ayrıştırın.
+          </div>
+        `;
+        return;
+      }
+
+      const results = [];
+      expertKnowledgeBase.forEach(rule => {
+        let totalConditions = 0;
+        let matchedConditions = 0;
+
+        for (let [condKey, expectedVal] of Object.entries(rule.conditions)) {
+          totalConditions++;
+          if (userFacts[condKey] === expectedVal) matchedConditions++;
+        }
+
+        if (matchedConditions > 0) {
+          const matchRatio = matchedConditions / totalConditions;
+          const finalScore = Math.round(matchRatio * rule.confidence * 100);
+          if (finalScore >= 40) {
+            results.push({
+              ...rule,
+              score: finalScore,
+              matchedCnt: matchedConditions,
+              totalCnt: totalConditions
+            });
+          }
+        }
+      });
+
+      results.sort((a, b) => b.score - a.score);
+      const container = document.getElementById('expert-results-container');
+      if (results.length === 0) {
+        playSoundFx('alert');
+        container.innerHTML = `
+          <div style="color:var(--tech-rose); text-align:center; padding-top:100px; font-family:var(--font-mono);">
+            ❌ Eşleşen Bilinen Arıza Kuralı Bulunamadı.<br>
+            <span style="font-size:9.5px; color:var(--text-muted); margin-top:4px; display:inline-block;">Farklı semptom kombinasyonlarını işaretlemeyi deneyin.</span>
+          </div>
+        `;
+        return;
+      }
+
+      playSoundFx('success');
+      let html = "";
+      results.forEach((diag, idx) => {
+        const isPrimary = idx === 0;
+        const scoreColor = diag.score >= 85 ? 'var(--tech-emerald)' : (diag.score >= 60 ? 'var(--tech-amber)' : 'var(--tech-cyan)');
+        
+        html += `
+          <div class="expert-diag-card ${isPrimary ? 'primary-hit' : ''}">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
+              <div>
+                <span style="font-size:8px; font-family:var(--font-mono); color:var(--text-dim); text-transform:uppercase;">[${diag.category}]</span>
+                <div style="font-size:12px; font-weight:700; color:${isPrimary ? '#fff' : '#cbd5e1'}; margin-top:1px;">
+                  ${isPrimary ? '🏆 ' : '• '} ${escapeHtml(diag.title)}
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-family:var(--font-mono); font-size:14px; font-weight:800; color:${scoreColor};">%${diag.score}</span>
+                <div style="font-size:7.5px; color:var(--text-dim);">GÜVEN ORANI</div>
+              </div>
+            </div>
+
+            <div class="expert-confidence-bar-bg">
+              <div class="expert-confidence-bar-fill" style="width:${diag.score}%; background:${scoreColor};"></div>
+            </div>
+
+            <div style="font-size:10px; color:var(--text-muted); line-height:1.45; margin:6px 0;">
+              <b style="color:var(--tech-amber);">Kök Neden (RCA):</b> ${escapeHtml(diag.rootCause)}
+            </div>
+
+            <div style="margin-top:6px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                <label style="color:var(--tech-emerald); margin:0; font-size:8.5px;">🛠️ Önerilen CLI Mühendislik Reçetesi:</label>
+                ${isPrimary ? `<span id="expert-best-fix-cmd" style="display:none;">${escapeHtml(diag.cliFix)}</span>` : ''}
+              </div>
+              <pre style="background:#020409; border:1px solid rgba(0,240,255,0.15); padding:6px; color:var(--tech-cyan); font-size:9.5px; overflow-x:auto; white-space:pre-wrap;">${escapeHtml(diag.cliFix)}</pre>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // =========================================================================
+    // PCAP / WIRESHARK İNCELEYİCİ
+    // =========================================================================
+    let parsedPcapPackets = [];
+    let activeSelectedPcapIndex = -1;
+
+    function renderHexDump(uint8Arr) {
+      if (!uint8Arr || uint8Arr.length === 0) return "Hex verisi bulunamadı.";
+      let out = "";
+      for (let i = 0; i < uint8Arr.length; i += 16) {
+        let hexPart = "", asciiPart = "";
+        let offset = i.toString(16).padStart(4, '0');
+        for (let j = 0; j < 16; j++) {
+          if (i + j < uint8Arr.length) {
+            let byte = uint8Arr[i + j];
+            hexPart += byte.toString(16).padStart(2, '0') + " ";
+            asciiPart += (byte >= 32 && byte <= 126) ? String.fromCharCode(byte) : ".";
+          } else {
+            hexPart += "   ";
+          }
+        }
+        out += `${offset}   ${hexPart}  |${asciiPart}|\n`;
+      }
+      return out;
+    }
+
+    function updatePcapSummaryKpi() {
+      const total = parsedPcapPackets.length;
+      document.getElementById('pcap-kpi-total').innerText = total;
+      if (total === 0) return;
+
+      const protos = [...new Set(parsedPcapPackets.map(p => p.proto))];
+      document.getElementById('pcap-kpi-proto').innerText = protos.join(', ');
+      
+      const totalBytes = parsedPcapPackets.reduce((acc, p) => acc + p.len, 0);
+      document.getElementById('pcap-kpi-avglen').innerText = `${Math.round(totalBytes / total)} B`;
+
+      const lastTime = parseFloat(parsedPcapPackets[total - 1].time) || 0;
+      const firstTime = parseFloat(parsedPcapPackets[0].time) || 0;
+      document.getElementById('pcap-kpi-dur').innerText = `${(lastTime - firstTime).toFixed(3)} sn`;
+      document.getElementById('pcap-kpi-streams').innerText = `${protos.length > 2 ? 3 : 1} Oturum`;
+    }
+
+    function loadSamplePcap(type) {
+      playSoundFx('key');
+      parsedPcapPackets = [];
+
+      if (type === 'tcp') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "192.168.1.50", dst: "93.184.216.34", proto: "TCP", len: 74,
+            info: "49152 → 80 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM=1",
+            raw: new TextEncoder().encode("TCP SYN Packet [Flags: S] MSS 1460 SACK Permitted WS=256"),
+            layers: [
+              { title: "Frame 1: 74 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Length", "74 bytes (592 bits)"]] },
+              { title: "Internet Protocol Version 4, Src: 192.168.1.50, Dst: 93.184.216.34", fields: [["TTL", "128"], ["Header Checksum", "0x541c [Correct]"], ["Protocol", "TCP (6)"]] },
+              { title: "Transmission Control Protocol, Src Port: 49152, Dst Port: 80, Seq: 0, Len: 0", fields: [["Source Port", "49152 (Ephemeral Client Port)"], ["Destination Port", "80 (HTTP Web)"], ["Sequence Number", "0 (Relative seq 0)"], ["Flags", "0x002 (SYN)"], ["Window Size Value", "64240"], ["MSS Option", "1460 bytes"]] }
+            ]
+          },
+          {
+            no: 2, time: "0.012400", src: "93.184.216.34", dst: "192.168.1.50", proto: "TCP", len: 74,
+            info: "80 → 49152 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=1460",
+            raw: new TextEncoder().encode("TCP SYN-ACK Packet [Flags: S+A] Seq=0 Ack=1"),
+            layers: [
+              { title: "Frame 2: 74 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Length", "74 bytes"]] },
+              { title: "Transmission Control Protocol, Src Port: 80, Dst Port: 49152", fields: [["Source Port", "80 (HTTP)"], ["Destination Port", "49152"], ["Flags", "0x012 (SYN, ACK)"]] }
+            ]
+          }
+        ];
+      } else if (type === 'dns') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "192.168.1.50", dst: "8.8.8.8", proto: "DNS", len: 78,
+            info: "Standard query 0x1a2b A server.corporate.local",
+            raw: new TextEncoder().encode("DNS Query 0x1a2b A server.corporate.local"),
+            layers: [
+              { title: "Frame 1: 78 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Length", "78 bytes"]] },
+              { title: "User Datagram Protocol, Src Port: 53210, Dst Port: 53", fields: [["Source Port", "53210"], ["Destination Port", "53 (DNS)"]] },
+              { title: "Domain Name System (query)", fields: [["Transaction ID", "0x1a2b"], ["Questions", "1"], ["Query Name", "server.corporate.local"], ["Type", "A (Host Address)"]] }
+            ]
+          },
+          {
+            no: 2, time: "0.018250", src: "8.8.8.8", dst: "192.168.1.50", proto: "DNS", len: 94,
+            info: "Standard query response 0x1a2b A server.corporate.local A 10.10.10.11",
+            raw: new TextEncoder().encode("DNS Response 0x1a2b A 10.10.10.11"),
+            layers: [
+              { title: "Frame 2: 94 bytes on wire", fields: [["Length", "94 bytes"]] },
+              { title: "Domain Name System (response)", fields: [["Transaction ID", "0x1a2b"], ["Answers", "1"], ["server.corporate.local", "Addr: 10.10.10.11"]] }
+            ]
+          }
+        ];
+      } else if (type === 'ospf') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "10.10.10.1", dst: "224.0.0.5", proto: "OSPF", len: 82,
+            info: "OSPFv2 Hello Packet | Area: 0.0.0.0 | Router ID: 1.1.1.1",
+            raw: new TextEncoder().encode("OSPFv2 HELLO Router-ID: 1.1.1.1 Area: 0.0.0.0 Priority: 1"),
+            layers: [
+              { title: "Frame 1: 82 bytes on wire", fields: [["Encapsulation", "Ethernet II"], ["Destination MAC", "01:00:5e:00:00:05 (AllSPFRouters)"]] },
+              { title: "Internet Protocol Version 4, Dst: 224.0.0.5", fields: [["Protocol", "OSPF (89)"], ["TTL", "1"]] },
+              { title: "Open Shortest Path First (Hello Packet)", fields: [["Version", "2"], ["Router ID", "1.1.1.1"], ["Area ID", "0.0.0.0 (Backbone)"], ["Hello Interval", "10s"], ["Dead Interval", "40s"]] }
+            ]
+          }
+        ];
+      } else if (type === 'arp') {
+        parsedPcapPackets = [
+          {
+            no: 1, time: "0.000000", src: "00:0c:29:ab:cd:01", dst: "ff:ff:ff:ff:ff:ff", proto: "ARP", len: 42,
+            info: "Who has 10.10.10.254? Tell 10.10.10.50",
+            raw: new TextEncoder().encode("ARP Request: Who has 10.10.10.254? Tell 10.10.10.50"),
+            layers: [
+              { title: "Frame 1: 42 bytes on wire", fields: [["Encapsulation", "Ethernet II Broadcast"]] },
+              { title: "Address Resolution Protocol (request)", fields: [["Hardware type", "Ethernet (1)"], ["Opcode", "request (1)"], ["Sender MAC", "00:0c:29:ab:cd:01"], ["Sender IP", "10.10.10.50"], ["Target IP", "10.10.10.254"]] }
+            ]
+          },
+          {
+            no: 2, time: "0.000410", src: "00:50:56:ef:12:34", dst: "00:0c:29:ab:cd:01", proto: "ARP", len: 42,
+            info: "10.10.10.254 is at 00:50:56:ef:12:34",
+            raw: new TextEncoder().encode("ARP Reply: 10.10.10.254 is at 00:50:56:ef:12:34"),
+            layers: [
+              { title: "Frame 2: 42 bytes on wire", fields: [["Encapsulation", "Ethernet II Unicast"]] },
+              { title: "Address Resolution Protocol (reply)", fields: [["Opcode", "reply (2)"], ["Sender MAC", "00:50:56:ef:12:34"], ["Sender IP", "10.10.10.254"], ["Target MAC", "00:0c:29:ab:cd:01"], ["Target IP", "10.10.10.50"]] }
+            ]
+          }
+        ];
+      }
+
+      applyPcapFilter();
+      updatePcapSummaryKpi();
+      if (parsedPcapPackets.length > 0) selectPcapPacket(0);
+    }
+
+    function handlePcapFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          parseBinaryPcap(evt.target.result);
+          playSoundFx('success');
+        } catch(err) {
+          alert("PCAP ayrıştırma hatası: " + err.message);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function parseBinaryPcap(buffer) {
+      const view = new DataView(buffer);
+      const magic = view.getUint32(0, true);
+      let isLittleEndian = true;
+      if (magic === 0xa1b2c3d4) isLittleEndian = false;
+      else if (magic === 0xd4c3b2a1) isLittleEndian = true;
+      else {
+        loadSamplePcap('tcp');
+        return;
+      }
+
+      parsedPcapPackets = [];
+      let offset = 24;
+      let packetNo = 1;
+
+      while (offset < buffer.byteLength) {
+        if (offset + 16 > buffer.byteLength) break;
+        const tsSec = view.getUint32(offset, isLittleEndian);
+        const tsUsec = view.getUint32(offset + 4, isLittleEndian);
+        const inclLen = view.getUint32(offset + 8, isLittleEndian);
+        offset += 16;
+
+        if (offset + inclLen > buffer.byteLength) break;
+        const pktBytes = new Uint8Array(buffer, offset, inclLen);
+
+        let srcIp = "0.0.0.0", dstIp = "0.0.0.0", proto = "ETH", info = `Frame ${packetNo}`;
+        let layers = [];
+
+        if (inclLen >= 14) {
+          const etherType = (pktBytes[12] << 8) | pktBytes[13];
+          if (etherType === 0x0800 && inclLen >= 34) {
+            srcIp = `${pktBytes[26]}.${pktBytes[27]}.${pktBytes[28]}.${pktBytes[29]}`;
+            dstIp = `${pktBytes[30]}.${pktBytes[31]}.${pktBytes[32]}.${pktBytes[33]}`;
+            const ipProto = pktBytes[23];
+            if (ipProto === 6) { proto = "TCP"; info = `TCP Packet [Len: ${inclLen}]`; }
+            else if (ipProto === 17) { 
+              const srcPort = (pktBytes[34] << 8) | pktBytes[35];
+              const dstPort = (pktBytes[36] << 8) | pktBytes[37];
+              if (srcPort === 53 || dstPort === 53) { proto = "DNS"; info = "DNS Query/Response"; }
+              else { proto = "UDP"; info = `UDP Datagram ${srcPort} → ${dstPort}`; }
+            }
+            else if (ipProto === 1) { proto = "ICMP"; info = "ICMP Echo Message"; }
+            else if (ipProto === 89) { proto = "OSPF"; info = "OSPF Routing Packet"; }
+          } else if (etherType === 0x0806) {
+            proto = "ARP";
+            info = "ARP Address Resolution Message";
+          }
+        }
+
+        layers = [
+          { title: `Frame ${packetNo}: ${inclLen} bytes on wire`, fields: [["Captured Length", `${inclLen} bytes`], ["Time Offset", `${(tsSec % 1000 + tsUsec / 1e6).toFixed(6)} s`]] },
+          { title: `Internet Protocol ${proto}`, fields: [["Source", srcIp], ["Destination", dstIp], ["Payload Length", `${inclLen - 14} bytes`]] }
+        ];
+
+        parsedPcapPackets.push({
+          no: packetNo,
+          time: (tsSec % 1000 + tsUsec / 1e6).toFixed(6),
+          src: srcIp,
+          dst: dstIp,
+          proto: proto,
+          len: inclLen,
+          info: info,
+          raw: pktBytes,
+          layers: layers
+        });
+
+        offset += inclLen;
+        packetNo++;
+        if (packetNo > 500) break;
+      }
+
+      applyPcapFilter();
+      updatePcapSummaryKpi();
+      if (parsedPcapPackets.length > 0) selectPcapPacket(0);
+    }
+
+    function applyPcapFilter() {
+      const q = document.getElementById('pcap-display-filter').value.toLowerCase().trim();
+      const tbody = document.getElementById('pcap-table-tbody');
+      let html = "";
+
+      parsedPcapPackets.forEach((p, idx) => {
+        let match = true;
+        if (q) {
+          const fullStr = `${p.proto} ${p.src} ${p.dst} ${p.info}`.toLowerCase();
+          if (!fullStr.includes(q)) match = false;
+        }
+
+        if (match) {
+          let protoClass = `pcap-row-proto-${p.proto.toLowerCase()}`;
+          let isSelected = idx === activeSelectedPcapIndex;
+          html += `
+            <tr style="cursor:pointer; ${isSelected ? 'background:rgba(0,240,255,0.08); font-weight:bold;' : ''}" onclick="selectPcapPacket(${idx})">
+              <td>${p.no}</td>
+              <td style="color:var(--text-dim); font-size:9px;">${p.time}</td>
+              <td style="font-weight:600; color:var(--text-main);">${p.src}</td>
+              <td style="font-weight:600; color:var(--text-main);">${p.dst}</td>
+              <td><span class="${protoClass}">${p.proto}</span></td>
+              <td>${p.len}</td>
+              <td style="color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(p.info)}</td>
+            </tr>
+          `;
+        }
+      });
+      tbody.innerHTML = html || `<tr><td colspan="7" style="text-align:center; color:var(--text-dim);">Filtreye uygun paket bulunamadı.</td></tr>`;
+    }
+
+    function selectPcapPacket(idx) {
+      playSoundFx('key');
+      activeSelectedPcapIndex = idx;
+      const p = parsedPcapPackets[idx];
+      if (!p) return;
+
+      document.getElementById('pcap-active-pkt-label').innerText = `Paket #${p.no} (${p.proto} - ${p.len} Bayt)`;
+      let treeHtml = "";
+      p.layers.forEach((layer) => {
+        let fieldsHtml = "";
+        if (layer.fields) {
+          layer.fields.forEach(f => {
+            fieldsHtml += `<div class="pcap-field-row"><span class="pcap-field-name">${f[0]}:</span><span class="pcap-field-val">${f[1]}</span></div>`;
+          });
+        }
+        treeHtml += `
+          <div class="pcap-tree-layer">
+            <div class="pcap-tree-header">▼ ${escapeHtml(layer.title)}</div>
+            <div class="pcap-tree-body">${fieldsHtml}</div>
+          </div>
+        `;
+      });
+      document.getElementById('pcap-packet-tree').innerHTML = treeHtml;
+
+      const rawBytes = p.raw instanceof Uint8Array ? p.raw : new TextEncoder().encode(p.info);
+      document.getElementById('pcap-hex-dump').innerText = renderHexDump(rawBytes);
+    }
+
+    // =========================================================================
+    // HARDENING AUDIT
+    // =========================================================================
+    const hardeningRules = [
+      { id: 'pass_enc', title: 'Şifrelerin Şifrelenmesi', weight: 8, check: (c) => /\bservice\s+password-encryption\b/i.test(c), fix: 'service password-encryption', desc: 'Düz metin şifreleri Type 7 formatında saklar.' },
+      { id: 'ssh_only', title: 'VTY Telnet Engelleme & SSH Zorunluluğu', weight: 12, check: (c) => /\btransport\s+input\s+ssh\b/i.test(c) && !/\btransport\s+input\s+.*telnet/i.test(c) && !/\btransport\s+input\s+all\b/i.test(c), fix: 'line vty 0 15\n transport input ssh', desc: 'Telnet trafiğini kapatır, sadece SSH v2 erişimine izin verir.' },
+      { id: 'no_domain_lookup', title: 'DNS İsim Çözümleme Kapatma', weight: 5, check: (c) => /\bno\s+ip\s+domain[\s-]lookup\b/i.test(c), fix: 'no ip domain-lookup', desc: 'Hatalı komutlarda konsolun kilitlenmesini önler.' },
+      { id: 'snmp_safe', title: 'Zayıf SNMP Toplulukları (public/private)', weight: 10, check: (c) => !/\bsnmp-server\s+community\s+(public|private)\b/i.test(c), fix: 'no snmp-server community public\nno snmp-server community private', desc: 'Varsayılan public/private SNMP dizgilerini kaldırır.' },
+      { id: 'aaa_new_model', title: 'AAA Kimlik Doğrulama Çerçevesi', weight: 10, check: (c) => /\baaa\s+new-model\b/i.test(c), fix: 'aaa new-model\naaa authentication login default local', desc: 'Merkezi kimlik denetimi için AAA mimarisini etkinleştirir.' },
+      { id: 'enable_secret', title: 'Güçlü Enable Secret Kullanımı', weight: 10, check: (c) => /\benable\s+secret\b/i.test(c), fix: 'enable secret C1sc0_Str0ng_P@ss!', desc: 'MD5/SHA256 ile hashlenmiş enable secret tanımlar.' },
+      { id: 'no_http', title: 'Güvensiz HTTP Web Servisi Kapatma', weight: 8, check: (c) => /\bno\s+ip\s+http\s+server\b/i.test(c) || /\bip\s+http\s+secure-server\b/i.test(c), fix: 'no ip http server\nip http secure-server', desc: 'Düz metin web yönetimini kapatır, HTTPS açar.' },
+      { id: 'no_source_route', title: 'IP Kaynak Yönlendirme Kapatma', weight: 5, check: (c) => /\bno\s+ip\s+source-route\b/i.test(c), fix: 'no ip source-route', desc: 'Paketin yönlendiricileri atlayarak sahte rota izlemesini engeller.' },
+      { id: 'log_buffered', title: 'Bellek İçi Olay Günlüğü (Logging Buffered)', weight: 6, check: (c) => /\blogging\s+buffered\b/i.test(c), fix: 'logging buffered 64000 informational', desc: 'Logları RAM tamponunda tutar, konsol donmasını önler.' },
+      { id: 'login_block', title: 'Brute-Force Parola Saldırı Koruması', weight: 8, check: (c) => /\blogin\s+block-for\b/i.test(c), fix: 'login block-for 120 attempts 3 within 60', desc: '60 saniyede 3 hatalı girişte erişimi 2 dakika kilitler.' },
+      { id: 'banner_motd', title: 'Yasal Uyarı Banner Tanımı', weight: 4, check: (c) => /\bbanner\s+(motd|login)\b/i.test(c), fix: 'banner motd ^C YETKISIZ ERISIM YASAKTIR. ^C', desc: 'Yasal kanıt ve uyarı metni tanımlar.' },
+      { id: 'tcp_keepalives', title: 'TCP Keepalive Denetimi', weight: 4, check: (c) => /\bservice\s+tcp-keepalives-(in|out)\b/i.test(c), fix: 'service tcp-keepalives-in\nservice tcp-keepalives-out', desc: 'Kopan VTY/SSH oturumlarının asılı kalmasını önler.' },
+      { id: 'dhcp_snooping', title: 'DHCP Snooping Koruması', weight: 5, check: (c) => /\bip\s+dhcp\s+snooping\b/i.test(c), fix: 'ip dhcp snooping\nip dhcp snooping vlan 1-4094', desc: 'Rogue DHCP sunucu saldırılarını engeller.' },
+      { id: 'stp_bpduguard', title: 'STP PortFast BPDU Guard', weight: 5, check: (c) => /\bspanning-tree\s+portfast\s+bpduguard\s+default\b/i.test(c) || /\bspanning-tree\s+bpduguard\s+enable\b/i.test(c), fix: 'spanning-tree portfast bpduguard default', desc: 'Kullanıcı portlarına switch takılarak STP ağacının bozulmasını önler.' }
+    ];
+
+    function loadSampleAuditConfig() {
+      document.getElementById('audit-raw-config').value = `hostname Core-Switch-01\n!\nenable password cisco\n!\nno service password-encryption\n!\nusername admin privilege 15 password admin123\n!\nsnmp-server community public RO\nsnmp-server community private RW\n!\ninterface GigabitEthernet1/0/1\n switchport mode access\n switchport access vlan 10\n!\nline vty 0 4\n password cisco\n transport input telnet all\n!\nend`;
+      auditCiscoConfig();
+    }
+
+    function auditCiscoConfig() {
+      playSoundFx('key');
+      const raw = document.getElementById('audit-raw-config').value;
+      if (!raw.trim()) { alert("Lütfen running-config metni yapıştırın."); return; }
+
+      let totalScore = 0, passCount = 0, failCount = 0, fixes = [], tbody = "";
+
+      hardeningRules.forEach(rule => {
+        const passed = rule.check(raw);
+        if (passed) {
+          totalScore += rule.weight;
+          passCount++;
+          tbody += `<tr><td><b style="color:#fff;">${rule.title}</b></td><td><span style="color:var(--text-muted); font-size:9px;">${rule.desc}</span></td><td><span class="audit-badge badge-pass">GEÇTİ</span></td><td style="color:var(--tech-emerald); font-weight:bold;">+${rule.weight}</td></tr>`;
+        } else {
+          failCount++;
+          fixes.push(`! ${rule.title} İyileştirmesi\n${rule.fix}`);
+          tbody += `<tr style="background:rgba(255, 51, 102, 0.03);"><td><b style="color:var(--tech-rose);">${rule.title}</b></td><td><span style="color:var(--text-muted); font-size:9px;">${rule.desc}</span></td><td><span class="audit-badge badge-fail">EKSİK</span></td><td style="color:var(--tech-rose); font-weight:bold;">0 / ${rule.weight}</td></tr>`;
+        }
+      });
+
+      const scoreEl = document.getElementById('audit-score-val');
+      scoreEl.innerText = `${totalScore} / 100`;
+      scoreEl.style.color = totalScore >= 80 ? 'var(--tech-emerald)' : (totalScore >= 50 ? 'var(--tech-amber)' : 'var(--tech-rose)');
+
+      document.getElementById('audit-pass-cnt').innerText = `${passCount} Kural`;
+      document.getElementById('audit-fail-cnt').innerText = `${failCount} Zafiyet`;
+      document.getElementById('audit-fix-cnt').innerText = `${fixes.length} Adet`;
+      document.getElementById('audit-matrix-tbody').innerHTML = tbody;
+
+      let fixScript = `! ========================================================\n! ZERO_PACKET OTOMATİK GÜVENLİK İYİLEŞTİRME SCRİPTİ (FIX)\n! Üretilme: ${new Date().toLocaleString('tr-TR')}\n! ========================================================\nconfigure terminal\n!\n`;
+      fixScript += fixes.join('\n!\n') + `\n!\nend\nwrite memory\n`;
+      document.getElementById('audit-fix-script').innerText = fixes.length > 0 ? fixScript : "! Tebrikler! Tüm güvenlik kriterleri başarıyla sağlandı.";
+    }
+
+    // =========================================================================
+    // TRANSFER SIZER
+    // =========================================================================
+    function switchTransferTab(mode) {
+      playSoundFx('key');
+      document.getElementById('tab-ts-fwd').classList.toggle('active', mode === 'fwd');
+      document.getElementById('tab-ts-rev').classList.toggle('active', mode === 'rev');
+      document.getElementById('sec-ts-fwd').style.display = (mode === 'fwd') ? 'block' : 'none';
+      document.getElementById('sec-ts-rev').style.display = (mode === 'rev') ? 'block' : 'none';
+      if (mode === 'fwd') calcTransferTime(); else calcRequiredBw();
+    }
+
+    function calcTransferTime() {
+      const sizeVal = parseFloat(document.getElementById('ts-size-val').value) || 0;
+      const sizeUnit = document.getElementById('ts-size-unit').value;
+      const bwVal = parseFloat(document.getElementById('ts-bw-val').value) || 0;
+      const bwUnit = document.getElementById('ts-bw-unit').value;
+      const overhead = parseFloat(document.getElementById('ts-overhead').value) || 0.9;
+      if (sizeVal <= 0 || bwVal <= 0) return;
+
+      const sizeMultipliers = { 'MB': 1e6, 'GB': 1e9, 'TB': 1e12, 'PB': 1e15 };
+      const totalBytes = sizeVal * sizeMultipliers[sizeUnit];
+      const totalBits = totalBytes * 8;
+
+      const bwMultipliers = { 'Kbps': 1e3, 'Mbps': 1e6, 'Gbps': 1e9, '10Gbps': 10e9 };
+      const nominalBps = bwVal * bwMultipliers[bwUnit];
+      const effectiveBps = nominalBps * overhead;
+      const totalSeconds = totalBits / effectiveBps;
+
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+
+      let formattedTime = "";
+      if (days > 0) formattedTime += `${days} Gün `;
+      if (hours > 0 || days > 0) formattedTime += `${hours} Saat `;
+      if (minutes > 0 || hours > 0 || days > 0) formattedTime += `${minutes} Dk `;
+      formattedTime += `${seconds} Sn`;
+
+      const mbPerSec = (effectiveBps / (8 * 1e6)).toFixed(2);
+      const gbPerHour = ((effectiveBps * 3600) / (8 * 1e9)).toFixed(2);
+
+      document.getElementById('ts-result-box').innerHTML = `
+        <div class="res-row"><span class="res-label">Toplam Süre:</span><span class="res-val green" style="font-size:13px;">${formattedTime}</span></div>
+        <div class="res-row"><span class="res-label">Net Aktarım Hızı:</span><span class="res-val">${mbPerSec} MB/sn</span></div>
+        <div class="res-row"><span class="res-label">Saatlik Kapasite:</span><span class="res-val amber">${gbPerHour} GB/Saat</span></div>
+        <div class="res-row"><span class="res-label">Efektif Hız:</span><span class="res-val">${(effectiveBps/1e6).toFixed(1)} Mbps</span></div>
+      `;
+    }
+
+    function calcRequiredBw() {
+      const sizeVal = parseFloat(document.getElementById('ts-rev-size').value) || 0;
+      const sizeUnit = document.getElementById('ts-rev-unit').value;
+      const timeVal = parseFloat(document.getElementById('ts-rev-time').value) || 0;
+      const timeUnit = document.getElementById('ts-rev-timeunit').value;
+      if (sizeVal <= 0 || timeVal <= 0) return;
+
+      const totalBytes = sizeVal * (sizeUnit === 'TB' ? 1e12 : 1e9);
+      const totalBits = totalBytes * 8;
+      let totalSeconds = timeVal * 3600;
+      if (timeUnit === 'minutes') totalSeconds = timeVal * 60;
+      if (timeUnit === 'days') totalSeconds = timeVal * 86400;
+
+      const requiredEffectiveBps = totalBits / totalSeconds;
+      const requiredNominalMbps = (requiredEffectiveBps / (0.90 * 1e6)).toFixed(1);
+      const requiredNominalGbps = (requiredEffectiveBps / (0.90 * 1e9)).toFixed(2);
+
+      document.getElementById('ts-rev-result-box').innerHTML = `
+        <div class="res-row"><span class="res-label">Gereken Hat Hızı (Mbps):</span><span class="res-val green" style="font-size:13px;">${requiredNominalMbps} Mbps</span></div>
+        <div class="res-row"><span class="res-label">Gereken Hat Hızı (Gbps):</span><span class="res-val amber">${requiredNominalGbps} Gbps</span></div>
+        <div class="res-row"><span class="res-label">Saniyede Taşınması Gereken:</span><span class="res-val">${(totalBytes / totalSeconds / 1e6).toFixed(1)} MB/sn</span></div>
+      `;
+    }
+
+    // =========================================================================
+    // SUBNET OVERLAP CHECK
+    // =========================================================================
+    function ip2int(ip) { 
+      return ip.split('.').reduce((acc, oct) => ((acc << 8) + parseInt(oct, 10)) >>> 0, 0) >>> 0; 
+    }
+    function int2ip(int) { 
+      return [(int >>> 24) & 255, (int >>> 16) & 255, (int >>> 8) & 255, int & 255].join('.'); 
+    }
+
+    function parseCIDR(cidrStr) {
+      const parts = cidrStr.trim().split('/');
+      if (parts.length !== 2) return null;
+      const ip = parts[0].trim();
+      const prefix = parseInt(parts[1].trim(), 10);
+      if (isNaN(prefix) || prefix < 0 || prefix > 32) return null;
+      const ipInt = ip2int(ip);
+      const mask = prefix === 0 ? 0 : (0xFFFFFFFF << (32 - prefix)) >>> 0;
+      const start = (ipInt & mask) >>> 0;
+      const end = (start | (~mask >>> 0)) >>> 0;
+      return { cidr: `${int2ip(start)}/${prefix}`, start, end, prefix, totalIPs: (end - start + 1) >>> 0 };
+    }
+
+    function loadSampleOverlap() {
+      playSoundFx('key');
+      document.getElementById('so-candidate-ip').value = "10.50.2.0/24";
+      document.getElementById('so-existing-list').value = "10.0.0.0/16\n192.168.1.0/24\n172.16.0.0/20\n10.50.0.0/22";
+      runSubnetOverlapCheck();
+    }
+
+    function runSubnetOverlapCheck() {
+      playSoundFx('key');
+      const candidateStr = document.getElementById('so-candidate-ip').value.trim();
+      const rawList = document.getElementById('so-existing-list').value.trim().split('\n');
+      const candidate = parseCIDR(candidateStr);
+      if (!candidate) {
+        document.getElementById('so-status-card').innerHTML = `<span style="color:var(--tech-rose);">Geçersiz Hedef CIDR formatı.</span>`;
+        return;
+      }
+
+      const overlaps = [];
+      rawList.forEach(line => {
+        const item = line.trim();
+        if (!item || item.startsWith('#')) return;
+        const parsed = parseCIDR(item);
+        if (!parsed) return;
+
+        if (candidate.start <= parsed.end && candidate.end >= parsed.start) {
+          const overlapStart = Math.max(candidate.start, parsed.start) >>> 0;
+          const overlapEnd = Math.min(candidate.end, parsed.end) >>> 0;
+          let type = "Kısmi Kesişim";
+          if (candidate.start >= parsed.start && candidate.end <= parsed.end) type = "🔴 Hedef Alt Küme (Tam Kapsanıyor)";
+          else if (candidate.start <= parsed.start && candidate.end >= parsed.end) type = "🔴 Hedef Üst Küme (Mevcut Ağı Kapsıyor)";
+
+          overlaps.push({
+            existing: parsed.cidr,
+            range: `${int2ip(overlapStart)} - ${int2ip(overlapEnd)}`,
+            count: ((overlapEnd - overlapStart + 1) >>> 0),
+            type: type
+          });
+        }
+      });
+
+      const statusCard = document.getElementById('so-status-card');
+      let tbody = "";
+      if (overlaps.length > 0) {
+        playSoundFx('alert');
+        statusCard.innerHTML = `<div style="text-align:center;"><b style="color:var(--tech-rose); font-size:12px;">⚠️ ÇAKIŞMA TESPİT EDİLDİ (${overlaps.length} Alt Ağ ile Kesişiyor)</b></div>`;
+        overlaps.forEach(o => {
+          tbody += `<tr><td style="color:var(--tech-rose); font-weight:bold;">${o.existing}</td><td>${o.range} (${o.count} IP)</td><td style="color:var(--tech-amber);">${o.type}</td></tr>`;
+        });
+      } else {
+        playSoundFx('success');
+        statusCard.innerHTML = `<div style="text-align:center;"><b style="color:var(--tech-emerald); font-size:12px;">✅ TEMİZ // ÇAKIŞMA YOK</b><div style="font-size:10px; color:var(--text-muted); margin-top:2px;">Hedef alt ağ (${candidate.cidr}) mevcut ağlar ile çakışmıyor.</div></div>`;
+        tbody = `<tr><td colspan="3" style="text-align:center; color:var(--tech-emerald);">Kesişen alt ağ bulunamadı.</td></tr>`;
+      }
+      document.getElementById('so-table-body').innerHTML = tbody;
+    }
+
+    // =========================================================================
+    // PINOUT & FIREWALL PORTS
+    // =========================================================================
+    function switchPinoutTab(t) {
+      playSoundFx('key');
+      ['rj45', 'console', 'fiber'].forEach(tab => {
+        document.getElementById('tab-pin-' + tab).classList.toggle('active', tab === t);
+        document.getElementById('sec-pin-' + tab).style.display = (tab === t) ? 'block' : 'none';
+      });
+    }
+
+    const wellKnownPorts = [
+      { id: 'ssh', port: 22, proto: 'TCP', name: 'SSH', cat: 'Yönetim', desc: 'Güvenli Uzak Terminal', defaultSelected: false },
+      { id: 'dns', port: 53, proto: 'UDP/TCP', name: 'DNS', cat: 'Altyapı', desc: 'Domain Name System Sorguları', defaultSelected: true },
+      { id: 'http', port: 80, proto: 'TCP', name: 'HTTP', cat: 'Web', desc: 'Düz Metin Web Trafiği', defaultSelected: true },
+      { id: 'ntp', port: 123, proto: 'UDP', name: 'NTP', cat: 'Altyapı', desc: 'Network Time Protocol Saat Eşitlemesi', defaultSelected: false },
+      { id: 'bgp', port: 179, proto: 'TCP', name: 'BGP', cat: 'Routing', desc: 'Border Gateway Protocol Komşuluğu', defaultSelected: false },
+      { id: 'ldap', port: 389, proto: 'TCP', name: 'LDAP', cat: 'Kimlik', desc: 'Active Directory Dizin Erişimi', defaultSelected: false },
+      { id: 'https', port: 443, proto: 'TCP', name: 'HTTPS', cat: 'Web', desc: 'Şifreli TLS/SSL Web Trafiği', defaultSelected: true },
+      { id: 'ipsec_ike', port: 500, proto: 'UDP', name: 'IPsec ISAKMP', cat: 'VPN', desc: 'IKEv1 / IKEv2 Anahtar Değişimi', defaultSelected: false },
+      { id: 'syslog', port: 514, proto: 'UDP', name: 'Syslog', cat: 'Log', desc: 'Sistem Olay Günlüğü Aktarımı', defaultSelected: false },
+      { id: 'ldaps', port: 636, proto: 'TCP', name: 'LDAPS', cat: 'Kimlik', desc: 'Güvenli Şifreli Active Directory', defaultSelected: false },
+      { id: 'radius_auth', port: 1812, proto: 'UDP', name: 'RADIUS Auth', cat: 'Kimlik', desc: '802.1X Ağ Kimlik Doğrulama', defaultSelected: false },
+      { id: 'radius_acct', port: 1813, proto: 'UDP', name: 'RADIUS Acct', cat: 'Kimlik', desc: 'Ağ Hesaplaşma / Muhasebe', defaultSelected: false },
+      { id: 'rdp', port: 3389, proto: 'TCP', name: 'RDP', cat: 'Yönetim', desc: 'Windows Uzak Masaüstü', defaultSelected: false },
+      { id: 'ipsec_natt', port: 4500, proto: 'UDP', name: 'IPsec NAT-T', cat: 'VPN', desc: 'IPsec NAT Traversal Kapsülleme', defaultSelected: false },
+      { id: 'wireguard', port: 51820, proto: 'UDP', name: 'WireGuard', cat: 'VPN', desc: 'WireGuard Modern VPN Tüneli', defaultSelected: false }
+    ];
+
+    let selectedPortIndices = new Set([1, 2, 6]);
+
+    function populateFirewallPortsTable() {
+      const tbody = document.getElementById('fw-ports-tbody');
+      if (!tbody) return;
+      let html = "";
+      wellKnownPorts.forEach((p, idx) => {
+        const isChecked = selectedPortIndices.has(idx);
+        html += `
+          <tr style="cursor:pointer;" onclick="togglePortSelection(${idx}, event)">
+            <td style="text-align:center;"><input type="checkbox" class="fw-port-cb" data-idx="${idx}" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); togglePortSelection(${idx}, event)"></td>
+            <td><b style="color:var(--tech-cyan);">${p.port}</b></td>
+            <td><span class="res-val green">${p.proto}</span></td>
+            <td><b>${p.name}</b></td>
+            <td><span style="font-size:9px; color:var(--text-dim);">${p.cat}</span></td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+      updateSelectedCount();
+      generateFwRuleSnippet();
+    }
+
+    function togglePortSelection(idx, e) {
+      playSoundFx('key');
+      if (selectedPortIndices.has(idx)) selectedPortIndices.delete(idx);
+      else selectedPortIndices.add(idx);
+      
+      const cb = document.querySelector(`.fw-port-cb[data-idx="${idx}"]`);
+      if (cb) cb.checked = selectedPortIndices.has(idx);
+      updateSelectedCount();
+      generateFwRuleSnippet();
+    }
+
+    function toggleCheckAll(checked) {
+      playSoundFx('key');
+      if (checked) wellKnownPorts.forEach((_, idx) => selectedPortIndices.add(idx));
+      else selectedPortIndices.clear();
+      document.querySelectorAll('.fw-port-cb').forEach(cb => cb.checked = checked);
+      updateSelectedCount();
+      generateFwRuleSnippet();
+    }
+
+    function selectAllPorts(status) {
+      const cbAll = document.getElementById('fw-check-all');
+      if (cbAll) cbAll.checked = status;
+      toggleCheckAll(status);
+    }
+
+    function applyPortPreset(type) {
+      playSoundFx('key');
+      selectedPortIndices.clear();
+      wellKnownPorts.forEach((p, idx) => {
+        if (type === 'web' && ['HTTP', 'HTTPS', 'DNS'].includes(p.name)) selectedPortIndices.add(idx);
+        if (type === 'ad' && ['LDAP', 'LDAPS', 'DNS'].includes(p.name)) selectedPortIndices.add(idx);
+        if (type === 'mgmt' && ['SSH', 'RDP', 'Syslog', 'NTP', 'IPsec ISAKMP', 'IPsec NAT-T', 'WireGuard'].includes(p.name)) selectedPortIndices.add(idx);
+      });
+      populateFirewallPortsTable();
+    }
+
+    function updateSelectedCount() {
+      const cntEl = document.getElementById('fw-selected-count');
+      if (cntEl) cntEl.innerText = `${selectedPortIndices.size} Port Seçili`;
+    }
+
+    function filterFirewallPorts() {
+      const query = document.getElementById('fw-port-search').value.toLowerCase().trim();
+      const tbody = document.getElementById('fw-ports-tbody');
+      let html = "";
+      wellKnownPorts.forEach((p, idx) => {
+        if (p.port.toString().includes(query) || p.name.toLowerCase().includes(query) || p.cat.toLowerCase().includes(query)) {
+          const isChecked = selectedPortIndices.has(idx);
+          html += `
+            <tr style="cursor:pointer;" onclick="togglePortSelection(${idx}, event)">
+              <td style="text-align:center;"><input type="checkbox" class="fw-port-cb" data-idx="${idx}" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); togglePortSelection(${idx}, event)"></td>
+              <td><b style="color:var(--tech-cyan);">${p.port}</b></td>
+              <td><span class="res-val green">${p.proto}</span></td>
+              <td><b>${p.name}</b></td>
+              <td><span style="font-size:9px; color:var(--text-dim);">${p.cat}</span></td>
+            </tr>
+          `;
+        }
+      });
+      tbody.innerHTML = html || `<tr><td colspan="5" style="text-align:center; color:var(--text-dim);">Eşleşen port bulunamadı.</td></tr>`;
+    }
+
+    function generateFwRuleSnippet() {
+      const platform = document.getElementById('fw-platform-sel').value;
+      const selected = Array.from(selectedPortIndices).map(i => wellKnownPorts[i]);
+
+      if (selected.length === 0) {
+        document.getElementById('fw-rule-output').innerText = "! Lütfen tablodan en az 1 port seçin.";
+        return;
+      }
+
+      let code = "";
+      if (platform === 'cisco_asa') {
+        code = `! Cisco ASA / Firepower Servis Nesneleri ve Grup Tanımı\nobject-group service OG_KURUMSAL_SERVISLER tcp-udp\n`;
+        selected.forEach(p => {
+          code += ` port-object eq ${p.port}  ! ${p.name} (${p.desc})\n`;
+        });
+        code += `!\naccess-list OUTSIDE_IN extended permit object-group OG_KURUMSAL_SERVISLER any any\n`;
+      } else if (platform === 'fortinet') {
+        code = `# FortiOS CLI Özel Servisler ve Servis Grubu\nconfig firewall service custom\n`;
+        selected.forEach(p => {
+          const isUdp = p.proto.includes('UDP') && !p.proto.includes('TCP');
+          code += `    edit "SVC_${p.name.replace(/[^a-zA-Z0-9]/g, '_')}"\n        set ${isUdp ? 'udp' : 'tcp'}-portrange ${p.port}\n        set comment "${p.desc}"\n    next\n`;
+        });
+        code += `end\n\nconfig firewall service group\n    edit "GRP_KURUMSAL_SERVISLER"\n        set member ${selected.map(p => `"SVC_${p.name.replace(/[^a-zA-Z0-9]/g, '_')}"`).join(' ')}\n    next\nend\n`;
+      } else if (platform === 'paloalto') {
+        code = `# Palo Alto PAN-OS Set Komutları ve Servis Grubu\n`;
+        selected.forEach(p => {
+          const proto = p.proto.includes('UDP') && !p.proto.includes('TCP') ? 'udp' : 'tcp';
+          code += `set service SERVICE_${p.name.replace(/[^a-zA-Z0-9]/g, '_')} protocol ${proto} port ${p.port} description "${p.desc}"\n`;
+        });
+        code += `\nset service-group GRP_KURUMSAL_SERVISLER members [ ${selected.map(p => `SERVICE_${p.name.replace(/[^a-zA-Z0-9]/g, '_')}`).join(' ')} ]\n`;
+      } else {
+        const tcpPorts = selected.filter(p => p.proto.includes('TCP')).map(p => p.port);
+        const udpPorts = selected.filter(p => p.proto.includes('UDP')).map(p => p.port);
+        code = `# Linux iptables Multiport Filtre Kuralları\n`;
+        if (tcpPorts.length > 0) {
+          code += `iptables -A INPUT -p tcp -m multiport --dports ${tcpPorts.join(',')} -m state --state NEW,ESTABLISHED -j ACCEPT -m comment --comment "TCP Servisleri"\n`;
+        }
+        if (udpPorts.length > 0) {
+          code += `iptables -A INPUT -p udp -m multiport --dports ${udpPorts.join(',')} -m state --state NEW,ESTABLISHED -j ACCEPT -m comment --comment "UDP Servisleri"\n`;
+        }
+      }
+      document.getElementById('fw-rule-output').innerText = code;
+    }
+
+    // =========================================================================
+    // DIFF ENGINE (LCS)
+    // =========================================================================
+    function loadSampleDiff() {
+      playSoundFx('key');
+      document.getElementById('diff-old-input').value = `hostname Omurga-Switch-01\n!\nvlan 10\n name DATA_USERS\n!\ninterface GigabitEthernet1/0/1\n switchport mode access\n switchport access vlan 10\n!\nrouter ospf 1\n network 10.10.10.0 0.0.0.255 area 0`;
+      document.getElementById('diff-new-input').value = `hostname Omurga-Switch-01\n!\nvlan 10\n name DATA_USERS\n!\nvlan 20\n name SERVERS\n!\ninterface GigabitEthernet1/0/1\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n!\nrouter ospf 1\n network 10.10.10.0 0.0.0.255 area 0\n network 10.10.20.0 0.0.0.255 area 0`;
+      runConfigDiff();
+    }
+
+    function clearDiffInputs() {
+      playSoundFx('key');
+      document.getElementById('diff-old-input').value = '';
+      document.getElementById('diff-new-input').value = '';
+      document.getElementById('diff-added-count').innerText = '0';
+      document.getElementById('diff-removed-count').innerText = '0';
+      document.getElementById('diff-unchanged-count').innerText = '0';
+      document.getElementById('diff-total-changes').innerText = '0';
+      document.getElementById('diff-output-box').innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px 0; font-family:var(--font-mono);">Konfigürasyon metinlerini girip butona tıklayın.</div>';
+      document.getElementById('diff-status-label').innerText = 'Temizlendi';
+    }
+
+    function computeLCSDiff(oldLines, newLines) {
+      const m = oldLines.length, n = newLines.length;
+      const dp = Array.from({ length: m + 1 }, () => new Int32Array(n + 1));
+      
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (oldLines[i - 1] === newLines[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+          else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+
+      let i = m, j = n;
+      const diff = [];
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && oldLines[i - 1] === newLines[j - 1]) {
+          diff.push({ type: 'unchanged', text: oldLines[i - 1], oldLine: i, newLine: j });
+          i--; j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+          diff.push({ type: 'added', text: newLines[j - 1], oldLine: '', newLine: j });
+          j--;
+        } else if (i > 0 && (j === 0 || dp[i][j - 1] < dp[i - 1][j])) {
+          diff.push({ type: 'removed', text: oldLines[i - 1], oldLine: i, newLine: '' });
+          i--;
+        }
+      }
+      return diff.reverse();
+    }
+
+    function runConfigDiff() {
+      playSoundFx('key');
+      const oldRaw = document.getElementById('diff-old-input').value;
+      const newRaw = document.getElementById('diff-new-input').value;
+      if (!oldRaw.trim() && !newRaw.trim()) return;
+
+      const ignoreComments = document.getElementById('diff-ignore-comments') && document.getElementById('diff-ignore-comments').checked;
+
+      const normalize = (text) => {
+        let lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+        if (ignoreComments) {
+          lines = lines.map(l => l.trimEnd()).filter(l => l.trim() !== '!' && l.trim() !== '');
+        }
+        return lines;
+      };
+
+      const oldLines = normalize(oldRaw);
+      const newLines = normalize(newRaw);
+      const diffList = computeLCSDiff(oldLines, newLines);
+      let added = 0, removed = 0, unchanged = 0, tableHtml = '<table class="diff-table"><tbody>';
+
+      diffList.forEach(item => {
+        if (item.type === 'added') {
+          added++;
+          tableHtml += `<tr class="added"><td class="diff-num"></td><td class="diff-num">${item.newLine}</td><td class="diff-sign">+</td><td>${escapeHtml(item.text)}</td></tr>`;
+        } else if (item.type === 'removed') {
+          removed++;
+          tableHtml += `<tr class="removed"><td class="diff-num">${item.oldLine}</td><td class="diff-num"></td><td class="diff-sign">-</td><td>${escapeHtml(item.text)}</td></tr>`;
+        } else {
+          unchanged++;
+          tableHtml += `<tr class="unchanged"><td class="diff-num">${item.oldLine}</td><td class="diff-num">${item.newLine}</td><td class="diff-sign"> </td><td>${escapeHtml(item.text)}</td></tr>`;
+        }
+      });
+      tableHtml += '</tbody></table>';
+
+      document.getElementById('diff-added-count').innerText = added;
+      document.getElementById('diff-removed-count').innerText = removed;
+      document.getElementById('diff-unchanged-count').innerText = unchanged;
+      document.getElementById('diff-total-changes').innerText = added + removed;
+      document.getElementById('diff-output-box').innerHTML = tableHtml;
+      document.getElementById('diff-status-label').innerText = `Rapor Hazır (${added + removed} Satır Farkı)`;
+    }
+
+    // =========================================================================
+    // CISCO RANGE, SYSLOG, TEMPLATES, ACL, CRYPT
+    // =========================================================================
+    function toggleRangeFields() {
+      const m = document.getElementById('range-mode').value;
+      document.getElementById('range-access-sec').style.display = m === 'access' ? 'block' : 'none';
+      document.getElementById('range-trunk-sec').style.display = m === 'trunk' ? 'block' : 'none';
+      document.getElementById('range-blackhole-sec').style.display = m === 'blackhole' ? 'block' : 'none';
+    }
+    function togglePortSecOpts() { 
+      document.getElementById('range-portsec-opts').style.display = document.getElementById('range-port-sec').checked ? 'grid' : 'none'; 
+    }
+
+    function generateCiscoRangeConfig() {
+      playSoundFx('key');
+      const m = document.getElementById('range-mode').value, r = document.getElementById('range-iface').value.trim(), d = document.getElementById('range-desc').value.trim();
+      let out = `! ZeroPacket Interface Range Config\n`;
+      if (m === 'access') {
+        const dv = document.getElementById('range-data-vlan').value;
+        out += `interface range ${r}\n description ${d}\n switchport mode access\n switchport access vlan ${dv}\n`;
+        if (document.getElementById('range-stp-portfast').checked) out += ` spanning-tree portfast\n`;
+        if (document.getElementById('range-stp-bpduguard').checked) out += ` spanning-tree bpduguard enable\n`;
+        if (document.getElementById('range-port-sec').checked) out += ` switchport port-security\n switchport port-security maximum ${document.getElementById('range-mac-max').value}\n`;
+        out += ` no shutdown\n`;
+      } else if (m === 'trunk') {
+        out += `interface range ${r}\n description ${d}\n switchport mode trunk\n switchport trunk native vlan ${document.getElementById('range-native-vlan').value}\n switchport trunk allowed vlan ${document.getElementById('range-allowed-vlans').value}\n no shutdown\n`;
+      } else {
+        out += `interface range ${r}\n description ${d}\n switchport access vlan ${document.getElementById('range-blackhole-vlan').value}\n shutdown\n`;
+      }
+      document.getElementById('cisco-range-output').innerText = out;
+    }
+
+    let parsedSyslogs = [];
+    function loadSampleSyslog() {
+      playSoundFx('key');
+      document.getElementById('syslog-raw-input').value = `*Jan 15 08:23:12: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down\n*Jan 15 08:23:13: %OSPF-5-ADJCHG: Process 1, Nbr 10.10.10.2 on Gi0/1 from FULL to DOWN\n*Jan 15 08:25:44: %PORT_SECURITY-2-PSECURE_VIOLATION: Security violation by MAC 0011.2233.4455 on Gi0/2`;
+      parseCiscoSyslog();
+    }
+
+    function parseCiscoSyslog() {
+      playSoundFx('key');
+      const raw = document.getElementById('syslog-raw-input').value.trim(); if (!raw) return;
+      parsedSyslogs = []; let crit = 0, warn = 0, info = 0;
+      raw.split('\n').forEach((l, idx) => {
+        const m = l.match(/%([A-Z0-9_]+)-([0-7])-([A-Z0-9_]+):\s*(.*)/);
+        let sev = 5, mnem = "GENEL", msg = l;
+        if (m) { sev = parseInt(m[2], 10); mnem = `${m[1]}-${m[2]}-${m[3]}`; msg = m[4]; }
+        if (sev <= 3) crit++; else if (sev === 4) warn++; else info++;
+        parsedSyslogs.push({ id: idx, sev, mnem, msg });
+      });
+      document.getElementById('syslog-total-count').innerText = parsedSyslogs.length;
+      document.getElementById('syslog-crit-count').innerText = crit;
+      document.getElementById('syslog-warn-count').innerText = warn;
+      document.getElementById('syslog-info-count').innerText = info;
+      filterSyslogResults();
+    }
+
+    function filterSyslogResults() {
+      const filter = document.getElementById('syslog-filter-sev').value;
+      let filtered = parsedSyslogs;
+      if (filter === 'crit') filtered = parsedSyslogs.filter(s => s.sev <= 3);
+      if (filter === 'warn') filtered = parsedSyslogs.filter(s => s.sev === 4);
+      if (filter === 'info') filtered = parsedSyslogs.filter(s => s.sev >= 5);
+
+      let h = '';
+      filtered.forEach(l => {
+        h += `<div class="result-box" style="border-left:2px solid ${l.sev <= 3 ? 'var(--tech-rose)' : (l.sev === 4 ? 'var(--tech-amber)' : 'var(--tech-emerald)')}; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between;"><b style="color:#fff; font-size:10px;">%${l.mnem}</b><span style="color:${l.sev<=3?'var(--tech-rose)':(l.sev===4?'var(--tech-amber)':'var(--tech-emerald)')}; font-weight:bold;">SEV ${l.sev}</span></div>
+          <div style="color:var(--text-muted); font-size:9px; margin-top:2px;">${l.msg}</div>
+        </div>`;
+      });
+      document.getElementById('syslog-output-container').innerHTML = h || '<div style="color:var(--text-dim); text-align:center; font-family:var(--font-mono);">Kayıt yok.</div>';
+    }
+
+    function toggleCiscoTmplFields() {
+      const p = document.getElementById('cisco-tmpl-proto').value;
+      document.getElementById('field-cisco-extra').style.display = (p === 'eigrp') ? 'none' : 'block';
+    }
+
+    function generateCiscoConfig() {
+      playSoundFx('key');
+      const p = document.getElementById('cisco-tmpl-proto').value, as = document.getElementById('cisco-tmpl-as').value, ifc = document.getElementById('cisco-tmpl-iface').value, ip = document.getElementById('cisco-tmpl-ip').value, ex = document.getElementById('cisco-tmpl-extra').value;
+      let out = `! Cisco IOS Routing Config (${p.toUpperCase()})\ninterface ${ifc}\n ip address ${ip.replace('/24', ' 255.255.255.0')}\n no shutdown\n!\n`;
+      if (p === 'ospf') out += `router ospf ${as}\n network ${ip.split('/')[0]} 0.0.0.255 area ${ex}\n`;
+      else if (p === 'eigrp') out += `router eigrp ${as}\n network ${ip.split('/')[0]} 0.0.0.255\n no auto-summary\n`;
+      else if (p === 'bgp') out += `router bgp ${as}\n neighbor ${ex} remote-as 65001\n`;
+      else if (p === 'hsrp') out += `interface ${ifc}\n standby ${as} ip ${ex}\n standby ${as} priority 110\n standby ${as} preempt\n`;
+      else if (p === 'ipsla') out += `ip sla ${as}\n icmp-echo ${ex}\n frequency 5\nip sla schedule ${as} life forever start-time now\n`;
+      document.getElementById('cisco-tmpl-output').innerText = out;
+    }
+
+    function toggleAclFields() { 
+      document.getElementById('acl-ext-fields').style.display = document.getElementById('acl-type').value === 'extended' ? 'block' : 'none'; 
+    }
+
+    function generateCiscoAcl() {
+      playSoundFx('key');
+      const t = document.getElementById('acl-type').value, num = document.getElementById('acl-num').value, act = document.getElementById('acl-action').value, src = document.getElementById('acl-src').value;
+      let out = `! Cisco Access-List (ACL)\n`;
+      if (t === 'standard') out += `access-list ${num} ${act} ${src.replace('/24', ' 0.0.0.255')}\n`;
+      else out += `access-list ${num} ${act} ${document.getElementById('acl-proto').value} ${src.replace('/24', ' 0.0.0.255')} ${document.getElementById('acl-dst').value.replace('/24', ' 0.0.0.255')} ${document.getElementById('acl-port').value}\n`;
+      document.getElementById('acl-output').innerText = out;
+    }
+
+    const ciscoKey = [0x64, 0x73, 0x66, 0x4d, 0x38, 0x02, 0x06, 0xab, 0x22, 0x03, 0x9e, 0x25, 0x6d, 0x20, 0x30, 0x01];
+    function toggleCryptPlaceholder() { 
+      document.getElementById('crypt-input').value = document.getElementById('crypt-mode').value === 'decrypt' ? "070C281F190C" : "cisco123"; 
+    }
+
+    function processCiscoCrypt() {
+      playSoundFx('key');
+      const m = document.getElementById('crypt-mode').value, inp = document.getElementById('crypt-input').value.trim();
+      if (!inp) return;
+      if (m === 'decrypt') {
+        let idx = parseInt(inp.substring(0, 2), 10), res = "";
+        for (let i = 2; i < inp.length; i += 2) { res += String.fromCharCode(parseInt(inp.substring(i, i + 2), 16) ^ ciscoKey[idx++ % ciscoKey.length]); }
+        document.getElementById('crypt-output').innerText = res;
+      } else {
+        let idx = 7, hex = "07";
+        for (let i = 0; i < inp.length; i++) {
+          let h = (inp.charCodeAt(i) ^ ciscoKey[idx++ % ciscoKey.length]).toString(16).toUpperCase();
+          hex += (h.length < 2 ? "0" + h : h);
+        }
+        document.getElementById('crypt-output').innerText = hex;
+      }
+    }
+
+    // =========================================================================
+    // INTERACTIVE TOPOLOGY & SIMULATOR
+    // =========================================================================
+    let canvasNodes = [], canvasLinks = [], canvasSelectedNode = null, canvasLinkSource = null, isLinkMode = false, activeDraggingNodeId = null, dragOffset = { x: 0, y: 0 }, isSimulating = false;
+
+    const deviceIcons = {
+      pc: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><rect x="2" y="3" width="20" height="14"/><line x1="8" y1="21" x2="16" y2="21"/></svg>`,
+      server: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><rect x="2" y="2" width="20" height="8"/><rect x="2" y="14" width="20" height="8"/></svg>`,
+      switch: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><rect x="2" y="6" width="20" height="12"/><path d="M6 10l4-2v8l-4-2M18 10l-4-2v8l4-2"/></svg>`,
+      router: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff9d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M7 12h10M12 7v10"/></svg>`,
+      firewall: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff3366" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M3 15h18"/></svg>`
+    };
+
+    function initTopologyEngine() {
+      const container = document.getElementById('canvas-container');
+      if (!container || container.dataset.initialized) return;
+      container.dataset.initialized = "true";
+
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect(), mouseX = e.clientX - rect.left, mouseY = e.clientY - rect.top;
+        if (activeDraggingNodeId) {
+          const node = canvasNodes.find(n => n.id === activeDraggingNodeId);
+          if (node) {
+            node.x = Math.max(0, Math.min(rect.width - 145, mouseX - dragOffset.x));
+            node.y = Math.max(0, Math.min(rect.height - 65, mouseY - dragOffset.y));
+            const el = document.getElementById(node.id);
+            if (el) { el.style.left = node.x + 'px'; el.style.top = node.y + 'px'; }
+            drawCanvasLinks();
+          }
+        }
+        if (isLinkMode && canvasLinkSource) {
+          const c = getNodeCenter(canvasLinkSource.id);
+          const t = document.getElementById('temp-line');
+          if (t) { t.setAttribute('x1', c.x); t.setAttribute('y1', c.y); t.setAttribute('x2', mouseX); t.setAttribute('y2', mouseY); t.style.display = 'block'; }
+        }
+      });
+      document.addEventListener('mouseup', () => { activeDraggingNodeId = null; });
+      loadDefaultTopology();
+    }
+
+    function loadDefaultTopology() {
+      canvasNodes = []; canvasLinks = [];
+      addNode('L3 Router', 'router', '192.168.1.1', 60, 60, 10, true);
+      addNode('Firewall GW', 'firewall', '10.10.10.1', 400, 60, 10, true);
+      addNode('L3 Core Switch', 'switch', '172.16.0.1', 230, 240, 1, true);
+      addNode('Sunucu V20', 'server', '10.10.20.10', 60, 440, 20, false);
+      addNode('Kullanıcı PC', 'pc', '192.168.1.50', 400, 440, 10, false);
+
+      setTimeout(() => {
+        if (canvasNodes.length >= 5) {
+          canvasLinks = [
+            { from: canvasNodes[0].id, to: canvasNodes[2].id, status: 'UP', mode: 'trunk', vlan: 0, packetCount: 0 },
+            { from: canvasNodes[1].id, to: canvasNodes[2].id, status: 'UP', mode: 'trunk', vlan: 0, packetCount: 0 },
+            { from: canvasNodes[2].id, to: canvasNodes[3].id, status: 'UP', mode: 'access', vlan: 20, packetCount: 0 },
+            { from: canvasNodes[2].id, to: canvasNodes[4].id, status: 'UP', mode: 'access', vlan: 10, packetCount: 0 }
+          ];
+          drawCanvasLinks();
+        }
+      }, 50);
+    }
+
+    function toggleLinkMode() {
+      playSoundFx('key');
+      isLinkMode = !isLinkMode;
+      canvasLinkSource = null;
+      document.getElementById('btn-link-mode').classList.toggle('active', isLinkMode);
+      document.getElementById('canvas-container').classList.toggle('linking-mode', isLinkMode);
+      const t = document.getElementById('temp-line');
+      if (t) t.style.display = 'none';
+      renderCanvas();
+    }
+
+    function addNode(type, devKey, ip, x, y, vlan = 10, isL3 = false) {
+      playSoundFx('key');
+      const c = document.getElementById('canvas-container');
+      const rect = c ? c.getBoundingClientRect() : { width: 750, height: 600 };
+      const n = {
+        id: 'n_' + Date.now() + '_' + Math.floor(Math.random() * 100),
+        type, devKey,
+        ip: ip || '192.168.1.' + Math.floor(Math.random() * 200 + 10),
+        vlan: parseInt(vlan, 10) || 10,
+        isL3: Boolean(isL3 || devKey === 'router' || devKey === 'firewall'),
+        status: 'ONLINE',
+        x: x !== undefined ? x : Math.floor(Math.random() * (rect.width - 160)) + 20,
+        y: y !== undefined ? y : Math.floor(Math.random() * (rect.height - 100)) + 20
+      };
+      canvasNodes.push(n);
+      renderCanvas();
+      selectNodeForInspector(n);
+      return n;
+    }
+
+    function clearCanvas() {
+      playSoundFx('alert');
+      canvasNodes = []; canvasLinks = []; canvasSelectedNode = null;
+      renderCanvas();
+      document.getElementById('inspector-content').innerHTML = `<div style="font-size:10px; color:var(--text-dim); font-family:var(--font-mono);">Bir cihaz seçin.</div>`;
+      document.getElementById('inspector-badge').style.display = 'none';
+    }
+
+    function getAutoLinkMode(node1, node2) {
+      const hostTypes = ['pc', 'server', 'ap'];
+      if (hostTypes.includes(node1.devKey) || hostTypes.includes(node2.devKey)) return 'access';
+      if ((node1.devKey === 'switch' && node2.devKey === 'switch') ||
+          (node1.devKey === 'switch' && (node2.isL3 || node2.devKey === 'router' || node2.devKey === 'firewall')) ||
+          (node2.devKey === 'switch' && (node1.isL3 || node1.devKey === 'router' || node1.devKey === 'firewall'))) {
+        return 'trunk';
+      }
+      return 'access';
+    }
+
+    function renderCanvas() {
+      const container = document.getElementById('canvas-nodes'); if (!container) return;
+      container.innerHTML = '';
+      canvasNodes.forEach(n => {
+        const div = document.createElement('div');
+        div.className = 'canvas-node';
+        div.id = n.id;
+        div.style.left = n.x + 'px';
+        div.style.top = n.y + 'px';
+        if (canvasSelectedNode && canvasSelectedNode.id === n.id) div.classList.add('selected');
+
+        const isOff = n.status === 'OFFLINE';
+        const roleBadgeText = n.isL3 ? 'L3 ROUTED' : (n.devKey === 'switch' ? 'L2 SWITCH' : `VLAN ${n.vlan}`);
+        const roleBadgeClass = n.isL3 ? 'badge-l3' : (n.devKey === 'switch' ? 'badge-sw' : 'badge-vlan');
+
+        div.innerHTML = `
+          <div class="node-top-bar">
+            <div style="display:flex; align-items:center; gap:4px; overflow:hidden;">
+              ${deviceIcons[n.devKey] || deviceIcons['pc']}
+              <span class="node-title-text">${n.type}</span>
+            </div>
+            <span class="node-del-btn" title="Cihazı Sil" onmousedown="event.stopPropagation();" onclick="deleteNode('${n.id}', event)">✕</span>
+          </div>
+          <div class="node-ip-row">
+            <span class="node-ip-text">${n.ip}</span>
+          </div>
+          <div class="node-bottom-bar">
+            <span class="node-badge ${roleBadgeClass}">${roleBadgeText}</span>
+            <span class="node-status-dot ${isOff ? 'offline' : ''}"></span>
+          </div>
+        `;
+
+        div.onmousedown = (e) => {
+          if (e.target.classList.contains('node-del-btn')) return;
+          e.stopPropagation();
+          const r = container.getBoundingClientRect();
+          if (isLinkMode) {
+            if (!canvasLinkSource) { canvasLinkSource = n; playSoundFx('beep'); }
+            else if (canvasLinkSource.id !== n.id) {
+              const exists = canvasLinks.some(l => (l.from === canvasLinkSource.id && l.to === n.id) || (l.from === n.id && l.to === canvasLinkSource.id));
+              if (!exists) {
+                const hostTypes = ['pc', 'server', 'ap'];
+                const autoMode = getAutoLinkMode(canvasLinkSource, n);
+                const linkVlan = hostTypes.includes(n.devKey) ? n.vlan : (hostTypes.includes(canvasLinkSource.devKey) ? canvasLinkSource.vlan : 10);
+                
+                canvasLinks.push({ 
+                  from: canvasLinkSource.id, 
+                  to: n.id, 
+                  status: 'UP', 
+                  mode: autoMode, 
+                  vlan: linkVlan,
+                  packetCount: 0
+                });
+                playSoundFx('success');
+              }
+              toggleLinkMode();
+            }
+            return;
+          }
+          playSoundFx('key');
+          canvasSelectedNode = n;
+          activeDraggingNodeId = n.id;
+          dragOffset.x = e.clientX - r.left - n.x;
+          dragOffset.y = e.clientY - r.top - n.y;
+          selectNodeForInspector(n);
+          renderCanvas();
+        };
+        container.appendChild(div);
+      });
+      drawCanvasLinks();
+    }
+
+    function getNodeCenter(id) {
+      const node = canvasNodes.find(x => x.id === id);
+      if (!node) return { x: 0, y: 0 };
+      return { x: node.x + 70, y: node.y + 30 };
+    }
+
+    function drawCanvasLinks() {
+      const svg = document.getElementById('canvas-svg'); if (!svg) return;
+      svg.querySelectorAll('.node-link-group').forEach(l => l.remove());
+
+      canvasLinks.forEach(l => {
+        const n1 = canvasNodes.find(x => x.id === l.from), n2 = canvasNodes.find(x => x.id === l.to);
+        if (n1 && n2) {
+          const c1 = getNodeCenter(n1.id), c2 = getNodeCenter(n2.id);
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.setAttribute("class", "node-link-group");
+          g.style.cursor = "pointer"; g.style.pointerEvents = "all";
+
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.setAttribute("x1", c1.x); line.setAttribute("y1", c1.y);
+          line.setAttribute("x2", c2.x); line.setAttribute("y2", c2.y);
+          line.setAttribute("stroke-width", "2");
+
+          if (l.status === 'DOWN') {
+            line.setAttribute("stroke", "var(--tech-rose)");
+            line.setAttribute("stroke-dasharray", "4,4");
+          } else if (l.mode === 'trunk') {
+            line.setAttribute("stroke", "rgba(0, 240, 255, 0.85)");
+          } else {
+            line.setAttribute("stroke", "rgba(0, 255, 157, 0.75)");
+          }
+
+          const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          text.setAttribute("x", (c1.x + c2.x) / 2);
+          text.setAttribute("y", (c1.y + c2.y) / 2 - 4);
+          text.setAttribute("fill", l.status === 'DOWN' ? "var(--tech-rose)" : (l.mode === 'trunk' ? "var(--tech-cyan)" : "var(--tech-emerald)"));
+          text.setAttribute("font-family", "Consolas, monospace");
+          text.setAttribute("font-size", "8px"); text.setAttribute("font-weight", "600");
+          text.setAttribute("text-anchor", "middle");
+          text.textContent = l.status === 'DOWN' ? '✕ KOPUK' : (l.mode === 'trunk' ? `TRUNK (${l.packetCount||0} Pkt)` : `VLAN ${l.vlan} (${l.packetCount||0} Pkt)`);
+
+          g.onclick = () => { toggleLinkFailure(l.from, l.to); };
+          g.appendChild(line); g.appendChild(text); svg.appendChild(g);
+        }
+      });
+    }
+
+    function toggleLinkFailure(fromId, toId) {
+      const link = canvasLinks.find(l => (l.from === fromId && l.to === toId) || (l.from === toId && l.to === fromId));
+      if (link) {
+        link.status = (link.status === 'DOWN') ? 'UP' : 'DOWN';
+        const n1 = canvasNodes.find(x => x.id === fromId), n2 = canvasNodes.find(x => x.id === toId);
+        if (link.status === 'DOWN') playSoundFx('alert'); else playSoundFx('success');
+        logSimEvent(link.status === 'DOWN' ? `⚠️ [LINK_DOWN] ${n1 ? n1.type : ''} ↔ ${n2 ? n2.type : ''}` : `✅ [LINK_UP] ${n1 ? n1.type : ''} ↔ ${n2 ? n2.type : ''}`, link.status === 'DOWN' ? 'var(--tech-rose)' : 'var(--tech-emerald)');
+        drawCanvasLinks();
+        if (canvasSelectedNode) selectNodeForInspector(canvasSelectedNode);
+      }
+    }
+
+    function selectNodeForInspector(n) {
+      const badge = document.getElementById('inspector-badge');
+      badge.style.display = 'inline-block';
+      badge.innerText = n.status === 'OFFLINE' ? 'OFFLINE' : 'ONLINE';
+      badge.style.color = n.status === 'OFFLINE' ? 'var(--tech-rose)' : 'var(--tech-emerald)';
+
+      const connected = canvasLinks.filter(l => l.from === n.id || l.to === n.id).map(l => {
+        const otherId = l.from === n.id ? l.to : l.from;
+        return { link: l, neighbor: canvasNodes.find(x => x.id === otherId) };
+      }).filter(x => x.neighbor);
+
+      let linksHtml = connected.length === 0 ? `<div style="color:var(--text-dim); font-size:9px;">Bağlı hat yok.</div>` : '';
+      connected.forEach(cn => {
+        const isDown = cn.link.status === 'DOWN';
+        linksHtml += `
+          <div style="flex:1; display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:4px 6px; border:1px solid var(--border-subtle); margin-top:3px; font-size:9px;">
+            <div>
+              <span style="color:${isDown ? 'var(--tech-rose)' : 'var(--tech-cyan)'}; font-weight:600;">${isDown ? '✕ (KOPUK)' : '↔'} ${cn.neighbor.type}</span>
+              <div style="font-size:8px; color:var(--text-dim);">${cn.link.mode === 'trunk' ? 'Trunk (802.1Q)' : 'Access (VLAN ' + cn.link.vlan + ')'}</div>
+            </div>
+            <div style="display:flex; gap:3px;">
+              <button class="btn btn-secondary" style="padding:1px 4px; font-size:8px; color:${isDown ? 'var(--tech-emerald)' : 'var(--tech-rose)'};" onclick="toggleLinkFailure('${cn.link.from}', '${cn.link.to}')">${isDown ? 'Onar' : 'Kopart'}</button>
+              <span style="color:var(--tech-rose); cursor:pointer; font-weight:bold; padding-left:3px;" onclick="removeSpecificLink('${cn.link.from}', '${cn.link.to}')">×</span>
+            </div>
+          </div>
+        `;
+      });
+
+      let targetOpts = `<option value="">-- Hedef Cihaz Seçin --</option>`;
+      canvasNodes.forEach(other => { 
+        if (other.id !== n.id) {
+          targetOpts += `<option value="${other.id}">${other.type} (${other.ip})</option>`;
+        }
+      });
+
+      document.getElementById('inspector-content').innerHTML = `
+        <div class="form-group"><label>Cihaz Adı / Hostname</label><input type="text" value="${n.type}" oninput="updateNodeProp('${n.id}', 'type', this.value)"></div>
+        <div class="form-group"><label>IP Adresi</label><input type="text" value="${n.ip}" oninput="updateNodeProp('${n.id}', 'ip', this.value)"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px;">
+          <div class="form-group"><label>VLAN ID (Hostlar İçin)</label><input type="number" value="${n.vlan || 10}" oninput="updateNodeProp('${n.id}', 'vlan', parseInt(this.value)||10)"></div>
+          <div class="form-group"><label>Katman-3 (Yönlendirici)</label>
+            <select onchange="updateNodeProp('${n.id}', 'isL3', this.value === 'true')">
+              <option value="false" ${!n.isL3?'selected':''}>Katman-2 (Host/Switch)</option>
+              <option value="true" ${n.isL3?'selected':''}>Katman-3 (Router/L3)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Link & Port Durumu</label>
+          <select onchange="updateNodeProp('${n.id}', 'status', this.value)">
+            <option value="ONLINE" ${n.status==='ONLINE'?'selected':''}>ÇEVRİMİÇİ (Aktif)</option>
+            <option value="OFFLINE" ${n.status==='OFFLINE'?'selected':''}>ÇEVRİMDIŞI (Arızalı/Kapalı)</option>
+          </select>
+        </div>
+        <div style="background:rgba(0,240,255,0.03); padding:6px; border:1px solid var(--border-tech); margin-top:4px;">
+          <label style="color:var(--tech-cyan); margin-bottom:3px;">🚀 DİNAMİK YÖNLENDİRME TESTİ</label>
+          <select id="sim-target-node" style="margin-bottom:4px;">${targetOpts}</select>
+          <div style="display:flex; gap:3px;">
+            <button class="btn" style="flex:1; font-size:9px; padding:3px;" onclick="startCustomPacketSim('${n.id}', 'icmp')">🟢 Ping Testi</button>
+          </div>
+        </div>
+        <div style="margin-top:6px;"><label style="color:var(--tech-emerald);">🔗 Bağlı Hatlar (${connected.length}):</label>${linksHtml}</div>
+        <button class="btn btn-danger" onclick="deleteNode('${n.id}')" style="width:100%; margin-top:8px;">Cihazı Sil</button>
+      `;
+    }
+
+    function removeSpecificLink(fromId, toId) {
+      playSoundFx('alert');
+      canvasLinks = canvasLinks.filter(l => !( (l.from === fromId && l.to === toId) || (l.from === toId && l.to === fromId) ));
+      renderCanvas();
+      if (canvasSelectedNode) selectNodeForInspector(canvasSelectedNode);
+    }
+
+    function updateNodeProp(id, key, val) {
+      const n = canvasNodes.find(x => x.id === id);
+      if (n) { n[key] = val; renderCanvas(); selectNodeForInspector(n); }
+    }
+
+    function deleteNode(id, e) {
+      if (e) { e.stopPropagation(); e.preventDefault(); }
+      playSoundFx('alert');
+      canvasNodes = canvasNodes.filter(x => x.id !== id);
+      canvasLinks = canvasLinks.filter(x => x.from !== id && x.to !== id);
+      if (canvasSelectedNode && canvasSelectedNode.id === id) canvasSelectedNode = null;
+      renderCanvas();
+      const badge = document.getElementById('inspector-badge');
+      if (badge) badge.style.display = 'none';
+      document.getElementById('inspector-content').innerHTML = `<div style="font-size:10px; color:var(--text-dim); font-family:var(--font-mono);">Düzenlemek için bir cihaza tıklayın.</div>`;
+      logSimEvent(`🗑️ Cihaz ve bağlı hatlar kaldırıldı: #${id}`, 'var(--tech-rose)');
+    }
+
+    function logSimEvent(msg, color="#cbd5e1") {
+      const box = document.getElementById('sim-event-log'); 
+      if (!box) return;
+      const time = new Date().toTimeString().split(' ')[0];
+      const entry = document.createElement('div');
+      entry.style.marginBottom = '3px';
+      entry.innerHTML = `<span style="color:var(--text-dim);">[${time}]</span> <span style="color:${color};">${msg}</span>`;
+      box.appendChild(entry);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function findShortestPath(startId, endId) {
+      if (startId === endId) return [startId];
+      let queue = [[startId]], visited = new Set([startId]);
+      while (queue.length > 0) {
+        let path = queue.shift(), currNode = path[path.length - 1], neighbors = [];
+        canvasLinks.forEach(l => {
+          if (l.status !== 'DOWN') {
+            if (l.from === currNode && !visited.has(l.to)) neighbors.push(l.to);
+            if (l.to === currNode && !visited.has(l.from)) neighbors.push(l.from);
+          }
+        });
+        for (let nb of neighbors) {
+          const nNode = canvasNodes.find(n => n.id === nb);
+          if (nNode && nNode.status !== 'OFFLINE') {
+            visited.add(nb);
+            let nPath = [...path, nb];
+            if (nb === endId) return nPath;
+            queue.push(nPath);
+          }
+        }
+      }
+      return null;
+    }
+
+    function animatePacketStep(fromId, toId, color, label, speed, callback) {
+      playSoundFx('packet');
+      const src = getNodeCenter(fromId), dst = getNodeCenter(toId);
+      const svg = document.getElementById('canvas-svg'); 
+      if (!svg) return;
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("r", "5"); 
+      circle.setAttribute("fill", color); 
+      circle.setAttribute("cx", src.x); 
+      circle.setAttribute("cy", src.y);
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", src.x); 
+      text.setAttribute("y", src.y - 8); 
+      text.setAttribute("fill", "#ffffff"); 
+      text.setAttribute("font-size", "8px"); 
+      text.setAttribute("font-family", "Consolas, monospace"); 
+      text.setAttribute("font-weight", "600"); 
+      text.setAttribute("text-anchor", "middle"); 
+      text.textContent = label;
+      g.appendChild(circle); 
+      g.appendChild(text); 
+      svg.appendChild(g);
+
+      let progress = 0;
+      function step() {
+        progress += speed;
+        if (progress <= 1) {
+          circle.setAttribute("cx", src.x + (dst.x - src.x) * progress);
+          circle.setAttribute("cy", src.y + (dst.y - src.y) * progress);
+          text.setAttribute("x", src.x + (dst.x - src.x) * progress);
+          text.setAttribute("y", src.y + (dst.y - src.y) * progress - 8);
+          requestAnimationFrame(step);
+        } else { 
+          g.remove(); 
+          if (callback) callback(); 
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function sendMultiHopPacket(path, type, isReply = false) {
+      if (!path || path.length < 2) return;
+      let color = '#00ff9d';
+      let hopIndex = 0;
+      const srcNode = canvasNodes.find(n => n.id === path[0]), dstNode = canvasNodes.find(n => n.id === path[path.length - 1]);
+
+      if (srcNode.vlan !== dstNode.vlan) {
+        const hasL3 = path.some(nodeId => { 
+          const n = canvasNodes.find(x => x.id === nodeId); 
+          return n && n.isL3; 
+        });
+        if (!hasL3) {
+          playSoundFx('alert');
+          logSimEvent(`❌ [VLAN İZOLASYONU] VLAN ${srcNode.vlan} ve VLAN ${dstNode.vlan} arasında L3 Router/Gateway yok! Paket düşürüldü.`, 'var(--tech-rose)');
+          isSimulating = false; 
+          return;
+        }
+      }
+
+      let currentPacketVlan = isReply ? dstNode.vlan : srcNode.vlan;
+
+      function nextHop() {
+        if (hopIndex < path.length - 1) {
+          let from = path[hopIndex], to = path[hopIndex + 1];
+          let fNode = canvasNodes.find(n => n.id === from), tNode = canvasNodes.find(n => n.id === to);
+          let link = canvasLinks.find(l => (l.from === from && l.to === to) || (l.from === to && l.to === from));
+
+          if (link && link.status === 'DOWN') {
+            playSoundFx('alert');
+            logSimEvent(`❌ [HAT_KOPUK] İletim başarısız: ${fNode ? fNode.type : ''} ➔ ${tNode ? tNode.type : ''}`, 'var(--tech-rose)');
+            isSimulating = false; 
+            return;
+          }
+          if (tNode && tNode.status === 'OFFLINE') {
+            playSoundFx('alert');
+            logSimEvent(`❌ [CİHAZ_KAPALI] Hedef cihaz yanıt vermiyor: ${tNode.type}`, 'var(--tech-rose)');
+            isSimulating = false; 
+            return;
+          }
+
+          if (link) {
+            link.packetCount = (link.packetCount || 0) + 1;
+            drawCanvasLinks();
+          }
+
+          let hopLabel = "";
+          if (fNode.isL3 && fNode.vlan !== dstNode.vlan) {
+            currentPacketVlan = isReply ? srcNode.vlan : dstNode.vlan;
+            logSimEvent(`🔄 [L3 YÖNLENDİRME] ${fNode.type} paketi VLAN ${srcNode.vlan} ➔ VLAN ${dstNode.vlan} yönlendirdi.`, 'var(--tech-amber)');
+          }
+
+          if (link.mode === 'trunk') hopLabel = `[802.1Q | V${currentPacketVlan}]`;
+          else hopLabel = `[Access V${currentPacketVlan}]`;
+
+          hopIndex++;
+          logSimEvent(`📡 [SNIFFER_WIRE] ${hopLabel} ${fNode ? fNode.type : from} ➔ ${tNode ? tNode.type : to} (Payload: ${type.toUpperCase()})`, color);
+          animatePacketStep(from, to, color, hopLabel, 0.03, nextHop);
+        } else {
+          if (!isReply && type === 'icmp') {
+            logSimEvent(`🎯 Hedefe ulaştı, ICMP Yankı Yanıtı (Echo-Reply) dönüyor...`, 'var(--tech-cyan)');
+            setTimeout(() => { sendMultiHopPacket([...path].reverse(), 'icmp', true); }, 200);
+          } else {
+            playSoundFx('success');
+            logSimEvent(`✅ [BAŞARILI] Paket aktarımı başarıyla tamamlandı!`, 'var(--tech-emerald)');
+            isSimulating = false;
+          }
+        }
+      }
+      nextHop();
+    }
+
+    function startCustomPacketSim(srcId, type) {
+      if (isSimulating) return;
+      const targetSelect = document.getElementById('sim-target-node'), dstId = targetSelect ? targetSelect.value : null;
+      if (!dstId) { alert("Lütfen hedef cihaz seçin!"); return; }
+      const path = findShortestPath(srcId, dstId);
+      if (!path) { playSoundFx('alert'); logSimEvent(`❌ [ERİŞİLEMEZ] Hedefe giden açık bir hat yolu bulunamadı!`, 'var(--tech-rose)'); return; }
+      isSimulating = true;
+      sendMultiHopPacket(path, type, false);
+    }
+
+    function runDefaultPingSimulation() {
+      if (isSimulating) return;
+      if (canvasNodes.length < 2) { alert("Kanvas üzerinde en az 2 cihaz bulunmalıdır!"); return; }
+      const srcId = canvasNodes[canvasNodes.length - 1].id, dstId = canvasNodes[0].id;
+      const path = findShortestPath(srcId, dstId);
+      if (!path) { playSoundFx('alert'); logSimEvent(`❌ [HATAYA GEÇİŞ] Hedefe ulaşan aktif hat bulunamadı!`, 'var(--tech-rose)'); return; }
+      isSimulating = true;
+      sendMultiHopPacket(path, 'icmp', false);
+    }
+
+    function exportPNG() {
+      playSoundFx('key');
+      const container = document.getElementById('canvas-container');
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const canvas = document.createElement('canvas');
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#02050b';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 24) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 24) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      canvasLinks.forEach(l => {
+        const n1 = canvasNodes.find(x => x.id === l.from), n2 = canvasNodes.find(x => x.id === l.to);
+        if (n1 && n2) {
+          const c1 = getNodeCenter(n1.id), c2 = getNodeCenter(n2.id);
+          ctx.beginPath();
+          ctx.moveTo(c1.x, c1.y);
+          ctx.lineTo(c2.x, c2.y);
+          ctx.strokeStyle = l.status === 'DOWN' ? '#ff3366' : (l.mode === 'trunk' ? '#00f0ff' : '#00ff9d');
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.fillStyle = '#cbd5e1';
+          ctx.font = '10px Consolas, monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(l.mode === 'trunk' ? 'TRUNK' : `VLAN ${l.vlan}`, (c1.x + c2.x) / 2, (c1.y + c2.y) / 2 - 4);
+        }
+      });
+
+      canvasNodes.forEach(n => {
+        ctx.fillStyle = '#070e1c';
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 1;
+        ctx.fillRect(n.x, n.y, 140, 60);
+        ctx.strokeRect(n.x, n.y, 140, 60);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(n.type, n.x + 8, n.y + 18);
+
+        ctx.fillStyle = '#00f0ff';
+        ctx.font = '9px Consolas, monospace';
+        ctx.fillText(n.ip, n.x + 8, n.y + 36);
+
+        ctx.fillStyle = n.isL3 ? '#00ff9d' : '#ffb454';
+        ctx.font = '8px Consolas, monospace';
+        ctx.fillText(n.isL3 ? 'L3 ROUTED' : `VLAN ${n.vlan}`, n.x + 8, n.y + 50);
+      });
+
+      const link = document.createElement('a');
+      link.download = `zeropacket-topoloji-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function exportJSON() {
+      playSoundFx('key');
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ nodes: canvasNodes, links: canvasLinks }));
+      const a = document.createElement('a'); 
+      a.setAttribute("href", dataStr); 
+      a.setAttribute("download", "zeropacket-topoloji.json"); 
+      a.click();
+    }
+
+    function triggerJSONUpload() { playSoundFx('key'); document.getElementById('json-file-input').click(); }
+
+    function importJSON(e) {
+      const file = e.target.files[0]; 
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const p = JSON.parse(evt.target.result);
+          if (p.nodes) canvasNodes = p.nodes; 
+          if (p.links) canvasLinks = p.links;
+          renderCanvas();
+          playSoundFx('success');
+        } catch(err) { alert("Geçersiz JSON formatı!"); }
+      };
+      reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // TRACEROUTE & MTR
+    // =========================================================================
+    function loadSampleTrace(t) {
+      playSoundFx('key');
+      if (t === 'cisco') {
+        document.getElementById('tr-raw-input').value = `Tracing the route to 8.8.8.8\n  1 192.168.1.1 1 msec 1 msec 1 msec\n  2 10.240.0.1 8 msec 7 msec 9 msec\n  3 172.16.100.254 14 msec 15 msec 12 msec\n  4 82.222.40.1 22 msec 20 msec 24 msec\n  5 * * *\n  6 8.8.8.8 44 msec 43 msec 44 msec`;
+      } else {
+        document.getElementById('tr-raw-input').value = `HOST: omurga-gw-01               Loss%   Snt   Last   Avg\n  1.|-- 192.168.1.1                0.0%    10    0.8   0.9\n  2.|-- 10.50.0.1                  0.0%    10    5.2   5.6\n  3.|-- 212.156.101.45             0.0%    10   18.4  19.2\n  4.|-- ???                       100.0    10    0.0   0.0\n  5.|-- 8.8.8.8                    0.0%    10   41.0  41.5`;
+      }
+      parseTraceroute();
+    }
+
+    function parseTraceroute() {
+      playSoundFx('key');
+      const raw = document.getElementById('tr-raw-input').value.trim(); 
+      if (!raw) return;
+      const lines = raw.split('\n'), hops = [];
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        let matchCisco = trimmed.match(/^(\d+)\s+([0-9a-zA-Z.\-_?]+|\*)\s+(.*)/);
+        let matchMtr = trimmed.match(/^(\d+)\.\|--\s+([0-9a-zA-Z.\-_?]+|\?\?\?)\s+([0-9.]+)%\s+(\d+)\s+([0-9.]+)\s+([0-9.]+)/);
+        if (matchMtr) {
+          const hop = parseInt(matchMtr[1], 10), ip = matchMtr[2], loss = parseFloat(matchMtr[3]), avg = parseFloat(matchMtr[6]);
+          hops.push({ hop, ip, avgRtt: isNaN(avg) ? 0 : avg, isDrop: loss >= 100 || ip.includes('?') });
+        } else if (matchCisco) {
+          const hop = parseInt(matchCisco[1], 10), ip = matchCisco[2], rest = matchCisco[3];
+          let isDrop = ip === '*' || rest.includes('* * *');
+          let rttVals = rest.match(/([0-9.]+)\s*ms/gi), avg = 0;
+          if (rttVals && rttVals.length > 0) {
+            let sum = 0; 
+            rttVals.forEach(r => sum += parseFloat(r));
+            avg = Math.round((sum / rttVals.length) * 10) / 10;
+          }
+          hops.push({ hop, ip: isDrop ? '* (Zaman Aşımı / Drop)' : ip, avgRtt: avg, isDrop });
+        }
+      });
+      renderTraceroute(hops);
+    }
+
+    function renderTraceroute(hops) {
+      const container = document.getElementById('tr-hop-container');
+      if (!container) return;
+      if (hops.length === 0) { 
+        container.innerHTML = `<div style="color:var(--tech-rose); text-align:center; padding:20px; font-family:var(--font-mono);">Geçerli format bulunamadı.</div>`; 
+        return; 
+      }
+
+      let valid = hops.filter(h => !h.isDrop && h.avgRtt > 0);
+      let avg = valid.length > 0 ? (valid.reduce((a, b) => a + b.avgRtt, 0) / valid.length).toFixed(1) : 0;
+      let max = valid.length > 0 ? Math.max(...valid.map(h => h.avgRtt)) : 0;
+      let drop = hops.filter(h => h.isDrop).length;
+
+      document.getElementById('tr-total-hops').innerText = hops.length;
+      document.getElementById('tr-avg-rtt').innerText = avg + ' ms';
+      document.getElementById('tr-max-rtt').innerText = max + ' ms';
+      document.getElementById('tr-drop-hops').innerText = drop;
+
+      let html = '';
+      hops.forEach(h => {
+        let barColor = h.avgRtt > 80 ? 'var(--tech-rose)' : (h.avgRtt > 35 ? 'var(--tech-amber)' : 'var(--tech-emerald)');
+        let pct = Math.min(100, Math.max(5, (h.avgRtt / (max || 100)) * 100));
+        html += `
+          <div class="tr-hop-card" style="${h.isDrop ? 'border-color:rgba(255,51,102,0.3);' : ''}">
+            <div class="tr-hop-num">#${h.hop}</div>
+            <div><div style="font-weight:600; color:${h.isDrop ? 'var(--tech-rose)' : '#fff'}; font-size:10px;">${h.ip}</div><div style="font-size:8px; color:var(--text-dim);">${h.isDrop ? 'Cevap Yok' : 'Sekme Düğümü'}</div></div>
+            <div><span class="res-val ${h.isDrop ? '' : (h.avgRtt < 35 ? 'green' : 'amber')}" style="${h.isDrop ? 'color:var(--tech-rose)' : ''}">${h.isDrop ? 'DROP' : h.avgRtt + ' ms'}</span><div class="tr-rtt-bar-bg"><div class="tr-rtt-bar-fill" style="width:${h.isDrop ? 100 : pct}%; background:${h.isDrop ? 'var(--tech-rose)' : barColor};"></div></div></div>
+            <div style="font-size:9px; color:var(--text-dim); text-align:right;">${h.isDrop ? '⚠️ Güvenlik Duvarı Filtresi' : (h.hop === hops.length ? '🎯 Hedef Cihaz' : '🔗 Omurga Geçişi')}</div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // =========================================================================
+    // WIFI HEATMAP & RADAR
+    // =========================================================================
+    let wifiAP = { x: 140, y: 170 }, wifiRx = { x: 450, y: 170 };
+    let wifiWalls = [{ x1: 270, y1: 30, x2: 270, y2: 310, loss: 15, name: 'Beton', color: '#ff3366' }];
+    let activeWifiTool = 'ap', activeMaterialLoss = 15, activeMaterialColor = '#ff3366';
+    let isDrawingWall = false, currentWallStart = null;
+
+    function setWifiTool(t, b) {
+      playSoundFx('key');
+      activeWifiTool = t;
+      document.querySelectorAll('.wifi-tool-btn').forEach(x => x.classList.remove('active'));
+      if(b) b.classList.add('active');
+      if (t === 'stone') { activeMaterialLoss = 15; activeMaterialColor = '#ff3366'; }
+      else if (t === 'brick') { activeMaterialLoss = 7; activeMaterialColor = '#ffb454'; }
+      else if (t === 'window') { activeMaterialLoss = 3; activeMaterialColor = '#00f0ff'; }
+    }
+
+    function clearWifiCanvas() { 
+      playSoundFx('alert');
+      wifiAP = { x: 140, y: 170 }; 
+      wifiRx = { x: 450, y: 170 }; 
+      wifiWalls = []; 
+      drawWifiHeatmap(); 
+    }
+
+    function initWifiCanvas() {
+      const cv = document.getElementById('wifi-canvas'); 
+      if (!cv) return; 
+      cv.width = cv.offsetWidth || 700; 
+      cv.height = cv.offsetHeight || 340;
+      
+      cv.onmousedown = (e) => {
+        const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        if (activeWifiTool === 'ap') { wifiAP = { x, y }; playSoundFx('beep'); drawWifiHeatmap(); }
+        else if (activeWifiTool === 'rx') { wifiRx = { x, y }; playSoundFx('beep'); drawWifiHeatmap(); }
+        else { isDrawingWall = true; currentWallStart = { x, y }; }
+      };
+      cv.onmousemove = (e) => {
+        const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        if (isDrawingWall) {
+          drawWifiHeatmap();
+          const ctx = cv.getContext('2d');
+          ctx.beginPath(); ctx.moveTo(currentWallStart.x, currentWallStart.y); ctx.lineTo(x, y);
+          ctx.strokeStyle = activeMaterialColor; ctx.lineWidth = 3; ctx.stroke();
+        } else { updateWifiMetrics(wifiRx.x, wifiRx.y, x, y); }
+      };
+      cv.onmouseup = (e) => {
+        if (isDrawingWall) {
+          const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+          if (Math.hypot(x - currentWallStart.x, y - currentWallStart.y) > 10) {
+            wifiWalls.push({ x1: currentWallStart.x, y1: currentWallStart.y, x2: x, y2: y, loss: activeMaterialLoss, color: activeMaterialColor });
+            playSoundFx('key');
+          }
+          isDrawingWall = false; 
+          drawWifiHeatmap();
+        }
+      };
+      drawWifiHeatmap();
+    }
+
+    function calculateRssi(tx, ty) {
+      const freq = parseFloat(document.getElementById('wifi-freq').value) || 5000;
+      const txP = parseFloat(document.getElementById('wifi-txpower').value) || 20;
+      const dM = Math.max(0.5, Math.hypot(tx - wifiAP.x, ty - wifiAP.y) / 20);
+      const fspl = 20 * Math.log10(dM) + 20 * Math.log10(freq) - 27.55;
+      let wL = 0;
+      wifiWalls.forEach(w => {
+        const d = (ty - wifiAP.y) * (w.x2 - w.x1) - (tx - wifiAP.x) * (w.y2 - w.y1);
+        if (d !== 0) {
+          const ua = ((tx - wifiAP.x) * (w.y1 - wifiAP.y) - (ty - wifiAP.y) * (w.x1 - wifiAP.x)) / d;
+          const ub = ((w.x2 - w.x1) * (w.y1 - wifiAP.y) - (w.y2 - w.y1) * (w.x1 - wifiAP.x)) / d;
+          if (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1) wL += w.loss;
+        }
+      });
+      return { rssi: Math.round(txP - fspl - wL), distM: dM.toFixed(1) };
+    }
+
+    function drawWifiHeatmap() {
+      const cv = document.getElementById('wifi-canvas'); 
+      if (!cv) return; 
+      const ctx = cv.getContext('2d');
+      ctx.fillStyle = '#020408'; 
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      
+      for (let x = 0; x < cv.width; x += 16) {
+        for (let y = 0; y < cv.height; y += 16) {
+          const res = calculateRssi(x, y);
+          ctx.fillStyle = res.rssi > -50 ? 'rgba(0,255,157,0.22)' : (res.rssi > -65 ? 'rgba(0,240,255,0.18)' : (res.rssi > -75 ? 'rgba(255,180,84,0.14)' : 'rgba(255,51,102,0.1)'));
+          ctx.fillRect(x, y, 16, 16);
+        }
+      }
+      wifiWalls.forEach(w => {
+        ctx.beginPath(); ctx.moveTo(w.x1, w.y1); ctx.lineTo(w.x2, w.y2); ctx.strokeStyle = w.color; ctx.lineWidth = 3; ctx.stroke();
+      });
+      ctx.beginPath(); ctx.arc(wifiAP.x, wifiAP.y, 7, 0, Math.PI * 2); ctx.fillStyle = '#00f0ff'; ctx.fill();
+      ctx.beginPath(); ctx.arc(wifiRx.x, wifiRx.y, 5, 0, Math.PI * 2); ctx.fillStyle = '#00ff9d'; ctx.fill();
+      updateWifiMetrics(wifiRx.x, wifiRx.y);
+    }
+
+    function updateWifiMetrics(rxX, rxY, curX, curY) {
+      const rxRes = calculateRssi(rxX, rxY);
+      const metricsBox = document.getElementById('wifi-metrics-box');
+      if (!metricsBox) return;
+      let html = `
+        <div class="res-row"><span class="res-label">İstemci Sinyali:</span><span class="res-val ${rxRes.rssi > -65 ? 'green' : 'amber'}">${rxRes.rssi} dBm</span></div>
+        <div class="res-row"><span class="res-label">AP Mesafesi:</span><span class="res-val">${rxRes.distM} Metre</span></div>
+        <div class="res-row"><span class="res-label">Duvar Engeli:</span><span class="res-val">${wifiWalls.length} Adet</span></div>
+      `;
+      if (curX !== undefined && curY !== undefined) {
+        const cRes = calculateRssi(curX, curY);
+        html += `<div class="res-row" style="margin-top:3px; padding-top:3px;"><span class="res-label">İmleç Konumu:</span><span class="res-val">${cRes.rssi} dBm</span></div>`;
+      }
+      metricsBox.innerHTML = html;
+    }
+
+    // =========================================================================
+    // NAT SIMULATOR
+    // =========================================================================
+    let natTable = [], allocatedPatPort = 10000;
+
+    function sendNatPacket() {
+      playSoundFx('packet');
+      const mode = document.getElementById('nat-mode').value;
+      const insideIp = document.getElementById('nat-inside-ip').value.trim();
+      const insidePort = document.getElementById('nat-inside-port').value.trim();
+      const outsideIp = document.getElementById('nat-outside-ip').value.trim();
+      const outsidePort = document.getElementById('nat-outside-port').value.trim();
+      if (!insideIp || !insidePort) return;
+
+      let gIp = "203.0.113.10", gPort = insidePort;
+      if (mode === 'pat') gPort = allocatedPatPort++;
+
+      const entry = { proto: 'TCP', insideLocal: `${insideIp}:${insidePort}`, insideGlobal: `${gIp}:${gPort}`, outsideGlobal: `${outsideIp}:${outsidePort}` };
+      natTable.push(entry);
+      
+      let h = '';
+      natTable.forEach(r => h += `<tr><td>${r.proto}</td><td>${r.insideLocal}</td><td>${r.insideGlobal}</td><td>${r.outsideGlobal}</td></tr>`);
+      document.getElementById('nat-table-body').innerHTML = h;
+      document.getElementById('nat-log-out').innerHTML = `<div style="color:var(--tech-emerald);">[DÖNÜŞTÜRÜLDÜ] ${entry.insideLocal} ➔ ${entry.insideGlobal} (Hedef: ${entry.outsideGlobal})</div>`;
+    }
+
+    function clearNatTable() { 
+      playSoundFx('alert');
+      natTable = []; 
+      document.getElementById('nat-table-body').innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">Tablo boş.</td></tr>`; 
+      document.getElementById('nat-log-out').innerHTML = `<div style="color:var(--text-dim);">Dönüşüm günlüğü burada görüntülenir.</div>`;
+    }
+
+    // =========================================================================
+    // CIDR & VLSM HESAPLAYICILARI
+    // =========================================================================
+    function ipToInt(ip) { return ip.split('.').reduce((acc, oct) => (acc << 8) + parseInt(oct, 10), 0) >>> 0; }
+    function intToIp(int) { return [(int >>> 24) & 255, (int >>> 16) & 255, (int >>> 8) & 255, int & 255].join('.'); }
+
+    function calcSubnet() {
+      playSoundFx('key');
+      const p = document.getElementById('subnet-ip').value.split('/');
+      const ip = p[0].trim(), cidr = parseInt(p[1], 10);
+      const validCidr = (isNaN(cidr) || cidr < 0 || cidr > 32) ? 24 : cidr;
+      const maskInt = validCidr === 0 ? 0 : (0xFFFFFFFF << (32 - validCidr)) >>> 0;
+      const netInt = (ipToInt(ip) & maskInt) >>> 0;
+      const bcastInt = (netInt | (~maskInt >>> 0)) >>> 0;
+      
+      let usableRange = "";
+      let usableHosts = 0;
+      
+      if (validCidr === 32) {
+        usableRange = `${intToIp(netInt)} (Tekil Host)`;
+        usableHosts = 1;
+      } else if (validCidr === 31) {
+        usableRange = `${intToIp(netInt)} - ${intToIp(bcastInt)} (RFC 3021 P2P)`;
+        usableHosts = 2;
+      } else {
+        usableRange = `${intToIp(netInt + 1)} - ${intToIp(bcastInt - 1)}`;
+        usableHosts = Math.max(0, Math.pow(2, 32 - validCidr) - 2);
+      }
+
+      document.getElementById('subnet-out').innerHTML = `
+        <div class="res-row"><span class="res-label">Ağ Adresi:</span><span class="res-val green">${intToIp(netInt)}/${validCidr}</span></div>
+        <div class="res-row"><span class="res-label">Broadcast Adresi:</span><span class="res-val">${validCidr >= 31 ? 'Yok (P2P/Host)' : intToIp(bcastInt)}</span></div>
+        <div class="res-row"><span class="res-label">Subnet Mask:</span><span class="res-val">${intToIp(maskInt)}</span></div>
+        <div class="res-row"><span class="res-label">Kullanılabilir IP Aralığı:</span><span class="res-val">${usableRange}</span></div>
+        <div class="res-row"><span class="res-label">Kullanılabilir Host Sayısı:</span><span class="res-val green">${usableHosts.toLocaleString()}</span></div>
+      `;
+    }
+
+    function calcVLSM() {
+      playSoundFx('key');
+      const raw = document.getElementById('vlsm-ip').value.trim().split('/');
+      const baseIp = raw[0].trim();
+      const baseCidr = parseInt(raw[1], 10) || 24;
+      const cnt = parseInt(document.getElementById('vlsm-count').value, 10) || 4;
+
+      const addedBits = Math.ceil(Math.log2(cnt));
+      const newCidr = baseCidr + addedBits;
+
+      if (newCidr > 32) {
+        document.getElementById('vlsm-out').innerHTML = `<div style="color:var(--tech-rose); padding:6px;">Hata: İstenen alt ağ sayısı mevcut CIDR (/${baseCidr}) için çok büyük!</div>`;
+        return;
+      }
+
+      const blockSize = Math.pow(2, 32 - newCidr);
+      let currentInt = ip2int(baseIp);
+      let h = '';
+
+      for (let i = 0; i < cnt; i++) {
+        const netIp = int2ip(currentInt);
+        const bcastIp = int2ip((currentInt + blockSize - 1) >>> 0);
+        let usableHosts = 0;
+        let rangeStr = "";
+
+        if (newCidr === 32) {
+          usableHosts = 1;
+          rangeStr = `${netIp}`;
+        } else if (newCidr === 31) {
+          usableHosts = 2;
+          rangeStr = `${netIp} - ${bcastIp}`;
+        } else {
+          usableHosts = blockSize - 2;
+          rangeStr = `${int2ip(currentInt + 1)} - ${int2ip(currentInt + blockSize - 2)}`;
+        }
+
+        h += `
+          <div class="res-row">
+            <span class="res-label">Alt Ağ #${i + 1} (${netIp}/${newCidr}):</span>
+            <span class="res-val green">${rangeStr} [${usableHosts.toLocaleString()} Host]</span>
+          </div>
+        `;
+        currentInt = (currentInt + blockSize) >>> 0;
+      }
+      document.getElementById('vlsm-out').innerHTML = h;
+    }
+
+    // =========================================================================
+    // 5 ENTEGRE GELİŞMİŞ HESAPLAMA MOTORU
+    // =========================================================================
+
+    // 1. WILDCARD MASKE MOTORU
+    function updateWildcardHelper() {
+      const type = document.getElementById('wild-input-type').value;
+      const valInput = document.getElementById('wild-val');
+      const label = document.getElementById('wild-val-label');
+      if (type === 'mask') {
+        label.innerText = "Alt Ağ Maskesi (Subnet Mask)";
+        valInput.value = "255.255.255.240";
+      } else if (type === 'cidr') {
+        label.innerText = "CIDR Prefix Değeri (/xx)";
+        valInput.value = "28";
+      } else {
+        label.innerText = "Wildcard (Ters Maske)";
+        valInput.value = "0.0.0.15";
+      }
+      calcWild();
+    }
+
+    function setWildcardPreset(v) {
+      document.getElementById('wild-input-type').value = 'mask';
+      document.getElementById('wild-val-label').innerText = "Alt Ağ Maskesi (Subnet Mask)";
+      document.getElementById('wild-val').value = v;
+      calcWild();
+    }
+
+    function calcWild() {
+      const type = document.getElementById('wild-input-type').value;
+      const inputVal = document.getElementById('wild-val').value.trim().replace('/', '');
+      const baseIp = document.getElementById('wild-base-ip').value.trim() || '192.168.10.0';
+      const outBox = document.getElementById('wild-out');
+      const ciscoBox = document.getElementById('wild-cisco-cmd');
+
+      let maskOctets = [255, 255, 255, 0];
+      let wildOctets = [0, 0, 0, 255];
+      let cidr = 24;
+
+      try {
+        if (type === 'mask') {
+          maskOctets = inputVal.split('.').map(x => parseInt(x, 10) || 0);
+          wildOctets = maskOctets.map(p => 255 - p);
+          let binaryStr = maskOctets.map(o => o.toString(2).padStart(8, '0')).join('');
+          cidr = (binaryStr.match(/1/g) || []).length;
+        } else if (type === 'cidr') {
+          cidr = parseInt(inputVal, 10);
+          if (isNaN(cidr) || cidr < 0 || cidr > 32) cidr = 24;
+          let maskInt = cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr)) >>> 0;
+          maskOctets = [(maskInt >>> 24) & 255, (maskInt >>> 16) & 255, (maskInt >>> 8) & 255, maskInt & 255];
+          wildOctets = maskOctets.map(p => 255 - p);
+        } else {
+          wildOctets = inputVal.split('.').map(x => parseInt(x, 10) || 0);
+          maskOctets = wildOctets.map(p => 255 - p);
+          let binaryStr = maskOctets.map(o => o.toString(2).padStart(8, '0')).join('');
+          cidr = (binaryStr.match(/1/g) || []).length;
+        }
+
+        const maskStr = maskOctets.join('.');
+        const wildStr = wildOctets.join('.');
+        const maskBin = maskOctets.map(o => o.toString(2).padStart(8, '0')).join(' ');
+        const wildBin = wildOctets.map(o => o.toString(2).padStart(8, '0')).join(' ');
+        const totalHosts = Math.max(1, Math.pow(2, 32 - cidr) - (cidr >= 31 ? 0 : 2));
+
+        outBox.innerHTML = `
+          <div class="res-row"><span class="res-label">Wildcard (Ters Maske):</span><span class="res-val green" style="font-size:13px; font-weight:800;">${wildStr}</span></div>
+          <div class="res-row"><span class="res-label">Subnet Mask Karşılığı:</span><span class="res-val">${maskStr}</span></div>
+          <div class="res-row"><span class="res-label">CIDR Eşdeğeri:</span><span class="res-val amber">/${cidr}</span></div>
+          <div class="res-row"><span class="res-label">Kullanılabilir Host:</span><span class="res-val">${totalHosts.toLocaleString()} Host</span></div>
+          <div class="res-row"><span class="res-label">Mask Binary (32-Bit):</span><span class="res-val" style="font-size:9.5px; color:var(--text-muted);">${maskBin}</span></div>
+          <div class="res-row"><span class="res-label">Wildcard Binary:</span><span class="res-val green" style="font-size:9.5px;">${wildBin}</span></div>
+        `;
+
+        ciscoBox.innerText = `! Cisco IOS Standart & Genişletilmiş ACL Kuralı
+access-list 10 permit ${baseIp} ${wildStr}
+access-list 100 permit ip ${baseIp} ${wildStr} any
+
+! Cisco IOS OSPFv2 Network Bildirimi
+router ospf 1
+ network ${baseIp} ${wildStr} area 0`;
+
+      } catch (err) {
+        outBox.innerHTML = `<span style="color:var(--tech-rose);">Geçersiz format: ${err.message}</span>`;
+      }
+    }
+
+    // 2. MAC OUI DONANIM SORGULAMA MOTORU
+    function setMacPreset(v) {
+      document.getElementById('mac-val').value = v;
+      calcMAC();
+    }
+
+    function calcMAC() {
+      const raw = document.getElementById('mac-val').value.trim();
+      const clean = raw.replace(/[^a-fA-F0-9]/g, '').toUpperCase();
+      const outBox = document.getElementById('mac-out');
+
+      if (clean.length < 6) {
+        outBox.innerHTML = `<span style="color:var(--text-dim); text-align:center; padding:20px; display:block;">En az 6 karakterlik MAC/OUI adresi girin...</span>`;
+        return;
+      }
+
+      const oui = clean.substring(0, 6);
+      const ouiFormatted = `${oui.substring(0,2)}:${oui.substring(2,4)}:${oui.substring(4,6)}`;
+      
+      const ouiDatabase = {
+        "00000C": "Cisco Systems, Inc. (Legacy / HSRP)",
+        "000142": "Cisco Systems, Inc.",
+        "00070E": "Cisco Systems, Inc.",
+        "001EF7": "Cisco Systems, Inc.",
+        "F44B2A": "Cisco Systems, Inc. (Catalyst)",
+        "000C29": "VMware, Inc. (ESXi / Fusion / Workstation)",
+        "005056": "VMware, Inc. (ESXi Server)",
+        "000569": "VMware, Inc.",
+        "080027": "Oracle VirtualBox Virtual Adapter",
+        "0A0027": "Oracle VirtualBox Host-Only",
+        "F8F082": "Apple, Inc. (Mac / iPhone / iPad)",
+        "FCECFA": "Apple, Inc.",
+        "A483E7": "Apple, Inc.",
+        "B827EB": "Raspberry Pi Foundation (RPi 3 / Zero)",
+        "DCA632": "Raspberry Pi Foundation (RPi 4)",
+        "E45F01": "Raspberry Pi Foundation",
+        "00090F": "Fortinet Technologies, Inc. (FortiGate)",
+        "704CA5": "Fortinet Technologies, Inc.",
+        "AC4BC8": "Palo Alto Networks (Next-Gen Firewall)",
+        "D404FF": "Palo Alto Networks",
+        "488B5A": "MikroTik RouterOS",
+        "000C42": "MikroTik RouterOS",
+        "00155D": "Microsoft Corporation (Hyper-V Network Adapter)",
+        "00E04C": "Realtek Semiconductor Corp.",
+        "507B9D": "Intel Corporate (NIC / WiFi)",
+        "ECB1D7": "Hewlett Packard Enterprise (Aruba / ProCurve)"
+      };
+
+      let vendor = ouiDatabase[oui] || "Bilinmeyen Üretici / Özel Organizasyonel OUI";
+
+      let fullMac = clean.padEnd(12, '0').substring(0, 12);
+      let ciscoFmt = `${fullMac.substring(0,4)}.${fullMac.substring(4,8)}.${fullMac.substring(8,12)}`.toLowerCase();
+      let linuxFmt = fullMac.match(/.{1,2}/g).join(':').toLowerCase();
+      let winFmt = fullMac.match(/.{1,2}/g).join('-').toUpperCase();
+
+      let firstByte = parseInt(clean.substring(0, 2), 16) || 0;
+      let isMulticast = (firstByte & 0x01) === 1;
+      let isLocalAdmin = (firstByte & 0x02) === 2;
+
+      let eui64 = "";
+      if (clean.length === 12) {
+        let b0 = parseInt(clean.substring(0, 2), 16) ^ 0x02;
+        let b0Hex = b0.toString(16).padStart(2, '0').toLowerCase();
+        let p1 = b0Hex + clean.substring(2, 4).toLowerCase();
+        let p2 = clean.substring(4, 6).toLowerCase() + "ff";
+        let p3 = "fe" + clean.substring(6, 8).toLowerCase();
+        let p4 = clean.substring(8, 12).toLowerCase();
+        eui64 = `fe80::${p1}:${p2}:${p3}:${p4}`;
+      } else {
+        eui64 = "12 karakter tam MAC girildiğinde türetilir";
+      }
+
+      outBox.innerHTML = `
+        <div class="res-row"><span class="res-label">OUI Üretici Donanım:</span><span class="res-val green" style="font-weight:700;">${vendor}</span></div>
+        <div class="res-row"><span class="res-label">OUI Bloğu (İlk 24-Bit):</span><span class="res-val amber">${ouiFormatted}</span></div>
+        <div class="res-row"><span class="res-label">Cisco Formatı:</span><span class="res-val">${ciscoFmt}</span></div>
+        <div class="res-row"><span class="res-label">Linux / Unix Formatı:</span><span class="res-val">${linuxFmt}</span></div>
+        <div class="res-row"><span class="res-label">Windows Formatı:</span><span class="res-val">${winFmt}</span></div>
+        <div class="res-row"><span class="res-label">İletim Türü (b0):</span><span class="res-val ${isMulticast ? 'rose' : 'green'}">${isMulticast ? '🔴 Multicast / Broadcast' : '🟢 Unicast'}</span></div>
+        <div class="res-row"><span class="res-label">Yönetim Türü (b1):</span><span class="res-val ${isLocalAdmin ? 'amber' : 'green'}">${isLocalAdmin ? '🟡 Locally Administered (Rastgele MAC)' : '🟢 Globally Unique (OUI Donanımsal)'}</span></div>
+        <div class="res-row" style="border-top:1px solid var(--border-tech); margin-top:4px; padding-top:4px;">
+          <span class="res-label">IPv6 EUI-64 Link-Local:</span>
+          <span class="res-val green" id="mac-eui64-val" style="word-break:break-all;">${eui64}</span>
+        </div>
+      `;
+    }
+
+    // 3. IPSEC & GRE MSS MOTORU
+    function applyIpsecPreset() {
+      const p = document.getElementById('ipsec-preset-sel').value;
+      document.getElementById('ipsec-mtu').value = p;
+      calcIPSec();
+    }
+
+    function calcIPSec() {
+      const mtu = parseInt(document.getElementById('ipsec-mtu').value, 10) || 1500;
+      const mode = document.getElementById('ipsec-mode').value;
+      const inner = document.getElementById('ipsec-inner-proto').value;
+      const outBox = document.getElementById('ipsec-out');
+      const ciscoBox = document.getElementById('ipsec-cisco-cmd-full');
+
+      let overhead = 56;
+      let desc = "IPSec ESP Tünel Başlığı (AES + SHA)";
+
+      if (mode === 'gre_ipsec') {
+        overhead = 76;
+        desc = "Outer IP (20B) + ESP (36B) + GRE (20B)";
+      } else if (mode === 'ipsec_tunnel') {
+        overhead = 56;
+        desc = "Outer IP (20B) + ESP Başlık, IV, Pad ve ICV (36B)";
+      } else if (mode === 'ipsec_natt') {
+        overhead = 64;
+        desc = "Outer IP (20B) + UDP NAT-T 4500 (8B) + ESP (36B)";
+      } else if (mode === 'gre_plain') {
+        overhead = 24;
+        desc = "Outer IP (20B) + Standard GRE Başlığı (4B)";
+      } else if (mode === 'wireguard') {
+        overhead = inner === 'ipv4' ? 60 : 80;
+        desc = "WireGuard Başlığı (32B) + UDP (8B) + IP Başlığı (20B/40B)";
+      }
+
+      const ipHeader = inner === 'ipv4' ? 20 : 40;
+      const tcpHeader = 20;
+      const transportHeader = ipHeader + tcpHeader;
+
+      const tunnelMtu = mtu - overhead;
+      const idealMss = tunnelMtu - transportHeader;
+
+      outBox.innerHTML = `
+        <div class="res-row"><span class="res-label">Fiziksel Hat MTU:</span><span class="res-val">${mtu} Bayt</span></div>
+        <div class="res-row"><span class="res-label">Protokol Overhead (Yük):</span><span class="res-val rose" style="font-weight:700;">-${overhead} Bayt</span></div>
+        <div class="res-row"><span class="res-label">Kapsülleme Detayı:</span><span class="res-val" style="font-size:9.5px; color:var(--text-muted);">${desc}</span></div>
+        <div class="res-row"><span class="res-label">Güvenli Tünel MTU:</span><span class="res-val amber" style="font-weight:700;">${tunnelMtu} Bayt</span></div>
+        <div class="res-row"><span class="res-label">İç Protokol Başlığı:</span><span class="res-val">${transportHeader} Bayt (${inner.toUpperCase()} + TCP)</span></div>
+        <div class="res-row" style="border-top:1px solid var(--border-tech); margin-top:4px; padding-top:4px;">
+          <span class="res-label">İdeal TCP MSS Değeri:</span>
+          <span class="res-val green" style="font-size:14px; font-weight:800;">${idealMss} Bayt</span>
+        </div>
+      `;
+
+      ciscoBox.innerText = `! Cisco IOS Router Tünel Parçalanma ve MSS Ayarları
+configure terminal
+interface Tunnel1
+ ip mtu ${tunnelMtu}
+ ip tcp adjust-mss ${idealMss}
+${inner === 'ipv6' ? ` ipv6 tcp adjust-mss ${idealMss}\n` : ''}end
+write memory`;
+    }
+
+    // 4. IPV6 GENİŞLETİCİ & ANALİZÖR MOTORU
+    function setIpv6Preset(v) {
+      document.getElementById('ipv6-val').value = v;
+      calcIPv6();
+    }
+
+    function calcIPv6() {
+      const raw = document.getElementById('ipv6-val').value.trim();
+      const outBox = document.getElementById('ipv6-out');
+      if (!raw) {
+        outBox.innerHTML = `<span style="color:var(--text-dim); text-align:center; padding:20px; display:block;">IPv6 adresi girin...</span>`;
+        return;
+      }
+
+      let addrPart = raw;
+      let prefixPart = "";
+      if (raw.includes('/')) {
+        const p = raw.split('/');
+        addrPart = p[0];
+        prefixPart = "/" + p[1];
+      }
+
+      try {
+        let hextets = [];
+        if (addrPart.includes('::')) {
+          const halves = addrPart.split('::');
+          const left = halves[0] ? halves[0].split(':') : [];
+          const right = halves[1] ? halves[1].split(':') : [];
+          const missing = 8 - (left.length + right.length);
+          const middle = Array(missing).fill('0000');
+          hextets = [...left, ...middle, ...right].map(h => h.padStart(4, '0').toLowerCase());
+        } else {
+          hextets = addrPart.split(':').map(h => h.padStart(4, '0').toLowerCase());
+        }
+
+        if (hextets.length !== 8) {
+          throw new Error("IPv6 adresi tam 8 hextet içermelidir.");
+        }
+
+        const fullExpanded = hextets.join(':');
+
+        let compressed = hextets.map(h => h.replace(/^0+/, '') || '0').join(':');
+        compressed = compressed.replace(/(?:^|:)0(?::0)+(?::|$)/, '::');
+
+        let scope = "Bilinmeyen / Özel Kapsam";
+        const h0 = hextets[0];
+        if (h0.startsWith('2') || h0.startsWith('3')) scope = "Global Unicast (Genel İnternet Yönlendirilebilir)";
+        else if (h0 === 'fe80') scope = "Link-Local Unicast (fe80::/10 Yerel Bağlantı)";
+        else if (h0.startsWith('fc') || h0.startsWith('fd')) scope = "Unique Local Address (ULA - fd00::/8 Kurumsal Özel)";
+        else if (h0 === 'ff02') scope = "Link-Local Multicast (ff02::)";
+        else if (h0.startsWith('ff')) scope = "Multicast Grubu (ff00::/8)";
+        else if (fullExpanded === '0000:0000:0000:0000:0000:0000:0000:0001') scope = "Loopback (Geri Döngü ::1/128)";
+        else if (fullExpanded === '0000:0000:0000:0000:0000:0000:0000:0000') scope = "Unspecified / Varsayılan Rota (::/0)";
+
+        const last24Bits = hextets[6].substring(2, 4) + hextets[7];
+        const solicitedNode = `ff02::1:ff${hextets[6].substring(2, 4)}:${hextets[7]}`;
+
+        outBox.innerHTML = `
+          <div class="res-row"><span class="res-label">128-Bit Tam Genişletilmiş:</span><span class="res-val green" id="ipv6-full-expanded" style="font-weight:700; word-break:break-all;">${fullExpanded}${prefixPart}</span></div>
+          <div class="res-row"><span class="res-label">RFC 5952 Daraltılmış Format:</span><span class="res-val amber">${compressed}${prefixPart}</span></div>
+          <div class="res-row"><span class="res-label">Adres Tipi / Kapsam:</span><span class="res-val">${scope}</span></div>
+          <div class="res-row"><span class="res-label">Ağ Arayüz ID (Son 64-Bit):</span><span class="res-val" style="color:var(--tech-purple);">${hextets.slice(4).join(':')}</span></div>
+          <div class="res-row" style="border-top:1px solid var(--border-tech); margin-top:4px; padding-top:4px;">
+            <span class="res-label">Solicited-Node Multicast:</span>
+            <span class="res-val green" style="word-break:break-all;">${solicitedNode}</span>
+          </div>
+        `;
+      } catch(err) {
+        outBox.innerHTML = `<span style="color:var(--tech-rose);">Geçersiz IPv6 formatı: ${err.message}</span>`;
+      }
+    }
+
+    // 5. IP SINIFI & CGNAT MOTORU
+    function setIpClassPreset(v) {
+      document.getElementById('ipclass-val').value = v;
+      calcClass();
+    }
+
+    function calcClass() {
+      const ipStr = document.getElementById('ipclass-val').value.trim();
+      const outBox = document.getElementById('ipclass-out');
+
+      const parts = ipStr.split('.');
+      if (parts.length !== 4) {
+        outBox.innerHTML = `<span style="color:var(--text-dim); text-align:center; padding:20px; display:block;">Geçerli bir IPv4 adresi girin...</span>`;
+        return;
+      }
+
+      const oct0 = parseInt(parts[0], 10);
+      const oct1 = parseInt(parts[1], 10);
+      const oct2 = parseInt(parts[2], 10);
+      const oct3 = parseInt(parts[3], 10);
+
+      if (isNaN(oct0) || isNaN(oct1) || isNaN(oct2) || isNaN(oct3) ||
+          oct0 < 0 || oct0 > 255 || oct1 < 0 || oct1 > 255 || oct2 < 0 || oct2 > 255 || oct3 < 0 || oct3 > 255) {
+        outBox.innerHTML = `<span style="color:var(--tech-rose);">Geçersiz IPv4 oktet değerleri (0-255 aralığında olmalı).</span>`;
+        return;
+      }
+
+      let cls = "Bilinmeyen";
+      let defMask = "0.0.0.0";
+      let defCidr = 0;
+
+      if (oct0 >= 1 && oct0 <= 126) { cls = "A Sınıfı (1.0.0.0 - 126.255.255.255)"; defMask = "255.0.0.0"; defCidr = 8; }
+      else if (oct0 === 127) { cls = "Loopback Bloğu (127.0.0.0/8)"; defMask = "255.0.0.0"; defCidr = 8; }
+      else if (oct0 >= 128 && oct0 <= 191) { cls = "B Sınıfı (128.0.0.0 - 191.255.255.255)"; defMask = "255.255.0.0"; defCidr = 16; }
+      else if (oct0 >= 192 && oct0 <= 223) { cls = "C Sınıfı (192.0.0.0 - 223.255.255.255)"; defMask = "255.255.255.0"; defCidr = 24; }
+      else if (oct0 >= 224 && oct0 <= 239) { cls = "D Sınıfı (Multicast: 224.0.0.0 - 239.255.255.255)"; defMask = "Yok (Multicast)"; defCidr = 4; }
+      else if (oct0 >= 240 && oct0 <= 255) { cls = "E Sınıfı (Deneysel & Gelecekte Kullanım: 240.0.0.0/4)"; defMask = "Yok (Rezerve)"; defCidr = 4; }
+
+      const ipNum = ip2int(ipStr);
+      let rfcScope = "Genel İnternet Yönlendirilebilir (Public IP)";
+      let isPrivate = false;
+      let isCgnat = false;
+      let isApipa = false;
+
+      if (oct0 === 10) {
+        rfcScope = "RFC 1918 Özel Blok (10.0.0.0/8 - Kurumsal LAN)";
+        isPrivate = true;
+      } else if (oct0 === 172 && oct1 >= 16 && oct1 <= 31) {
+        rfcScope = "RFC 1918 Özel Blok (172.16.0.0/12 - Kurumsal LAN)";
+        isPrivate = true;
+      } else if (oct0 === 192 && oct1 === 168) {
+        rfcScope = "RFC 1918 Özel Blok (192.168.0.0/16 - Ev / Ofis LAN)";
+        isPrivate = true;
+      } else if (ipNum >= ip2int("100.64.0.0") && ipNum <= ip2int("100.127.255.255")) {
+        rfcScope = "RFC 6598 Taşıyıcı Sınıfı NAT (100.64.0.0/10 - CGNAT)";
+        isCgnat = true;
+      } else if (oct0 === 169 && oct1 === 254) {
+        rfcScope = "RFC 3927 APIPA Link-Local (169.254.0.0/16 - Otomatik Özel IP)";
+        isApipa = true;
+      } else if (oct0 === 127) {
+        rfcScope = "RFC 1122 Loopback (127.0.0.0/8 - Yerel Ana Bilgisayar)";
+      }
+
+      const binaryStr = parts.map(p => parseInt(p, 10).toString(2).padStart(8, '0')).join('.');
+      const hexStr = parts.map(p => parseInt(p, 10).toString(16).padStart(2, '0').toUpperCase()).join(':');
+
+      outBox.innerHTML = `
+        <span id="ipclass-summary-text" style="display:none;">IP: ${ipStr} | Sınıf: ${cls} | Kapsam: ${rfcScope}</span>
+        <div class="res-row"><span class="res-label">Tarihsel IP Sınıfı:</span><span class="res-val green" style="font-weight:700;">${cls}</span></div>
+        <div class="res-row"><span class="res-label">Varsayılan Alt Ağ Maskesi:</span><span class="res-val amber">${defMask} ${defCidr ? `(/${defCidr})` : ''}</span></div>
+        <div class="res-row"><span class="res-label">RFC Mimari Kapsamı:</span><span class="res-val ${isCgnat ? 'rose' : (isPrivate ? 'amber' : 'green')}" style="font-weight:700;">${rfcScope}</span></div>
+        <div class="res-row"><span class="res-label">CGNAT (100.64.0.0/10) Durumu:</span><span class="res-val ${isCgnat ? 'rose' : 'green'}">${isCgnat ? '⚠️ EVET (Taşıyıcı NAT Altında / Dış Port Kapalı)' : 'HAYIR (CGNAT Değil)'}</span></div>
+        <div class="res-row"><span class="res-label">İnternet Yönlendirilebilirliği:</span><span class="res-val ${isPrivate || isCgnat || isApipa ? 'amber' : 'green'}">${isPrivate || isCgnat || isApipa ? 'Hayır (Yalnızca NAT veya Yerel Hat)' : 'Evet (Genel / Public)'}</span></div>
+        <div class="res-row"><span class="res-label">Binary Gösterim (32-Bit):</span><span class="res-val" style="font-size:9.5px; color:var(--text-muted);">${binaryStr}</span></div>
+        <div class="res-row"><span class="res-label">Hexadecimal Gösterim:</span><span class="res-val" style="font-size:9.5px; color:var(--tech-purple);">${hexStr} (0x${parts.map(p=>parseInt(p,10).toString(16).padStart(2,'0').toUpperCase()).join('')})</span></div>
+      `;
     }
 
     // =========================================================================
