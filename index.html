@@ -722,49 +722,49 @@
         <!-- GRUP 1: SAHA, VERİ MERKEZİ & OPERASYON -->
         <div class="rack-group">
           <div class="rack-header grp1"><span>[01] SAHA, VERİ MERKEZİ & OPERASYON</span><span class="btn-tag">DC & OPS</span></div>
-          <button onclick="showPanel('dashboard')" id="btn-dashboard" class="nav-btn active"><span>📊 Sistem Dizini & HUD</span><span class="btn-tag">M-01</span></button>
-          <button onclick="showPanel('real-console')" id="btn-real-console" class="nav-btn ops-btn"><span>🔌 ZeroConsole (Web Serial / Canlı)</span><span class="btn-tag" style="color:#10b981; font-weight:bold;">M-02</span></button>
-          <button onclick="showPanel('rack-planner')" id="btn-rack-planner" class="nav-btn dc-btn"><span>🗄️ 42U Rack Kabin Görsel Planlayıcı</span><span class="btn-tag">M-03</span></button>
-          <button onclick="showPanel('dc-power')" id="btn-dc-power" class="nav-btn dc-btn"><span>⚡ Güç (PDU/kW), UPS & Isı (BTU)</span><span class="btn-tag">M-04</span></button>
-          <button onclick="showPanel('field-notes')" id="btn-field-notes" class="nav-btn dc-btn"><span>📝 Saha İçi Mühendislik Not Defteri</span><span class="btn-tag">M-05</span></button>
-          <button onclick="showPanel('mini-ipam')" id="btn-mini-ipam" class="nav-btn ops-btn"><span>📋 Mini IPAM (Görsel IP Defteri)</span><span class="btn-tag">M-06</span></button>
-          <button onclick="showPanel('calendar')" id="btn-calendar" class="nav-btn ops-btn"><span>📅 Ağ Bakım & Operasyon Takvimi</span><span class="btn-tag">M-07</span></button>
-          <button onclick="showPanel('phy-pinout')" id="btn-phy-pinout" class="nav-btn ops-btn"><span>🔌 L1 RJ45, Konsol & Fiber Pinout</span><span class="btn-tag">M-08</span></button>
-          <button onclick="showPanel('recovery-hub')" id="btn-recovery-hub" class="nav-btn ops-btn"><span>🔄 Cihaz Kurtarma & Reset (Recovery Hub)</span><span class="btn-tag">M-09</span></button>
+          <button onclick="showPanel('dashboard')" id="btn-dashboard" class="nav-btn active"><span>📊 Sistem Dizini & HUD</span><span class="btn-tag">Anasayfa</span></button>
+          <button onclick="showPanel('real-console')" id="btn-real-console" class="nav-btn ops-btn"><span>🔌 ZeroConsole (Web Serial / Canlı)</span><span class="btn-tag">M-01</span></button>
+          <button onclick="showPanel('rack-planner')" id="btn-rack-planner" class="nav-btn dc-btn"><span>🗄️ 42U Rack Kabin Görsel Planlayıcı</span><span class="btn-tag">M-02</span></button>
+          <button onclick="showPanel('dc-power')" id="btn-dc-power" class="nav-btn dc-btn"><span>⚡ Güç (PDU/kW), UPS & Isı (BTU)</span><span class="btn-tag">M-03</span></button>
+          <button onclick="showPanel('field-notes')" id="btn-field-notes" class="nav-btn dc-btn"><span>📝 Saha İçi Mühendislik Not Defteri</span><span class="btn-tag">M-04</span></button>
+          <button onclick="showPanel('mini-ipam')" id="btn-mini-ipam" class="nav-btn ops-btn"><span>📋 Mini IPAM (Görsel IP Defteri)</span><span class="btn-tag">M-05</span></button>
+          <button onclick="showPanel('calendar')" id="btn-calendar" class="nav-btn ops-btn"><span>📅 Ağ Bakım & Operasyon Takvimi</span><span class="btn-tag">M-06</span></button>
+          <button onclick="showPanel('phy-pinout')" id="btn-phy-pinout" class="nav-btn ops-btn"><span>🔌 L1 RJ45, Konsol & Fiber Pinout</span><span class="btn-tag">M-07</span></button>
+          <button onclick="showPanel('recovery-hub')" id="btn-recovery-hub" class="nav-btn ops-btn"><span>🔄 Cihaz Kurtarma & Reset (Recovery Hub)</span><span class="btn-tag">M-08</span></button>
         </div>
 
         <!-- GRUP 2: CISCO, GÜVENLİK & ANALİZ -->
         <div class="rack-group">
           <div class="rack-header grp2"><span>[02] CISCO, GÜVENLİK & ANALİZ</span><span class="btn-tag">IOS, SEC & LOGS</span></div>
-          <button onclick="showPanel('expert-engine')" id="btn-expert-engine" class="nav-btn ops-btn"><span>🤖 Çevrimdışı Uzman Teşhis Motoru</span><span class="btn-tag">M-10</span></button>
-          <button onclick="showPanel('pcap-viewer')" id="btn-pcap-viewer" class="nav-btn ops-btn"><span>🦈 PCAP / Wireshark İnceleyici</span><span class="btn-tag">M-11</span></button>
-          <button onclick="showPanel('config-auditor')" id="btn-config-auditor" class="nav-btn ops-btn"><span>🛡️ Cisco Hardening & Güvenlik Denetimi</span><span class="btn-tag">M-12</span></button>
-          <button onclick="showPanel('backup-rollback')" id="btn-backup-rollback" class="nav-btn cisco-btn"><span>💾 Otomatik Yedekleme & Rollback Hub</span><span class="btn-tag">M-13</span></button>
-          <button onclick="showPanel('cisco-diff')" id="btn-cisco-diff" class="nav-btn cisco-btn"><span>🔍 Config Diff Engine (LCS)</span><span class="btn-tag">M-14</span></button>
-          <button onclick="showPanel('cisco-range')" id="btn-cisco-range" class="nav-btn cisco-btn"><span>⚡ Interface Range & Toplu VLAN</span><span class="btn-tag">M-15</span></button>
-          <button onclick="showPanel('cisco-syslog')" id="btn-cisco-syslog" class="nav-btn cisco-btn"><span>🪵 Syslog & Anomali Çözümleyici</span><span class="btn-tag">M-16</span></button>
-          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cisco-btn"><span>📋 IOS Routing Protokol Taslakları</span><span class="btn-tag">M-17</span></button>
-          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cisco-btn"><span>🛡️ Erişim Listesi (ACL) Matrisi</span><span class="btn-tag">M-18</span></button>
-          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cisco-btn"><span>🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="btn-tag">M-19</span></button>
-          <button onclick="showPanel('firewall-ports')" id="btn-firewall-ports" class="nav-btn ops-btn"><span>🛡️ Güvenlik Duvarı Port & Protokol</span><span class="btn-tag">M-20</span></button>
+          <button onclick="showPanel('expert-engine')" id="btn-expert-engine" class="nav-btn ops-btn"><span>🤖 Çevrimdışı Uzman Teşhis Motoru</span><span class="btn-tag">M-09</span></button>
+          <button onclick="showPanel('pcap-viewer')" id="btn-pcap-viewer" class="nav-btn ops-btn"><span>🦈 PCAP / Wireshark İnceleyici</span><span class="btn-tag">M-10</span></button>
+          <button onclick="showPanel('config-auditor')" id="btn-config-auditor" class="nav-btn ops-btn"><span>🛡️ Cisco Hardening & Güvenlik Denetimi</span><span class="btn-tag">M-11</span></button>
+          <button onclick="showPanel('backup-rollback')" id="btn-backup-rollback" class="nav-btn cisco-btn"><span>💾 Otomatik Yedekleme & Rollback Hub</span><span class="btn-tag">M-12</span></button>
+          <button onclick="showPanel('cisco-diff')" id="btn-cisco-diff" class="nav-btn cisco-btn"><span>🔍 Config Diff Engine (LCS)</span><span class="btn-tag">M-13</span></button>
+          <button onclick="showPanel('cisco-range')" id="btn-cisco-range" class="nav-btn cisco-btn"><span>⚡ Interface Range & Toplu VLAN</span><span class="btn-tag">M-14</span></button>
+          <button onclick="showPanel('cisco-syslog')" id="btn-cisco-syslog" class="nav-btn cisco-btn"><span>🪵 Syslog & Anomali Çözümleyici</span><span class="btn-tag">M-15</span></button>
+          <button onclick="showPanel('cisco-templates')" id="btn-cisco-templates" class="nav-btn cisco-btn"><span>📋 IOS Routing Protokol Taslakları</span><span class="btn-tag">M-16</span></button>
+          <button onclick="showPanel('cisco-acl')" id="btn-cisco-acl" class="nav-btn cisco-btn"><span>🛡️ Erişim Listesi (ACL) Matrisi</span><span class="btn-tag">M-17</span></button>
+          <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cisco-btn"><span>🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="btn-tag">M-18</span></button>
+          <button onclick="showPanel('firewall-ports')" id="btn-firewall-ports" class="nav-btn ops-btn"><span>🛡️ Güvenlik Duvarı Port & Protokol</span><span class="btn-tag">M-19</span></button>
         </div>
 
         <!-- GRUP 3: AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA -->
         <div class="rack-group">
-          <div class="rack-header grp3"><span>[03] AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA</span><span class="btn-tag">NET & CALC</span></div>
-          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn"><span>🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="btn-tag">M-21</span></button>
-          <button onclick="showPanel('traceroute')" id="btn-traceroute" class="nav-btn net-btn"><span>📍 Traceroute & MTR Sekme Çizici</span><span class="btn-tag">M-22</span></button>
-          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"><span>📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="btn-tag">M-23</span></button>
-          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn"><span>🔀 Dinamik NAT & PAT Simülatörü</span><span class="btn-tag">M-24</span></button>
-          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn"><span>🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="btn-tag">M-25</span></button>
-          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn"><span>📐 VLSM Alt Ağ Bölücü</span><span class="btn-tag">M-26</span></button>
-          <button onclick="showPanel('subnet-overlap')" id="btn-subnet-overlap" class="nav-btn ops-btn"><span>🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="btn-tag">M-27</span></button>
-          <button onclick="showPanel('transfer-sizer')" id="btn-transfer-sizer" class="nav-btn ops-btn"><span>⏱️ Veri Transfer & Hat Doygunluğu</span><span class="btn-tag">M-28</span></button>
-          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn calc-btn"><span>🎭 Wildcard Maske Tersleyici</span><span class="btn-tag">M-29</span></button>
-          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn calc-btn"><span>🔍 MAC OUI Donanım Sorgulama</span><span class="btn-tag">M-30</span></button>
-          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn calc-btn"><span>🛡️ IPSec & GRE MSS Boyutlandırıcı</span><span class="btn-tag">M-31</span></button>
-          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn calc-btn"><span>🌐 IPv6 Adres Genişletici / Analizör</span><span class="btn-tag">M-32</span></button>
-          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn calc-btn"><span>📊 IP Sınıfı ve CGNAT Analizi</span><span class="btn-tag">M-33</span></button>
+          <div class="rack-header grp3"><span>[03] AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA</span><span class="btn-tag"></span></div>
+          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn"><span>🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="btn-tag">M-20</span></button>
+          <button onclick="showPanel('traceroute')" id="btn-traceroute" class="nav-btn net-btn"><span>📍 Traceroute & MTR Sekme Çizici</span><span class="btn-tag">M-21</span></button>
+          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"><span>📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="btn-tag">M-22</span></button>
+          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn"><span>🔀 Dinamik NAT & PAT Simülatörü</span><span class="btn-tag">M-23</span></button>
+          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn"><span>🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="btn-tag">M-24</span></button>
+          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn"><span>📐 VLSM Alt Ağ Bölücü</span><span class="btn-tag">M-25</span></button>
+          <button onclick="showPanel('subnet-overlap')" id="btn-subnet-overlap" class="nav-btn ops-btn"><span>🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="btn-tag">M-26</span></button>
+          <button onclick="showPanel('transfer-sizer')" id="btn-transfer-sizer" class="nav-btn ops-btn"><span>⏱️ Veri Transfer & Hat Doygunluğu</span><span class="btn-tag">M-27</span></button>
+          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn calc-btn"><span>🎭 Wildcard Maske Tersleyici</span><span class="btn-tag">M-28</span></button>
+          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn calc-btn"><span>🔍 MAC OUI Donanım Sorgulama</span><span class="btn-tag">M-29</span></button>
+          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn calc-btn"><span>🛡️ IPSec & GRE MSS Boyutlandırıcı</span><span class="btn-tag">M-30</span></button>
+          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn calc-btn"><span>🌐 IPv6 Adres Genişletici / Analizör</span><span class="btn-tag">M-31</span></button>
+          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn calc-btn"><span>📊 IP Sınıfı ve CGNAT Analizi</span><span class="btn-tag">M-32</span></button>
         </div>
 
       </div>
