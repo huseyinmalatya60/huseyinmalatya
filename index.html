@@ -626,6 +626,81 @@
     .rack-dev-patch { background: linear-gradient(90deg, #374151, #1f2937); border-left: 3px solid #9ca3af; }
     .rack-dev-ups { background: linear-gradient(90deg, #78350f, #451a03); border-left: 3px solid var(--tech-amber); }
     .rack-dev-firewall { background: linear-gradient(90deg, #831843, #500724); border-left: 3px solid var(--tech-rose); }
+/* PATCH BAY & KABLOLAMA CSS */
+.patch-panel-chassis {
+  background: #020409;
+  border: 2px solid #334155;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  position: relative;
+  margin-bottom: 12px;
+}
+.patch-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
+}
+.patch-port-jack {
+  background: #060c18;
+  border: 1px solid var(--border-tech);
+  border-radius: 2px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 2px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.12s ease;
+  user-select: none;
+}
+.patch-port-jack:hover {
+  transform: translateY(-2px);
+  border-color: var(--tech-cyan);
+  box-shadow: 0 0 10px var(--tech-cyan-glow);
+}
+.patch-port-jack.active {
+  border-color: #fff;
+  box-shadow: 0 0 12px var(--tech-cyan);
+}
+.patch-port-led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #334155;
+}
+.patch-port-led.data { background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
+.patch-port-led.voip { background: var(--tech-emerald); box-shadow: 0 0 6px var(--tech-emerald); }
+.patch-port-led.cctv { background: var(--tech-amber); box-shadow: 0 0 6px var(--tech-amber); }
+.patch-port-led.ap { background: var(--tech-purple); box-shadow: 0 0 6px var(--tech-purple); }
+.patch-port-led.fail { background: var(--tech-rose); box-shadow: 0 0 6px var(--tech-rose); }
+.patch-port-num { font-family: var(--font-mono); font-size: 9px; font-weight: 700; color: var(--text-dim); }
+.patch-port-badge { font-family: var(--font-mono); font-size: 7.5px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+
+.cable-trace-flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-void);
+  border: 1px solid var(--border-tech);
+  padding: 10px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+.trace-step-node {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 10px;
+  min-width: 140px;
+  font-family: var(--font-mono);
+  position: relative;
+}
+.trace-step-node.active {
+  border-color: var(--tech-cyan);
+  box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.15);
+}
+.trace-step-arrow { color: var(--tech-cyan); font-weight: 800; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -732,6 +807,10 @@
           <button onclick="showPanel('calendar')" id="btn-calendar" class="nav-btn ops-btn"><span>📅 Ağ Bakım & Operasyon Takvimi</span><span class="btn-tag">M-06</span></button>
           <button onclick="showPanel('phy-pinout')" id="btn-phy-pinout" class="nav-btn ops-btn"><span>🔌 L1 RJ45, Konsol & Fiber Pinout</span><span class="btn-tag">M-07</span></button>
           <button onclick="showPanel('recovery-hub')" id="btn-recovery-hub" class="nav-btn ops-btn"><span>🔄 Cihaz Kurtarma & Reset (Recovery Hub)</span><span class="btn-tag">M-08</span></button>
+          <button onclick="showPanel('patch-bay')" id="btn-patch-bay" class="nav-btn dc-btn"><span>🔌 Kablolama & Patch Bay Router</span><span class="btn-tag">M-34</span></button>
+	  <button onclick="showPanel('hw-matrix')" id="btn-hw-matrix" class="nav-btn dc-btn"><span>🗃️ Donanım, ASIC Buffer & Transceiver</span><span class="btn-tag">M-35</span></button>
+	  <button onclick="showPanel('port-autopsy')" id="btn-port-autopsy" class="nav-btn ops-btn"><span>🔬 Port Sayaç Otopsisi & Drop Teşhisi</span><span class="btn-tag">M-36</span></button>
+	  <button onclick="showPanel('tdr-analyzer')" id="btn-tdr-analyzer" class="nav-btn cisco-btn"><span>⚡ Cisco / Huawei Donanımsal TDR Kablo Testi</span><span class="btn-tag">M-37</span></button>
         </div>
 
         <!-- GRUP 2: CISCO, GÜVENLİK & ANALİZ -->
@@ -811,6 +890,10 @@
               <div class="dir-item" onclick="showPanel('calendar')"><div class="dir-item-header"><span class="dir-item-title">📅 Ağ Bakım & Operasyon Takvimi</span><span class="dir-item-tag">M-06</span></div><div class="dir-item-desc">Planlı bakım pencereleri (Maintenance Windows), CR kayıtları, risk analizi ve etkileşimli faaliyet detay penceresi.</div></div>
               <div class="dir-item" onclick="showPanel('phy-pinout')"><div class="dir-item-header"><span class="dir-item-title">🔌 L1 RJ45, Konsol & Fiber Pinout Rehberi</span><span class="dir-item-tag">M-07</span></div><div class="dir-item-desc">T568A/B renk dizilimi, Cisco rollover konsol kablo şeması ve fiber optik konnektör standartları.</div></div>
               <div class="dir-item" onclick="showPanel('recovery-hub')"><div class="dir-item-header"><span class="dir-item-title">🔄 Cihaz Kurtarma & Reset (Recovery Hub)</span><span class="dir-item-tag">M-08</span></div><div class="dir-item-desc">Cisco Router/Switch/ASA şifre kurtarma (ROMMON/0x2142), Mode Buton sıfırlama ve Confreg register sihirbazı.</div></div>
+              <div class="dir-item" onclick="showPanel('patch-bay')"><div class="dir-item-header"><span class="dir-item-title">🔌 Bina İçi Kablolama & Patch Bay Router</span><span class="dir-item-tag">M-34</span></div><div class="dir-item-desc">Priz, yapısal kablo ID, patch panel, switchport ve VLAN uçtan uca hat takibi, zayıflama (dB) hesabı ve Cisco açıklama sihirbazı.</div></div>
+	      <div class="dir-item" onclick="showPanel('hw-matrix')"><div class="dir-item-header"><span class="dir-item-title">🗃️ Donanım Kıyaslama & ASIC Buffer Kataloğu</span><span class="dir-item-tag">M-35</span></div><div class="dir-item-desc">Cisco Catalyst/Nexus, Arista, Juniper donanım özellikleri, ASIC paket tamponu microburst kaybı hesabı ve 1G-400G SFP/QSFP transceiver kataloğu.</div></div>
+	      <div class="dir-item" onclick="showPanel('port-autopsy')"><div class="dir-item-header"><span class="dir-item-title">🔬 Port Sayaç Otopsisi (Counter Autopsy & Discard RCA)</span><span class="dir-item-tag">M-36</span></div><div class="dir-item-desc">Cisco/Huawei "show interface" çıktısındaki CRC, Input Errors, Late Collision, Giants, Runts ve Buffer Discards sayaçlarını analiz ederek kök neden analizi (RCA) çıkarır.</div></div>
+	      <div class="dir-item" onclick="showPanel('tdr-analyzer')"><div class="dir-item-header"><span class="dir-item-title">⚡ Cisco & Huawei TDR Dahili Kablo Test Analizörü</span><span class="dir-item-tag">M-37</span></div><div class="dir-item-desc">Switch PHY çipinin Time Domain Reflectometry (TDR) test verilerini ayrıştırır. 4 çift (Pair A-B-C-D) için kopukluk (Open), kısa devre (Short) ve metre bazlı kırık noktasını görselleştirir.</div></div>
             </div>
 
             <!-- DİZİN 2: CISCO, GÜVENLİK & ANALİZ -->
@@ -851,7 +934,490 @@
           </div>
         </div>
 
-        <!-- M-20 (YENİ): LISP (LOCATOR/ID SEPARATION) FABRIC & CONFIG ENGINE -->
+	<!-- M-36: PORT SAYAÇ OTOPSİSİ VE DİSKARD/DROP TEŞHİS MOTORU -->
+<div id="panel-port-autopsy" class="panel">
+  <div class="panel-header">
+    <div>
+      <div class="panel-title">// PORT SAYAÇ OTOPSİSİ & DISCARD/ERROR KÖK NEDEN ANALİZÖRÜ (RCA ENGINE)</div>
+      <div class="panel-desc">Cisco IOS/NX-OS veya Huawei "show interface" dökümünü analiz ederek L1/L2 fiziksel donanım, duplex uyuşmazlığı ve ASIC egress microburst taşmalarını ayrıştırır.</div>
+    </div>
+    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+      <button onclick="loadSampleCounter('crc')" class="btn btn-secondary">⚡ Örnek: Hasarlı Kablo (CRC/Input)</button>
+      <button onclick="loadSampleCounter('duplex')" class="btn btn-secondary">⚡ Örnek: Duplex Mismatch</button>
+      <button onclick="loadSampleCounter('drops')" class="btn btn-secondary">⚡ Örnek: Buffer Congestion</button>
+      <button onclick="runPortCounterAutopsy()" class="btn" style="background:var(--tech-emerald); color:#020408;">🚀 Otopsiyi Başlat</button>
+    </div>
+  </div>
+
+  <div class="cdr-kpi-grid" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="cdr-kpi-card"><label>Fiziksel / Link Durumu</label><div class="cdr-kpi-val" id="pa-kpi-status" style="font-size:12px; margin-top:4px;">-</div></div>
+    <div class="cdr-kpi-card"><label>Toplam Hata (Input/Output)</label><div class="cdr-kpi-val amber" id="pa-kpi-errors">0</div></div>
+    <div class="cdr-kpi-card"><label>CRC / FCS Hatası</label><div class="cdr-kpi-val" id="pa-kpi-crc" style="color:var(--tech-rose);">0</div></div>
+    <div class="cdr-kpi-card"><label>Buffer Drop / Discards</label><div class="cdr-kpi-val" id="pa-kpi-drops" style="color:var(--tech-amber);">0</div></div>
+    <div class="cdr-kpi-card"><label>Genel Port Sağlığı</label><div class="cdr-kpi-val green" id="pa-kpi-health">--</div></div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: 1.1fr 1.4fr; gap:12px;">
+    <div>
+      <div class="form-group">
+        <label>Ham "show interfaces [port]" CLI Çıktısı</label>
+        <textarea id="pa-raw-input" rows="13" style="font-size:10px; line-height:1.45;" placeholder="Cisco 'show interface Gi1/0/1' veya Huawei 'display interface GigabitEthernet0/0/1' çıktısını yapıştırın..."></textarea>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+        <div class="form-group">
+          <label>Cihaz / OS Platformu</label>
+          <select id="pa-os-type">
+            <option value="cisco_ios" selected>Cisco IOS / IOS-XE / NX-OS</option>
+            <option value="huawei_vrp">Huawei VRP Switch</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Zaman Aralığı (Dakika)</label>
+          <input type="number" id="pa-interval-mins" value="60" title="Hataların oluştuğu süre; saniyedeki hata oranını türetmek için kullanılır">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label style="color:var(--tech-cyan);">Otopsi Raporu & Kök Neden Analizi (RCA)</label>
+      <div id="pa-rca-results-box" class="result-box" style="min-height:270px; max-height:360px; overflow-y:auto;">
+        <div style="color:var(--text-dim); text-align:center; padding-top:100px; font-family:var(--font-mono);">
+          Yukarıdaki örneklerden birini seçin veya CLI çıktısı yapıştırıp <b>'Otopsiyi Başlat'</b> butonuna basın.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:10px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+      <label style="color:var(--tech-emerald); margin:0;">🛠️ ÖNERİLEN DONANIM VE CLI İYİLEŞTİRME REÇETESİ</label>
+      <button onclick="copyToClipboard('pa-fix-cli-out')" class="btn btn-secondary" style="padding:2px 6px; font-size:9.5px;">📋 Reçeteyi Kopyala</button>
+    </div>
+    <pre id="pa-fix-cli-out" style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px; color:var(--tech-emerald); height:110px; overflow-y:auto; font-family:var(--font-mono); font-size:10.5px; line-height:1.45; white-space:pre-wrap;">Otopsi sonrasında çözüm komutları burada üretilecektir.</pre>
+  </div>
+</div>
+
+
+	<!-- M-37: CISCO & HUAWEI TDR DAHİLİ KABLO TESTİ VE RJ45 4-PAIR ARIZA OSİLOSKOPU -->
+<div id="panel-tdr-analyzer" class="panel">
+  <div class="panel-header">
+    <div>
+      <div class="panel-title">// CISCO & HUAWEI DAHİLİ TDR KABLO TESTİ & RJ45 ARIZA MERKEZİ (IEEE 802.3 PHY TDR)</div>
+      <div class="panel-desc">Switch Ethernet PHY çipindeki Time Domain Reflectometer (TDR) sinyallerini analiz eder. Metre hassasiyetinde kopuk (Open), kısa devre (Short) ve empedans uyumsuzluklarını görselleştirir.</div>
+    </div>
+    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+      <button onclick="loadSampleTdr('normal')" class="btn btn-secondary">🟢 Tam Sağlıklı Hat</button>
+      <button onclick="loadSampleTdr('broken_28m')" class="btn btn-secondary">🔴 28. Metrede Kopuk (Open)</button>
+      <button onclick="loadSampleTdr('short_pin')" class="btn btn-secondary">🟡 Çift C Kısa Devre (Short)</button>
+      <button onclick="parseTdrRawOutput()" class="btn" style="background:var(--tech-cyan); color:#020408;">🚀 TDR Raporunu Çözümle</button>
+    </div>
+  </div>
+
+  <div class="topology-tabs">
+    <button class="tab-btn active" id="tdr-tab-visual" onclick="switchTdrTab('visual')">📊 Görsel RJ45 4-Çift (Pair) Kablo Osiloskopu</button>
+    <button class="tab-btn" id="tdr-tab-cli" onclick="switchTdrTab('cli')">💻 Cisco & Huawei TDR Komut Sihirbazı</button>
+  </div>
+
+  <!-- SEKME 1: GÖRSEL OSİLOSKOP VE AYRIŞTIRICI -->
+  <div id="tdr-sec-visual">
+    <div style="display:grid; grid-template-columns: 1.15fr 1.35fr; gap:12px;">
+      <div>
+        <div class="form-group">
+          <label>TDR Ham Konsol Çıktısı (show / display cable-diagnostics)</label>
+          <textarea id="tdr-raw-input" rows="10" style="font-size:10.5px;" placeholder="Cisco 'show cable-diagnostics tdr interface ...' veya Huawei 'display virtual-cable-test ...' çıktısını yapıştırın..."></textarea>
+        </div>
+
+        <div class="recovery-step-card" style="margin-top:4px;">
+          <div class="recovery-step-title">⚡ IEEE 802.3 PHY TDR Durum Anlamları</div>
+          <div class="recovery-step-desc">
+            • <b>Normal:</b> Çift empedansı dengeli, sonlandırma başarılı.<br>
+            • <b>Open (Açık Devre):</b> Belirtilen mesafede kablo kesilmiş, prizden sökülmüş veya temassızlık var.<br>
+            • <b>Short (Kısa Devre):</b> Teller birbirine temas ediyor (ezilmiş kablo veya hatalı çakım).<br>
+            • <b>Mesafe Toleransı:</b> Dahili PHY çipleri ±1 ile ±3 metre hata payıyla ölçüm yapar.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <label style="color:var(--tech-cyan); margin:0;">8-Pin / 4-Pair Fiziksel Kablo Kanal Haritası</label>
+          <span id="tdr-summary-badge" class="audit-badge badge-pass">ANALİZ BEKLENİYOR</span>
+        </div>
+
+        <div id="tdr-pair-cards-container" style="display:flex; flex-direction:column; gap:6px;">
+          <!-- 4 Çift Kartı Dinamik Oluşur -->
+        </div>
+
+        <div class="result-box" id="tdr-verdict-box" style="margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEKME 2: KOMUT SİHİRBAZI -->
+  <div id="tdr-sec-cli" style="display:none;">
+    <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:12px;">
+      <div>
+        <div class="form-group">
+          <label>Switch Donanım Üreticisi</label>
+          <select id="tdr-vendor-sel" onchange="generateTdrCliScript()">
+            <option value="cisco" selected>Cisco Catalyst (IOS / IOS-XE)</option>
+            <option value="huawei">Huawei Quidway / CloudEngine (VRP)</option>
+            <option value="arista">Arista Networks (EOS PHY Cable-Diag)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Test Edilecek Arayüz (Port)</label>
+          <input type="text" id="tdr-port-name" value="GigabitEthernet1/0/12" oninput="generateTdrCliScript()">
+        </div>
+        <div class="recovery-step-card">
+          <div class="recovery-step-title">⚠️ Saha Operasyon Notu</div>
+          <div class="recovery-step-desc">TDR testi başlatıldığında switchport linki yaklaşık <b>3 ila 7 saniye süreyle geçici olarak DOWN olur</b> ve sinyal dalgası gönderilir. Canlı kritik uplinklerde bakım penceresinde çalıştırılmalıdır!</div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+          <label style="color:var(--tech-emerald); margin:0;">TDR Çalıştırma & Raporlama CLI Komutları</label>
+          <button onclick="copyToClipboard('tdr-cli-script-out')" class="btn btn-secondary" style="padding:2px 6px; font-size:9px;">📋 Kopyala</button>
+        </div>
+        <pre id="tdr-cli-script-out" style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px; color:var(--tech-emerald); height:200px; font-family:var(--font-mono); font-size:10.5px; line-height:1.5; white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<!-- M-35: DONANIM KARŞILAŞTIRMA & TRANSCEIVER / ASIC BUFFER KATALOĞU -->
+<div id="panel-hw-matrix" class="panel">
+  <div class="panel-header">
+    <div>
+      <div class="panel-title">// KURUMSAL AĞ DONANIM KARŞILAŞTIRMA, TRANSCEIVER & ASIC BUFFER KATALOĞU</div>
+      <div class="panel-desc">ASIC paket tampon belleği, microburst kayıp simülatörü, switch donanım mimarisi ve 1G-400G optik alıcı-verici kütüphanesi.</div>
+    </div>
+    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+      <button onclick="copyToClipboard('hw-compare-summary-box')" class="btn btn-secondary">📋 Raporu Kopyala</button>
+      <button onclick="exportHwCatalogJson()" class="btn btn-secondary">💾 JSON Yedek</button>
+    </div>
+  </div>
+
+  <div class="topology-tabs">
+    <button class="tab-btn active" id="hw-tab-compare" onclick="switchHwTab('compare')">🔀 Switch Donanım Karşılaştırma Matrisi</button>
+    <button class="tab-btn" id="hw-tab-buffer" onclick="switchHwTab('buffer')">📊 ASIC Paket Tamponu & Microburst Simülatörü</button>
+    <button class="tab-btn" id="hw-tab-optics" onclick="switchHwTab('optics')">💡 Transceiver & DAC / AOC Optik Veritabanı (1G - 400G)</button>
+  </div>
+
+  <!-- SEKME 1: DONANIM KARŞILAŞTIRMA -->
+  <div id="hw-sec-compare">
+    <div style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px 12px; margin-bottom:12px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="margin:0; color:var(--tech-cyan);">CİHAZ A:</label>
+        <select id="hw-dev-sel-1" onchange="renderHardwareComparison()" style="width:230px; font-weight:bold;"></select>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="margin:0; color:var(--tech-emerald);">CİHAZ B:</label>
+        <select id="hw-dev-sel-2" onchange="renderHardwareComparison()" style="width:230px; font-weight:bold;"></select>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="margin:0; color:var(--tech-amber);">CİHAZ C (OPSİYONEL):</label>
+        <select id="hw-dev-sel-3" onchange="renderHardwareComparison()" style="width:230px; font-weight:bold;">
+          <option value="none">-- Seçilmedi --</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto; background:var(--bg-input); border:1px solid var(--border-tech); margin-bottom:10px;">
+      <table class="nat-table" id="hw-compare-table">
+        <thead>
+          <tr id="hw-compare-thead-row">
+            <th style="width:220px;">Teknik Parametre / Metrik</th>
+            <th id="hw-th-col-1">Cihaz A</th>
+            <th id="hw-th-col-2">Cihaz B</th>
+            <th id="hw-th-col-3" style="display:none;">Cihaz C</th>
+          </tr>
+        </thead>
+        <tbody id="hw-compare-tbody"></tbody>
+      </table>
+    </div>
+
+    <div id="hw-compare-summary-box" style="display:none;"></div>
+  </div>
+
+  <!-- SEKME 2: ASIC BUFFER & MICROBURST HESAPLAYICI -->
+  <div id="hw-sec-buffer" style="display:none;">
+    <div style="display:grid; grid-template-columns: 1.15fr 1.35fr; gap:12px;">
+      <div>
+        <div class="recovery-step-card">
+          <div class="recovery-step-title">⚡ Microburst & Incast Paket Düşmesi Nedir?</div>
+          <div class="recovery-step-desc">
+            Veri merkezinde veya omurgada birden fazla yüksek hızlı port (örneğin 25G/100G), milisaniyeler seviyesinde tek bir çıkış portuna (örneğin 10G sunucu veya 1G uplink) yüklendiğinde, ortalama bant genişliği düşük görünse bile ASIC paket tamponu (Packet Buffer) anında taşar ve paketler <b>InDiscards / Tail-Drop</b> ile düşer.
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <div class="form-group">
+            <label>Gelen Trafik Hızı (Ingress Burst)</label>
+            <select id="mb-ingress-rate" onchange="calcMicroburstLoss()">
+              <option value="100000">100 Gbps (Spine Uplink)</option>
+              <option value="40000">40 Gbps (Fabric Link)</option>
+              <option value="25000" selected>25 Gbps (Modern ToR Sunucu)</option>
+              <option value="10000">10 Gbps (Standart 10G Hat)</option>
+              <option value="1000">1 Gbps (Erişim Portu)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Çıkış Portu Hızı (Egress Port)</label>
+            <select id="mb-egress-rate" onchange="calcMicroburstLoss()">
+              <option value="25000">25 Gbps</option>
+              <option value="10000" selected>10 Gbps (Sunucu Arayüzü)</option>
+              <option value="1000">1 Gbps (Kullanıcı / Kamera Portu)</option>
+              <option value="100">100 Mbps (Eski Hat / WAN)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <div class="form-group">
+            <label>Patlama Süresi (Burst Duration)</label>
+            <select id="mb-burst-duration" onchange="calcMicroburstLoss()">
+              <option value="0.5">0.5 Milisaniye (Mikro Dalga)</option>
+              <option value="2" selected>2.0 Milisaniye (Tipik Veritabanı / Yedek)</option>
+              <option value="5">5.0 Milisaniye (Yoğun Incast)</option>
+              <option value="10">10.0 Milisaniye (Aşırı Doygunluk)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Kullanılabilir ASIC Tamponu (Buffer)</label>
+            <select id="mb-buffer-size" onchange="calcMicroburstLoss()">
+              <option value="3">3 MB (Düşük Kampüs Switchport Payı)</option>
+              <option value="6">6 MB (Cisco Catalyst 9200 Payı)</option>
+              <option value="16" selected>16 MB (Catalyst 9300X / Standart)</option>
+              <option value="32">32 MB (Arista 7050X3 / Cat9500)</option>
+              <option value="40">40 MB (Cisco Nexus 93180YC-FX3)</option>
+              <option value="128">128 MB (Derin Tampon / Deep Buffer SP)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ortalama Paket Boyutu (Frame Size)</label>
+          <select id="mb-frame-size" onchange="calcMicroburstLoss()">
+            <option value="1500" selected>1500 Bayt (Standart Ethernet MTU)</option>
+            <option value="9000">9000 Bayt (Jumbo Frame Veri Depolama)</option>
+            <option value="256">256 Bayt (Karışık Küçük Paketler / TCP ACK)</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label style="color:var(--tech-cyan);">⚡ Microburst Termal & Paket Kayıp Analizi</label>
+        <div class="result-box" id="mb-result-box" style="min-height:260px; line-height:1.65;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEKME 3: TRANSCEIVER & OPTİK MODÜL KATALOĞU -->
+  <div id="hw-sec-optics" style="display:none;">
+    <div style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted);">HIZ FİLTRESİ:</span>
+        <select id="optics-filter-speed" onchange="filterOpticsTable()" style="width:130px; font-size:10.5px;">
+          <option value="all" selected>Tümü (1G - 400G)</option>
+          <option value="1G">1 Gbps (SFP)</option>
+          <option value="10G">10 Gbps (SFP+)</option>
+          <option value="25G">25 Gbps (SFP28)</option>
+          <option value="40G">40 Gbps (QSFP+)</option>
+          <option value="100G">100 Gbps (QSFP28)</option>
+          <option value="400G">400 Gbps (QSFP-DD)</option>
+        </select>
+
+        <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted); margin-left:6px;">MEDYA TİPİ:</span>
+        <select id="optics-filter-media" onchange="filterOpticsTable()" style="width:140px; font-size:10.5px;">
+          <option value="all" selected>Tüm Medyalar</option>
+          <option value="mmf">Multi-Mode (OM3/OM4)</option>
+          <option value="smf">Single-Mode (OS2)</option>
+          <option value="copper">Bakır / DAC Twinax</option>
+        </select>
+      </div>
+
+      <input type="text" id="optics-search" oninput="filterOpticsTable()" placeholder="Standart, kod veya menzil ara (örn: SR4, LR, CWDM, 10km, LC)..." style="width:260px; padding:4px 8px; font-size:10.5px;">
+    </div>
+
+    <div style="max-height: 380px; overflow-y: auto; background: var(--bg-input); border: 1px solid var(--border-tech);">
+      <table class="nat-table" id="optics-data-table">
+        <thead>
+          <tr>
+            <th>Optik Standart</th>
+            <th>Form Faktör</th>
+            <th>Hız</th>
+            <th>Medya & Dalgaboyu</th>
+            <th>Konnektör</th>
+            <th>Maks. Menzil</th>
+            <th>Tx / Rx Güç Aralığı</th>
+            <th>Optik Bütçe (Kayıp)</th>
+          </tr>
+        </thead>
+        <tbody id="optics-table-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>	
+
+       <!-- M-34: BİNA İÇİ KABLOLAMA & PORT HARİTASI (PATCH BAY ROUTER) -->
+<div id="panel-patch-bay" class="panel">
+  <div class="panel-header">
+    <div>
+      <div class="panel-title">// BİNA İÇİ KABLOLAMA VERİ BANKASI & PATCH BAY ROUTER (ANSI/TIA-606-C)</div>
+      <div class="panel-desc">Duvar prizi (Outlet), yatay yapısal kablo, patch panel, patch cord, switchport ve VLAN uçtan uca sinyal haritalayıcısı.</div>
+    </div>
+    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+      <button onclick="exportPatchBayJSON()" class="btn btn-secondary">💾 JSON Yedek</button>
+      <input type="file" id="pb-import-input" style="display:none;" accept=".json" onchange="importPatchBayJSON(event)">
+      <button onclick="document.getElementById('pb-import-input').click()" class="btn btn-secondary">📂 İçe Aktar</button>
+      <button onclick="copyToClipboard('pb-cisco-desc-cli')" class="btn btn-secondary">📋 Cisco CLI Kopyala</button>
+      <button onclick="resetPatchBayDefaults()" class="btn btn-danger">Fabrika Ayarları</button>
+    </div>
+  </div>
+
+  <!-- ÜST PANEL SEÇİMİ VE GÖRSEL PATCH PANEL (24 PORT) -->
+  <div style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <label style="margin:0; color:var(--tech-cyan);">AKTİF PATCH PANEL:</label>
+      <select id="pb-panel-select" onchange="changeActivePatchPanel()" style="width:190px; font-weight:bold;">
+        <option value="PP-01" selected>PP-01 (Kabin-A Kat-2 Veri)</option>
+        <option value="PP-02">PP-02 (Kabin-A Kat-3 Veri)</option>
+        <option value="PP-SEC">PP-SEC (Güvenlik / Kamera)</option>
+      </select>
+      <button onclick="addNewPatchPanelPrompt()" class="btn btn-secondary" style="padding:2px 6px; font-size:9.5px;">+ Yeni Panel</button>
+    </div>
+    <div style="display:flex; gap:8px; font-family:var(--font-mono); font-size:10px;">
+      <span style="color:#38bdf8;">● Data</span>
+      <span style="color:var(--tech-emerald);">● VoIP</span>
+      <span style="color:var(--tech-amber);">● Kamera (CCTV)</span>
+      <span style="color:var(--tech-purple);">● Wi-Fi AP</span>
+      <span style="color:var(--tech-rose);">● Hatalı/Kopuk</span>
+      <span style="color:var(--text-dim);">○ Boş</span>
+    </div>
+  </div>
+
+  <div class="patch-panel-chassis">
+    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-family:var(--font-mono); font-size:9px; color:var(--text-dim);">
+      <span>CAT6A UTP 24-PORT PATCH PANEL 1U // SHIELDED HIGH-DENSITY</span>
+      <span id="pb-chassis-label">PP-01 // RACK-A (U38)</span>
+    </div>
+    <div class="patch-panel-grid" id="pb-jack-container"></div>
+  </div>
+
+  <!-- UÇTAN UCA HAT İZLEME (CROSS-CONNECT FLOW) -->
+  <div style="margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+    <label style="color:var(--tech-cyan); margin:0;">🔗 UÇTAN UCA SİNYAL İZLEME VE ÇAPRAZ BAĞLANTI (TRACE PATH):</label>
+    <span id="pb-trace-status-badge" class="audit-badge badge-pass">HAT AKTİF</span>
+  </div>
+  <div class="cable-trace-flow" id="pb-trace-flow-container"></div>
+
+  <!-- EDİTÖR, TESTER VE CISCO CLI ÜRETİCİ -->
+  <div style="display:grid; grid-template-columns: 1.25fr 1fr; gap:12px;">
+    <!-- SOL: PORT KABLOLAMA EDİTÖRÜ -->
+    <div style="background:var(--bg-input); border:1px solid var(--border-tech); padding:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:4px; margin-bottom:8px;">
+        <b style="color:var(--tech-cyan); font-size:12px;" id="pb-edit-port-title">Port: Seçilmedi</b>
+        <span id="pb-edit-service-badge" class="audit-badge badge-pass">DATA</span>
+      </div>
+
+      <input type="hidden" id="pb-current-port-id">
+
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:6px;">
+        <div class="form-group">
+          <label>Bağlı Servis Türü</label>
+          <select id="pb-field-service" onchange="updateSelectedPortForm(true)">
+            <option value="data">🔵 Kullanıcı PC / Veri</option>
+            <option value="voip">🟢 IP Telefon / VoIP</option>
+            <option value="cctv">🟡 Güvenlik Kamerası (CCTV)</option>
+            <option value="ap">🟣 Kablosuz Erişim Noktası (AP)</option>
+            <option value="empty">⚪ Boş (Patch Yapılmadı)</option>
+            <option value="fail">🔴 Arızalı / Kopuk / Fail</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Kablo Standartı</label>
+          <select id="pb-field-cabletype" onchange="calcCableDiagnostics()">
+            <option value="cat6a" selected>Cat6A U/FTP (500 MHz)</option>
+            <option value="cat6">Cat6 UTP (250 MHz)</option>
+            <option value="cat5e">Cat5e UTP (100 MHz)</option>
+            <option value="os2">OS2 Tek Mod Fiber</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px;">
+        <div class="form-group">
+          <label>Duvar Prizi (Outlet)</label>
+          <input type="text" id="pb-field-outlet" placeholder="Örn: K2-O204-P01" oninput="updateSelectedPortForm(true)">
+        </div>
+        <div class="form-group">
+          <label>Yatay Kablo ID</label>
+          <input type="text" id="pb-field-cableid" placeholder="Örn: CBL-204-A" oninput="updateSelectedPortForm(true)">
+        </div>
+        <div class="form-group">
+          <label>Metraj (Metre)</label>
+          <input type="number" id="pb-field-length" value="38" min="1" max="150" oninput="calcCableDiagnostics()">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap:6px;">
+        <div class="form-group">
+          <label>Hedef Switch</label>
+          <input type="text" id="pb-field-switch" value="CORE-SW-01" oninput="updateSelectedPortForm(true)">
+        </div>
+        <div class="form-group">
+          <label>Switch Portu</label>
+          <input type="text" id="pb-field-switchport" value="Gi1/0/1" oninput="updateSelectedPortForm(true)">
+        </div>
+        <div class="form-group">
+          <label>VLAN ID</label>
+          <input type="number" id="pb-field-vlan" value="10" oninput="updateSelectedPortForm(true)">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1.3fr; gap:6px;">
+        <div class="form-group">
+          <label>PoE İhtiyacı</label>
+          <select id="pb-field-poe" onchange="calcCableDiagnostics()">
+            <option value="none">Yok (0W)</option>
+            <option value="af">PoE 802.3af (15.4W)</option>
+            <option value="at" selected>PoE+ 802.3at (30.0W)</option>
+            <option value="bt">PoE++ 802.3bt (60W-90W)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Patch Cord Rengi & Boyu</label>
+          <input type="text" id="pb-field-patchcord" value="Mavi 1.5m Cat6A" oninput="updateSelectedPortForm(true)">
+        </div>
+      </div>
+
+      <div style="display:flex; gap:6px; margin-top:4px;">
+        <button onclick="savePatchPortRecord()" class="btn" style="flex:1;">💾 Port Kaydını Güncelle</button>
+        <button onclick="clearPortPatching()" class="btn btn-secondary" style="color:var(--tech-rose); width:95px;">✕ Boşa Al</button>
+      </div>
+    </div>
+
+    <!-- SAĞ: FLUKE KALİTE TESTİ & CISCO CLI ÜRETİCİ -->
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div>
+        <label style="color:var(--tech-emerald); margin:0 0 3px 0;">⚡ FLUKE & TIA-568-C.2 FİZİKSEL KANAL TAHMİNİ</label>
+        <div class="result-box" id="pb-cable-diag-box" style="margin-top:2px;"></div>
+      </div>
+
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+          <label style="color:var(--tech-cyan); margin:0;">🚀 Otomatik Cisco Switch Port CLI Yapılandırması</label>
+          <button onclick="copyToClipboard('pb-cisco-desc-cli')" class="btn btn-secondary" style="padding:2px 6px; font-size:9px;">📋 Kopyala</button>
+        </div>
+        <pre id="pb-cisco-desc-cli" style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px; color:var(--tech-emerald); height:140px; overflow-y:auto; font-family:var(--font-mono); font-size:10px; line-height:1.45; white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	 <!-- M-20 (YENİ): LISP (LOCATOR/ID SEPARATION) FABRIC & CONFIG ENGINE -->
         <div id="panel-lisp-engine" class="panel">
           <div class="panel-header">
             <div>
@@ -3090,7 +3656,9 @@ function showPanel(id) {
   if(targetBtn) targetBtn.classList.add('active');
 
   if (id === 'lisp-engine') generateLispConfig();
+  if (id === 'patch-bay') setTimeout(initPatchBayEngine, 50);
   if (id === 'calendar') setTimeout(renderCalendarGrid, 50);
+  if (id === 'hw-matrix') setTimeout(initHardwareCatalogEngine, 50);
   if (id === 'backup-rollback') setTimeout(generateBackupCli, 50);
   if (id === 'wifi-analyzer') setTimeout(initWifiCanvas, 50);
   if (id === 'canvas') setTimeout(initTopologyEngine, 50);
@@ -3392,6 +3960,777 @@ function calcDcPower() {
     </div>
   `;
 }
+
+// =========================================================================
+// M-35: DONANIM KARŞILAŞTIRMA & TRANSCEIVER / ASIC BUFFER MOTORU
+// =========================================================================
+const enterpriseSwitchDatabase = {
+  "cat9200_48p": {
+    name: "Cisco Catalyst 9200 (48P PoE+)",
+    vendor: "Cisco Systems",
+    role: "Kampüs Erişim (Layer-2 / Basic L3)",
+    asic: "UADP 2.0 Mini",
+    switchingCap: "176 Gbps",
+    forwardingRate: "261.9 Mpps",
+    bufferSize: "6 MB (Paylaşımlı)",
+    latency: "Store-and-Forward (~3.5 µs)",
+    stacking: "StackWise-160 (160 Gbps)",
+    macTable: "32,000 (32K)",
+    ipv4Routes: "14,000 (14K)",
+    tcamAcl: "1,500 Giriş",
+    poeBudget: "740W / 1440W (Çift PSU)",
+    os: "Cisco IOS-XE (Network Essentials/Adv)",
+    uplinks: "4x 10G SFP+ Modüler",
+    notes: "Şube ve standart kurumsal erişim katmanı."
+  },
+  "cat9300x_48tx": {
+    name: "Cisco Catalyst 9300X (48P mGig / 90W)",
+    vendor: "Cisco Systems",
+    role: "Kurumsal Kampüs Erişim & Dağıtım",
+    asic: "UADP 2.5sec / UADP 3.0",
+    switchingCap: "1,000 Gbps (1 Tbps)",
+    forwardingRate: "744.0 Mpps",
+    bufferSize: "16 MB (Dinamik Ayrılmış)",
+    latency: "Store-and-Forward (~2.4 µs)",
+    stacking: "StackWise-1T (1,000 Gbps / 1 Tbps)",
+    macTable: "64,000 (64K)",
+    ipv4Routes: "48,000 (48K)",
+    tcamAcl: "5,120 Giriş",
+    poeBudget: "UPOE+ 90W (Port Başı) / 1900W PSU",
+    os: "Cisco IOS-XE (DNA Premier/Adv)",
+    uplinks: "2x 100G QSFP28 veya 8x 25G SFP28",
+    notes: "Wi-Fi 6E/7 AP'ler ve 100G uplink gereksinimi için ideal."
+  },
+  "cat9500_32qc": {
+    name: "Cisco Catalyst 9500 (32x 100G QSFP28)",
+    vendor: "Cisco Systems",
+    role: "Kampüs Omurga & Çekirdek (Core)",
+    asic: "Cisco UADP 3.0 (Çift ASIC)",
+    switchingCap: "6,400 Gbps (6.4 Tbps)",
+    forwardingRate: "2,000 Mpps (2 Bpps)",
+    bufferSize: "32 MB (16 MB ASIC başı)",
+    latency: "Store-and-Forward (~1.8 µs)",
+    stacking: "StackWise Virtual (SVL - 100G Hat)",
+    macTable: "82,000 (82K)",
+    ipv4Routes: "212,000 (212K)",
+    tcamAcl: "16,000 Giriş",
+    poeBudget: "Yok (Sadece Veri / Fiber)",
+    os: "Cisco IOS-XE (Enterprise Advantage)",
+    uplinks: "32x 40G/100G QSFP28 Doğrudan",
+    notes: "Büyük kampüs ve kurum omurgası."
+  },
+  "nexus_93180yc_fx3": {
+    name: "Cisco Nexus 93180YC-FX3",
+    vendor: "Cisco Systems",
+    role: "Veri Merkezi ToR / Spine-Leaf Leaf",
+    asic: "Cisco Cloud Scale (Tahoe/FX3)",
+    switchingCap: "3,600 Gbps (3.6 Tbps)",
+    forwardingRate: "2,600 Mpps (2.6 Bpps)",
+    bufferSize: "40 MB Akıllı Tampon (Intelligent Buffer)",
+    latency: "Cut-Through (~1.1 µs)",
+    stacking: "vPC (Virtual Port-Channel) / EVPN VXLAN",
+    macTable: "512,000 (512K)",
+    ipv4Routes: "896,000 (896K LPM)",
+    tcamAcl: "16,000 Ingress / 8,000 Egress",
+    poeBudget: "Yok (DC Sunucu Bağlantısı)",
+    os: "Cisco NX-OS / ACI Modu",
+    uplinks: "48x 1/10/25G SFP28 + 6x 40/100G QSFP28",
+    notes: "Veri merkezi sanallaştırma, RoCEv2 ve EVPN fabric leaf."
+  },
+  "arista_7050x3_48yc": {
+    name: "Arista DCS-7050SX3-48YC8",
+    vendor: "Arista Networks",
+    role: "Veri Merkezi ToR Leaf / Yüksek Hız",
+    asic: "Broadcom Trident 3 (X3)",
+    switchingCap: "3,200 Gbps (3.2 Tbps)",
+    forwardingRate: "2,000 Mpps (2 Bpps)",
+    bufferSize: "32 MB (Packet Buffer)",
+    latency: "Cut-Through (~800 ns)",
+    stacking: "MLAG (Multi-Chassis LAG) / VXLAN",
+    macTable: "288,000 (288K)",
+    ipv4Routes: "360,000 (360K)",
+    tcamAcl: "12,000 Giriş",
+    poeBudget: "Yok",
+    os: "Arista EOS (Saf Linux Tabanlı)",
+    uplinks: "48x 25G SFP28 + 8x 100G QSFP28",
+    notes: "Düşük gecikmeli (low-latency) finans ve bulut sistemleri."
+  },
+  "juniper_ex4400_48f": {
+    name: "Juniper EX4400 (48x 1G SFP / Fiber)",
+    vendor: "Juniper Networks",
+    role: "Kurumsal Dağıtım & Toplama (Aggregation)",
+    asic: "Marvell / Juniper Özel Paket ASIC",
+    switchingCap: "464 Gbps",
+    forwardingRate: "345.0 Mpps",
+    bufferSize: "16 MB Tampon",
+    latency: "Store-and-Forward (~2.8 µs)",
+    stacking: "Virtual Chassis (100G Hat)",
+    macTable: "64,000 (64K)",
+    ipv4Routes: "64,000 (64K)",
+    tcamAcl: "6,000 Giriş",
+    poeBudget: "Yok (Fiber Model)",
+    os: "Junos OS (FreeBSD Çekirdek)",
+    uplinks: "4x 25G SFP28 / 2x 100G QSFP28",
+    notes: "EVPN-VXLAN kampüs kumaşı destekli toplama katmanı."
+  }
+};
+
+const enterpriseOpticsCatalog = [
+  { std: "1000BASE-T", form: "SFP", speed: "1G", media: "copper", wlen: "Bakır Cat6", conn: "RJ45", reach: "100 m", txRx: "Elektriksel", loss: "TIA-568 Limit" },
+  { std: "1000BASE-SX", form: "SFP", speed: "1G", media: "mmf", wlen: "850 nm", conn: "LC Duplex", reach: "550 m (OM2/OM3)", txRx: "-9.5 ~ -3.0 dBm / -17 dBm", loss: "7.5 dB" },
+  { std: "1000BASE-LX/LH", form: "SFP", speed: "1G", media: "smf", wlen: "1310 nm", conn: "LC Duplex", reach: "10 km (OS2)", txRx: "-9.0 ~ -3.0 dBm / -20 dBm", loss: "11.0 dB" },
+  { std: "1000BASE-ZX", form: "SFP", speed: "1G", media: "smf", wlen: "1550 nm", conn: "LC Duplex", reach: "80 km (OS2)", txRx: "0.0 ~ +5.0 dBm / -23 dBm", loss: "23.0 dB" },
+  { std: "10GBASE-CU DAC", form: "SFP+", speed: "10G", media: "copper", wlen: "Twinax Bakır", conn: "Doğrudan Ekli", reach: "1m - 5m", txRx: "Pasif Elektriksel", loss: "0.5 dB" },
+  { std: "10GBASE-SR", form: "SFP+", speed: "10G", media: "mmf", wlen: "850 nm", conn: "LC Duplex", reach: "300 m (OM3) / 400m (OM4)", txRx: "-7.3 ~ -1.0 dBm / -9.9 dBm", loss: "2.6 dB" },
+  { std: "10GBASE-LR", form: "SFP+", speed: "10G", media: "smf", wlen: "1310 nm", conn: "LC Duplex", reach: "10 km (OS2)", txRx: "-8.2 ~ +0.5 dBm / -14.4 dBm", loss: "6.2 dB" },
+  { std: "10GBASE-ER", form: "SFP+", speed: "10G", media: "smf", wlen: "1550 nm", conn: "LC Duplex", reach: "40 km (OS2)", txRx: "-4.7 ~ +4.0 dBm / -15.8 dBm", loss: "11.1 dB" },
+  { std: "10GBASE-ZR", form: "SFP+", speed: "10G", media: "smf", wlen: "1550 nm", conn: "LC Duplex", reach: "80 km (OS2)", txRx: "0.0 ~ +4.0 dBm / -24.0 dBm", loss: "24.0 dB" },
+  { std: "25GBASE-SR", form: "SFP28", speed: "25G", media: "mmf", wlen: "850 nm", conn: "LC Duplex", reach: "70 m (OM3) / 100m (OM4)", txRx: "-8.4 ~ +2.4 dBm / -10.3 dBm", loss: "1.9 dB" },
+  { std: "25GBASE-LR", form: "SFP28", speed: "25G", media: "smf", wlen: "1310 nm", conn: "LC Duplex", reach: "10 km (OS2)", txRx: "-7.0 ~ +2.0 dBm / -13.3 dBm", loss: "6.3 dB" },
+  { std: "40GBASE-SR4", form: "QSFP+", speed: "40G", media: "mmf", wlen: "850 nm (4-Lane)", conn: "MPO-12", reach: "100 m (OM3) / 150m (OM4)", txRx: "-7.6 ~ +2.4 dBm / -9.5 dBm", loss: "1.9 dB" },
+  { std: "40GBASE-LR4", form: "QSFP+", speed: "40G", media: "smf", wlen: "CWDM (1271-1331nm)", conn: "LC Duplex", reach: "10 km (OS2)", txRx: "-7.0 ~ +2.3 dBm / -13.7 dBm", loss: "6.7 dB" },
+  { std: "100GBASE-SR4", form: "QSFP28", speed: "100G", media: "mmf", wlen: "850 nm (4x 25G)", conn: "MPO-12", reach: "70 m (OM3) / 100m (OM4)", txRx: "-8.4 ~ +2.4 dBm / -10.3 dBm", loss: "1.9 dB" },
+  { std: "100GBASE-CWDM4", form: "QSFP28", speed: "100G", media: "smf", wlen: "CWDM4 (1271-1331)", conn: "LC Duplex", reach: "2 km (OS2)", txRx: "-6.5 ~ +2.5 dBm / -10.0 dBm", loss: "3.5 dB" },
+  { std: "100GBASE-LR4", form: "QSFP28", speed: "100G", media: "smf", wlen: "LAN-WDM (1295-1309)", conn: "LC Duplex", reach: "10 km (OS2)", txRx: "-4.3 ~ +4.5 dBm / -10.6 dBm", loss: "6.3 dB" },
+  { std: "400GBASE-DR4", form: "QSFP-DD", speed: "400G", media: "smf", wlen: "1310 nm (4-Lane PAM4)", conn: "MPO-12 / APC", reach: "500 m (OS2)", txRx: "-2.9 ~ +4.0 dBm / -5.9 dBm", loss: "3.0 dB" },
+  { std: "400GBASE-FR4", form: "QSFP-DD", speed: "400G", media: "smf", wlen: "CWDM4 PAM4", conn: "LC Duplex", reach: "2 km (OS2)", txRx: "-3.3 ~ +3.5 dBm / -7.3 dBm", loss: "4.0 dB" }
+];
+
+function initHardwareCatalogEngine() {
+  populateDeviceDropdowns();
+  renderHardwareComparison();
+  calcMicroburstLoss();
+  filterOpticsTable();
+}
+
+function switchHwTab(tab) {
+  playSoundFx('key');
+  ['compare', 'buffer', 'optics'].forEach(t => {
+    const btn = document.getElementById('hw-tab-' + t);
+    const sec = document.getElementById('hw-sec-' + t);
+    if (btn) btn.classList.toggle('active', t === tab);
+    if (sec) sec.style.display = (t === tab) ? 'block' : 'none';
+  });
+  if (tab === 'compare') renderHardwareComparison();
+  if (tab === 'buffer') calcMicroburstLoss();
+  if (tab === 'optics') filterOpticsTable();
+}
+
+function populateDeviceDropdowns() {
+  const sel1 = document.getElementById('hw-dev-sel-1');
+  const sel2 = document.getElementById('hw-dev-sel-2');
+  const sel3 = document.getElementById('hw-dev-sel-3');
+  if (!sel1 || !sel2 || !sel3) return;
+
+  sel1.innerHTML = "";
+  sel2.innerHTML = "";
+  sel3.innerHTML = `<option value="none">-- 3. Cihaz (Opsiyonel) --</option>`;
+
+  const keys = Object.keys(enterpriseSwitchDatabase);
+  keys.forEach((k, idx) => {
+    const dev = enterpriseSwitchDatabase[k];
+    const opt1 = new Option(`${dev.name}`, k);
+    const opt2 = new Option(`${dev.name}`, k);
+    const opt3 = new Option(`${dev.name}`, k);
+
+    sel1.add(opt1);
+    sel2.add(opt2);
+    sel3.add(opt3);
+  });
+
+  sel1.value = "cat9300x_48tx";
+  sel2.value = "nexus_93180yc_fx3";
+  sel3.value = "arista_7050x3_48yc";
+}
+
+function renderHardwareComparison() {
+  const devId1 = document.getElementById('hw-dev-sel-1').value;
+  const devId2 = document.getElementById('hw-dev-sel-2').value;
+  const devId3 = document.getElementById('hw-dev-sel-3').value;
+
+  const d1 = enterpriseSwitchDatabase[devId1];
+  const d2 = enterpriseSwitchDatabase[devId2];
+  const d3 = (devId3 !== 'none') ? enterpriseSwitchDatabase[devId3] : null;
+
+  const th1 = document.getElementById('hw-th-col-1');
+  const th2 = document.getElementById('hw-th-col-2');
+  const th3 = document.getElementById('hw-th-col-3');
+
+  if (th1 && d1) th1.innerHTML = `<b style="color:var(--tech-cyan);">${d1.name}</b>`;
+  if (th2 && d2) th2.innerHTML = `<b style="color:var(--tech-emerald);">${d2.name}</b>`;
+  if (th3) {
+    if (d3) {
+      th3.style.display = "";
+      th3.innerHTML = `<b style="color:var(--tech-amber);">${d3.name}</b>`;
+    } else {
+      th3.style.display = "none";
+    }
+  }
+
+  const metrics = [
+    { label: "Üretici & Ekosistem", key: "vendor" },
+    { label: "Mimari Rol / Kullanım", key: "role" },
+    { label: "ASIC Ailesi & Silikon", key: "asic" },
+    { label: "Anahtarlama Kapasitesi", key: "switchingCap", highlight: true },
+    { label: "İletim Hızı (Forwarding Rate)", key: "forwardingRate", highlight: true },
+    { label: "ASIC Paket Tamponu (Buffer)", key: "bufferSize", highlight: true },
+    { label: "Mimari Gecikme (Latency)", key: "latency" },
+    { label: "Yığınlama / Fabric Stacking", key: "stacking" },
+    { label: "MAC Adres Tablosu Boyutu", key: "macTable" },
+    { label: "IPv4 Rota Kapasitesi (LPM)", key: "ipv4Routes" },
+    { label: "TCAM ACL / Güvenlik Kuralı", key: "tcamAcl" },
+    { label: "PoE Güç Bütçesi (Maksimum)", key: "poeBudget" },
+    { label: "İşletim Sistemi (NOS)", key: "os" },
+    { label: "Uplink / Modüler Portlar", key: "uplinks" },
+    { label: "Mimari Değerlendirme & Not", key: "notes" }
+  ];
+
+  let tbodyHtml = "";
+  metrics.forEach(m => {
+    tbodyHtml += `
+      <tr>
+        <td style="background:#040914; font-weight:700; color:var(--text-muted); font-size:10px;">${m.label}</td>
+        <td style="${m.highlight ? 'color:var(--tech-cyan); font-weight:700;' : ''}">${d1[m.key] || '-'}</td>
+        <td style="${m.highlight ? 'color:var(--tech-emerald); font-weight:700;' : ''}">${d2[m.key] || '-'}</td>
+        ${d3 ? `<td style="${m.highlight ? 'color:var(--tech-amber); font-weight:700;' : ''}">${d3[m.key] || '-'}</td>` : ''}
+      </tr>
+    `;
+  });
+
+  const tbody = document.getElementById('hw-compare-tbody');
+  if (tbody) tbody.innerHTML = tbodyHtml;
+
+  // Özet raporu panoya kopyalama için hazırlama
+  let summaryText = `=== ZEROPACKET DONANIM KIYASLAMA RAPORU ===\n`;
+  summaryText += `CİHAZ 1: ${d1.name} | ASIC: ${d1.asic} | Kapasite: ${d1.switchingCap} | Buffer: ${d1.bufferSize}\n`;
+  summaryText += `CİHAZ 2: ${d2.name} | ASIC: ${d2.asic} | Kapasite: ${d2.switchingCap} | Buffer: ${d2.bufferSize}\n`;
+  if (d3) summaryText += `CİHAZ 3: ${d3.name} | ASIC: ${d3.asic} | Kapasite: ${d3.switchingCap} | Buffer: ${d3.bufferSize}\n`;
+  const summaryBox = document.getElementById('hw-compare-summary-box');
+  if (summaryBox) summaryBox.innerText = summaryText;
+}
+
+function calcMicroburstLoss() {
+  const inRateMbps = parseFloat(document.getElementById('mb-ingress-rate').value) || 25000;
+  const outRateMbps = parseFloat(document.getElementById('mb-egress-rate').value) || 10000;
+  const durationMs = parseFloat(document.getElementById('mb-burst-duration').value) || 2.0;
+  const bufferMb = parseFloat(document.getElementById('mb-buffer-size').value) || 16.0;
+  const frameSizeBytes = parseFloat(document.getElementById('mb-frame-size').value) || 1500;
+  const outBox = document.getElementById('mb-result-box');
+
+  // Fark hızı (Rate Differential)
+  const rateDiffMbps = inRateMbps - outRateMbps;
+  
+  if (rateDiffMbps <= 0) {
+    outBox.innerHTML = `
+      <div style="text-align:center; padding-top:40px;">
+        <span class="audit-badge badge-pass" style="font-size:12px; padding:6px 12px;">✅ DARBOĞAZ YOK // TAMPERE TAŞMA OLUŞMAZ</span>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:10px; line-height:1.5;">
+          Çıkış portunun h (${outRateMbps} Mbps), gelen patlama hızından (${inRateMbps} Mbps) büyük veya eşittir.<br>
+          Kuyruk birikmez, paket kaybı (Tail-Drop) yaşanmaz.
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // 1 Megabit = 125,000 Bayt = 0.125 Megabayt (MB)
+  // Biriken veri miktarı (MB/ms cinsinden)
+  const diffMBps = rateDiffMbps * 0.125; // MB/saniye
+  const totalBurstAccumulatedMB = (diffMBps * (durationMs / 1000)); // Bu patlama süresince biriken MB
+  
+  const isOverflow = totalBurstAccumulatedMB > bufferMb;
+  const droppedMB = isOverflow ? (totalBurstAccumulatedMB - bufferMb) : 0;
+  const droppedBytes = droppedMB * 1024 * 1024;
+  const droppedPackets = isOverflow ? Math.ceil(droppedBytes / frameSizeBytes) : 0;
+  const timeToBufferExhaustionMs = (bufferMb / diffMBps) * 1000;
+  const requiredBufferToSurviveMB = totalBurstAccumulatedMB.toFixed(2);
+
+  outBox.innerHTML = `
+    <div class="res-row">
+      <span class="res-label">Hız Farkı (Rate Differential):</span>
+      <span class="res-val rose" style="font-size:12px; font-weight:800;">+${(rateDiffMbps/1000).toFixed(1)} Gbps (${rateDiffMbps.toLocaleString()} Mbps)</span>
+    </div>
+    <div class="res-row">
+      <span class="res-label">Oluşan Patlama Verisi (Accumulation):</span>
+      <span class="res-val amber" style="font-weight:700;">${totalBurstAccumulatedMB.toFixed(2)} MB (${durationMs} ms içinde)</span>
+    </div>
+    <div class="res-row">
+      <span class="res-label">Mevcut Tampon (Buffer) Boyutu:</span>
+      <span class="res-val">${bufferMb.toFixed(1)} MB</span>
+    </div>
+    <div class="res-row">
+      <span class="res-label">Tamponun Tamamen Dolma Süresi:</span>
+      <span class="res-val" style="color:var(--tech-cyan);">${timeToBufferExhaustionMs.toFixed(2)} Milisaniye (ms)</span>
+    </div>
+    <div class="res-row" style="border-top:1px solid var(--border-tech); margin-top:4px; padding-top:4px;">
+      <span class="res-label">Kayıp Durumu (Tail-Drop / InDiscards):</span>
+      <span class="res-val ${isOverflow ? 'rose' : 'green'}" style="font-weight:800; font-size:13px;">
+        ${isOverflow ? `🔴 TAŞMA VAR (-${droppedMB.toFixed(2)} MB)` : '🟢 BAŞARILI // TAŞMA YOK'}
+      </span>
+    </div>
+    <div class="res-row">
+      <span class="res-label">Düşürülen Tahmini Paket Sayısı:</span>
+      <span class="res-val ${isOverflow ? 'rose' : 'green'}" style="font-weight:bold;">
+        ${isOverflow ? `${droppedPackets.toLocaleString()} Paket (Frame)` : '0 Paket'}
+      </span>
+    </div>
+    <div class="res-row" style="border-top:1px solid var(--border-subtle); margin-top:4px; padding-top:4px;">
+      <span class="res-label">Sıfır Kayıp İçin Gereken Min. Tampon:</span>
+      <span class="res-val green" style="font-size:13px; font-weight:800;">${requiredBufferToSurviveMB} MB</span>
+    </div>
+  `;
+}
+
+function filterOpticsTable() {
+  const speed = document.getElementById('optics-filter-speed').value;
+  const media = document.getElementById('optics-filter-media').value;
+  const query = (document.getElementById('optics-search')?.value || "").toLowerCase().trim();
+  const tbody = document.getElementById('optics-table-tbody');
+  if (!tbody) return;
+
+  let html = "";
+  enterpriseOpticsCatalog.forEach(opt => {
+    if (speed !== 'all' && opt.speed !== speed) return;
+    if (media !== 'all' && opt.media !== media) return;
+
+    if (query) {
+      const fullText = `${opt.std} ${opt.form} ${opt.speed} ${opt.wlen} ${opt.conn} ${opt.reach}`.toLowerCase();
+      if (!fullText.includes(query)) return;
+    }
+
+    let mediaBadge = `<span style="color:#38bdf8;">SMF (Tek-Mod)</span>`;
+    if (opt.media === 'mmf') mediaBadge = `<span style="color:var(--tech-amber);">MMF (Çoklu-Mod)</span>`;
+    if (opt.media === 'copper') mediaBadge = `<span style="color:var(--tech-emerald);">Bakır Twinax</span>`;
+
+    html += `
+      <tr>
+        <td><b style="color:var(--tech-cyan);">${opt.std}</b></td>
+        <td><span class="brand-badge-tech" style="padding:1px 4px; font-size:8.5px;">${opt.form}</span></td>
+        <td><b style="color:#fff;">${opt.speed}</b></td>
+        <td>${mediaBadge} <span style="font-size:9.5px; color:var(--text-muted);">(${opt.wlen})</span></td>
+        <td>${opt.conn}</td>
+        <td><span style="color:var(--tech-emerald); font-weight:bold;">${opt.reach}</span></td>
+        <td style="font-size:9.5px; color:var(--text-muted);">${opt.txRx}</td>
+        <td><span class="res-val amber">${opt.loss}</span></td>
+      </tr>
+    `;
+  });
+
+  tbody.innerHTML = html || `<tr><td colspan="8" style="text-align:center; color:var(--text-dim);">Filtreye uygun optik modül bulunamadı.</td></tr>`;
+}
+
+function exportHwCatalogJson() {
+  playSoundFx('key');
+  const payload = {
+    switches: enterpriseSwitchDatabase,
+    optics: enterpriseOpticsCatalog,
+    exportedAt: new Date().toISOString()
+  };
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+  const a = document.createElement('a');
+  a.href = dataStr;
+  a.download = `zeropacket_hw_catalog_${Date.now()}.json`;
+  a.click();
+  playSoundFx('success');
+}
+
+
+// =========================================================================
+// M-34: BİNA İÇİ KABLOLAMA & PORT HARİTASI (PATCH BAY ROUTER) MOTORU
+// =========================================================================
+let patchBayDatabase = {};
+let activePatchPanelId = "PP-01";
+let activePatchPortNum = 1;
+
+function initPatchBayEngine() {
+  try {
+    const stored = localStorage.getItem('zp_patchbay_db_v1');
+    if (stored) {
+      patchBayDatabase = JSON.parse(stored);
+    } else {
+      loadDefaultPatchBayData();
+    }
+  } catch (e) {
+    loadDefaultPatchBayData();
+  }
+  renderPatchPanelChassis();
+  selectPatchPort(1);
+}
+
+function savePatchBayStorage() {
+  try {
+    localStorage.setItem('zp_patchbay_db_v1', JSON.stringify(patchBayDatabase));
+  } catch(e) {}
+}
+
+function loadDefaultPatchBayData() {
+  patchBayDatabase = {
+    "PP-01": generateDefaultPanelPorts("PP-01", 2, "A"),
+    "PP-02": generateDefaultPanelPorts("PP-02", 3, "B"),
+    "PP-SEC": generateSecurityPanelPorts()
+  };
+  savePatchBayStorage();
+}
+
+function generateDefaultPanelPorts(panelId, floor, wing) {
+  const ports = {};
+  for (let i = 1; i <= 24; i++) {
+    let service = "empty";
+    let vlan = 10;
+    let outlet = `K${floor}-O${floor}0${Math.ceil(i / 2)}-P0${(i % 2) + 1}`;
+    let cableId = `CBL-${wing}${floor}-${String(i).padStart(2, '0')}`;
+    let swPort = `Gi1/0/${i}`;
+    let length = Math.floor(22 + (i * 2.2));
+    let poe = "none";
+    let cord = "Mavi 1.5m Cat6A";
+
+    if (i <= 14) {
+      service = "data"; vlan = 20; cord = "Mavi 1.5m Cat6A";
+    } else if (i <= 18) {
+      service = "voip"; vlan = 30; poe = "af"; cord = "Yeşil 2.0m Cat6A";
+    } else if (i <= 20) {
+      service = "ap"; vlan = 40; poe = "at"; cord = "Mor 2.0m Cat6A";
+    } else if (i === 21) {
+      service = "fail"; cord = "Kırmızı 1.0m (Arızalı)";
+    }
+
+    ports[i] = {
+      portNum: i,
+      service,
+      cableType: "cat6a",
+      outlet: service === "empty" ? "" : outlet,
+      cableId: service === "empty" ? "" : cableId,
+      length: service === "empty" ? 0 : length,
+      swHost: "CORE-SW-01",
+      swPort,
+      vlan: service === "empty" ? 1 : vlan,
+      poe,
+      patchCord: service === "empty" ? "Bağlantı Yok" : cord,
+      notes: ""
+    };
+  }
+  return ports;
+}
+
+function generateSecurityPanelPorts() {
+  const ports = {};
+  for (let i = 1; i <= 24; i++) {
+    ports[i] = {
+      portNum: i,
+      service: i <= 16 ? "cctv" : "empty",
+      cableType: "cat6",
+      outlet: i <= 16 ? `K1-CAM-${String(i).padStart(2, '0')}` : "",
+      cableId: i <= 16 ? `SEC-CBL-${String(i).padStart(2, '0')}` : "",
+      length: 30 + (i * 3),
+      swHost: "CCTV-SW-01",
+      swPort: `Gi1/0/${i}`,
+      vlan: 50,
+      poe: "at",
+      patchCord: i <= 16 ? "Sarı 1.0m Cat6" : "Bağlantı Yok",
+      notes: "Kamera Hattı"
+    };
+  }
+  return ports;
+}
+
+function changeActivePatchPanel() {
+  playSoundFx('key');
+  activePatchPanelId = document.getElementById('pb-panel-select').value;
+  document.getElementById('pb-chassis-label').innerText = `${activePatchPanelId} // RACK-A`;
+  renderPatchPanelChassis();
+  selectPatchPort(1);
+}
+
+function addNewPatchPanelPrompt() {
+  const name = prompt("Yeni Patch Panel Adı (Örn: PP-03, PP-FIBER):", "PP-03");
+  if (!name || patchBayDatabase[name]) {
+    if (patchBayDatabase[name]) alert("Bu isimde bir panel zaten mevcut!");
+    return;
+  }
+  patchBayDatabase[name] = generateDefaultPanelPorts(name, 1, "C");
+  savePatchBayStorage();
+  
+  const sel = document.getElementById('pb-panel-select');
+  const opt = document.createElement('option');
+  opt.value = name; opt.innerText = name;
+  sel.appendChild(opt);
+  sel.value = name;
+  changeActivePatchPanel();
+  playSoundFx('success');
+}
+
+function renderPatchPanelChassis() {
+  const container = document.getElementById('pb-jack-container');
+  if (!container) return;
+  const currentPorts = patchBayDatabase[activePatchPanelId] || {};
+
+  let html = "";
+  for (let p = 1; p <= 24; p++) {
+    const data = currentPorts[p] || { service: "empty" };
+    const isActive = p === activePatchPortNum;
+    
+    html += `
+      <div class="patch-port-jack ${isActive ? 'active' : ''}" id="pb-port-slot-${p}" onclick="selectPatchPort(${p})" title="Port ${p}: ${data.service.toUpperCase()} [${data.outlet || 'Boş'}]">
+        <div style="display:flex; justify-content:space-between; width:100%; align-items:center; padding:0 2px;">
+          <span class="patch-port-num">${p}</span>
+          <span class="patch-port-led ${data.service}"></span>
+        </div>
+        <div class="patch-port-badge" style="color:${getServiceColor(data.service)};">
+          ${data.service === 'empty' ? 'EMPTY' : (data.outlet ? data.outlet.split('-').slice(-2).join('-') : 'ACT')}
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+function getServiceColor(s) {
+  if (s === 'data') return '#38bdf8';
+  if (s === 'voip') return 'var(--tech-emerald)';
+  if (s === 'cctv') return 'var(--tech-amber)';
+  if (s === 'ap') return 'var(--tech-purple)';
+  if (s === 'fail') return 'var(--tech-rose)';
+  return 'var(--text-dim)';
+}
+
+function selectPatchPort(portNum) {
+  playSoundFx('key');
+  activePatchPortNum = portNum;
+  document.querySelectorAll('.patch-port-jack').forEach(el => el.classList.remove('active'));
+  const activeEl = document.getElementById(`pb-port-slot-${portNum}`);
+  if (activeEl) activeEl.classList.add('active');
+
+  const pData = (patchBayDatabase[activePatchPanelId] && patchBayDatabase[activePatchPanelId][portNum]) || {
+    portNum, service: "empty", cableType: "cat6a", outlet: "", cableId: "", length: 0,
+    swHost: "CORE-SW-01", swPort: `Gi1/0/${portNum}`, vlan: 10, poe: "none", patchCord: "Bağlantı Yok"
+  };
+
+  document.getElementById('pb-current-port-id').value = portNum;
+  document.getElementById('pb-edit-port-title').innerText = `${activePatchPanelId} // PORT #${portNum}`;
+  document.getElementById('pb-field-service').value = pData.service;
+  document.getElementById('pb-field-cabletype').value = pData.cableType || 'cat6a';
+  document.getElementById('pb-field-outlet').value = pData.outlet || '';
+  document.getElementById('pb-field-cableid').value = pData.cableId || '';
+  document.getElementById('pb-field-length').value = pData.length || 30;
+  document.getElementById('pb-field-switch').value = pData.swHost || 'CORE-SW-01';
+  document.getElementById('pb-field-switchport').value = pData.swPort || `Gi1/0/${portNum}`;
+  document.getElementById('pb-field-vlan').value = pData.vlan || 10;
+  document.getElementById('pb-field-poe').value = pData.poe || 'none';
+  document.getElementById('pb-field-patchcord').value = pData.patchCord || 'Mavi 1.5m Cat6A';
+
+  const badge = document.getElementById('pb-edit-service-badge');
+  badge.innerText = pData.service.toUpperCase();
+  badge.className = `audit-badge ${pData.service === 'fail' ? 'badge-fail' : 'badge-pass'}`;
+
+  renderTracePathFlow(pData);
+  calcCableDiagnostics();
+}
+
+function renderTracePathFlow(data) {
+  const container = document.getElementById('pb-trace-flow-container');
+  const statusBadge = document.getElementById('pb-trace-status-badge');
+  if (!container) return;
+
+  const isConnected = data.service !== 'empty' && data.service !== 'fail';
+  if (statusBadge) {
+    statusBadge.innerText = isConnected ? 'SİNYAL AKTİF' : (data.service === 'fail' ? 'HAT HATALI / FAIL' : 'PATCH YOK / BOŞ');
+    statusBadge.className = `audit-badge ${isConnected ? 'badge-pass' : 'badge-fail'}`;
+  }
+
+  container.innerHTML = `
+    <!-- 1. DUVAR PRİZİ -->
+    <div class="trace-step-node ${isConnected ? 'active' : ''}">
+      <div style="font-size:8.5px; color:var(--text-dim);">[01] WORK AREA OUTLET</div>
+      <b style="color:var(--tech-cyan); font-size:11px;">${data.outlet || 'Tanımsız Priz'}</b>
+      <div style="font-size:9px; color:var(--text-muted);">Masaüstü / Son Nokta</div>
+    </div>
+
+    <div class="trace-step-arrow">➔</div>
+
+    <!-- 2. YATAY KABLO -->
+    <div class="trace-step-node ${isConnected ? 'active' : ''}">
+      <div style="font-size:8.5px; color:var(--text-dim);">[02] STRUCTURED HORIZONTAL</div>
+      <b style="color:var(--tech-emerald); font-size:11px;">${data.cableId || 'Kablo ID Yok'}</b>
+      <div style="font-size:9px; color:var(--text-muted);">${data.cableType.toUpperCase()} | ${data.length} Metre</div>
+    </div>
+
+    <div class="trace-step-arrow">➔</div>
+
+    <!-- 3. PATCH PANEL & PORT -->
+    <div class="trace-step-node active" style="border-color:var(--tech-amber);">
+      <div style="font-size:8.5px; color:var(--text-dim);">[03] PATCH PANEL JACK</div>
+      <b style="color:var(--tech-amber); font-size:11px;">${activePatchPanelId} : Port ${data.portNum}</b>
+      <div style="font-size:9px; color:var(--text-muted);">Kabin İçi Sonlandırma</div>
+    </div>
+
+    <div class="trace-step-arrow">➔</div>
+
+    <!-- 4. PATCH CORD -->
+    <div class="trace-step-node ${isConnected ? 'active' : ''}">
+      <div style="font-size:8.5px; color:var(--text-dim);">[04] RJ45 PATCH CORD</div>
+      <b style="color:#fff; font-size:11px;">${data.patchCord}</b>
+      <div style="font-size:9px; color:var(--text-muted);">Kabin İçi Köprü</div>
+    </div>
+
+    <div class="trace-step-arrow">➔</div>
+
+    <!-- 5. SWITCH & SWITCHPORT -->
+    <div class="trace-step-node ${isConnected ? 'active' : ''}">
+      <div style="font-size:8.5px; color:var(--text-dim);">[05] ACCESS SWITCHPORT</div>
+      <b style="color:#38bdf8; font-size:11px;">${data.swHost}</b>
+      <div style="font-size:9px; color:var(--tech-emerald); font-weight:bold;">${data.swPort} (VLAN ${data.vlan})</div>
+    </div>
+  `;
+}
+
+function calcCableDiagnostics() {
+  const length = parseFloat(document.getElementById('pb-field-length').value) || 0;
+  const cableType = document.getElementById('pb-field-cabletype').value;
+  const poeType = document.getElementById('pb-field-poe').value;
+  const service = document.getElementById('pb-field-service').value;
+  const diagBox = document.getElementById('pb-cable-diag-box');
+  const cliBox = document.getElementById('pb-cisco-desc-cli');
+
+  // ANSI/TIA-568-C.2 Standart Limitleri:
+  // Maksimum 90 metre yatay kablo + 10 metre patch cord = 100 Metre Channel
+  const isOverLength = length > 90;
+  const totalChannelLen = length + 3; // +3m patch cord payı
+
+  // Zayıflama (Attenuation dB @ 100MHz tahmini)
+  let attPerMeter = 0.21; // Cat6A dB/m
+  if (cableType === 'cat6') attPerMeter = 0.24;
+  if (cableType === 'cat5e') attPerMeter = 0.28;
+  const totalLossDb = (length * attPerMeter).toFixed(1);
+
+  // PoE Voltaj Düşümü Hesabı (Cat6 Loop Resistance ~ 0.14 ohm/metre)
+  let poeCurrent = 0; // Amper
+  let poeWatts = "0W";
+  if (poeType === 'af') { poeCurrent = 0.35; poeWatts = "15.4W"; }
+  if (poeType === 'at') { poeCurrent = 0.60; poeWatts = "30.0W"; }
+  if (poeType === 'bt') { poeCurrent = 1.20; poeWatts = "60-90W"; }
+  
+  const loopResistance = (length * 0.14).toFixed(2);
+  const vDrop = (poeCurrent * loopResistance).toFixed(2);
+
+  diagBox.innerHTML = `
+    <div class="res-row"><span class="res-label">Kalıcı Hat (Permanent Link):</span><span class="res-val ${isOverLength ? 'rose' : 'green'}" style="font-weight:700;">${length} Metre ${isOverLength ? '⚠️ (90M LİMİTİ AŞILDI)' : '✓ (TIA Uygun)'}</span></div>
+    <div class="res-row"><span class="res-label">Tahmini Toplam Kanal (Channel):</span><span class="res-val">${totalChannelLen} Metre (Max: 100m)</span></div>
+    <div class="res-row"><span class="res-label">Tahmini Hat Zayıflaması (Loss):</span><span class="res-val amber">-${totalLossDb} dB @ 100MHz</span></div>
+    <div class="res-row"><span class="res-label">Döngü Direnci (Loop Resistance):</span><span class="res-val">${loopResistance} Ω</span></div>
+    <div class="res-row"><span class="res-label">PoE Yükü & Voltaj Düşümü:</span><span class="res-val ${parseFloat(vDrop) > 4.5 ? 'rose' : 'green'}">${poeWatts} (${poeType.toUpperCase()}) / -${vDrop}V Kayıp</span></div>
+  `;
+
+  // Cisco CLI Description ve Yapılandırma Üretimi
+  const outlet = document.getElementById('pb-field-outlet').value.trim() || 'PRIZ';
+  const swHost = document.getElementById('pb-field-switch').value.trim() || 'SW';
+  const swPort = document.getElementById('pb-field-switchport').value.trim() || 'Gi1/0/1';
+  const vlan = document.getElementById('pb-field-vlan').value.trim() || '10';
+
+  let cli = `! ========================================================\n`;
+  cli += `! CISCO SWITCHPORT TANIM SİHİRBAZI (${swHost})\n`;
+  cli += `! ========================================================\n`;
+  cli += `configure terminal\n`;
+  cli += `interface ${swPort}\n`;
+  cli += ` description [${activePatchPanelId}_P${activePatchPortNum}]_${outlet}_${service.toUpperCase()}\n`;
+  cli += ` switchport mode access\n`;
+  cli += ` switchport access vlan ${vlan}\n`;
+  if (service === 'voip') cli += ` switchport voice vlan 30\n`;
+  if (poeType !== 'none') cli += ` power inline auto\n`;
+  else cli += ` power inline never\n`;
+  cli += ` spanning-tree portfast\n`;
+  cli += ` spanning-tree bpduguard enable\n`;
+  if (service === 'fail' || service === 'empty') cli += ` shutdown\n`;
+  else cli += ` no shutdown\n`;
+  cli += `exit\nend\n`;
+
+  cliBox.innerText = cli;
+}
+
+function updateSelectedPortForm(triggerDiag = false) {
+  const portNum = parseInt(document.getElementById('pb-current-port-id').value, 10);
+  if (!portNum || !patchBayDatabase[activePatchPanelId]) return;
+
+  const pData = patchBayDatabase[activePatchPanelId][portNum];
+  if (!pData) return;
+
+  pData.service = document.getElementById('pb-field-service').value;
+  pData.cableType = document.getElementById('pb-field-cabletype').value;
+  pData.outlet = document.getElementById('pb-field-outlet').value.trim();
+  pData.cableId = document.getElementById('pb-field-cableid').value.trim();
+  pData.length = parseInt(document.getElementById('pb-field-length').value, 10) || 0;
+  pData.swHost = document.getElementById('pb-field-switch').value.trim();
+  pData.swPort = document.getElementById('pb-field-switchport').value.trim();
+  pData.vlan = parseInt(document.getElementById('pb-field-vlan').value, 10) || 10;
+  pData.poe = document.getElementById('pb-field-poe').value;
+  pData.patchCord = document.getElementById('pb-field-patchcord').value.trim();
+
+  renderTracePathFlow(pData);
+  if (triggerDiag) calcCableDiagnostics();
+}
+
+function savePatchPortRecord() {
+  playSoundFx('key');
+  updateSelectedPortForm(true);
+  savePatchBayStorage();
+  renderPatchPanelChassis();
+  playSoundFx('success');
+  alert(`Port #${activePatchPortNum} bağlantı kaydı başarıyla güncellendi!`);
+}
+
+function clearPortPatching() {
+  playSoundFx('alert');
+  const portNum = activePatchPortNum;
+  if (!patchBayDatabase[activePatchPanelId] || !patchBayDatabase[activePatchPanelId][portNum]) return;
+
+  patchBayDatabase[activePatchPanelId][portNum] = {
+    portNum, service: "empty", cableType: "cat6a", outlet: "", cableId: "", length: 0,
+    swHost: "CORE-SW-01", swPort: `Gi1/0/${portNum}`, vlan: 1, poe: "none", patchCord: "Bağlantı Yok"
+  };
+
+  savePatchBayStorage();
+  renderPatchPanelChassis();
+  selectPatchPort(portNum);
+}
+
+function resetPatchBayDefaults() {
+  if (confirm("Tüm yapısal kablolama ve patch panel veritabanını fabrika ayarlarına döndürmek istediğinize emin misiniz?")) {
+    playSoundFx('alert');
+    loadDefaultPatchBayData();
+    changeActivePatchPanel();
+    playSoundFx('success');
+  }
+}
+
+function exportPatchBayJSON() {
+  playSoundFx('key');
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(patchBayDatabase, null, 2));
+  const a = document.createElement('a');
+  a.href = dataStr;
+  a.download = `zeropacket_patchbay_cabling_${Date.now()}.json`;
+  a.click();
+}
+
+function importPatchBayJSON(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const parsed = JSON.parse(evt.target.result);
+      if (typeof parsed === 'object') {
+        patchBayDatabase = parsed;
+        savePatchBayStorage();
+        changeActivePatchPanel();
+        playSoundFx('success');
+        alert("Yapısal kablolama veri bankası başarıyla yüklendi!");
+      }
+    } catch(err) {
+      alert("Geçersiz JSON kablolama dosyası.");
+    }
+  };
+  reader.readAsText(file);
+}
+
 
 // M-02: 42U RACK KABİN GÖRSEL PLANLAYICI MOTORU
 let rackCabinDatabase = [];
@@ -6688,6 +8027,373 @@ function calcVLSM() {
   document.getElementById('vlsm-out').innerHTML = h;
 }
 
+// M-36: PORT SAYAÇ OTOPSİSİ & DISCARD RCA MOTORU
+// =========================================================================
+function loadSampleCounter(type) {
+  playSoundFx('key');
+  const rawInput = document.getElementById('pa-raw-input');
+  if (type === 'crc') {
+    rawInput.value = 
+`GigabitEthernet1/0/18 is up, line protocol is up (connected) 
+  Hardware is Gigabit Ethernet, address is f44b.2a11.2212
+  Description: UPLINK_TO_FLOOR3
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec, 
+     reliability 255/255, txload 14/255, rxload 32/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 1000Mb/s, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  5 minutes input rate 124000 bits/sec, 48 packets/sec
+  5 minutes output rate 88000 bits/sec, 35 packets/sec
+     2184920 packets input, 194019280 bytes, 0 no buffer
+     Received 4810 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     14820 input errors, 14210 CRC, 610 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     1920110 packets output, 148291024 bytes, 0 underruns
+     0 output errors, 0 collisions, 2 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred`;
+  } else if (type === 'duplex') {
+    rawInput.value = 
+`FastEthernet0/4 is up, line protocol is up (connected)
+  Full-duplex, 100Mb/s, media type is 100BaseTX
+     1450201 packets input, 110291024 bytes, 0 no buffer
+     4510 input errors, 4200 CRC, 310 frame, 0 overrun, 0 ignored
+     1210490 packets output, 89102450 bytes, 0 underruns
+     8940 output errors, 8940 collisions, 3120 late collision, 14 interface resets`;
+  } else if (type === 'drops') {
+    rawInput.value = 
+`TenGigabitEthernet1/0/1 is up, line protocol is up (connected)
+  Description: STORAGE_BACKUP_TARGET
+  Full-duplex, 10Gb/s, media type is SFP-10G-SR
+     48192019 packets input, 51029102400 bytes, 140291 no buffer
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     51029104 packets output, 54910245000 bytes, 0 underruns
+     241902 output buffer failures, 184290 output buffers swapped out
+     841290 output errors, 0 collisions, 841290 output drops`;
+  }
+  runPortCounterAutopsy();
+}
+
+function runPortCounterAutopsy() {
+  playSoundFx('key');
+  const raw = document.getElementById('pa-raw-input').value;
+  const intervalMins = parseFloat(document.getElementById('pa-interval-mins').value) || 60;
+  const intervalSecs = intervalMins * 60;
+
+  if (!raw.trim()) {
+    alert("Lütfen geçerli bir show interface metni yapıştırın.");
+    return;
+  }
+
+  // Regex Sayaç Ayrıştırmaları
+  const crcMatch = raw.match(/(\d+)\s+CRC/i) || raw.match(/CRC:\s*(\d+)/i);
+  const inputErrMatch = raw.match(/(\d+)\s+input errors/i) || raw.match(/Input error:\s*(\d+)/i);
+  const outputErrMatch = raw.match(/(\d+)\s+output errors/i);
+  const lateColMatch = raw.match(/(\d+)\s+late collision/i);
+  const runtsMatch = raw.match(/(\d+)\s+runts/i);
+  const giantsMatch = raw.match(/(\d+)\s+giants/i);
+  const outputDropMatch = raw.match(/(\d+)\s+output drops/i) || raw.match(/Total output drops:\s*(\d+)/i);
+  const noBufferMatch = raw.match(/(\d+)\s+no buffer/i);
+  const resetsMatch = raw.match(/(\d+)\s+interface resets/i);
+  const duplexMatch = raw.match(/(Full-duplex|Half-duplex|Auto-duplex)/i);
+  const speedMatch = raw.match(/(\d+)(Mb\/s|Gb\/s|Kb\/s)/i);
+  const statusMatch = raw.match(/is\s+(up|down|administratively down)/i);
+
+  const crc = crcMatch ? parseInt(crcMatch[1], 10) : 0;
+  const inErrors = inputErrMatch ? parseInt(inputErrMatch[1], 10) : 0;
+  const outErrors = outputErrMatch ? parseInt(outputErrMatch[1], 10) : 0;
+  const lateCol = lateColMatch ? parseInt(lateColMatch[1], 10) : 0;
+  const runts = runtsMatch ? parseInt(runtsMatch[1], 10) : 0;
+  const giants = giantsMatch ? parseInt(giantsMatch[1], 10) : 0;
+  const outDrops = outputDropMatch ? parseInt(outputDropMatch[1], 10) : 0;
+  const noBuffer = noBufferMatch ? parseInt(noBufferMatch[1], 10) : 0;
+  const resets = resetsMatch ? parseInt(resetsMatch[1], 10) : 0;
+  const portStatus = statusMatch ? statusMatch[1].toUpperCase() : "UP";
+
+  const totalErrors = inErrors + outErrors;
+  const totalDrops = outDrops + noBuffer;
+
+  // KPI Güncellemeleri
+  document.getElementById('pa-kpi-status').innerText = portStatus;
+  document.getElementById('pa-kpi-status').style.color = portStatus === 'UP' ? 'var(--tech-emerald)' : 'var(--tech-rose)';
+  document.getElementById('pa-kpi-errors').innerText = totalErrors.toLocaleString();
+  document.getElementById('pa-kpi-crc').innerText = crc.toLocaleString();
+  document.getElementById('pa-kpi-drops').innerText = totalDrops.toLocaleString();
+
+  let healthScore = 100;
+  if (crc > 0) healthScore -= 30;
+  if (lateCol > 0) healthScore -= 35;
+  if (totalDrops > 0) healthScore -= 20;
+  if (giants > 0 || runts > 0) healthScore -= 15;
+  if (healthScore < 0) healthScore = 0;
+
+  const healthEl = document.getElementById('pa-kpi-health');
+  healthEl.innerText = `%${healthScore}`;
+  healthEl.style.color = healthScore >= 80 ? 'var(--tech-emerald)' : (healthScore >= 50 ? 'var(--tech-amber)' : 'var(--tech-rose)');
+
+  // Otopsi Çıkarımları (RCA)
+  const findings = [];
+  const fixes = [];
+
+  if (lateCol > 0) {
+    findings.push({
+      title: "🔴 KESİN DUPLEX MISMATCH VEYA AŞIRI KABLO METRAJI",
+      sev: "high",
+      desc: `Portta <b>${lateCol.toLocaleString()}</b> adet Late Collision tespit edildi. Ethernet standardında ilk 64 bayt (512 bit) iletildikten sonra çarpışma olması imkansızdır. Karşı port Half-Duplex çalışıyor veya kablo 100 metreden uzundur.`
+    });
+    fixes.push("! Duplex Mismatch Düzeltme\ninterface <PORT>\n speed auto\n duplex full\n!");
+  }
+
+  if (crc > 0) {
+    const crcRate = (crc / intervalSecs).toFixed(2);
+    findings.push({
+      title: "🔴 FİZİKSEL KATMAN BOZULMASI (CRC / FCS ERRORS)",
+      sev: "high",
+      desc: `Toplam <b>${crc.toLocaleString()}</b> CRC hatası (Saniyede ~${crcRate} hata). Bozuk bakır patch cord, ezilmiş kablo, gevşek keystone jack, kirli SFP fiber ucu veya yakın geçen yüksek gerilim (EMI) gürültüsü.`
+    });
+    fixes.push("! Fiziksel Hata Doğrulama ve Sayaç Sıfırlama\nclear counters <PORT>\n! Kabloyu Fluke/TDR ile test edin veya patch cord değiştirin.\n!");
+  }
+
+  if (outDrops > 0 || noBuffer > 0) {
+    findings.push({
+      title: "🟡 ASIC EGRESS TAMPON TAŞMASI (BUFFER CONGESTION / TAIL-DROP)",
+      sev: "med",
+      desc: `Port çıkışında <b>${outDrops.toLocaleString()}</b> Output Drops ve <b>${noBuffer.toLocaleString()}</b> No-Buffer yaşandı. Yüksek hızlı bir hattan (örn. 10G/40G) bu porta paket akarken kuyruklar doldu (Incast Microburst).`
+    });
+    fixes.push("! Çıkış Kuyruğu ve Flow-Control / QoS Yapılandırması\ninterface <PORT>\n flowcontrol receive on\n flowcontrol send on\n qos queue-softmax-multiplier 1200\n!");
+  }
+
+  if (giants > 0) {
+    findings.push({
+      title: "🟡 MTU VE 802.1Q VLAN TAG UYUŞMAZLIĞI (GIANTS)",
+      sev: "med",
+      desc: `Portta <b>${giants.toLocaleString()}</b> Giants (1518/1522 bayttan büyük paket) görüldü. Cihaz Jumbo Frame alıyor fakat MTU 1500 olarak kalmış veya QinQ çift etiketleme sınırları aşıyor.`
+    });
+    fixes.push("! Jumbo Frame MTU Genişletme\ninterface <PORT>\n mtu 9216\n!");
+  }
+
+  if (runts > 0) {
+    findings.push({
+      title: "🟡 ÇOK KÜÇÜK PAKETLER (RUNTS < 64 BYTE)",
+      sev: "med",
+      desc: `Portta <b>${runts.toLocaleString()}</b> Runt tespit edildi. Çarpışma sonucu yarım kalmış veya arızalı ağ kartı (NIC) tarafından basılmış 64 bayttan küçük çerçeveler.`
+    });
+  }
+
+  if (findings.length === 0) {
+    findings.push({
+      title: "🟢 TERTEMİZ PORT SAYAÇLARI",
+      sev: "low",
+      desc: "İncelenen arayüzde donanımsal hata, duplex uyumsuzluğu veya kuyruk taşması izine rastlanmadı."
+    });
+    fixes.push("! Port sayaçları kusursuz çalışıyor.");
+  }
+
+  // Ekrana Çizme
+  let rcaHtml = "";
+  findings.forEach(f => {
+    let color = f.sev === 'high' ? 'var(--tech-rose)' : (f.sev === 'med' ? 'var(--tech-amber)' : 'var(--tech-emerald)');
+    rcaHtml += `
+      <div style="background:var(--bg-card); border-left:3px solid ${color}; padding:8px 10px; margin-bottom:6px; font-family:var(--font-mono);">
+        <div style="font-weight:700; color:${color}; font-size:11.5px;">${f.title}</div>
+        <div style="font-size:10.5px; color:var(--text-muted); margin-top:3px; line-height:1.45;">${f.desc}</div>
+      </div>
+    `;
+  });
+
+  document.getElementById('pa-rca-results-box').innerHTML = rcaHtml;
+  document.getElementById('pa-fix-cli-out').innerText = fixes.join('\n');
+  playSoundFx(healthScore >= 80 ? 'success' : 'alert');
+}
+
+// =========================================================================
+// M-37: CISCO & HUAWEI TDR DAHİLİ KABLO TESTİ MOTORU
+// =========================================================================
+function switchTdrTab(tab) {
+  playSoundFx('key');
+  ['visual', 'cli'].forEach(t => {
+    const b = document.getElementById('tdr-tab-' + t);
+    const s = document.getElementById('tdr-sec-' + t);
+    if (b) b.classList.toggle('active', t === tab);
+    if (s) s.style.display = (t === tab) ? 'block' : 'none';
+  });
+  if (tab === 'cli') generateTdrCliScript();
+}
+
+function loadSampleTdr(scenario) {
+  playSoundFx('key');
+  const area = document.getElementById('tdr-raw-input');
+  if (scenario === 'normal') {
+    area.value = 
+`TDR test last run on: September 10 10:14:22
+Interface Speed local pair pair length remote pair Pair status
+--------- ----- ---------- ------------------ ----------- --------------------
+Gi1/0/12  1000M Pair A     42   +/- 2  meters N/A         Normal
+                Pair B     42   +/- 2  meters N/A         Normal
+                Pair C     43   +/- 2  meters N/A         Normal
+                Pair D     42   +/- 2  meters N/A         Normal`;
+  } else if (scenario === 'broken_28m') {
+    area.value = 
+`TDR test last run on: September 10 10:18:40
+Interface Speed local pair pair length remote pair Pair status
+--------- ----- ---------- ------------------ ----------- --------------------
+Gi1/0/12  AUTO  Pair A     28   +/- 2  meters N/A         Open
+                Pair B     28   +/- 2  meters N/A         Open
+                Pair C     28   +/- 2  meters N/A         Open
+                Pair D     28   +/- 2  meters N/A         Open`;
+  } else if (scenario === 'short_pin') {
+    area.value = 
+`TDR test last run on: September 10 10:22:15
+Interface Speed local pair pair length remote pair Pair status
+--------- ----- ---------- ------------------ ----------- --------------------
+Gi1/0/12  100M  Pair A     35   +/- 2  meters N/A         Normal
+                Pair B     35   +/- 2  meters N/A         Normal
+                Pair C     12   +/- 2  meters N/A         Short
+                Pair D     35   +/- 2  meters N/A         Normal`;
+  }
+  parseTdrRawOutput();
+}
+
+function parseTdrRawOutput() {
+  playSoundFx('key');
+  const raw = document.getElementById('tdr-raw-input').value.trim();
+  const container = document.getElementById('tdr-pair-cards-container');
+  const verdictBox = document.getElementById('tdr-verdict-box');
+  const summaryBadge = document.getElementById('tdr-summary-badge');
+
+  if (!raw) {
+    alert("Lütfen TDR test çıktısı yapıştırın.");
+    return;
+  }
+
+  // 4 Çifti Varsayılan Olarak Tanımla
+  const pairs = {
+    A: { name: "Pair A (Pin 1-2 / Turuncu-Beyaz)", status: "Normal", length: 0, color: "#f97316" },
+    B: { name: "Pair B (Pin 3-6 / Yeşil-Beyaz)", status: "Normal", length: 0, color: "#10b981" },
+    C: { name: "Pair C (Pin 4-5 / Mavi-Beyaz)", status: "Normal", length: 0, color: "#3b82f6" },
+    D: { name: "Pair D (Pin 7-8 / Kahve-Beyaz)", status: "Normal", length: 0, color: "#854d0e" }
+  };
+
+  const lines = raw.split('\n');
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    ['A', 'B', 'C', 'D'].forEach(pKey => {
+      if (trimmed.match(new RegExp(`Pair\\s+${pKey}`, 'i'))) {
+        const lenMatch = trimmed.match(/(\d+)\s*(?:\+\/-\s*\d+)?\s*meters?/i);
+        if (lenMatch) pairs[pKey].length = parseInt(lenMatch[1], 10);
+
+        if (trimmed.match(/Open/i)) pairs[pKey].status = "Open";
+        else if (trimmed.match(/Short/i)) pairs[pKey].status = "Short";
+        else if (trimmed.match(/Impedance/i)) pairs[pKey].status = "Impedance Mismatch";
+        else if (trimmed.match(/Normal/i)) pairs[pKey].status = "Normal";
+      }
+    });
+  });
+
+  // Kartları ve İlerleme Çubuklarını Ekrana Çizme
+  let hasFault = false;
+  let faultDesc = "";
+  let html = "";
+
+  Object.keys(pairs).forEach(k => {
+    const p = pairs[k];
+    const isNormal = p.status === "Normal";
+    if (!isNormal) {
+      hasFault = true;
+      faultDesc += `• ${p.name}: ${p.status.toUpperCase()} @ ${p.length} Metre\n`;
+    }
+
+    const statusBadge = isNormal 
+      ? `<span class="audit-badge badge-pass">NORMAL (OK)</span>` 
+      : `<span class="audit-badge badge-fail">${p.status.toUpperCase()}</span>`;
+
+    // Maksimum 100m kanal sınırına göre çubuk genişliği
+    const barWidthPct = Math.min(100, Math.max(5, (p.length / 90) * 100));
+    const barColor = isNormal ? 'var(--tech-emerald)' : 'var(--tech-rose)';
+
+    html += `
+      <div style="background:var(--bg-input); border:1px solid ${isNormal ? 'var(--border-subtle)' : 'var(--tech-rose)'}; padding:7px 10px; font-family:var(--font-mono);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="width:10px; height:10px; border-radius:2px; background:${p.color}; display:inline-block;"></span>
+            <b style="color:#fff; font-size:11px;">${p.name}</b>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:var(--tech-cyan); font-weight:700;">${p.length} Metre</span>
+            ${statusBadge}
+          </div>
+        </div>
+
+        <div class="tr-rtt-bar-bg" style="height:5px;">
+          <div class="tr-rtt-bar-fill" style="width:${barWidthPct}%; background:${barColor};"></div>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  if (summaryBadge) {
+    summaryBadge.innerText = hasFault ? "KABLO FİZİKSEL ARIZALI" : "KABLO TESTİ BAŞARILI";
+    summaryBadge.className = `audit-badge ${hasFault ? 'badge-fail' : 'badge-pass'}`;
+  }
+
+  if (hasFault) {
+    playSoundFx('alert');
+    verdictBox.innerHTML = `
+      <div style="color:var(--tech-rose); font-weight:800; font-size:12px; margin-bottom:4px;">⚠️ TDR ARIZA TEŞHİSİ:</div>
+      <div style="font-size:11px; color:var(--text-muted); line-height:1.5;">
+        ${faultDesc.replace(/\n/g, '<br>')}
+        <b>Mühendislik Yorumu:</b> Sinyal yansıması hesaplanan metrede sonlanmıştır. Bu mesafe priz tarafına denk geliyorsa priz jack'i sökülmüş; şaft içinde kalıyorsa kablo bükülmüş veya kemirgen/ezilme kaynaklı kopmuştur.
+      </div>
+    `;
+  } else {
+    playSoundFx('success');
+    const avgLen = pairs.A.length || 40;
+    verdictBox.innerHTML = `
+      <div style="color:var(--tech-emerald); font-weight:800; font-size:12px; margin-bottom:4px;">✅ FİZİKSEL KABLO KUSURSUZ (4-PAIR OK)</div>
+      <div style="font-size:11px; color:var(--text-muted); line-height:1.5;">
+        Tüm 4 çift (1-2, 3-6, 4-5, 7-8) dengeli empedans ile ~<b>${avgLen} metre</b> mesafede sonlanmaktadır. Hat 1000BASE-T (Gigabit) ve PoE+ standartlarına uygundur.
+      </div>
+    `;
+  }
+}
+
+function generateTdrCliScript() {
+  const vendor = document.getElementById('tdr-vendor-sel').value;
+  const port = document.getElementById('tdr-port-name').value.trim() || 'GigabitEthernet1/0/1';
+  const out = document.getElementById('tdr-cli-script-out');
+
+  let cli = "";
+  if (vendor === 'cisco') {
+    cli = `! Cisco Catalyst Donanımsal TDR Kablo Testi
+! 1. Adım: Testi Başlatın (Port 3-5 saniye kesintiye uğrar)
+test cable-diagnostics tdr interface ${port}
+
+! 2. Adım: Testin Tamamlanması İçin 5 Saniye Bekleyin...
+
+! 3. Adım: 4-Pair Sonuçlarını Okuyun
+show cable-diagnostics tdr interface ${port}
+`;
+  } else if (vendor === 'huawei') {
+    cli = `<Huawei> system-view
+[Huawei] interface ${port}
+! Huawei VRP Sanal Kablo Testi Başlatma
+[Huawei-${port}] virtual-cable-test
+! Çıkan tabloda Pair status ve Pair length değerlerini okuyun.
+`;
+  } else {
+    cli = `! Arista EOS PHY Cable Diagnostics
+test cable-diagnostics interface ${port}
+show cable-diagnostics interface ${port}
+`;
+  }
+  out.innerText = cli;
+}
+
 // =========================================================================
 // PROTOKOL VE HESAPLAMA MOTORLARI (M-29 - M-33)
 // =========================================================================
@@ -7093,10 +8799,12 @@ write memory`;
       triggerIntro();
       toggleRangeFields();
       toggleCiscoTmplFields();
+      initHardwareCatalogEngine();
       toggleAclFields();
       toggleCryptPlaceholder();
       loadSampleAuditConfig();
       loadSampleDiff();
+      initPatchBayEngine();
       calcTransferTime();
       runSubnetOverlapCheck();
       populateFirewallPortsTable();
@@ -7107,6 +8815,7 @@ write memory`;
       calcIPSec();
       calcMAC();
       calcWild();
+      generateTdrCliScript();
       initCalendarEngine();
       initIpamEngine();
       generateBackupCli();
@@ -7120,4 +8829,3 @@ write memory`;
   </script>
 </body>
 </html>
-
