@@ -828,25 +828,27 @@
           <button onclick="showPanel('cisco-crypt')" id="btn-cisco-crypt" class="nav-btn cisco-btn"><span>🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="btn-tag">M-22</span></button>
           <button onclick="showPanel('firewall-ports')" id="btn-firewall-ports" class="nav-btn ops-btn"><span>🛡️ Güvenlik Duvarı Port & Protokol</span><span class="btn-tag">M-23</span></button>
           <button onclick="showPanel('cross-vendor')" id="btn-cross-vendor" class="nav-btn cisco-btn"><span>🔀 Cross-Vendor CLI Rosetta Stone</span><span class="btn-tag">M-24</span></button>
+          <button onclick="showPanel('chaos-sim')" id="btn-chaos-sim" class="nav-btn cisco-btn"><span>🚨 NOC Kriz & Chaos Simülatörü</span><span class="btn-tag">M-25</span></button>
+	  <button onclick="showPanel('eol-matrix')" id="btn-eol-matrix" class="nav-btn dc-btn"><span>⏳ Donanım EoL / EoS Yaşam Döngüsü</span><span class="btn-tag">M-26</span></button>
         </div>
 
         <!-- GRUP 3: AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA -->
         <div class="rack-group">
           <div class="rack-header grp3"><span>[03] AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA</span><span class="btn-tag"></span></div>
-          <button onclick="showPanel('lisp-engine')" id="btn-lisp-engine" class="nav-btn cisco-btn"><span>🌐 LISP (EID/RLOC) Mimari & Fabric Hub</span><span class="btn-tag">M-25</span></button>
-          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn"><span>🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="btn-tag">M-26</span></button>
-          <button onclick="showPanel('traceroute')" id="btn-traceroute" class="nav-btn net-btn"><span>📍 Traceroute & MTR Sekme Çizici</span><span class="btn-tag">M-27</span></button>
-          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"><span>📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="btn-tag">M-28</span></button>
-          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn"><span>🔀 Dinamik NAT & PAT Simülatörü</span><span class="btn-tag">M-29</span></button>
-          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn"><span>🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="btn-tag">M-30</span></button>
-          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn"><span>📐 VLSM Alt Ağ Bölücü</span><span class="btn-tag">M-31</span></button>
-          <button onclick="showPanel('subnet-overlap')" id="btn-subnet-overlap" class="nav-btn ops-btn"><span>🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="btn-tag">M-32</span></button>
-          <button onclick="showPanel('transfer-sizer')" id="btn-transfer-sizer" class="nav-btn ops-btn"><span>⏱️ Veri Transfer & Hat Doygunluğu</span><span class="btn-tag">M-33</span></button>
-          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn calc-btn"><span>🎭 Wildcard Maske Tersleyici</span><span class="btn-tag">M-34</span></button>
-          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn calc-btn"><span>🔍 MAC OUI Donanım Sorgulama</span><span class="btn-tag">M-35</span></button>
-          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn calc-btn"><span>🛡️ IPSec, GRE & LISP MSS Boyutlandırıcı</span><span class="btn-tag">M-36</span></button>
-          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn calc-btn"><span>🌐 IPv6 Adres Genişletici / Analizör</span><span class="btn-tag">M-37</span></button>
-          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn calc-btn"><span>📊 IP Sınıfı ve CGNAT Analizi</span><span class="btn-tag">M-38</span></button>
+          <button onclick="showPanel('lisp-engine')" id="btn-lisp-engine" class="nav-btn cisco-btn"><span>🌐 LISP (EID/RLOC) Mimari & Fabric Hub</span><span class="btn-tag">M-26</span></button>
+          <button onclick="showPanel('canvas')" id="btn-canvas" class="nav-btn net-btn"><span>🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="btn-tag">M-27</span></button>
+          <button onclick="showPanel('traceroute')" id="btn-traceroute" class="nav-btn net-btn"><span>📍 Traceroute & MTR Sekme Çizici</span><span class="btn-tag">M-28</span></button>
+          <button onclick="showPanel('wifi-analyzer')" id="btn-wifi-analyzer" class="nav-btn net-btn"><span>📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="btn-tag">M-29</span></button>
+          <button onclick="showPanel('nat')" id="btn-nat" class="nav-btn net-btn"><span>🔀 Dinamik NAT & PAT Simülatörü</span><span class="btn-tag">M-30</span></button>
+          <button onclick="showPanel('subnet')" id="btn-subnet" class="nav-btn net-btn"><span>🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="btn-tag">M-31</span></button>
+          <button onclick="showPanel('vlsm')" id="btn-vlsm" class="nav-btn net-btn"><span>📐 VLSM Alt Ağ Bölücü</span><span class="btn-tag">M-32</span></button>
+          <button onclick="showPanel('subnet-overlap')" id="btn-subnet-overlap" class="nav-btn ops-btn"><span>🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="btn-tag">M-33</span></button>
+          <button onclick="showPanel('transfer-sizer')" id="btn-transfer-sizer" class="nav-btn ops-btn"><span>⏱️ Veri Transfer & Hat Doygunluğu</span><span class="btn-tag">M-34</span></button>
+          <button onclick="showPanel('wildcard')" id="btn-wildcard" class="nav-btn calc-btn"><span>🎭 Wildcard Maske Tersleyici</span><span class="btn-tag">M-35</span></button>
+          <button onclick="showPanel('mac')" id="btn-mac" class="nav-btn calc-btn"><span>🔍 MAC OUI Donanım Sorgulama</span><span class="btn-tag">M-36</span></button>
+          <button onclick="showPanel('ipsec')" id="btn-ipsec" class="nav-btn calc-btn"><span>🛡️ IPSec, GRE & LISP MSS Boyutlandırıcı</span><span class="btn-tag">M-37</span></button>
+          <button onclick="showPanel('ipv6')" id="btn-ipv6" class="nav-btn calc-btn"><span>🌐 IPv6 Adres Genişletici / Analizör</span><span class="btn-tag">M-38</span></button>
+          <button onclick="showPanel('ipclass')" id="btn-ipclass" class="nav-btn calc-btn"><span>📊 IP Sınıfı ve CGNAT Analizi</span><span class="btn-tag">M-39</span></button>
         </div>
 
       </div>
@@ -911,26 +913,28 @@
               <div class="dir-item" onclick="showPanel('cisco-acl')"><div class="dir-item-header"><span class="dir-item-title">🛡️ Erişim Listesi (ACL) Matrisi</span><span class="dir-item-tag">M-21</span></div><div class="dir-item-desc">Standard ve Extended ACL kurallarını wildcard maskelerine otomatik çevirerek hazırlar.</div></div>
               <div class="dir-item" onclick="showPanel('cisco-crypt')"><div class="dir-item-header"><span class="dir-item-title">🔑 Type 7 Şifre Çözücü / Kodlayıcı</span><span class="dir-item-tag">M-22</span></div><div class="dir-item-desc">Type 7 şifreli metinleri çözer veya açık metinleri Type 7 formatına dönüştürür.</div></div>
               <div class="dir-item" onclick="showPanel('firewall-ports')"><div class="dir-item-header"><span class="dir-item-title">🛡️ Güvenlik Duvarı Port & Protokol Matrisi</span><span class="dir-item-tag">M-23</span></div><div class="dir-item-desc">LISP UDP 4341/4342, Web, AD ve VPN portları için Cisco ASA, FortiOS, Palo Alto ve iptables kuralı üretir.</div></div>
-              <div class="dir-item" onclick="showPanel('cross-vendor')"><div class="dir-item-header"><span class="dir-item-title">🔀 Cross-VendorCLI Rosetta Stone</span><span class="dir-item-tag" style="color:var(--tech-cyan); border-color:var(--tech-cyan);">M-24</span></div><div class="dir-item-desc">Cisco IOS, Juniper Junos, Huawei VRP, Arista EOS ve Linux arasında komut çevirisi, arama ve operasyonel cheat-sheet.</div></div>
+              <div class="dir-item" onclick="showPanel('cross-vendor')"><div class="dir-item-header"><span class="dir-item-title">🔀 Cross-VendorCLI Rosetta Stone</span><span class="dir-item-tag">M-24</span></div><div class="dir-item-desc">Cisco IOS, Juniper Junos, Huawei VRP, Arista EOS ve Linux arasında komut çevirisi, arama ve operasyonel cheat-sheet.</div></div>
+              <div class="dir-item" onclick="showPanel('chaos-sim')"><div class="dir-item-header"><span class="dir-item-title">🚨 NOC Kriz & Chaos Simülatörü (12 Senaryo)</span><span class="dir-item-tag">M-25</span></div><div class="dir-item-desc">Rogue DHCP, STP Hijack, OSPF MTU, BGP Leak ve Loop arızalarına karşı süreli, interaktif kriz çözme tatbikat motoru.</div></div>
+	      <div class="dir-item" onclick="showPanel('eol-matrix')"><div class="dir-item-header"><span class="dir-item-title">⏳ Donanım EoL / EoS Yaşam Döngüsü Kütüphanesi</span><span class="dir-item-tag" style="color:#f59e0b; border-color:#f59e0b;">M-40</span></div><divclass="dir-item-desc">Cisco, Fortinet, Juniper ve Arista cihazlarının satış sonu, güvenlik desteği bitişi (LDOS), son stabil IOS sürümleri ve göç (migration) yolları.</div></div>
             </div>
 
             <!-- DİZİN 3: AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA -->
             <div class="dir-category">
               <div class="dir-category-title" style="color: var(--tech-emerald);">[03] AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA (NET & CALC)</div>
               <div class="dir-item" onclick="showPanel('lisp-engine')"><div class="dir-item-header"><span class="dir-item-title">🌐 LISP (EID/RLOC) Mimari & Fabric Hub</span><span class="dir-item-tag" style="color:#a78bfa; border-color:#a78bfa;">YENİ // LISP</span></div><div class="dir-item-desc">Locator/ID Separation (RFC 6830) xTR, MS/MR, PxTR konfigürasyonu, EID-RLOC haritalaması ve Map-Cache analizörü.</div></div>
-              <div class="dir-item" onclick="showPanel('canvas')"><div class="dir-item-header"><span class="dir-item-title">🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="dir-item-tag">M-26</span></div><div class="dir-item-desc">Genişletilmiş kanvasta hat kopması, Inter-VLAN routing, sniffer ve paket akış simülasyonu.</div></div>
-              <div class="dir-item" onclick="showPanel('traceroute')"><div class="dir-item-header"><span class="dir-item-title">📍 Traceroute & MTR Sekme Çizici</span><span class="dir-item-tag">M-27</span></div><div class="dir-item-desc">Cisco ve MTR traceroute çıktılarını görsel sekme düğümlerine ve RTT çubuklarına dönüştürür.</div></div>
-              <div class="dir-item" onclick="showPanel('wifi-analyzer')"><div class="dir-item-header"><span class="dir-item-title">📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="dir-item-tag">M-28</span></div><div class="dir-item-desc">Duvar materyallerinin 2.4/5GHz sinyal yayılımına etkisini canlı ısı haritasıyla simüle eder.</div></div>
-              <div class="dir-item" onclick="showPanel('nat')"><div class="dir-item-header"><span class="dir-item-title">🔀 Dinamik NAT & PAT Simülatörü</span><span class="dir-item-tag">M-29</span></div><div class="dir-item-desc">Inside Local IP ve port dönüşüm süreçlerini interaktif NAT tablosunda gösterir.</div></div>
-              <div class="dir-item" onclick="showPanel('subnet')"><div class="dir-item-header"><span class="dir-item-title">🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="dir-item-tag">M-30</span></div><div class="dir-item-desc">CIDR adres formatına göre ağ, broadcast, netmask ve kullanılabilir IP havuzunu çıkarır.</div></div>
-              <div class="dir-item" onclick="showPanel('vlsm')"><div class="dir-item-header"><span class="dir-item-title">📐 VLSM Alt Ağ Bölücü</span><span class="dir-item-tag">M-31</span></div><div class="dir-item-desc">IP bloklarını belirtilen alt ağ sayılarına göre otomatik olarak dinamik alt bloklara böler.</div></div>
-              <div class="dir-item" onclick="showPanel('subnet-overlap')"><div class="dir-item-header"><span class="dir-item-title">🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="dir-item-tag">M-32</span></div><div class="dir-item-desc">Mevcut alt ağ listesini tarayarak yeni eklenecek IP bloğunun çakışıp çakışmadığını tespit eder.</div></div>
-              <div class="dir-item" onclick="showPanel('transfer-sizer')"><div class="dir-item-header"><span class="dir-item-title">⏱️ Veri Transfer & Hat Doygunluğu</span><span class="dir-item-tag">M-33</span></div><div class="dir-item-desc">Veri boyutu ve hat hızına göre transfer süresini veya bakım penceresi için gereken bant genişliğini hesaplar.</div></div>
-              <div class="dir-item" onclick="showPanel('wildcard')"><div class="dir-item-header"><span class="dir-item-title">🎭 Wildcard Maske Tersleyici</span><span class="dir-item-tag">M-34</span></div><div class="dir-item-desc">Subnet maskesi veya CIDR'dan çift yönlü Wildcard hesabı ve Cisco ACL/OSPF CLI çıktısı.</div></div>
-              <div class="dir-item" onclick="showPanel('mac')"><div class="dir-item-header"><span class="dir-item-title">🔍 MAC OUI Donanım Sorgulama</span><span class="dir-item-tag">M-35</span></div><div class="dir-item-desc">IEEE OUI üretici tespiti, format dönüşümü, EUI-64 Link-Local hesabı ve Multicast/U-L analizi.</div></div>
-              <div class="dir-item" onclick="showPanel('ipsec')"><div class="dir-item-header"><span class="dir-item-title">🛡️ IPSec, GRE & LISP MSS Boyutlandırıcı</span><span class="dir-item-tag">M-36</span></div><div class="dir-item-desc">LISP UDP 4341 (36B/56B), IPSec ESP ve GRE başlıklarıyla ideal TCP MSS boyutlandırması.</div></div>
-              <div class="dir-item" onclick="showPanel('ipv6')"><div class="dir-item-header"><span class="dir-item-title">🌐 IPv6 Adres Genişletici / Analizör</span><span class="dir-item-tag">M-37</span></div><div class="dir-item-desc">Sıfır sıkıştırmalı (::) IPv6 adreslerini 128-bit tam formata genişletir, daraltır ve Solicited-Node türetir.</div></div>
-              <div class="dir-item" onclick="showPanel('ipclass')"><div class="dir-item-header"><span class="dir-item-title">📊 IP Sınıfı ve CGNAT Analizi</span><span class="dir-item-tag">M-38</span></div><div class="dir-item-desc">Class A/B/C/D/E sınıflandırması, RFC 1918 Özel IP, RFC 6598 CGNAT ve RFC 3927 APIPA tespiti.</div></div>
+              <div class="dir-item" onclick="showPanel('canvas')"><div class="dir-item-header"><span class="dir-item-title">🗺️ Topoloji & Canlı Failover Simülatörü</span><span class="dir-item-tag">M-27</span></div><div class="dir-item-desc">Genişletilmiş kanvasta hat kopması, Inter-VLAN routing, sniffer ve paket akış simülasyonu.</div></div>
+              <div class="dir-item" onclick="showPanel('traceroute')"><div class="dir-item-header"><span class="dir-item-title">📍 Traceroute & MTR Sekme Çizici</span><span class="dir-item-tag">M-28</span></div><div class="dir-item-desc">Cisco ve MTR traceroute çıktılarını görsel sekme düğümlerine ve RTT çubuklarına dönüştürür.</div></div>
+              <div class="dir-item" onclick="showPanel('wifi-analyzer')"><div class="dir-item-header"><span class="dir-item-title">📶 Wi-Fi Yayılım & Sönümleme Radarı</span><span class="dir-item-tag">M-29</span></div><div class="dir-item-desc">Duvar materyallerinin 2.4/5GHz sinyal yayılımına etkisini canlı ısı haritasıyla simüle eder.</div></div>
+              <div class="dir-item" onclick="showPanel('nat')"><div class="dir-item-header"><span class="dir-item-title">🔀 Dinamik NAT & PAT Simülatörü</span><span class="dir-item-tag">M-30</span></div><div class="dir-item-desc">Inside Local IP ve port dönüşüm süreçlerini interaktif NAT tablosunda gösterir.</div></div>
+              <div class="dir-item" onclick="showPanel('subnet')"><div class="dir-item-header"><span class="dir-item-title">🧮 CIDR Alt Ağ Hesaplayıcı</span><span class="dir-item-tag">M-31</span></div><div class="dir-item-desc">CIDR adres formatına göre ağ, broadcast, netmask ve kullanılabilir IP havuzunu çıkarır.</div></div>
+              <div class="dir-item" onclick="showPanel('vlsm')"><div class="dir-item-header"><span class="dir-item-title">📐 VLSM Alt Ağ Bölücü</span><span class="dir-item-tag">M-32</span></div><div class="dir-item-desc">IP bloklarını belirtilen alt ağ sayılarına göre otomatik olarak dinamik alt bloklara böler.</div></div>
+              <div class="dir-item" onclick="showPanel('subnet-overlap')"><div class="dir-item-header"><span class="dir-item-title">🚫 Subnet Overlap & Çakışma Dedektörü</span><span class="dir-item-tag">M-33</span></div><div class="dir-item-desc">Mevcut alt ağ listesini tarayarak yeni eklenecek IP bloğunun çakışıp çakışmadığını tespit eder.</div></div>
+              <div class="dir-item" onclick="showPanel('transfer-sizer')"><div class="dir-item-header"><span class="dir-item-title">⏱️ Veri Transfer & Hat Doygunluğu</span><span class="dir-item-tag">M-34</span></div><div class="dir-item-desc">Veri boyutu ve hat hızına göre transfer süresini veya bakım penceresi için gereken bant genişliğini hesaplar.</div></div>
+              <div class="dir-item" onclick="showPanel('wildcard')"><div class="dir-item-header"><span class="dir-item-title">🎭 Wildcard Maske Tersleyici</span><span class="dir-item-tag">M-35</span></div><div class="dir-item-desc">Subnet maskesi veya CIDR'dan çift yönlü Wildcard hesabı ve Cisco ACL/OSPF CLI çıktısı.</div></div>
+              <div class="dir-item" onclick="showPanel('mac')"><div class="dir-item-header"><span class="dir-item-title">🔍 MAC OUI Donanım Sorgulama</span><span class="dir-item-tag">M-36</span></div><div class="dir-item-desc">IEEE OUI üretici tespiti, format dönüşümü, EUI-64 Link-Local hesabı ve Multicast/U-L analizi.</div></div>
+              <div class="dir-item" onclick="showPanel('ipsec')"><div class="dir-item-header"><span class="dir-item-title">🛡️ IPSec, GRE & LISP MSS Boyutlandırıcı</span><span class="dir-item-tag">M-37</span></div><div class="dir-item-desc">LISP UDP 4341 (36B/56B), IPSec ESP ve GRE başlıklarıyla ideal TCP MSS boyutlandırması.</div></div>
+              <div class="dir-item" onclick="showPanel('ipv6')"><div class="dir-item-header"><span class="dir-item-title">🌐 IPv6 Adres Genişletici / Analizör</span><span class="dir-item-tag">M-38</span></div><div class="dir-item-desc">Sıfır sıkıştırmalı (::) IPv6 adreslerini 128-bit tam formata genişletir, daraltır ve Solicited-Node türetir.</div></div>
+              <div class="dir-item" onclick="showPanel('ipclass')"><div class="dir-item-header"><span class="dir-item-title">📊 IP Sınıfı ve CGNAT Analizi</span><span class="dir-item-tag">M-39</span></div><div class="dir-item-desc">Class A/B/C/D/E sınıflandırması, RFC 1918 Özel IP, RFC 6598 CGNAT ve RFC 3927 APIPA tespiti.</div></div>
             </div>
 
           </div>
@@ -1084,6 +1088,117 @@
 </div>
 
 
+<!-- M-26: KURUMSAL DONANIM EoL / EoS YAŞAM DÖNGÜSÜ KÜTÜPHANESİ -->
+        <div id="panel-eol-matrix" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title" style="color:#f59e0b;">// KURUMSAL DONANIM YAŞAM DÖNGÜSÜ & EoL / EoS VERİTABANI (OFFLINE LIFECYCLE AUDIT)</div>
+              <div class="panel-desc">Cisco Catalyst/Nexus/ISR/ASA, Fortinet FortiGate, Juniper EX/SRX ve Arista için satış sonu (EoS), yazılım desteği sonu (EoSW) ve emeklilik (LDOS) matrisi.</div>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <button onclick="copyEolFilteredReport()" class="btn btn-secondary">📋 Raporu Kopyala</button>
+              <button onclick="resetEolFilters()" class="btn btn-secondary">Filtreleri Sıfırla</button>
+            </div>
+          </div>
+
+          <!-- KPI ÖZET ŞERİDİ -->
+          <div class="cdr-kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:10px;">
+            <div class="cdr-kpi-card"><label>Kayıtlı Cihaz Ailesi</label><div class="cdr-kpi-val" id="eol-kpi-total">0 Model</div></div>
+            <div class="cdr-kpi-card"><label>Desteği Tamamen Biten (LDOS)</label><div class="cdr-kpi-val" style="color:var(--tech-rose);" id="eol-kpi-retired">0 Model</div></div>
+            <div class="cdr-kpi-card"><label>Yalnızca Güvenlik Yaması</label><div class="cdr-kpi-val" style="color:var(--tech-amber);" id="eol-kpi-sec-only">0 Model</div></div>
+            <div class="cdr-kpi-card"><label>Aktif Satış & Destek</label><div class="cdr-kpi-val green" id="eol-kpi-active">0 Model</div></div>
+          </div>
+
+          <!-- SEKMELER: VERİTABANI ARAMA & TOPLU ENVANTER CHECK-UP -->
+          <div class="topology-tabs">
+            <button class="tab-btn active" id="eol-tab-db" onclick="switchEolTab('db')">🔍 Yaşam Döngüsü Arama & Donanım Matrisi</button>
+            <button class="tab-btn" id="eol-tab-audit" onclick="switchEolTab('audit')">📊 Toplu Envanter Risk Check-Up (As-Built Tarayıcı)</button>
+          </div>
+
+          <!-- SEKME 1: CANLI VERİTABANI VE FİLTRELEME -->
+          <div id="eol-sec-db">
+            <div style="background:var(--bg-input); border:1px solid var(--border-tech); padding:8px 10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">ÜRETİCİ:</span>
+                <select id="eol-filter-vendor" onchange="renderEolTable()" style="width:140px; font-size:10.5px;">
+                  <option value="all" selected>Tüm Üreticiler</option>
+                  <option value="Cisco">Cisco Systems</option>
+                  <option value="Fortinet">Fortinet</option>
+                  <option value="Juniper">Juniper Networks</option>
+                  <option value="Arista">Arista Networks</option>
+                </select>
+
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-left:4px;">DESTEK DURUMU:</span>
+                <select id="eol-filter-status" onchange="renderEolTable()" style="width:160px; font-size:10.5px;">
+                  <option value="all" selected>Tüm Durumlar</option>
+                  <option value="retired">🔴 Emekli (LDOS Aşılmış)</option>
+                  <option value="seconly">🟡 Kritik Aşama (Satış Sonu)</option>
+                  <option value="active">🟢 Aktif Desteği Var</option>
+                </select>
+              </div>
+
+              <input type="text" id="eol-search-box" oninput="renderEolTable()" placeholder="Model, rol veya önerilen göç cihazı ara (örn: 3850, 2960, 60E, 9300)..." style="width:280px; padding:4px 8px; font-size:10.5px;">
+            </div>
+
+            <div style="max-height: 420px; overflow-y: auto; background: var(--bg-input); border: 1px solid var(--border-tech); margin-bottom: 8px;">
+              <table class="nat-table" id="eol-data-table">
+                <thead>
+                  <tr>
+                    <th style="width:160px;">Cihaz Modeli</th>
+                    <th>Rol / Mimari</th>
+                    <th>Satış Sonu (EoS)</th>
+                    <th>Yazılım Sonu (EoSW)</th>
+                    <th>Tam Bitiş (LDOS)</th>
+                    <th>Destek Durumu</th>
+                    <th>Son Kararlı Sürüm</th>
+                    <th>Önerilen Göç Modeli</th>
+                  </tr>
+                </thead>
+                <tbody id="eol-table-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SEKME 2: TOPLU ENVANTER CHECK-UP -->
+          <div id="eol-sec-audit" style="display:none;">
+            <div style="display:grid; grid-template-columns: 1.1fr 1.3fr; gap:12px;">
+              <div>
+                <div class="form-group">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <label style="margin:0;">Kurum Donanım Listeniz (Her Satıra Bir Model)</label>
+                    <button onclick="loadSampleInventoryForAudit()" class="btn btn-secondary" style="padding:2px 6px; font-size:9px;">Örnek Liste Yükle</button>
+                  </div>
+                  <textarea id="eol-audit-raw-input" rows="12" style="font-size:11px;" placeholder="Elindeki switch/firewall modellerini yapıştırın:&#10;WS-C2960X-48FPS-L&#10;WS-C3850-24P&#10;FG-60E&#10;C9300-48P&#10;EX2200-48T..."></textarea>
+                </div>
+                <button onclick="runBulkInventoryAudit()" class="btn" style="width:100%; background:var(--tech-amber); color:#020408; font-weight:bold;">🚀 Envanter Yaşam Döngüsü Taramasını Başlat</button>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label style="color:var(--tech-cyan); margin:0;">Donanım Yaşam Döngüsü Teftiş Raporu</label>
+                  <button onclick="copyToClipboard('eol-audit-report-container')" class="btn btn-secondary" style="padding:2px 6px; font-size:9px;">📋 Raporu Kopyala</button>
+                </div>
+                <div id="eol-audit-report-container" class="result-box" style="min-height:280px; max-height:360px; overflow-y:auto; line-height:1.55;">
+                  <div style="color:var(--text-dim); text-align:center; padding-top:100px; font-family:var(--font-mono);">
+                    Sol kutucuğa donanım listenizi yapıştırıp <b>'Taramayı Başlat'</b> butonuna basın.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ALT MİMARİ AÇIKLAMASI -->
+          <div class="recovery-step-card" style="margin-top:6px;">
+            <div class="recovery-step-title">💡 EoL / EoS Terminoloji Sözlüğü</div>
+            <div class="recovery-step-desc">
+              • <b>End-of-Sale (EoS):</b> Cihazın artık üreticiden sipariş edilemediği tarih.<br>
+              • <b>End-of-SW-Maintenance (EoSW):</b> Üreticinin yeni işletim sistemi ve özellik geliştirmeyi durdurduğu tarih.<br>
+              • <b>Last Date of Support (LDOS):</b> Donanım parça garantisi ve güvenlik yaması dahil <b>tüm resmi desteğin tamamen bittiği</b> tarih. Bu tarihten sonraki güvenlik zafiyetlerine (CVE) yama çıkmaz; cihaz derhal yenilenmelidir.
+            </div>
+          </div>
+        </div>
+
+
 	<!-- M-37: CISCO & HUAWEI TDR DAHİLİ KABLO TESTİ VE RJ45 4-PAIR ARIZA OSİLOSKOPU -->
 <div id="panel-tdr-analyzer" class="panel">
   <div class="panel-header">
@@ -1170,6 +1285,130 @@
     </div>
   </div>
 </div>
+
+
+<!-- M-25: NOC KRİZ & CHAOS SİMÜLATÖRÜ (12 SENARYO) -->
+        <div id="panel-chaos-sim" class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title" style="color:var(--tech-rose);">// NOC ACİL DURUM KRİZ & ARIZA EĞİTİM MOTORU (WAR-ROOM FLIGHT SIMULATOR)</div>
+              <div class="panel-desc">SLA süresi altında gerçekçi ağ felaketlerini teşhis edin. 12 interaktif senaryo, sanal CLI konsolu ve kök neden (RCA) puanlama sistemi.</div>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <button onclick="startChaosScenario()" class="btn" style="background:var(--tech-rose); color:#fff; font-weight:bold;">🚨 Tatbikatı / Krizi Başlat</button>
+              <button onclick="resetChaosEngine()" class="btn btn-secondary">İptal / Sıfırla</button>
+            </div>
+          </div>
+
+          <!-- KRİZ DURUM ŞERİDİ & SLA GERİ SAYIM SAYACI -->
+          <div style="background:#050a14; border:1px solid var(--border-tech); padding:8px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <label style="margin:0; color:var(--tech-cyan);">TATBİKAT SENARYOSU:</label>
+              <select id="chaos-scenario-select" onchange="previewScenarioInfo()" style="width:340px; font-weight:bold; font-size:11px;">
+                <option value="random" selected>🎲 [RASTGELE KAOS MODU] Sürpriz Arıza</option>
+                <optgroup label="[BRONZ] Katman-1 & 2 Temel Krizler">
+                  <option value="1">#01: Rogue DHCP Server & Sahte Gateway</option>
+                  <option value="2">#02: 802.1Q Native VLAN Uyuşmazlığı</option>
+                  <option value="3">#03: Port-Security İhlali (Err-Disable)</option>
+                  <option value="4">#04: MAC Flapping & Kablo Döngüsü (Loop)</option>
+                </optgroup>
+                <optgroup label="[GÜMÜŞ] Katman-3 Yönlendirme & Tünel">
+                  <option value="5">#05: OSPF MTU Mismatch (EXSTART Kilitlenmesi)</option>
+                  <option value="6">#06: Tünel MTU & TCP MSS Blackhole</option>
+                  <option value="7">#07: HSRP Split-Brain (Çift Aktif Router)</option>
+                  <option value="8">#08: Statik Rota Çakışması (Null0 Tuzağı)</option>
+                </optgroup>
+                <optgroup label="[ALTIN] Omurga, BGP & Gelişmiş Mimari">
+                  <option value="9">#09: BGP Route Leak & Yedek Hat Doygunluğu</option>
+                  <option value="10">#10: STP Root Bridge Çalınması (Hijack)</option>
+                  <option value="11">#11: LISP EID Negative Map-Cache Drop</option>
+                  <option value="12">#12: ACL Implicit Deny Tuzağı (DNS Kesintisi)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="font-family:var(--font-mono); font-size:11px;">
+                <span style="color:var(--text-muted);">SLA KALAN: </span>
+                <span id="chaos-timer-display" style="color:var(--tech-amber); font-weight:800; font-size:15px;">--:--</span>
+              </div>
+              <span id="chaos-status-badge" class="audit-badge" style="background:#1e293b; color:#94a3b8; border:1px solid #475569;">HAZIR (BEKLİYOR)</span>
+            </div>
+          </div>
+
+          <!-- ANA DÜZEN: SOL BRIEFING & SAĞ CLI KONSOLU -->
+          <div style="display:grid; grid-template-columns: 1.15fr 1.35fr; gap:12px;">
+            
+            <!-- SOL: KRİZ RAPORU, ŞİKAYETLER VE KÖK NEDEN GİRİŞİ -->
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              
+              <!-- ACİL DURUM BİLDİRİMİ -->
+              <div id="chaos-briefing-card" style="background:var(--bg-input); border:1px solid var(--border-tech); padding:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; border-bottom:1px solid var(--border-subtle); padding-bottom:4px;">
+                  <span style="font-family:var(--font-mono); font-size:9px; color:var(--text-dim);">TİCKET ID: #INC-2026-994</span>
+                  <span id="chaos-difficulty-tag" class="brand-badge-tech" style="font-size:8.5px;">SEVİYE: -</span>
+                </div>
+                <div id="chaos-ticket-title" style="font-size:12.5px; font-weight:800; color:#fff; margin-bottom:4px;">Tatbikat Seçildi</div>
+                <div id="chaos-ticket-symptom" style="font-size:11px; color:var(--text-muted); line-height:1.45;">
+                  Yukarıdan bir senaryo seçin veya <b>'Tatbikatı / Krizi Başlat'</b> butonuna basın. Kriz başladığında SLA sayacınız işleyecek ve sağdaki terminalden sorunu teşhis etmeniz gerekecektir.
+                </div>
+              </div>
+
+              <!-- TOPOLOJİ & ETKİ ALANI ŞEMASI -->
+              <div class="result-box" style="margin-top:0;">
+                <div style="font-size:10px; font-weight:700; color:var(--tech-cyan); margin-bottom:4px;">🗺️ ETKİLENEN AĞ BLOKLARI & ROL DAĞILIMI:</div>
+                <div id="chaos-topology-trace" style="font-size:10px; color:#cbd5e1; line-height:1.5;">
+                  Kriz başlatıldığında etkilenen cihazlar burada listelenecektir.
+                </div>
+              </div>
+
+              <!-- HIZLI MÜDAHALE & ÇÖZÜM REÇETESİ GİRİŞİ -->
+              <div style="background:var(--bg-input); border:1px solid var(--border-subtle); padding:10px;">
+                <label style="color:var(--tech-emerald); margin-bottom:4px;">🛠️ TEŞHİSİ DOĞRULA VEYA ÇÖZÜM KOMUTU GİR</label>
+                <div style="display:flex; gap:6px; margin-bottom:6px;">
+                  <input type="text" id="chaos-solution-input" placeholder="Örn: ip dhcp snooping veya shutdown gi1/0/7..." onkeydown="if(event.key==='Enter') submitChaosSolution();" style="flex:1;">
+                  <button onclick="submitChaosSolution()" class="btn" style="background:var(--tech-emerald); color:#020408; font-weight:bold;">Çözümü Uygula</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; color:var(--text-dim);">
+                  <span>* Doğrudan sağdaki CLI konsolundan da komut çalıştırabilirsiniz.</span>
+                  <span id="chaos-attempts-count">Denenen Komut: 0</span>
+                </div>
+              </div>
+
+              <!-- SKOR KARTI (KRİZ SONU DEĞERLENDİRMESİ) -->
+              <div id="chaos-score-box" class="result-box" style="display:none; line-height:1.6;"></div>
+            </div>
+
+            <!-- SAĞ: İNTERAKTİF SAVAŞ ODASI CLI TERMİNALİ -->
+            <div style="display:flex; flex-direction:column; background:#010204; border:1px solid var(--border-tech); box-shadow: inset 0 0 20px rgba(0,0,0,0.9);">
+              <div style="background:#060c18; border-bottom:1px solid var(--border-subtle); padding:4px 8px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--tech-cyan); font-weight:bold;">📟 WAR-ROOM INTERACTIVE CLI [CORE-SW-01]</span>
+                <span style="font-size:9px; color:var(--text-dim); font-family:var(--font-mono);">'help' veya '?' yazabilirsiniz</span>
+              </div>
+
+              <div id="chaos-term-screen" tabindex="0" onkeydown="handleChaosTermKeys(event)" style="height: 380px; overflow-y: auto; padding: 10px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 11px; line-height: 1.45; color: #34d399; outline: none; white-space: pre-wrap; word-break: break-all;">
+=== NOC SAVAŞ ODASI KONSOLUNA HOŞ GELDİNİZ ===
+Krizi başlattığınızda arızayı teşhis etmek için aşağıdaki komutları yazabilirsiniz:
+• show ip route / show ip int brief
+• show spanning-tree / show interfaces trunk
+• show ip arp / show mac address-table
+• show logging / show interfaces counters errors
+• show ip ospf neighbor / show ip bgp
+-------------------------------------------------------------------------------
+Core-SW-01# 
+</div>
+
+              <!-- ALT HIZLI KOMUT GİRİŞİ -->
+              <div style="display:flex; align-items:center; background:#040813; border-top:1px solid var(--border-subtle); padding:4px 8px; gap:6px;">
+                <span style="color:var(--tech-cyan); font-family:var(--font-mono); font-size:10px; font-weight:bold;">CLI &gt;</span>
+                <input type="text" id="chaos-cmd-input" placeholder="Teşhis veya onarım komutunu buraya yazın (Enter)..." onkeydown="if(event.key==='Enter') runChaosTerminalInput();" style="flex:1; padding:3px 6px; font-size:10.5px;">
+                <button onclick="runChaosTerminalInput()" class="btn" style="padding:3px 10px; font-size:10px;">ÇALIŞTIR</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
 
 	<!-- M-35: DONANIM KARŞILAŞTIRMA & TRANSCEIVER / ASIC BUFFER KATALOĞU -->
 <div id="panel-hw-matrix" class="panel">
@@ -9274,6 +9513,874 @@ show cable-diagnostics interface ${port}
 }
 
 // =========================================================================
+// M-25: NOC ACİL DURUM KRİZ & CHAOS SİMÜLATÖRÜ MOTORU (12 SENARYO)
+// =========================================================================
+const chaosScenariosDB = {
+  1: {
+    id: 1, level: "BRONZ", title: "Rogue DHCP Server & Sahte Ağ Geçidi",
+    symptom: "Kullanıcılar internete ve iç ERP sunucularına çıkamıyor. Ağ kartlarında IP'ler 192.168.100.x bloğuna dönmüş ve Gateway 192.168.100.254 görünüyor!",
+    topo: "İstemciler (VLAN 10) ➔ Access-SW-01 [Gi1/0/7] ➔ Yetkisiz Ev Tipi Router",
+    timeLimit: 240, // 4 Dakika
+    validFixes: ["ip dhcp snooping", "shutdown", "interface gi1/0/7 shutdown", "ip dhcp snooping trust"],
+    showOutputs: {
+      "show ip arp": "Protocol  Address          Age (min)  Hardware Addr   Type   Interface\nInternet  10.10.10.1              -   0000.0c07.ac01  ARPA   Vlan10\nInternet  192.168.100.254         1   f44b.2a88.9912  ARPA   Vlan10 (ROGUE)",
+      "show logging": "%DHCP-4-ROGUE_OFFER: Rogue DHCP server detected at 192.168.100.254 on port Gi1/0/7\n%IP-4-DUP_ADDR: Duplicate address detected for 10.10.10.1",
+      "show interfaces gi1/0/7": "GigabitEthernet1/0/7 is up, line protocol is up\n  Description: TOPLANTI_MASASI_PRIZ_04\n  Full-duplex, 100Mb/s, media type is 10/100BaseTX\n  Received 1420 broadcasts (DHCP Offers)",
+      "show ip dhcp snooping": "Switch DHCP snooping is disabled\nDHCP snooping is configured on following VLANs: none"
+    }
+  },
+  2: {
+    id: 2, level: "BRONZ", title: "802.1Q Native VLAN Uyuşmazlığı (Trunk Drop)",
+    symptom: "Access switch ile Core switch arasındaki trunk linkte paketler rastgele düşüyor. CDP sürekli Native VLAN tutarsızlığı alarmı üretiyor.",
+    topo: "Core-SW-01 [Gi1/0/24] (Native 99) ◄--- Trunk ---► Access-SW-01 (Native 1)",
+    timeLimit: 240,
+    validFixes: ["switchport trunk native vlan 99", "switchport trunk native vlan 1"],
+    showOutputs: {
+      "show interfaces trunk": "Port        Mode             Encapsulation  Status        Native vlan\nGi1/0/24    on               802.1q         trunking      1 (MISMATCH)",
+      "show logging": "%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch detected on GigabitEthernet1/0/24 (1), with Core-SW-01 GigabitEthernet1/0/24 (99).",
+      "show spanning-tree": "VLAN0001 is broken due to Native VLAN Mismatch (Inconsistent State)"
+    }
+  },
+  3: {
+    id: 3, level: "BRONZ", title: "Port-Security İhlali (Err-Disable Kilitlenmesi)",
+    symptom: "Muhasebe departmanı portu (Gi1/0/12) aniden turuncu ışığa döndü ve bağlantı kesildi. Kullanıcı masaya çoklayıcı hub taktı.",
+    topo: "Muhasebe PC + Laptop ➔ Hub ➔ Access-SW [Gi1/0/12 - Max MAC: 1]",
+    timeLimit: 240,
+    validFixes: ["shutdown", "no shutdown", "switchport port-security maximum 2", "errdisable recovery cause psecure-violation"],
+    showOutputs: {
+      "show interfaces status err-disabled": "Port      Name                   Status       Reason               Err-disable Vlan\nGi1/0/12  MUHASEBE_MASA          err-disabled psecure-violation    10",
+      "show port-security interface gi1/0/12": "Port Security              : Enabled\nPort Status                : Secure-shutdown\nViolation Mode             : Shutdown\nMax MAC Addresses          : 1\nTotal MAC Addresses        : 2 (VIOLATION)",
+      "show logging": "%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC 0050.56fe.1122 on port Gi1/0/12."
+    }
+  },
+  4: {
+    id: 4, level: "BRONZ", title: "MAC Flapping & Fiziksel Kablo Döngüsü (Loop)",
+    symptom: "Switch işlemcisi (CPU) %99'a vurdu! Konsol yanıt vermekte zorlanıyor. Aynı MAC adresi saniyede onlarca kez iki port arasında sıçrıyor.",
+    topo: "Access-SW Gi1/0/3 ◄====== UTP PATCH KABLO ======► Gi1/0/4 (Döngü)",
+    timeLimit: 240,
+    validFixes: ["interface gi1/0/4 shutdown", "interface gi1/0/3 shutdown", "spanning-tree loopguard default"],
+    showOutputs: {
+      "show logging": "%SW_MATM-4-MACFLAP_NOTIF: Host 0011.2233.4455 in vlan 10 is flapping between port Gi1/0/3 and port Gi1/0/4\n%SYS-2-MALLOCFAIL: Memory allocation failure (CPU High)",
+      "show mac address-table": "Vlan    Mac Address       Type        Ports\n----    -----------       --------    -----\n  10    0011.2233.4455    DYNAMIC     Gi1/0/3 (Flapping to Gi1/0/4)",
+      "show spanning-tree": "Spanning tree is disabled on VLAN 10! Broadcast storm in progress!"
+    }
+  },
+  5: {
+    id: 5, level: "GÜMÜŞ", title: "OSPF MTU Uyuşmazlığı (EXSTART Kilitlenmesi)",
+    symptom: "Şube router'ı ile yeni kurulan 10G omurga arasında OSPF komşuluğu kurulmuyor. Arayüzler UP ancak durum sürekli EXSTART'ta takılı.",
+    topo: "Merkez Router [Gi0/1 - MTU 1500] ◄--- WAN ---► Şube Router [Gi0/1 - MTU 9000]",
+    timeLimit: 300,
+    validFixes: ["ip ospf mtu-ignore", "ip mtu 1500", "mtu 1500"],
+    showOutputs: {
+      "show ip ospf neighbor": "Neighbor ID     Pri   State           Dead Time   Address         Interface\n10.200.1.2        1   EXSTART/DROTHER 00:00:36    10.0.0.2        GigabitEthernet0/1",
+      "show ip ospf interface gi0/1": "GigabitEthernet0/1 is up, line protocol is up\n  Internet Address 10.0.0.1/30, Area 0, MTU 1500, Cost: 1",
+      "show logging": "%OSPF-5-ADJCHG: Process 1, Nbr 10.200.1.2 on Gi0/1 from EXSTART to DOWN, Neighbor Down: Too many retransmissions (DBD Packet Length Mismatch)"
+    }
+  },
+  6: {
+    id: 6, level: "GÜMÜŞ", title: "Tünel MTU & TCP MSS Blackhole (Gizli Parçalanma)",
+    symptom: "İstemciler 64 baytlık küçük paketlerle şube sunucularına ping atabiliyor. Ancak HTTPS web sayfaları veya 5 MB dosya transferleri donup kalıyor.",
+    topo: "Host PC ➔ [IPSec / GRE Tünel MTU: 1400] ➔ Şube ERP Sunucusu",
+    timeLimit: 300,
+    validFixes: ["ip tcp adjust-mss 1360", "ip tcp adjust-mss 1350", "ip mtu 1400"],
+    showOutputs: {
+      "show interfaces tunnel1": "Tunnel1 is up, line protocol is up\n  Hardware is Tunnel\n  Internet address is 172.16.100.1/30\n  Tunnel source 198.51.100.1, destination 198.51.100.2\n  Tunnel protocol/transport GRE/IP\n  MTU 1400 bytes, BW 100000 Kbit/sec",
+      "show logging": "%IP-4-FRAG_NEEDED: Packet to 10.50.1.10 exceeded MTU 1400, DF bit is set (Path MTU Blackhole)"
+    }
+  },
+  7: {
+    id: 7, level: "GÜMÜŞ", title: "HSRP Split-Brain (Çift Aktif Gateway Kriz)",
+    symptom: "Ağda IP çakışması alarmları patladı. Hem Core-SW-01 hem de Core-SW-02 kendisini VIP (192.168.1.1) için 'Active' ilan ediyor.",
+    topo: "Core-SW-01 (ACTIVE 192.168.1.1) ◄-- ACL Block (UDP 1985) --► Core-SW-02 (ACTIVE 192.168.1.1)",
+    timeLimit: 300,
+    validFixes: ["no ip access-group", "permit udp any any eq 1985", "standby 1 ip 192.168.1.1"],
+    showOutputs: {
+      "show standby brief": "                     P indicates configured to preempt.\nInterface   Grp  Pri P State   Active          Standby         Virtual IP\nVlan10      1    110 P Active  local           unknown         192.168.1.1",
+      "show access-lists": "Extended IP access list ACL_INSPECTION\n    10 deny udp any any eq 1985 (1420 matches - HSRP BLOCKED)\n    20 permit ip any any",
+      "show logging": "%HSRP-4-DIFFVIP1: Vlan10 Grp 1 active router is local with priority 110, but duplicate active detected!"
+    }
+  },
+  8: {
+    id: 8, level: "GÜMÜŞ", title: "Statik Rota Çakışması (Null0 Tuzağı)",
+    symptom: "10.50.0.0/16 bloğundaki hiçbir sunucuya ulaşılamıyor. Paketler router çıkışında sessizce düşüyor.",
+    topo: "Omurga Router ➔ [ip route 10.50.0.0 255.255.0.0 Null0] ➔ ÇÖP",
+    timeLimit: 300,
+    validFixes: ["no ip route 10.50.0.0 255.255.0.0 null0", "ip route 10.50.0.0 255.255.0.0 192.168.1.254"],
+    showOutputs: {
+      "show ip route": "S    10.50.0.0/16 is directly connected, Null0 (ADMIN DISTANCE 1 - BLACKHOLE)\nO    10.50.0.0/16 [110/20] via 192.168.1.254, 01:14:10, GigabitEthernet0/0",
+      "show ip route 10.50.1.1": "Routing entry for 10.50.0.0/16\n  Known via 'static', distance 1, metric 0 (connected)\n  * directly connected, via Null0"
+    }
+  },
+  9: {
+    id: 9, level: "ALTIN", title: "BGP Route Leak & Yedek Hat Doygunluğu",
+    symptom: "50 Mbps'lik yedek MPLS devresi %100 yükle boğulurken 1 Gbps'lik ana internet devresi bomboş bekliyor. Şirket genelinde internet durdu.",
+    topo: "ISP-1 (1 Gbps - Primary) vs ISP-2 (50 Mbps - Backup Local-Pref: 200)",
+    timeLimit: 360,
+    validFixes: ["set local-preference 300", "set local-preference 100", "as-path prepend", "route-map"],
+    showOutputs: {
+      "show ip bgp summary": "Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd\n198.51.100.1    4 65001    1420    1410      240    0    0 02:40:12        1 (Primary 1G)\n203.0.113.1     4 65002    1422    1411      240    0    0 02:40:10        1 (Backup 50M)",
+      "show ip bgp 0.0.0.0": "BGP routing table entry for 0.0.0.0/0\n  Paths: (2 available, best #2)\n  65001\n    198.51.100.1 from 198.51.100.1 (LocalPref: 100)\n  65002\n    203.0.113.1 from 203.0.113.1 (LocalPref: 200 - SELECTED BEST TO 50M PIPE)"
+    }
+  },
+  10: {
+    id: 10, level: "ALTIN", title: "STP Root Bridge Çalınması (Hijack & Fırtına)",
+    symptom: "Tüm kat switch'leri kilitlendi. Kat-3 kenar switch'ine bağlanan yabancı bir cihaz Priority 0 ile kendini Spanning-Tree Root yaptı.",
+    topo: "Core Switch (Priority 32768) ◄--- BPDUs ---► Kenar Port Gi1/0/20 (Priority 0 Hijack)",
+    timeLimit: 360,
+    validFixes: ["spanning-tree vlan 10 root primary", "spanning-tree vlan 10 priority 4096", "spanning-tree bpduguard enable", "bpduguard"],
+    showOutputs: {
+      "show spanning-tree": "VLAN0010\n  Spanning tree enabled protocol rstp\n  Root ID    Priority    0\n             Address     0050.56a1.b2c3\n             Cost        19\n             Port        20 (GigabitEthernet1/0/20)\n  Bridge ID  Priority    32778 (Default Core Switch)",
+      "show logging": "%SPANTREE-5-ROOTCHANGE: Root switch changed to priority 0 on port Gi1/0/20!"
+    }
+  },
+  11: {
+    id: 11, level: "ALTIN", title: "LISP EID Negative Map-Cache Drop",
+    symptom: "Fabric Edge (xTR) cihazındaki sunucular Pod-2 ile konuşamıyor. Trafik arayüzden çıkarken sessizce düşürülüyor.",
+    topo: "İstemci EID (10.10.10.50) ➔ xTR-01 [Map-Cache: Negative Drop] ➔ Drop",
+    timeLimit: 360,
+    validFixes: ["clear ip lisp map-cache", "itr map-resolver 203.0.113.1", "router lisp"],
+    showOutputs: {
+      "show ip lisp map-cache": "LISP IPv4 Mapping Table for EID-table default (IID 101), entries: 2\n10.10.10.0/24, uptime: 00:04:12, expires: 00:10:48, via map-reply, negative\n  Negative cache entry, action: drop (No-Mapping from Map-Server)",
+      "show logging": "%LISP-3-MAP_CACHE_DROP: Packet to EID 10.10.10.50 dropped due to Negative Map-Cache entry."
+    }
+  },
+  12: {
+    id: 12, level: "ALTIN", title: "ACL Implicit Deny Tuzağı (DNS Felaketi)",
+    symptom: "Router üzerinde yeni bir web erişim kuralı yazıldıktan sonra şirket genelinde isim çözümleme (DNS) çöktü.",
+    topo: "Host PC ➔ Core Router [Extended ACL 101: Permit HTTP only] ➔ Port 53 Blocked",
+    timeLimit: 360,
+    validFixes: ["permit udp any any eq 53", "permit ip any any", "access-list 101 permit udp any any eq 53", "no access-list 101"],
+    showOutputs: {
+      "show access-lists 101": "Extended IP access list 101\n    10 permit tcp any any eq 80\n    20 permit tcp any any eq 443\n    (Implicit Deny All: UDP 53 packets dropped - 14,892 matches)",
+      "show logging": "%SEC-6-IPACCESSLOGP: list 101 denied udp 192.168.1.50(54210) -> 8.8.8.8(53), 1 packet"
+    }
+  }
+};
+
+let activeChaosId = null;
+let chaosTimeRemaining = 0;
+let chaosTimerInterval = null;
+let chaosAttemptsCount = 0;
+let chaosStartTime = 0;
+
+function previewScenarioInfo() {
+  const selVal = document.getElementById('chaos-scenario-select').value;
+  if (selVal === 'random') {
+    document.getElementById('chaos-difficulty-tag').innerText = "SEVİYE: SÜRPRİZ";
+    document.getElementById('chaos-ticket-title').innerText = "🎲 Rastgele Kaos Tatbikatı";
+    document.getElementById('chaos-ticket-symptom').innerText = "Tatbikat başlatıldığında 12 senaryodan biri rastgele seçilecek ve süre sayacı işlemeye başlayacaktır.";
+    document.getElementById('chaos-topology-trace').innerText = "Gizli (Tatbikat başladığında açılır)";
+    return;
+  }
+
+  const sc = chaosScenariosDB[selVal];
+  if (!sc) return;
+
+  document.getElementById('chaos-difficulty-tag').innerText = `SEVİYE: ${sc.level}`;
+  document.getElementById('chaos-ticket-title').innerText = sc.title;
+  document.getElementById('chaos-ticket-symptom').innerText = sc.symptom;
+  document.getElementById('chaos-topology-trace').innerText = sc.topo;
+}
+
+function startChaosScenario() {
+  playSoundFx('alert');
+  let selVal = document.getElementById('chaos-scenario-select').value;
+  if (selVal === 'random') {
+    const keys = Object.keys(chaosScenariosDB);
+    selVal = keys[Math.floor(Math.random() * keys.length)];
+  }
+
+  const sc = chaosScenariosDB[selVal];
+  if (!sc) return;
+
+  activeChaosId = sc.id;
+  chaosTimeRemaining = sc.timeLimit;
+  chaosAttemptsCount = 0;
+  chaosStartTime = Date.now();
+
+  document.getElementById('chaos-difficulty-tag').innerText = `SEVİYE: ${sc.level}`;
+  document.getElementById('chaos-ticket-title').innerText = `🚨 [KRİZ AKTİF] ${sc.title}`;
+  document.getElementById('chaos-ticket-symptom').innerText = sc.symptom;
+  document.getElementById('chaos-topology-trace').innerText = sc.topo;
+
+  const statusBadge = document.getElementById('chaos-status-badge');
+  statusBadge.innerText = "🚨 SLA AKTİF (KRİZ)";
+  statusBadge.className = "audit-badge badge-fail";
+
+  document.getElementById('chaos-score-box').style.display = 'none';
+  document.getElementById('chaos-attempts-count').innerText = `Denenen Komut: 0`;
+
+  // Sayacı Başlat
+  if (chaosTimerInterval) clearInterval(chaosTimerInterval);
+  updateChaosTimerUI();
+  chaosTimerInterval = setInterval(() => {
+    chaosTimeRemaining--;
+    updateChaosTimerUI();
+    if (chaosTimeRemaining <= 0) {
+      clearInterval(chaosTimerInterval);
+      handleChaosSlaBreach();
+    }
+  }, 1000);
+
+  // Terminali Sıfırla ve Karşılama Ver
+  const term = document.getElementById('chaos-term-screen');
+  term.innerHTML = `\x1b[31m[!] ALARM: Ağ Operasyon Merkezi (NOC) acil durum bildirimi aldı!\x1b[0m\n` +
+                   `[!] Arıza: ${sc.title}\n` +
+                   `[!] Kriz başladı. Doğru teşhis için komutları yazın.\n-------------------------------------------------------------------------------\nCore-SW-01# `;
+}
+
+function updateChaosTimerUI() {
+  const timerDisplay = document.getElementById('chaos-timer-display');
+  const mins = Math.floor(chaosTimeRemaining / 60);
+  const secs = chaosTimeRemaining % 60;
+  timerDisplay.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  timerDisplay.style.color = chaosTimeRemaining <= 60 ? 'var(--tech-rose)' : (chaosTimeRemaining <= 120 ? 'var(--tech-amber)' : 'var(--tech-emerald)');
+}
+
+function resetChaosEngine() {
+  playSoundFx('key');
+  if (chaosTimerInterval) clearInterval(chaosTimerInterval);
+  activeChaosId = null;
+  document.getElementById('chaos-status-badge').innerText = "HAZIR (BEKLİYOR)";
+  document.getElementById('chaos-status-badge').className = "audit-badge";
+  document.getElementById('chaos-timer-display').innerText = "--:--";
+  document.getElementById('chaos-score-box').style.display = 'none';
+  previewScenarioInfo();
+}
+
+function handleChaosTermKeys(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    runChaosTerminalInput();
+  }
+}
+
+function runChaosTerminalInput() {
+  const inputEl = document.getElementById('chaos-cmd-input');
+  if (!inputEl) return;
+  const cmd = inputEl.value.trim();
+  inputEl.value = "";
+  if (!cmd) return;
+
+  const term = document.getElementById('chaos-term-screen');
+  term.innerHTML += `${cmd}\n`;
+  chaosAttemptsCount++;
+  document.getElementById('chaos-attempts-count').innerText = `Denenen Komut: ${chaosAttemptsCount}`;
+
+  if (!activeChaosId) {
+    term.innerHTML += `% Henüz bir kriz senaryosu başlatılmadı. Lütfen yukarıdaki 'Tatbikatı / Krizi Başlat' butonuna basın.\nCore-SW-01# `;
+    term.scrollTop = term.scrollHeight;
+    return;
+  }
+
+  processChaosCommand(cmd);
+}
+
+function submitChaosSolution() {
+  const inputEl = document.getElementById('chaos-solution-input');
+  if (!inputEl) return;
+  const fix = inputEl.value.trim();
+  inputEl.value = "";
+  if (!fix) return;
+
+  chaosAttemptsCount++;
+  document.getElementById('chaos-attempts-count').innerText = `Denenen Komut: ${chaosAttemptsCount}`;
+
+  if (!activeChaosId) {
+    alert("Lütfen önce bir senaryo başlatın.");
+    return;
+  }
+  processChaosCommand(fix, true);
+}
+
+function processChaosCommand(cmd, fromSolutionInput = false) {
+  const term = document.getElementById('chaos-term-screen');
+  const sc = chaosScenariosDB[activeChaosId];
+  const cleanCmd = cmd.toLowerCase().replace(/\s+/g, ' ');
+
+  // 1. ÇÖZÜM DOĞRULAMA KONTROLÜ
+  let isSolved = false;
+  for (let fix of sc.validFixes) {
+    if (cleanCmd.includes(fix.toLowerCase())) {
+      isSolved = true;
+      break;
+    }
+  }
+
+  if (isSolved) {
+    clearInterval(chaosTimerInterval);
+    playSoundFx('success');
+
+    const mttrSec = Math.round((Date.now() - chaosStartTime) / 1000);
+    const score = Math.max(30, 100 - (chaosAttemptsCount * 3) - Math.floor(mttrSec / 10));
+
+    term.innerHTML += `\n\x1b[32m[✓] TEBRİKLER! KRİZ BAŞARIYLA ÇÖZÜLDÜ!\x1b[0m\n` +
+                      `[✓] Ağ trafiği normale döndü. SLA hedefine ulaşıldı.\n` +
+                      `Core-SW-01# `;
+    term.scrollTop = term.scrollHeight;
+
+    const statusBadge = document.getElementById('chaos-status-badge');
+    statusBadge.innerText = "✅ ÇÖZÜLDÜ";
+    statusBadge.className = "audit-badge badge-pass";
+
+    renderChaosScorecard(sc, true, mttrSec, score);
+    return;
+  }
+
+  // 2. YARDIM VE DIAGNOSTIC KOMUT ÇIKTILARI
+  if (cleanCmd === 'help' || cleanCmd === '?') {
+    term.innerHTML += `Kullanılabilir Teşhis Komutları:\n  show ip route, show ip int brief, show interfaces trunk, show spanning-tree\n  show ip arp, show mac address-table, show logging, show ip ospf neighbor, show ip bgp\nCore-SW-01# `;
+  } else if (sc.showOutputs[cleanCmd]) {
+    term.innerHTML += `${sc.showOutputs[cleanCmd]}\nCore-SW-01# `;
+  } else if (cleanCmd.startsWith('show ')) {
+    // Kısmi eşleşme tara
+    let found = false;
+    for (let [k, out] of Object.entries(sc.showOutputs)) {
+      if (cleanCmd.includes(k) || k.includes(cleanCmd)) {
+        term.innerHTML += `${out}\nCore-SW-01# `;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      term.innerHTML += `% Bu senaryoda '${cmd}' için anomali tespit edilmedi veya veri temiz.\nCore-SW-01# `;
+    }
+  } else {
+    term.innerHTML += `% Komut uygulandı ancak kriz devam ediyor. Belirtileri incelemeye devam edin.\nCore-SW-01# `;
+  }
+
+  term.scrollTop = term.scrollHeight;
+}
+
+function handleChaosSlaBreach() {
+  playSoundFx('alert');
+  const sc = chaosScenariosDB[activeChaosId];
+  const term = document.getElementById('chaos-term-screen');
+
+  term.innerHTML += `\n\x1b[31m[✕] SLA SÜRESİ AŞILDI! MÜŞTERİ KESİNTİSİ RAPORLANDI!\x1b[0m\n` +
+                    `[✕] Kök Neden: ${sc.title}\n` +
+                    `[✕] Beklenen Çözüm Reçetesi: ${sc.validFixes[0]}\nCore-SW-01# `;
+  term.scrollTop = term.scrollHeight;
+
+  const statusBadge = document.getElementById('chaos-status-badge');
+  statusBadge.innerText = "❌ SLA AŞILDI";
+  statusBadge.className = "audit-badge badge-fail";
+
+  renderChaosScorecard(sc, false, sc.timeLimit, 0);
+}
+
+function renderChaosScorecard(sc, isSuccess, mttrSec, score) {
+  const box = document.getElementById('chaos-score-box');
+  box.style.display = 'block';
+
+  let mins = Math.floor(mttrSec / 60);
+  let secs = mttrSec % 60;
+  let timeStr = `${mins} dk ${secs} sn`;
+
+  box.innerHTML = `
+    <div style="font-weight:800; font-size:12px; color:${isSuccess ? 'var(--tech-emerald)' : 'var(--tech-rose)'}; margin-bottom:6px;">
+      ${isSuccess ? '🏆 TATBİKAT BAŞARIYLA TAMAMLANDI' : '❌ TATBİKAT BAŞARISIZ (SLA KESİNTİSİ)'}
+    </div>
+    <div class="res-row"><span class="res-label">Senaryo:</span><span class="res-val">${sc.title} (${sc.level})</span></div>
+    <div class="res-row"><span class="res-label">Çözüm Süresi (MTTR):</span><span class="res-val amber">${timeStr}</span></div>
+    <div class="res-row"><span class="res-label">Denenen Komut Sayısı:</span><span class="res-val">${chaosAttemptsCount} Adet</span></div>
+    <div class="res-row"><span class="res-label">NOC Yetkinlik Puanı:</span><span class="res-val ${score >= 70 ? 'green' : 'rose'}" style="font-size:14px; font-weight:800;">${score} / 100</span></div>
+    <div style="border-top:1px solid var(--border-subtle); margin-top:6px; padding-top:4px; font-size:10px; color:var(--text-muted);">
+      <b style="color:var(--tech-cyan);">Önerilen Altın Reçete:</b> <code>${sc.validFixes[0]}</code>
+    </div>
+  `;
+}
+
+// =========================================================================
+// M-26: KURUMSAL DONANIM YAŞAM DÖNGÜSÜ & EoL/EoS MOTORU
+// =========================================================================
+const enterpriseEolDatabase = [
+  // CISCO CATALYST & ERİŞİM
+  {
+    model: "Catalyst 2960-X / 2960-XR",
+    vendor: "Cisco",
+    role: "Kampüs L2/L3 Erişim",
+    eos: "31 Eki 2021",
+    eosw: "31 Eki 2022",
+    ldos: "31 Eki 2026",
+    status: "seconly",
+    lastOs: "IOS 15.2(7)E10a MD",
+    migPath: "Catalyst 9200 / 9200L",
+    notes: "Sahada en yaygın bulunan model. 2026 sonunda tüm desteği bitecek."
+  },
+  {
+    model: "Catalyst 3850 Serisi",
+    vendor: "Cisco",
+    role: "Kampüs Dağıtım / Stack L3",
+    eos: "31 Eki 2020",
+    eosw: "31 Eki 2021",
+    ldos: "31 Eki 2025",
+    status: "retired",
+    lastOs: "IOS-XE 16.12.10a",
+    migPath: "Catalyst 9300 Serisi",
+    notes: "LDOS süresi dolmuştur. Kritik zafiyet yaması dahi alamaz."
+  },
+  {
+    model: "Catalyst 3750-X / 3560-X",
+    vendor: "Cisco",
+    role: "Kampüs Stack L3 / Dağıtım",
+    eos: "30 Eki 2015",
+    eosw: "30 Eki 2016",
+    ldos: "31 Eki 2020",
+    status: "retired",
+    lastOs: "IOS 15.0(2)SE11 MD",
+    migPath: "Catalyst 9300 / 9200",
+    notes: "Tamamen emekli donanım. Donanım arızasında parça bulunamaz."
+  },
+  {
+    model: "Catalyst 2960-Plus / 2960-S",
+    vendor: "Cisco",
+    role: "Eski 10/100/1000 Kenar",
+    eos: "30 Kas 2015",
+    eosw: "30 Kas 2016",
+    ldos: "30 Kas 2020",
+    status: "retired",
+    lastOs: "IOS 15.0(2)SE11",
+    migPath: "Catalyst 9200L / 1000",
+    notes: "Eski şube ve kenar switch'i. Derhal değiştirilmelidir."
+  },
+  {
+    model: "Catalyst 9200 / 9200L",
+    vendor: "Cisco",
+    role: "Modern Kampüs L2/L3 Erişim",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2032+ (Aktif)",
+    status: "active",
+    lastOs: "IOS-XE 17.9.5 / 17.12.x",
+    migPath: "Güncel Model (Yerinde Kal)",
+    notes: "Modern kurumsal erişim omurgası."
+  },
+  {
+    model: "Catalyst 9300 / 9300X",
+    vendor: "Cisco",
+    role: "Gelişmiş Dağıtım / UPOE+",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2034+ (Aktif)",
+    status: "active",
+    lastOs: "IOS-XE 17.12.3 / 17.15.x",
+    migPath: "Güncel Model (Yerinde Kal)",
+    notes: "Wi-Fi 6E/7, mGig ve StackWise-1T destekli amiral gemisi."
+  },
+  {
+    model: "Catalyst 9500 / 9500X",
+    vendor: "Cisco",
+    role: "Kampüs Çekirdek (Core 40/100G)",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2035+ (Aktif)",
+    status: "active",
+    lastOs: "IOS-XE 17.12.x",
+    migPath: "Güncel Model",
+    notes: "Büyük ölçekli kampüs ve omurga anahtarlama."
+  },
+
+  // CISCO WAN & ISR ROUTER
+  {
+    model: "Cisco ISR 4331 / 4321 / 4351",
+    vendor: "Cisco",
+    role: "Şube & WAN Uç Router",
+    eos: "30 Kas 2023",
+    eosw: "30 Kas 2024",
+    ldos: "30 Kas 2028",
+    status: "seconly",
+    lastOs: "IOS-XE 17.9.5a",
+    migPath: "Catalyst 8300 / 8200 Edge",
+    notes: "Yeni özellik durduruldu. Sadece 2028'e kadar güvenlik yaması alacak."
+  },
+  {
+    model: "Cisco ISR 1941 / 2901 / 2911 / 3945",
+    vendor: "Cisco",
+    role: "G2 Klasik WAN Router",
+    eos: "09 Ara 2017",
+    eosw: "09 Ara 2018",
+    ldos: "31 Ara 2022",
+    status: "retired",
+    lastOs: "IOS 15.7(3)M9",
+    migPath: "Catalyst 8200 / ISR 1000",
+    notes: "Tamamen emekli. Güvenlik açıkları kapatılamaz."
+  },
+  {
+    model: "Cisco Catalyst 8200 / 8300",
+    vendor: "Cisco",
+    role: "SD-WAN / Yeni Nesil Edge",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2033+ (Aktif)",
+    status: "active",
+    lastOs: "IOS-XE 17.12.x",
+    migPath: "Güncel Model",
+    notes: "IPSec ve SD-WAN yüksek şifreleme kapasitesi."
+  },
+
+  // CISCO GÜVENLİK (ASA & FIREPOWER)
+  {
+    model: "Cisco ASA 5506-X / 5508-X / 5516-X",
+    vendor: "Cisco",
+    role: "Küçük/Orta Ölçek Firewall",
+    eos: "24 Ağu 2021",
+    eosw: "24 Ağu 2022",
+    ldos: "31 Ağu 2026",
+    status: "seconly",
+    lastOs: "ASA 9.16.4 / FTD 6.6.x",
+    migPath: "Firepower 1010 / 1120",
+    notes: "2026 Ağustos ayında tüm güvenlik desteği sonlanacak."
+  },
+  {
+    model: "Cisco ASA 5515-X / 5525-X / 5555-X",
+    vendor: "Cisco",
+    role: "Orta/Büyük Veri Merkezi FW",
+    eos: "01 Eki 2017",
+    eosw: "01 Eki 2018",
+    ldos: "30 Eyl 2022",
+    status: "retired",
+    lastOs: "ASA 9.14.4 MD",
+    migPath: "Secure Firewall 2100 / 3100",
+    notes: "Emekli. Donanım kripto hızlandırıcısı yeni şifrelemelerde yetersiz."
+  },
+  {
+    model: "Cisco Secure Firewall 1010 / 1120",
+    vendor: "Cisco",
+    role: "Yeni Nesil NGFW",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2032+ (Aktif)",
+    status: "active",
+    lastOs: "FTD / ASA 9.20.x",
+    migPath: "Güncel Model",
+    notes: "Donanımsal bypass ve modern NGFW mimarisi."
+  },
+
+  // FORTINET FORTIGATE
+  {
+    model: "FortiGate 60D / 90D",
+    vendor: "Fortinet",
+    role: "Giriş Seviyesi Şube FW",
+    eos: "26 Tem 2018",
+    eosw: "26 Tem 2020",
+    ldos: "26 Tem 2023",
+    status: "retired",
+    lastOs: "FortiOS 5.4.13 (Max)",
+    migPath: "FortiGate 60F / 70F",
+    notes: "LDOS doldu. SSL-VPN ve son CVE açıkları yamalanamaz."
+  },
+  {
+    model: "FortiGate 60E / 61E",
+    vendor: "Fortinet",
+    role: "Şube Güvenlik Duvarı",
+    eos: "19 Ağu 2021",
+    eosw: "19 Ağu 2023",
+    ldos: "19 Ağu 2026",
+    status: "seconly",
+    lastOs: "FortiOS 6.4.15 / 7.0.14",
+    migPath: "FortiGate 60F / 70F",
+    notes: "2026 Ağustos'ta emekli olacak. FortiOS 7.2 ve 7.4 yüklenemez."
+  },
+  {
+    model: "FortiGate 100D / 200D",
+    vendor: "Fortinet",
+    role: "Orta Ölçek Kurumsal FW",
+    eos: "10 Oca 2017",
+    eosw: "10 Oca 2019",
+    ldos: "10 Oca 2022",
+    status: "retired",
+    lastOs: "FortiOS 6.0.18 (Max)",
+    migPath: "FortiGate 100F / 200F",
+    notes: "Emekli. SOC işlemcisi modern TLS 1.3 trafiğinde tıkanır."
+  },
+  {
+    model: "FortiGate 100E / 101E",
+    vendor: "Fortinet",
+    role: "Kurumsal Ağ Geçidi",
+    eos: "31 Ara 2022",
+    eosw: "31 Ara 2024",
+    ldos: "31 Ara 2027",
+    status: "seconly",
+    lastOs: "FortiOS 7.0.x / 7.2.x",
+    migPath: "FortiGate 100F / 120G",
+    notes: "Yazılım desteği durmak üzere. 2027'de LDOS tamamlanacak."
+  },
+  {
+    model: "FortiGate 60F / 70F / 100F",
+    vendor: "Fortinet",
+    role: "Modern SD-WAN & NGFW",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2031+ (Aktif)",
+    status: "active",
+    lastOs: "FortiOS 7.2.8 / 7.4.x",
+    migPath: "Güncel Model",
+    notes: "SOC4 tabanlı yüksek hızlı ASIC donanım mimarisi."
+  },
+
+  // JUNIPER NETWORKS
+  {
+    model: "Juniper EX2200 / EX3300",
+    vendor: "Juniper",
+    role: "Kampüs Erişim / Virtual Chassis",
+    eos: "30 Haz 2019",
+    eosw: "30 Haz 2021",
+    ldos: "30 Haz 2024",
+    status: "retired",
+    lastOs: "Junos 15.1R7 (Max)",
+    migPath: "Juniper EX2300 / EX3400",
+    notes: "LDOS aşıldı. Junos güvenlik yamaları kesilmiştir."
+  },
+  {
+    model: "Juniper EX4200 / EX4500",
+    vendor: "Juniper",
+    role: "Omurga & Toplama (Aggregation)",
+    eos: "31 Ara 2015",
+    eosw: "31 Ara 2017",
+    ldos: "31 Ara 2020",
+    status: "retired",
+    lastOs: "Junos 15.1R7-S10",
+    migPath: "Juniper EX4400 / EX4650",
+    notes: "Eski nesil omurga switch'i. Tamamen emekli."
+  },
+  {
+    model: "Juniper EX2300 / EX3400",
+    vendor: "Juniper",
+    role: "Modern Kampüs Erişim & Dağıtım",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2030+ (Aktif)",
+    status: "active",
+    lastOs: "Junos 21.4R3 / 22.4R3",
+    migPath: "Güncel Model",
+    notes: "Junos Fusion ve modern kurumsal erişim anahtarı."
+  },
+
+  // ARISTA NETWORKS
+  {
+    model: "Arista DCS-7050S / 7050T",
+    vendor: "Arista",
+    role: "Veri Merkezi 10G ToR Leaf",
+    eos: "15 Tem 2017",
+    eosw: "15 Tem 2019",
+    ldos: "15 Tem 2022",
+    status: "retired",
+    lastOs: "EOS 4.20.x (Max)",
+    migPath: "Arista 7050SX3 Serisi",
+    notes: "Trident 1 çipli eski ToR switch. Emekli."
+  },
+  {
+    model: "Arista DCS-7050SX3 / 7060X",
+    vendor: "Arista",
+    role: "Veri Merkezi 25G/100G Leaf-Spine",
+    eos: "Aktif Satışta",
+    eosw: "Destekleniyor",
+    ldos: "2032+ (Aktif)",
+    status: "active",
+    lastOs: "EOS 4.31.x / 4.32.x",
+    migPath: "Güncel Model",
+    notes: "Kayıpsız Ethernet ve modern bulut omurgası."
+  }
+];
+
+function initEolMatrixEngine() {
+  updateEolKpis();
+  renderEolTable();
+}
+
+function switchEolTab(tab) {
+  playSoundFx('key');
+  document.getElementById('eol-tab-db').classList.toggle('active', tab === 'db');
+  document.getElementById('eol-tab-audit').classList.toggle('active', tab === 'audit');
+  document.getElementById('eol-sec-db').style.display = (tab === 'db') ? 'block' : 'none';
+  document.getElementById('eol-sec-audit').style.display = (tab === 'audit') ? 'block' : 'none';
+}
+
+function updateEolKpis() {
+  const total = enterpriseEolDatabase.length;
+  let retired = 0, seconly = 0, active = 0;
+
+  enterpriseEolDatabase.forEach(d => {
+    if (d.status === 'retired') retired++;
+    else if (d.status === 'seconly') seconly++;
+    else active++;
+  });
+
+  document.getElementById('eol-kpi-total').innerText = `${total} Model`;
+  document.getElementById('eol-kpi-retired').innerText = `${retired} Model`;
+  document.getElementById('eol-kpi-sec-only').innerText = `${seconly} Model`;
+  document.getElementById('eol-kpi-active').innerText = `${active} Model`;
+}
+
+function renderEolTable() {
+  const vendor = document.getElementById('eol-filter-vendor').value;
+  const status = document.getElementById('eol-filter-status').value;
+  const query = (document.getElementById('eol-search-box')?.value || "").toLowerCase().trim();
+  const tbody = document.getElementById('eol-table-tbody');
+  if (!tbody) return;
+
+  let html = "";
+  enterpriseEolDatabase.forEach(d => {
+    if (vendor !== 'all' && d.vendor !== vendor) return;
+    if (status !== 'all' && d.status !== status) return;
+
+    if (query) {
+      const text = `${d.model} ${d.vendor} ${d.role} ${d.migPath} ${d.lastOs}`.toLowerCase();
+      if (!text.includes(query)) return;
+    }
+
+    let statusBadge = "";
+    if (d.status === 'retired') {
+      statusBadge = `<span class="audit-badge badge-fail" title="Tüm destek bitti">🔴 EMEKLİ (LDOS)</span>`;
+    } else if (d.status === 'seconly') {
+      statusBadge = `<span class="audit-badge" style="background:rgba(255,180,84,0.2); color:var(--tech-amber); border:1px solid rgba(255,180,84,0.4);" title="Yeni yazılım yok, sadece güvenlik yaması">🟡 GÜVENLİK YAMASI</span>`;
+    } else {
+      statusBadge = `<span class="audit-badge badge-pass" title="Satışta ve destekleniyor">🟢 AKTİF DESTEK</span>`;
+    }
+
+    html += `
+      <tr>
+        <td><b style="color:var(--tech-cyan);">${d.model}</b><br><span style="font-size:9px; color:var(--text-dim);">${d.vendor}</span></td>
+        <td style="font-size:10px; color:var(--text-muted);">${d.role}</td>
+        <td style="font-size:10px;">${d.eos}</td>
+        <td style="font-size:10px;">${d.eosw}</td>
+        <td style="font-size:10.5px; font-weight:bold; color:${d.status==='retired'?'var(--tech-rose)':'#fff'};">${d.ldos}</td>
+        <td>${statusBadge}</td>
+        <td style="font-family:var(--font-mono); font-size:9.5px; color:var(--tech-emerald);">${d.lastOs}</td>
+        <td style="font-weight:700; color:#38bdf8; font-size:10px;">${d.migPath}</td>
+      </tr>
+    `;
+  });
+
+  tbody.innerHTML = html || `<tr><td colspan="8" style="text-align:center; color:var(--text-dim); padding:20px;">Filtrelere uygun donanım kaydı bulunamadı.</td></tr>`;
+}
+
+function resetEolFilters() {
+  playSoundFx('key');
+  document.getElementById('eol-filter-vendor').value = "all";
+  document.getElementById('eol-filter-status').value = "all";
+  document.getElementById('eol-search-box').value = "";
+  renderEolTable();
+}
+
+function loadSampleInventoryForAudit() {
+  playSoundFx('key');
+  document.getElementById('eol-audit-raw-input').value =
+`WS-C2960X-48FPS-L  (Kenar Kat-2 Switch)
+WS-C3850-24P       (Eski Dağıtım Switch)
+WS-C3750G-24TS     (Sistem Odası Yedek)
+C9300-48P          (Yeni Omurga Switch)
+ISR4331/K9         (Şube WAN Router)
+CISCO2911/K9       (Eski Yedek Router)
+ASA5506-K9         (Şube Güvenlik Duvarı)
+FG-60D             (Misafir Ağı FW)
+FG-100E            (Merkez Güvenlik Duvarı)
+EX2200-48T-4G      (Test Odası Switch)`;
+  runBulkInventoryAudit();
+}
+
+function runBulkInventoryAudit() {
+  playSoundFx('key');
+  const raw = document.getElementById('eol-audit-raw-input').value;
+  const container = document.getElementById('eol-audit-report-container');
+  if (!raw.trim()) {
+    alert("Lütfen taranacak donanım modellerini yapıştırın.");
+    return;
+  }
+
+  const lines = raw.split('\n');
+  let matchedDevices = [];
+  let retiredCount = 0;
+  let secOnlyCount = 0;
+  let activeCount = 0;
+
+  lines.forEach(line => {
+    const cleanLine = line.trim();
+    if (!cleanLine || cleanLine.startsWith('#')) return;
+
+    let matched = null;
+    for (let d of enterpriseEolDatabase) {
+      const keywords = d.model.split(/[\/\s-]+/).filter(k => k.length >= 3);
+      for (let kw of keywords) {
+        if (cleanLine.toUpperCase().includes(kw.toUpperCase())) {
+          matched = d;
+          break;
+        }
+      }
+      if (matched) break;
+    }
+
+    if (matched) {
+      if (matched.status === 'retired') retiredCount++;
+      else if (matched.status === 'seconly') secOnlyCount++;
+      else activeCount++;
+
+      matchedDevices.push({ raw: cleanLine, ...matched });
+    } else {
+      matchedDevices.push({ raw: cleanLine, model: "Bilinmeyen / Özel Model", status: "unknown", migPath: "İncelenmeli", ldos: "Veri Yok" });
+    }
+  });
+
+  const totalScanned = matchedDevices.length;
+  let riskScore = 100 - (retiredCount * 18) - (secOnlyCount * 8);
+  if (riskScore < 0) riskScore = 0;
+
+  playSoundFx(retiredCount > 0 ? 'alert' : 'success');
+
+  let reportHtml = `
+    <div style="font-size:12.5px; font-weight:800; color:${riskScore < 60 ? 'var(--tech-rose)' : 'var(--tech-emerald)'}; margin-bottom:6px;">
+      ${riskScore < 60 ? '⚠️ YÜKSEK ALTYAPI RİSKİ // EMEKLİ DONANIMLAR TESPİT EDİLDİ' : '✅ ALTYAPI DONANIM SAĞLIĞI UYGUN'}
+    </div>
+    <div class="res-row"><span class="res-label">Taranan Toplam Donanım:</span><span class="res-val">${totalScanned} Adet</span></div>
+    <div class="res-row"><span class="res-label">🔴 Desteği Tamamen Biten (Emekli):</span><span class="res-val rose" style="font-weight:bold;">${retiredCount} Adet (Acil Değişim Gerekli)</span></div>
+    <div class="res-row"><span class="res-label">🟡 Satış Sonu (Sadece Güvenlik):</span><span class="res-val amber">${secOnlyCount} Adet</span></div>
+    <div class="res-row"><span class="res-label">🟢 Güncel & Desteklenen:</span><span class="res-val green">${activeCount} Adet</span></div>
+    <div class="res-row"><span class="res-label">Kurumsal Yaşam Döngüsü Skoru:</span><span class="res-val ${riskScore<60?'rose':'green'}" style="font-size:14px; font-weight:800;">${riskScore} / 100</span></div>
+
+    <div style="margin-top:8px; border-top:1px solid var(--border-subtle); padding-top:6px;">
+      <b style="color:var(--tech-cyan); font-size:10.5px;">📋 ÖNERİLEN DONANIM YENİLEME VE GÖÇ (MIGRATION) PLANI:</b>
+      <div style="display:flex; flex-direction:column; gap:4px; margin-top:4px;">
+  `;
+
+  matchedDevices.forEach(item => {
+    let color = item.status === 'retired' ? 'var(--tech-rose)' : (item.status === 'seconly' ? 'var(--tech-amber)' : 'var(--tech-emerald)');
+    reportHtml += `
+      <div style="background:rgba(255,255,255,0.02); border-left:3px solid ${color}; padding:4px 6px; font-size:10px;">
+        <b style="color:#fff;">${item.raw}</b> ➔ 
+        <span style="color:${color}; font-weight:bold;">[${item.status ? item.status.toUpperCase() : 'UNKNOWN'}]</span> | 
+        LDOS: <span style="color:#fff;">${item.ldos}</span> | 
+        Önerilen Göç: <b style="color:#38bdf8;">${item.migPath}</b>
+      </div>
+    `;
+  });
+
+  reportHtml += `</div></div>`;
+  container.innerHTML = reportHtml;
+}
+
+function copyEolFilteredReport() {
+  playSoundFx('key');
+  let text = `=== ZEROPACKET DONANIM YAŞAM DÖNGÜSÜ & EoL RAPORU ===\n`;
+  text += `Tarih: ${new Date().toLocaleDateString('tr-TR')} | Standalone Air-Gap Kütüphanesi\n\n`;
+
+  enterpriseEolDatabase.forEach(d => {
+    text += `[${d.vendor.toUpperCase()}] ${d.model}\n`;
+    text += `  Rol: ${d.role} | Durum: ${d.status.toUpperCase()} | LDOS: ${d.ldos}\n`;
+    text += `  Son Kararlı Sürüm: ${d.lastOs}\n`;
+    text += `  Önerilen Göç Modeli: ${d.migPath}\n`;
+    text += `------------------------------------------------------------\n`;
+  });
+
+  navigator.clipboard.writeText(text).then(() => {
+    playSoundFx('success');
+    alert("Donanım EoL/EoS kataloğu panoya kopyalandı!");
+  });
+}
+
+
+
+// =========================================================================
 // PROTOKOL VE HESAPLAMA MOTORLARI (M-29 - M-33)
 // =========================================================================
 
@@ -9684,9 +10791,11 @@ write memory`;
       loadSampleAuditConfig();
       loadSampleDiff();
       initPatchBayEngine();
+      initEolMatrixEngine();
       calcTransferTime();
       runSubnetOverlapCheck();
       populateFirewallPortsTable();
+      previewScenarioInfo();
       calcSubnet();
       calcClass();
       calcIPv6();
