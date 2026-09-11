@@ -1825,56 +1825,123 @@
           </div>
         </div>
 
-        <!-- M-01: GERÇEK KONSOL -->
+        <!-- M-01: ZEROCONSOLE STANDALONE PRO (100% PURE HTML / ZERO PYTHON) -->
         <div id="panel-real-console" class="panel">
           <div class="panel-header">
             <div>
-              <div class="panel-title">// ZEROCONSOLE // GERÇEK DONANIM SERİ KONSOL TERMİNALİ (WEB SERIAL API)</div>
-              <div class="panel-desc">Simülatör DEĞİLDİR. Bilgisayarınıza takılı USB-RJ45 konsol kablosuyla doğrudan Switch/Router'a bağlanır (Putty gerekmez).</div>
+              <div class="panel-title">// ZEROCONSOLE STANDALONE // DONANIM KONSOL VE CLI TERMİNALİ (SIFIR EK PROGRAM)</div>
+              <div class="panel-desc">Gerçek USB-Konsol kablosuyla doğrudan Switch/Router CLI'ına bağlanın (PuTTY gerekmez, tamamen tek dosya).</div>
             </div>
-            <div style="display:flex; gap:6px;">
-              <button onclick="sendSerialBreak()" class="btn btn-danger" title="Cisco ROMMON moduna düşürmek için donanımsal BREAK sinyali gönderir">⚡ BREAK Sinyali Gönder</button>
-              <button onclick="downloadSerialSessionLog()" class="btn btn-secondary">💾 Oturum Logunu İndir (.txt)</button>
-              <button onclick="clearSerialScreen()" class="btn btn-secondary">Temizle</button>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <button onclick="sendCiscoHardwareBreak()" class="btn btn-danger" title="Cisco'yu ROMMON moduna düşürür">⚡ Donanımsal BREAK</button>
+              <button onclick="sendCiscoAbortSequence()" class="btn btn-secondary" title="Ping/Traceroute kesme sinyali">🛑 Ctrl+Shift+6 (Abort)</button>
+              <button onclick="openConsoleMacroModal()" class="btn btn-secondary">📋 Toplu Config Gönder</button>
+              <button onclick="downloadConsoleSessionLog()" class="btn btn-secondary">💾 Log İndir (.log)</button>
+              <button onclick="clearConsoleTerminalScreen()" class="btn btn-secondary">Temizle</button>
             </div>
           </div>
 
-          <div class="serial-terminal-wrapper">
-            <div class="serial-control-bar">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted);">HIZ (BAUD):</span>
-                <select id="serial-baud-rate" style="width:115px; padding:2px 4px; font-size:10.5px;">
-                  <option value="9600" selected>9600 (Standart)</option>
-                  <option value="115200">115200 (ROMMON/Hızlı)</option>
+          <!-- KONTROL VE BAĞLANTI ÇUBUĞU -->
+          <div style="background:#060c18; border:1px solid var(--border-tech); padding:8px 10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">ÇALIŞMA MODU:</span>
+              <select id="zc-engine-mode" onchange="changeZcEngineMode()" style="width:190px; font-weight:bold; color:var(--tech-cyan);">
+                <option value="hardware" selected>🔌 CANLI DONANIM KABLOSU</option>
+                <option value="sandbox">🧪 ÇEVRİMDIŞI CISCO CLI LAB</option>
+                <option value="ssh_helper">🚀 HIZLI SSH/TELNET BAŞLATICI</option>
+              </select>
+
+              <!-- SERİ PORT PARAMETRELERİ -->
+              <div id="zc-hardware-params" style="display:flex; align-items:center; gap:6px;">
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">BAUD:</span>
+                <select id="zc-baud-rate" style="width:95px; font-size:10px;">
+                  <option value="9600" selected>9600</option>
+                  <option value="115200">115200</option>
                   <option value="19200">19200</option>
                   <option value="38400">38400</option>
                   <option value="57600">57600</option>
                 </select>
 
-                <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted); margin-left:6px;">AKIŞ KONTROLÜ:</span>
-                <select id="serial-flow-control" style="width:95px; padding:2px 4px; font-size:10.5px;">
-                  <option value="none" selected>Yok (None)</option>
-                  <option value="hardware">RTS/CTS</option>
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">TEMA:</span>
+                <select id="zc-term-theme" onchange="changeTerminalTheme()" style="width:110px; font-size:10px;">
+                  <option value="theme-green" selected>Matrix Yeşil</option>
+                  <option value="theme-amber">CRT Kehribar</option>
+                  <option value="theme-cyan">Siber Mavi</option>
+                  <option value="theme-white">Klasik Beyaz</option>
                 </select>
-              </div>
-
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span id="serial-conn-status" style="font-family:var(--font-mono); font-size:11px; color:var(--tech-rose); font-weight:700;">● BAĞLI DEĞİL</span>
-                <button id="btn-serial-connect" onclick="toggleSerialConnection()" class="btn" style="background:var(--tech-emerald); color:#020408;">🔌 Konsol Portu Seç & Bağlan</button>
               </div>
             </div>
 
-            <div id="serial-term-output" tabindex="0" onkeydown="handleSerialRawKeyDown(event)">=== ZEROCONSOLE GERÇEK WEB SERIAL KONSOL ÇEKİRDEĞİ ===
-1. USB-Konsol (Cisco Mavi Kablo, FTDI, Prolific veya CH340) kablonuzu dizüstü bilgisayara takın.
-2. Yukarıdaki 'Konsol Portu Seç & Bağlan' butonuna basıp çıkan listeden COM portunuzu seçin.
-3. Ekrana tıklayarak doğrudan gerçek Switch/Router CLI'ını kullanabilirsiniz (Putty / SecureCRT gerekmez).
---------------------------------------------------------------------------------------------------
-</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="zc-connection-badge" style="font-family:var(--font-mono); font-size:10.5px; font-weight:bold; color:var(--tech-rose);">● KABLO BAĞLI DEĞİL</span>
+              <button id="zc-main-toggle-btn" onclick="toggleHardwareSerialConnection()" class="btn" style="background:var(--tech-emerald); color:#020408; font-weight:bold;">🔌 Konsol Kablosuna Bağlan</button>
+            </div>
+          </div>
 
-            <div class="serial-bottom-input-bar">
-              <span style="color:var(--tech-cyan); font-family:var(--font-mono); font-size:10.5px;">HIZLI KOMUT &gt;</span>
-              <input type="text" id="serial-quick-input" placeholder="Komut yazıp Enter'a basın (veya doğrudan yukarıdaki siyah ekrana tıklayıp klavyeden yazın)..." onkeydown="handleSerialQuickInputKey(event)">
-              <button onclick="sendSerialQuickInput()" class="btn" style="padding:3px 12px; font-size:10.5px;">GÖNDER</button>
+          <!-- TERMİNAL EKRANI (VT100 VIEWPORT) -->
+          <div style="position:relative; background:#010204; border:1px solid var(--border-tech); box-shadow: inset 0 0 25px rgba(0,0,0,0.95);">
+            <div id="zc-terminal-viewport" tabindex="0" onkeydown="handleConsoleHardwareKeys(event)" style="height: 470px; overflow-y: auto; padding: 12px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 11.5px; line-height: 1.45; color: #34d399; outline: none; white-space: pre-wrap; word-break: break-all; cursor: text;">
+=== ZEROCONSOLE PRO // 100% AIR-GAPPED STANDALONE (SIFIR PYTHON / SIFIR PROGRAM) ===
+1. USB-Konsol kablonuzu (Cisco mavi kablo, FTDI, Prolific veya CH340) bilgisayara takın.
+2. Yukarıdaki 'Konsol Kablosuna Bağlan' butonuna basıp çıkan port listesinden COM portunuzu seçin.
+3. PuTTY veya SecureCRT kullanmadan doğrudan gerçek switch CLI'ına bağlanacaksınız.
+---------------------------------------------------------------------------------------
+✓ TAB Tuşu: Cisco Komut Tamamlama       ✓ Yukarı/Aşağı Ok: Komut Geçmişi
+✓ Ctrl+Shift+6: Kilitlenen Pingi Durdur  ✓ Ctrl+C / Ctrl+Z: Çıkış ve İptal
+---------------------------------------------------------------------------------------
+</div>
+            <div id="zc-statusbar-info" style="position:absolute; bottom:6px; right:12px; font-family:var(--font-mono); font-size:9.5px; color:var(--text-dim); pointer-events:none;">
+              MOD: GERÇEK DONANIM SERİ | 8-N-1 | UTF-8
+            </div>
+          </div>
+
+          <!-- ALT HIZLI KOMUT GİRİŞİ -->
+          <div style="display:flex; align-items:center; background:#040813; border:1px solid var(--border-tech); border-top:none; padding:6px 10px; gap:8px;">
+            <span style="color:var(--tech-cyan); font-family:var(--font-mono); font-size:10.5px; font-weight:bold;">KOMUT &gt;</span>
+            <input type="text" id="zc-quick-input-field" placeholder="Komut yazın (Enter'a basın veya doğrudan yukarıdaki siyah ekrana tıklayıp klavyeden yazın)..." onkeydown="if(event.key==='Enter') executeQuickTerminalCommand();" style="flex:1; padding:4px 8px; font-size:11px;">
+            <button onclick="executeQuickTerminalCommand()" class="btn" style="padding:4px 12px; font-size:10px;">GÖNDER</button>
+          </div>
+
+          <!-- SSH / TELNET HIZLI LAUNCHER KUTUSU (GİZLİ BAŞLAR) -->
+          <div id="zc-ssh-helper-box" style="display:none; background:var(--bg-card); border:1px solid var(--border-tech); padding:10px; margin-top:8px;">
+            <b style="color:var(--tech-cyan); font-size:11.5px;">🚀 AĞ ÜZERİNDEN TEK TIKLA SSH / TELNET ÇALIŞTIRICI</b>
+            <div style="font-size:10.5px; color:var(--text-muted); margin:4px 0 8px 0;">
+              Tarayıcılar güvenlik mimarisi gereği Ethernet kablosundan ham TCP 22/23 soketi açamaz. Ancak Windows Terminal veya Linux terminaliniz için tek tıkla kopyalanıp çalıştırılmaya hazır komut satırı:
+            </div>
+            <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap:6px;">
+              <input type="text" id="zc-ssh-host" value="192.168.1.1" placeholder="Switch IP">
+              <input type="text" id="zc-ssh-user" value="admin" placeholder="Kullanıcı">
+              <select id="zc-ssh-proto"><option value="ssh">SSH (Port 22)</option><option value="telnet">Telnet (Port 23)</option></select>
+              <button onclick="generateSshLaunchCommand()" class="btn" style="width:100%;">📋 Komutu Kopyala</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOPLU MAKRO / PACED CONFIG MODALI -->
+        <div id="zc-macro-dialog" class="zp-modal-overlay">
+          <div class="zp-modal-box" style="width: 560px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-tech); padding-bottom:6px; margin-bottom:8px;">
+              <b style="color:var(--tech-cyan); font-size:12px;">📋 TOPLU CONFIG GÖNDERİCİ (GECİKMELİ PACED PASTE)</b>
+              <span style="color:var(--tech-rose); cursor:pointer; font-weight:bold;" onclick="closeConsoleMacroModal()">✕</span>
+            </div>
+            <div style="font-size:10px; color:var(--text-muted); margin-bottom:6px;">
+              Konsol portunu boğmamak için komutlar satır satır belirlenen gecikmeyle switch'e enjekte edilir:
+            </div>
+            <div class="form-group">
+              <label>Satırlar Arası Gecikme</label>
+              <select id="zc-macro-delay-ms">
+                <option value="100">100 ms (Hızlı)</option>
+                <option value="180" selected>180 ms (Cisco Standart - Önerilen)</option>
+                <option value="350">350 ms (Yavaş / Eski Seri Hat)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Gönderilecek CLI Satırları</label>
+              <textarea id="zc-macro-script-text" rows="9" placeholder="configure terminal&#10;interface GigabitEthernet1/0/1&#10; description UPLINK&#10; no shutdown&#10;exit"></textarea>
+            </div>
+            <div style="display:flex; gap:6px; justify-content:flex-end;">
+              <button onclick="injectMacroPacedLines()" class="btn" style="background:var(--tech-emerald); color:#020408;">🚀 Cihaza Enjekte Et</button>
+              <button onclick="closeConsoleMacroModal()" class="btn btn-secondary">İptal</button>
             </div>
           </div>
         </div>
@@ -5288,224 +5355,383 @@ function appendFieldNoteTemplate(type) {
   area.scrollTop = area.scrollHeight;
 }
 
+// ZEROCONSOLE STANDALONE MOTORU (100% PURE BROWSER // ZERO PYTHON)
 // =========================================================================
-// ZEROCONSOLE WEB SERIAL DONANIM MOTORU (M-01)
-// =========================================================================
-let serialPort = null;
-let serialReader = null;
-let serialWriter = null;
-let serialIsConnected = false;
-let serialSessionLogBuffer = "";
+let zcActivePort = null;
+let zcActiveReader = null;
+let zcActiveWriter = null;
+let zcIsPortOpen = false;
+let zcCurrentEngineMode = "hardware"; // hardware | sandbox | ssh_helper
+let zcRawLogSession = "";
 
-async function toggleSerialConnection() {
-  if (!("serial" in navigator)) {
-    alert("⚠️ Web Serial API bu tarayıcıda desteklenmiyor!\nLütfen Google Chrome, Microsoft Edge, Opera veya Brave kullanın.\n(Air-Gapped ortamlarda bu tarayıcılar USB-Konsol kablolarına doğrudan donanımsal erişim sağlar).");
-    return;
-  }
+// Dahili Sanal Cisco Lab Simülatörü Değişkenleri (Kablo Yokken Test İçin)
+let zcSimState = "user"; // user (>) | priv (#) | config ((config)#)
+let zcSimHostname = "Router";
 
-  if (serialIsConnected) {
-    await disconnectSerialPort();
-  } else {
-    await connectSerialPort();
+function changeZcEngineMode() {
+  playSoundFx('key');
+  zcCurrentEngineMode = document.getElementById('zc-engine-mode').value;
+  const hwParams = document.getElementById('zc-hardware-params');
+  const toggleBtn = document.getElementById('zc-main-toggle-btn');
+  const sshBox = document.getElementById('zc-ssh-helper-box');
+  const statusBadge = document.getElementById('zc-connection-badge');
+
+  if (zcCurrentEngineMode === 'hardware') {
+    hwParams.style.display = 'flex';
+    toggleBtn.style.display = 'inline-flex';
+    sshBox.style.display = 'none';
+    statusBadge.innerText = zcIsPortOpen ? "● CANLI KABLO BAĞLI" : "● KABLO BAĞLI DEĞİL";
+    statusBadge.style.color = zcIsPortOpen ? "var(--tech-emerald)" : "var(--tech-rose)";
+  } else if (zcCurrentEngineMode === 'sandbox') {
+    hwParams.style.display = 'none';
+    toggleBtn.style.display = 'none';
+    sshBox.style.display = 'none';
+    statusBadge.innerText = "● SANAL LABORATUVAR AKTİF";
+    statusBadge.style.color = "var(--tech-amber)";
+    appendZcText(`\n\n\x1b[33m--- DAHİLİ CISCO IOS TEST LABORATUVARI BAŞLATILDI ---\nKablo takılı değilken pratik yapabilirsiniz. 'enable', 'conf t', 'sh ip int br' deneyin.\x1b[0m\n${zcSimHostname}> `);
+  } else if (zcCurrentEngineMode === 'ssh_helper') {
+    hwParams.style.display = 'none';
+    toggleBtn.style.display = 'none';
+    sshBox.style.display = 'block';
+    statusBadge.innerText = "● SSH BAŞLATICI";
+    statusBadge.style.color = "var(--tech-cyan)";
   }
 }
 
-async function connectSerialPort() {
-  try {
-    const baudRate = parseInt(document.getElementById('serial-baud-rate').value, 10) || 9600;
-    const flowControl = document.getElementById('serial-flow-control').value;
+// 1. GERÇEK WEBSERIAL KABLO MOTORU (SIFIR PROGRAM)
+async function toggleHardwareSerialConnection() {
+  if (zcIsPortOpen) {
+    await disconnectHardwareSerial();
+  } else {
+    await connectHardwareSerial();
+  }
+}
 
-    serialPort = await navigator.serial.requestPort();
-    
-    await serialPort.open({
+async function connectHardwareSerial() {
+  if (!("serial" in navigator)) {
+    alert("⚠️ Web Serial API bu tarayıcıda desteklenmiyor!\nLütfen Google Chrome, Microsoft Edge veya Brave kullanın.");
+    return;
+  }
+  try {
+    const baudRate = parseInt(document.getElementById('zc-baud-rate').value, 10) || 9600;
+
+    zcActivePort = await navigator.serial.requestPort();
+    await zcActivePort.open({
       baudRate: baudRate,
       dataBits: 8,
       stopBits: 1,
       parity: "none",
-      flowControl: flowControl
+      flowControl: "none"
     });
 
-    serialIsConnected = true;
-    updateSerialUI(true);
-    appendSerialTerminalText(`\n[+] DONANIM PORTU BAĞLANDI (Baud: ${baudRate}, 8-N-1, Akış: ${flowControl})\n[+] Gerçek Switch/Router konsoluna doğrudan bağlandınız.\n\n`);
+    zcIsPortOpen = true;
+    updateHardwareUI(true, baudRate);
+    appendZcText(`\n\x1b[32m[+] CANLI KONSOL PORTU AÇILDI (${baudRate} Baud, 8-N-1)\x1b[0m\n[+] Gerçek Switch/Router CLI ekranındasınız.\n\n`);
     playSoundFx('success');
 
-    const term = document.getElementById('serial-term-output');
-    if (term) term.focus();
-
-    readSerialStream();
+    focusConsoleScreen();
+    readHardwareStream();
   } catch (err) {
-    console.error("Seri Port Bağlantı Hatası:", err);
     if (err.name !== 'NotFoundError') {
-      alert("Port açılırken hata oluştu: " + err.message);
+      alert("Port açılırken hata: " + err.message);
     }
   }
 }
 
-async function disconnectSerialPort() {
-  try {
-    serialIsConnected = false;
-    if (serialReader) {
-      await serialReader.cancel();
-      serialReader = null;
-    }
-    if (serialWriter) {
-      await serialWriter.close();
-      serialWriter = null;
-    }
-    if (serialPort) {
-      await serialPort.close();
-      serialPort = null;
-    }
-    updateSerialUI(false);
-    appendSerialTerminalText(`\n[-] SERİ PORT BAĞLANTISI KESİLDİ.\n`);
-    playSoundFx('alert');
-  } catch (err) {
-    console.error("Port kapatma hatası:", err);
-  }
-}
-
-async function readSerialStream() {
-  const textDecoder = new TextDecoder();
-  while (serialPort && serialPort.readable && serialIsConnected) {
+async function readHardwareStream() {
+  const decoder = new TextDecoder();
+  while (zcActivePort && zcActivePort.readable && zcIsPortOpen) {
     try {
-      serialReader = serialPort.readable.getReader();
+      zcActiveReader = zcActivePort.readable.getReader();
       while (true) {
-        const { value, done } = await serialReader.read();
+        const { value, done } = await zcActiveReader.read();
         if (done) break;
         if (value) {
-          const text = textDecoder.decode(value);
-          appendSerialTerminalText(text);
+          const text = decoder.decode(value);
+          appendZcText(text);
         }
       }
     } catch (err) {
-      console.warn("Seri akış okuma sonlandı:", err);
       break;
     } finally {
-      if (serialReader) {
-        serialReader.releaseLock();
-      }
+      if (zcActiveReader) zcActiveReader.releaseLock();
     }
   }
 }
 
-async function writeSerialData(str) {
-  if (!serialPort || !serialPort.writable || !serialIsConnected) {
-    alert("Cihaz bağlı değil! Lütfen önce 'Konsol Portu Seç & Bağlan' butonuna tıklayın.");
-    return;
-  }
+async function disconnectHardwareSerial() {
+  zcIsPortOpen = false;
   try {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(str);
-    const writer = serialPort.writable.getWriter();
-    await writer.write(data);
-    writer.releaseLock();
-  } catch (err) {
-    console.error("Seri porta veri gönderme hatası:", err);
+    if (zcActiveReader) { await zcActiveReader.cancel(); zcActiveReader = null; }
+    if (zcActiveWriter) { await zcActiveWriter.close(); zcActiveWriter = null; }
+    if (zcActivePort) { await zcActivePort.close(); zcActivePort = null; }
+  } catch(e) {}
+  updateHardwareUI(false);
+  appendZcText(`\n\x1b[31m[-] KONSOL BAĞLANTISI KESİLDİ.\x1b[0m\n`);
+  playSoundFx('alert');
+}
+
+function updateHardwareUI(connected, baud = 9600) {
+  const badge = document.getElementById('zc-connection-badge');
+  const btn = document.getElementById('zc-main-toggle-btn');
+  if (connected) {
+    badge.innerText = `● CANLI BAĞLI (${baud} Baud)`;
+    badge.style.color = "var(--tech-emerald)";
+    btn.innerText = "✕ Bağlantıyı Kes";
+    btn.style.background = "var(--tech-rose)";
+    btn.style.color = "#fff";
+  } else {
+    badge.innerText = "● KABLO BAĞLI DEĞİL";
+    badge.style.color = "var(--tech-rose)";
+    btn.innerText = "🔌 Konsol Kablosuna Bağlan";
+    btn.style.background = "var(--tech-emerald)";
+    btn.style.color = "#020408";
   }
 }
 
-async function sendSerialBreak() {
-  if (!serialPort || !serialIsConnected) {
-    alert("BREAK sinyali göndermek için önce seri porta bağlı olmalısınız.");
-    return;
-  }
-  try {
-    await serialPort.setSignals({ break: true });
-    setTimeout(async () => {
-      await serialPort.setSignals({ break: false });
-      appendSerialTerminalText(`\n[!] DONANIMSAL SERIAL BREAK SİNYALİ GÖNDERİLDİ [ROMMON TETİKLEMESİ]\n`);
-      playSoundFx('alert');
-    }, 250);
-  } catch (err) {
-    alert("Break sinyali gönderilemedi: " + err.message);
+// 2. VERİ GÖNDERME MOTORU (DONANIM VEYA SİMÜLATÖR)
+async function sendRawConsoleData(str) {
+  if (zcCurrentEngineMode === 'hardware') {
+    if (!zcIsPortOpen || !zcActivePort || !zcActivePort.writable) return;
+    try {
+      const encoder = new TextEncoder();
+      const writer = zcActivePort.writable.getWriter();
+      await writer.write(encoder.encode(str));
+      writer.releaseLock();
+    } catch(e) {}
+  } else if (zcCurrentEngineMode === 'sandbox') {
+    handleSandboxCliInput(str);
   }
 }
 
-function appendSerialTerminalText(txt) {
-  const term = document.getElementById('serial-term-output');
-  if (!term) return;
-  term.textContent += txt;
-  serialSessionLogBuffer += txt;
-  term.scrollTop = term.scrollHeight;
+// 3. EKRANA YAZMA VE ANSI RENKLERİ
+function appendZcText(rawText) {
+  zcRawLogSession += rawText;
+  const viewport = document.getElementById('zc-terminal-viewport');
+  if (!viewport) return;
+
+  let formatted = rawText
+    .replace(/\r\n/g, '\n')
+    .replace(/\x1b\[0m/g, '</span>')
+    .replace(/\x1b\[31m/g, '<span style="color:#ff3366;">')
+    .replace(/\x1b\[32m/g, '<span style="color:#00ff9d;">')
+    .replace(/\x1b\[33m/g, '<span style="color:#ffb454;">')
+    .replace(/\x1b\[34m/g, '<span style="color:#38bdf8;">')
+    .replace(/\x1b\[1m/g, '<span style="font-weight:bold;">');
+
+  const span = document.createElement('span');
+  span.innerHTML = formatted;
+  viewport.appendChild(span);
+  viewport.scrollTop = viewport.scrollHeight;
 }
 
-function clearSerialScreen() {
-  const term = document.getElementById('serial-term-output');
-  if (term) term.textContent = "";
+function focusConsoleScreen() {
+  const vp = document.getElementById('zc-terminal-viewport');
+  if (vp) vp.focus();
+}
+
+function clearConsoleTerminalScreen() {
+  const vp = document.getElementById('zc-terminal-viewport');
+  if (vp) vp.innerHTML = "";
   playSoundFx('key');
 }
 
-function downloadSerialSessionLog() {
-  if (!serialSessionLogBuffer) {
-    alert("Henüz kaydedilecek bir oturum verisi yok.");
+// 4. KLAVYE MOTORU (TAB, OKLAR, CTRL+SHIFT+6, BACKSPACE)
+function handleConsoleHardwareKeys(e) {
+  // Cisco Ping/Traceroute Durdurma Kısayolu: Ctrl + Shift + 6
+  if (e.ctrlKey && e.shiftKey && (e.key === '6' || e.code === 'Digit6')) {
+    e.preventDefault();
+    sendCiscoAbortSequence();
     return;
   }
-  const blob = new Blob([serialSessionLogBuffer], { type: "text/plain;charset=utf-8" });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `zeroconsole_session_${Date.now()}.txt`;
-  a.click();
-  playSoundFx('success');
-}
 
-function updateSerialUI(connected) {
-  const statusEl = document.getElementById('serial-conn-status');
-  const btn = document.getElementById('btn-serial-connect');
-  if (statusEl && btn) {
-    if (connected) {
-      statusEl.innerText = "● BAĞLI (CANLI SERİ HAT)";
-      statusEl.style.color = "var(--tech-emerald)";
-      btn.innerText = "❌ Bağlantıyı Kes";
-      btn.style.background = "var(--tech-rose)";
-      btn.style.color = "#fff";
-    } else {
-      statusEl.innerText = "● BAĞLI DEĞİL";
-      statusEl.style.color = "var(--tech-rose)";
-      btn.innerText = "🔌 Konsol Portu Seç & Bağlan";
-      btn.style.background = "var(--tech-emerald)";
-      btn.style.color = "#020408";
-    }
+  // Standart Ctrl Kısayolları
+  if (e.ctrlKey && !e.shiftKey && !e.altKey) {
+    const k = e.key.toLowerCase();
+    if (k === 'c') { e.preventDefault(); sendRawConsoleData("\x03"); return; }
+    if (k === 'z') { e.preventDefault(); sendRawConsoleData("\x1A"); return; }
+    if (k === 'u') { e.preventDefault(); sendRawConsoleData("\x15"); return; }
+  }
+
+  switch (e.key) {
+    case 'Enter':
+      e.preventDefault();
+      sendRawConsoleData("\r");
+      break;
+    case 'Tab':
+      e.preventDefault();
+      sendRawConsoleData("\t"); // Cisco komut tamamlama
+      break;
+    case 'Backspace':
+      e.preventDefault();
+      sendRawConsoleData("\b");
+      break;
+    case 'ArrowUp':
+      e.preventDefault();
+      sendRawConsoleData("\x1b[A"); // Cisco geçmiş yukarı
+      break;
+    case 'ArrowDown':
+      e.preventDefault();
+      sendRawConsoleData("\x1b[B"); // Cisco geçmiş aşağı
+      break;
+    case 'ArrowRight':
+      e.preventDefault();
+      sendRawConsoleData("\x1b[C");
+      break;
+    case 'ArrowLeft':
+      e.preventDefault();
+      sendRawConsoleData("\x1b[D");
+      break;
+    default:
+      if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        e.preventDefault();
+        sendRawConsoleData(e.key);
+      }
+      break;
   }
 }
 
-function handleSerialRawKeyDown(e) {
-  if (!serialIsConnected) return;
-  
-  if (e.key === "Tab") {
-    e.preventDefault();
-    writeSerialData("\t");
-  } else if (e.key === "Enter") {
-    e.preventDefault();
-    writeSerialData("\r");
-  } else if (e.key === "Backspace") {
-    e.preventDefault();
-    writeSerialData("\b");
-  } else if (e.ctrlKey && e.key === "c") {
-    e.preventDefault();
-    writeSerialData("\x03");
-  } else if (e.ctrlKey && e.key === "z") {
-    e.preventDefault();
-    writeSerialData("\x1A");
-  } else if (e.key.length === 1 && !e.altKey && !e.metaKey) {
-    writeSerialData(e.key);
-  }
-}
-
-function handleSerialQuickInputKey(e) {
-  if (e.key === "Enter") {
-    sendSerialQuickInput();
-  }
-}
-
-function sendSerialQuickInput() {
-  const input = document.getElementById('serial-quick-input');
+function executeQuickTerminalCommand() {
+  const input = document.getElementById('zc-quick-input-field');
   if (!input) return;
   const val = input.value;
   input.value = "";
   if (val) {
-    writeSerialData(val + "\r");
+    sendRawConsoleData(val + "\r");
   }
+  focusConsoleScreen();
+}
+
+// 5. DONANIMSAL SİNYALLER (BREAK & ABORT)
+async function sendCiscoHardwareBreak() {
+  if (zcCurrentEngineMode === 'hardware' && zcActivePort && zcIsPortOpen) {
+    try {
+      await zcActivePort.setSignals({ break: true });
+      setTimeout(async () => {
+        await zcActivePort.setSignals({ break: false });
+        appendZcText(`\n\x1b[31m[!] DONANIMSAL BREAK SİNYALİ GÖNDERİLDİ (ROMMON GİRİŞİ)\x1b[0m\n`);
+        playSoundFx('alert');
+      }, 300);
+    } catch(e) {
+      alert("Break sinyali gönderilemedi: " + e.message);
+    }
+  } else {
+    alert("Donanımsal Break sinyali için kabloyla bir cihaza bağlı olmalısınız.");
+  }
+}
+
+function sendCiscoAbortSequence() {
+  // ASCII 30 (0x1E) = Cisco Ping Abort
+  sendRawConsoleData("\x1e");
+  appendZcText(`\n\x1b[33m[!] ABORT SİNYALİ GÖNDERİLDİ (Ctrl+Shift+6)\x1b[0m\n`);
+  playSoundFx('alert');
+}
+
+// 6. TOPLU CONFIG PACED ENJEKSİYONU
+function openConsoleMacroModal() { playSoundFx('key'); document.getElementById('zc-macro-dialog').style.display = 'flex'; }
+function closeConsoleMacroModal() { document.getElementById('zc-macro-dialog').style.display = 'none'; }
+
+async function injectMacroPacedLines() {
+  const text = document.getElementById('zc-macro-script-text').value;
+  const delay = parseInt(document.getElementById('zc-macro-delay-ms').value, 10) || 180;
+  closeConsoleMacroModal();
+
+  if (!text.trim()) return;
+  const lines = text.split('\n');
+
+  appendZcText(`\n\x1b[33m[*] Toplu konfigürasyon gönderiliyor (${lines.length} satır, her satır ${delay}ms)...\x1b[0m\n`);
+
+  for (let l of lines) {
+    sendRawConsoleData(l + "\r");
+    await new Promise(r => setTimeout(r, delay));
+  }
+
+  appendZcText(`\n\x1b[32m[✓] Enjeksiyon tamamlandı.\x1b[0m\n`);
+  playSoundFx('success');
+  focusConsoleScreen();
+}
+
+// 7. OTURUM KAYDINI İNDİRME (.LOG)
+function downloadConsoleSessionLog() {
+  if (!zcRawLogSession) { alert("Kaydedilecek oturum verisi yok."); return; }
+  const clean = zcRawLogSession.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
+  const blob = new Blob([clean], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `cisco_console_${Date.now()}.log`;
+  a.click();
+  playSoundFx('success');
+}
+
+// 8. TEMA DEĞİŞTİRME
+function changeTerminalTheme() {
+  const theme = document.getElementById('zc-term-theme').value;
+  const vp = document.getElementById('zc-terminal-viewport');
+  if (!vp) return;
+  if (theme === 'theme-green') vp.style.color = "#34d399";
+  else if (theme === 'theme-amber') vp.style.color = "#ffb454";
+  else if (theme === 'theme-cyan') vp.style.color = "#00f0ff";
+  else if (theme === 'theme-white') vp.style.color = "#f8fafc";
+}
+
+// 9. DAHİLİ SANAL CISCO LAB (KABLO YOKKEN TEST EDEN MOTOR)
+let simBuffer = "";
+function handleSandboxCliInput(char) {
+  if (char === "\r") {
+    appendZcText("\n");
+    processSandboxCommand(simBuffer.trim());
+    simBuffer = "";
+  } else if (char === "\b") {
+    if (simBuffer.length > 0) {
+      simBuffer = simBuffer.slice(0, -1);
+      appendZcText("\b \b");
+    }
+  } else {
+    simBuffer += char;
+    appendZcText(char);
+  }
+}
+
+function processSandboxCommand(cmd) {
+  const lower = cmd.toLowerCase();
+  if (lower === "enable" || lower === "en") {
+    zcSimState = "priv";
+  } else if (lower === "disable") {
+    zcSimState = "user";
+  } else if (lower === "configure terminal" || lower === "conf t") {
+    if (zcSimState === "priv") zcSimState = "config";
+    else appendZcText("% Yetkisiz işlem. Önce 'enable' moduna geçin.\n");
+  } else if (lower === "exit" || lower === "end") {
+    if (zcSimState === "config") zcSimState = "priv";
+    else if (zcSimState === "priv") zcSimState = "user";
+  } else if (lower.startsWith("hostname ")) {
+    zcSimHostname = cmd.split(" ")[1] || "Router";
+  } else if (lower === "show ip interface brief" || lower === "sh ip int br") {
+    appendZcText("Interface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.168.1.1     YES manual up                    up\nGigabitEthernet0/1     unassigned      YES unset  administratively down down\n");
+  } else if (lower === "show vlan brief" || lower === "sh vlan") {
+    appendZcText("VLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n1    default                          active    Gi0/1, Gi0/2\n10   DATA_USERS                       active    \n20   VOIP_PHONES                      active    \n");
+  } else if (cmd !== "") {
+    appendZcText(`% Tanınmayan komut: "${cmd}". ('sh ip int br', 'conf t', 'enable' deneyin)\n`);
+  }
+
+  const promptStr = zcSimState === "user" ? `${zcSimHostname}> ` : (zcSimState === "priv" ? `${zcSimHostname}# ` : `${zcSimHostname}(config)# `);
+  appendZcText(promptStr);
+}
+
+// 10. SSH / TELNET HIZLI LAUNCHER KOMUT ÜRETİCİ
+function generateSshLaunchCommand() {
+  const host = document.getElementById('zc-ssh-host').value.trim() || '192.168.1.1';
+  const user = document.getElementById('zc-ssh-user').value.trim() || 'admin';
+  const proto = document.getElementById('zc-ssh-proto').value;
+
+  let cmd = proto === 'ssh' 
+    ? `ssh -o StrictHostKeyChecking=no ${user}@${host}`
+    : `telnet ${host}`;
+
+  navigator.clipboard.writeText(cmd).then(() => {
+    playSoundFx('beep');
+    alert(`Ağ komutu panoya kopyalandı! CMD veya Terminal'e yapıştırıp bağlanabilirsiniz:\n${cmd}`);
+  });
 }
 
 // =========================================================================
