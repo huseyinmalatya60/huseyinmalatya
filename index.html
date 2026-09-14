@@ -284,7 +284,7 @@
 
     .dir-search-wrapper { display: flex; align-items: center; background: var(--bg-input); border: 1px solid var(--border-tech); margin-bottom: 14px; padding: 5px 9px; }
     .dir-search-wrapper input { border: none; background: transparent; padding: 0 6px; font-size: 12px; }
-    .directory-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 12px; }
+    .directory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .dir-category { background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 12px; display: flex; flex-direction: column; gap: 7px; }
     .dir-category-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 6px; border-bottom: 1px solid var(--border-subtle); }
     .dir-item {
@@ -915,7 +915,7 @@
               <div class="dir-item" onclick="showPanel('firewall-ports')"><div class="dir-item-header"><span class="dir-item-title">🛡️ Güvenlik Duvarı Port & Protokol Matrisi</span><span class="dir-item-tag">M-23</span></div><div class="dir-item-desc">LISP UDP 4341/4342, Web, AD ve VPN portları için Cisco ASA, FortiOS, Palo Alto ve iptables kuralı üretir.</div></div>
               <div class="dir-item" onclick="showPanel('cross-vendor')"><div class="dir-item-header"><span class="dir-item-title">🔀 Cross-VendorCLI Rosetta Stone</span><span class="dir-item-tag">M-24</span></div><div class="dir-item-desc">Cisco IOS, Juniper Junos, Huawei VRP, Arista EOS ve Linux arasında komut çevirisi, arama ve operasyonel cheat-sheet.</div></div>
               <div class="dir-item" onclick="showPanel('chaos-sim')"><div class="dir-item-header"><span class="dir-item-title">🚨 NOC Kriz & Chaos Simülatörü (12 Senaryo)</span><span class="dir-item-tag">M-25</span></div><div class="dir-item-desc">Rogue DHCP, STP Hijack, OSPF MTU, BGP Leak ve Loop arızalarına karşı süreli, interaktif kriz çözme tatbikat motoru.</div></div>
-	      <div class="dir-item" onclick="showPanel('eol-matrix')"><div class="dir-item-header"><span class="dir-item-title">⏳ Donanım EoL / EoS Yaşam Döngüsü Kütüphanesi</span><span class="dir-item-tag" style="color:#f59e0b; border-color:#f59e0b;">M-40</span></div><divclass="dir-item-desc">Cisco, Fortinet, Juniper ve Arista cihazlarının satış sonu, güvenlik desteği bitişi (LDOS), son stabil IOS sürümleri ve göç (migration) yolları.</div></div>
+	      <div class="dir-item" onclick="showPanel('eol-matrix')"><div class="dir-item-header"><span class="dir-item-title">⏳ Donanım EoL / EoS Yaşam Döngüsü Kütüphanesi</span><span class="dir-item-tag">M-40</span></div><div class="dir-item-desc">Cisco, Fortinet, Juniper ve Arista cihazlarının satış sonu, güvenlik desteği bitişi (LDOS)</div></div>
             </div>
 
             <!-- DİZİN 3: AĞ MİMARİSİ, CAD & PROTOKOL HESAPLAMA -->
